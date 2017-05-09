@@ -1,0 +1,83 @@
+﻿
+@{
+    ViewBag.Title = "STAR Handbook";
+}
+
+<section class="content">
+    <row>
+        &emsp;
+    </row>
+
+    <row>
+        <ol class="breadcrumb">
+            <li class="active">STAR Handbook</li>
+        </ol>
+    </row>
+
+
+    <row>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title"><strong>What is STAR?</strong></h4>
+            </div>
+            <div class="panel-body">
+                <p><strong>STAR</strong> stands for Scheduling, Time & Attendance for Retail and is the workforce management tool for our Retail Estate colleagues and is accustomed to generate effective roster, manage Time and Attendance and ensure our colleagues are paid correctly with minimum payroll leakage. </p>
+                <p><strong>STAR</strong> provides a more accurate way of creating timecards using biometrics, which gives stores the visibility to have the right people in the right place at the right time, enabling us to align our colleagues to customer demand (footfall). </p>
+            </div>
+        </div>
+    </row>
+    <row>
+        &emsp;
+    </row>
+    <row>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title"><strong>Getting The Basics Right</strong></h4>
+            </div>
+            <div class="panel-body">
+                <dl>
+                    <dt><u>All colleagues enrolled on the Touch-ID terminal punching for shifts</u></dt>
+                    <dd>All colleagues working in stores have to be enrolled and clocking in/out using the Kronos Terminal. Please make sure you keep your S (Supervisor) card somewhere safe and when new colleagues join, they will need to be enrolled prior to their first shift commencing.</dd>
+                    <dt>&emsp;</dt>
+                    <dt><u>4 weeks schedules for every member of the team on STAR at all times</u></dt>
+                    <dd>Each week a new schedule should be uploaded onto STAR, ensuring every colleague is scheduled in for shifts and meeting their contractual hours</dd>
+                    <dt>&emsp;</dt>
+                    <dt><u>100% timecard sign-off</u></dt>
+                    <dd>The payroll deadline for timecards is 11am Monday. For stores open on a Sunday sign off should happen on a Sunday. If you are signing off on a Monday morning you should complete all timecards before 9:30am. This is to allow time before the 11am payroll deadline if necessary for troubleshooting and support.</dd>
+                    <dt>&emsp;</dt>
+                    <dt><u>Zero Full-time leakage</u></dt>
+                    <dd>Our full-time colleagues are contracted and paid to work 45 hours per week. If a full-timer works less than 45 hours then we are paying for non-working hours, and this is called payroll leakage. In order to optimize   SOH and maximize our productivity we need to minimize our payroll leakage. To do this we ensure that all full-time colleagues are scheduled and working 45 hours.</dd>
+                </dl>
+            </div>
+        </div>
+    </row>
+
+    <div class="panel panel-default">
+            <div class="panel-heading text-center">
+                <h3 class="panel-title"><strong>Follow the links below for information on...</strong></h3>
+            </div>
+        <div class="panel-body">
+            <div class="col-md-12">
+                    <a href="@Url.Action("KronosTerminal","STARHandbook")" class="btn btn-primary col-lg-3 col-md-5" style="margin-bottom:15px" role="button">Kronos Terminal</a>
+                    <span class="col-lg-1 col-md-1"></span>
+                    <a href="@Url.Action("Scheduling","STARHandbook")" class="btn btn-primary col-lg-3 col-md-5" style="margin-bottom:15px" role="button">Scheduling</a>
+                    <span class="col-lg-1 col-md-1"></span>
+                    <a href="@Url.Action("Availability","STARHandbook")" class="btn btn-primary col-lg-3 col-md-5" style="margin-bottom:15px" role="button">Colleague Availability</a>
+                    <span class="col-lg-1 col-md-1"></span>
+                    <a href="@Url.Action("ManagingTimecards","STARHandbook")" class="btn btn-primary col-lg-3 col-md-5" style="margin-bottom:15px" role="button">Managing Timecards</a>
+                    <span class="col-lg-1 col-md-1"></span>
+                    <a href="@Url.Action("TimecardExceptions","STARHandbook")" class="btn btn-primary col-lg-3 col-md-5" style="margin-bottom:15px" role="button">Timecard Exceptions</a>
+                    <span class="col-lg-1 col-md-1"></span>
+                    <a href="@Url.Action("TimecardSignOff","STARHandbook")" class="btn btn-primary col-lg-3 col-md-5" style="margin-bottom:15px" role="button">Timecard Sign Off</a>
+                    <span class="col-lg-1 col-md-1"></span>
+                    <a href="@Url.Action("EscalationsSupport","STARHandbook")" class="btn btn-primary col-lg-3 col-md-5 col-md-offset-3 col-lg-offset-4" style="margin-bottom:15px" role="button">Escalations & Support</a>
+                    <span class="col-lg-1 col-md-1"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+        </div>
+    </div>
+</section>

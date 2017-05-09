@@ -1,0 +1,51 @@
+﻿
+@{
+    ViewBag.Title = "STAR Handbook";
+}
+
+<section class="content">
+    <row>
+        &emsp;
+    </row>
+
+    <row>
+        <ol class="breadcrumb">
+            <li><a href="@Url.Action("Index","STARHandbook")">STAR Handbook</a></li>
+            <li><a href="@Url.Action("EscalationsSupport","STARHandbook")">Escalations & Support</a></li>
+            <li class="active">STAR Changes</li>
+        </ol>
+    </row>
+
+    <row>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title"><strong>STAR Changes</strong></h4>
+            </div>
+            <div class="panel-body">
+                <h4><strong>New Starters</strong></h4>
+                <p>
+                    <ul>
+                        <li>All new starters will be added to your STAR hierarchy once payroll has fully on boarded them.</li>
+                        <li>At this point you will need to schedule them for 4 weeks, including their Academy training </li>
+                        <li>Enroll them on the Touch- ID terminal prior to their first shift.</li>
+                        <li>If your new colleague is not added to STAR prior to their training you will need to escalate to your TPC. If they are not on STAR, then they won’t get paid.</li>
+                    </ul>
+                </p>
+                <hr />
+                <h4><strong>Transfers, Contract Changes and Leavers</strong></h4>
+                <ul>
+                    <li>All changes on STAR need to be requested through your TPC.</li>
+                    <li>You should give notice of these changes prior to them taking place. Once the change has been completed on Oracle it will be reflected on STAR 24 hours later. </li>
+                    <li>It is essential that all colleague records on Oracle and STAR are exactly the same. Any discrepancies can result in pay issues.</li>
+                </ul>
+            </div>
+        </div>
+    </row>
+
+    @Html.Partial("~/Views/Partials/_EscalationsSupportOptions.cshtml")
+
+    <div class="row">
+        <div class="col-md-6">
+        </div>
+    </div>
+</section>

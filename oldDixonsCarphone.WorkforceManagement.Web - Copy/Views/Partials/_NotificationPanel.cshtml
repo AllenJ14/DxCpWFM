@@ -1,0 +1,25 @@
+﻿@using DixonsCarphone.WorkforceManagement.Business.Entities
+@model IEnumerable<Activity> 
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <i class="fa fa-bell fa-fw"></i> Notifications Panel
+    </div>
+    <!-- /.panel-heading -->
+    <div class="panel-body">
+        <div class="list-group">
+            @foreach (var activity in Model)
+            {
+                <a href="#" class="list-group-item">
+                    <i class="fa fa-comment fa-fw"></i> @activity.Summary
+                    <span class="pull-right text-muted small">
+                        <em>@string.Format("{0:d} - {1} - {2}", activity.ActivityDate, activity.StartTime, activity.EndTime)</em>
+                    </span>
+                </a>
+            }
+        </div>
+        <!-- /.list-group -->
+        <a href="#" class="btn btn-default btn-block">View All Alerts</a>
+    </div>
+    <!-- /.panel-body -->
+</div>

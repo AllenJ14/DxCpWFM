@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewBag.Title = "STAR Handbook";
+}
+
+<section class="content">
+    <row>
+        &emsp;
+    </row>
+
+    <row>
+        <ol class="breadcrumb">
+            <li><a href="@Url.Action("Index","STARHandbook")">STAR Handbook</a></li>
+            <li><a href="@Url.Action("TimecardExceptions","STARHandbook")">Timecard Exceptions</a></li>
+            <li class="active">Adding a Comment</li>
+        </ol>
+    </row>
+
+    <row>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title"><strong>Adding a Comment</strong></h4>
+            </div>
+            <div class="panel-body">
+                <p>You will need to add a comment for <strong>all Absences and Exceptions</strong>. This allows an accurate record to be kept of all actions and can be used for resolving pay issues and grievances.</p>
+                <row class="col-md-12">
+                    <div class="col-md-6 text-center"><img src="~/Images/CMS_Uploads/AddingAComment1.png" class="img-responsive"/></div>
+                    <br />
+                    <div class="col-md-6">
+                        <p>Right click on the shift / clock and select 'Add Comment'.</p>
+                    </div>
+                </row>
+                <div class="col-md-12">
+                    &emsp;
+                </div>
+                <row class="col-md-12">
+                    <div class="col-md-6 text-center"><img src="~/Images/CMS_Uploads/AddingAComment2.png" class="img-responsive"/></div>
+                    <br />
+                    <div class="col-md-6">
+                        <p>This will bring up the Add Comment box. Select the most appropriate comment from the list. Ensuring it starts with 'IE – UK'</p>
+                        <p>The note box is free text and allows you to enter and details to support your decision</p>
+                    </div>
+                </row>
+            </div>
+        </div>
+    </row>
+
+    @Html.Partial("~/Views/Partials/_TimecardExceptionsOptions.cshtml")
+
+    <div class="row">
+        <div class="col-md-6">
+        </div>
+    </div>
+</section>

@@ -1,0 +1,223 @@
+﻿
+@{
+    ViewBag.Title = "STAR Handbook";
+}
+
+<section class="content">
+    <row>
+        &emsp;
+    </row>
+
+    <row>
+        <ol class="breadcrumb">
+            <li><a href="@Url.Action("Index","STARHandbook")">STAR Handbook</a></li>
+            <li><a href="@Url.Action("Scheduling","STARHandbook")">Scheduling</a></li>
+            <li class="active">Using Pay Codes</li>
+        </ol>
+    </row>
+
+    <row>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title"><strong>Using Pay Codes</strong></h4>
+            </div>
+            <div class="panel-body">
+                <p>For full details on pay codes including policies and processes see CPWTouch > People > HR Policies and Procedures.</p>
+                <hr />
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th class="col-md-3 text-center">Pay Code</th>
+                            <th class="text-center">Paid</th>
+                            <th class="text-center">SOH</th>
+                            <th class="text-center">Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Adoption Leave</td>
+                            <td>Yes</td>
+                            <td>No</td>
+                            <td>Subject to correct HR forms being completed and approved</td>
+                        </tr>
+                        <tr>
+                            <td>Approved Unpaid Leave</td>
+                            <td>No</td>
+                            <td>No</td>
+                            <td>Used for unpaid time off work and scheduling colleagues who have resigned</td>
+                        </tr>
+                        <tr>
+                            <td>AWOL</td>
+                            <td>No</td>
+                            <td>No</td>
+                            <td>Subject to correct HR forms being completed and approved</td>
+                        </tr>
+                        <tr>
+                            <td>Bereavement</td>
+                            <td>Yes</td>
+                            <td>Yes</td>
+                            <td>Up to 10 days for immediate family, 3 days for a Grandparent/Parent-in-law & 1 day for other family member/close friends (pro rota for PT colleagues)</td>
+                        </tr>
+                        <tr>
+                            <td>Birthday Holiday</td>
+                            <td>Yes</td>
+                            <td>No</td>
+                            <td>1 holiday day to be taken within a month before or after a colleagues Birthday</td>
+                        </tr>
+                        <tr>
+                            <td>Compassionate Leave</td>
+                            <td>No</td>
+                            <td>No</td>
+                            <td>Used if a colleague needs time off to support a friend or family member</td>
+                        </tr>
+                        <tr>
+                            <td>Disciplinary & Investigation Leave</td>
+                            <td>Yes</td>
+                            <td>Yes</td>
+                            <td>Used for managers running an investigation or disciplinary</td>
+                        </tr>
+                        <tr>
+                            <td>Domestic Emergency</td>
+                            <td>No</td>
+                            <td>No</td>
+                            <td>E.g. flooding, burglary, etc.</td>
+                        </tr>
+                        <tr>
+                            <td>Force Majeure</td>
+                            <td>Yes</td>
+                            <td>Yes</td>
+                            <td>When an employee can't attend work due to extreme circumstances e.g. severe weather</td>
+                        </tr>
+                        <tr>
+                            <td>Grandparents Leave</td>
+                            <td>Yes</td>
+                            <td>Yes</td>
+                            <td>1 day paid leave per financial year when your Grandchild is born</td>
+                        </tr>
+                        <tr>
+                            <td>Holiday</td>
+                            <td>Yes</td>
+                            <td>No</td>
+                            <td>Full timers holidays are always 9 hours (1 day) or 4.5 hours (half day). Part timers can book holiday in hours.</td>
+                        </tr>
+                        <tr>
+                            <td>In Store Training</td>
+                            <td>Yes</td>
+                            <td>Yes</td>
+                            <td>Training for the branch. Must be accompanied by a comment and note to explain the context of the training</td>
+                        </tr>
+                        <tr>
+                            <td>Jury Service</td>
+                            <td>No</td>
+                            <td>No</td>
+                            <td>Unpaid leave, however the courts will compensate colleagues for loss of earnings</td>
+                        </tr>
+                        <tr>
+                            <td>Medical Appointment Paid</td>
+                            <td>Yes</td>
+                            <td>Yes</td>
+                            <td>Only if within company policy</td>
+                        </tr>
+                        <tr>
+                            <td>Medical Appointment Unpaid</td>
+                            <td>No</td>
+                            <td>No</td>
+                            <td>Non-work related medical appointments or appointments outside of pollicy</td>
+                        </tr>
+                        <tr>
+                            <td>Meeting</td>
+                            <td>Yes</td>
+                            <td>Yes</td>
+                            <td>Must be accompanied by a comment and note to explain the context of the meeting</td>
+                        </tr>
+                        <tr>
+                            <td>Out Store Training</td>
+                            <td>Yes</td>
+                            <td>Yes</td>
+                            <td>Training for the company. Must be accompanied by a comment and note to explain the context of the training</td>
+                        </tr>
+                        <tr>
+                            <td>Parental Leave</td>
+                            <td>No</td>
+                            <td>No</td>
+                            <td>Time off for children</td>
+                        </tr>
+                        <tr>
+                            <td>Paternity Leave</td>
+                            <td>Yes</td>
+                            <td>Yes</td>
+                            <td>For the birth of the child, subject to correct HR forms being completed and approved</td>
+                        </tr>
+                        <tr>
+                            <td>Public Duties Unpaid</td>
+                            <td>No</td>
+                            <td>No</td>
+                            <td>Unpaid leave for volunteer public duties e.g. police and fire service</td>
+                        </tr>
+                        <tr>
+                            <td>Recruitment</td>
+                            <td>Yes</td>
+                            <td>Yes</td>
+                            <td>Used for managers running recruitment days</td>
+                        </tr>
+                        <tr>
+                            <td>Religious Leave Unpaid</td>
+                            <td>No</td>
+                            <td>No</td>
+                            <td>Not applicable to Retail</td>
+                        </tr>
+                        <tr>
+                            <td>Reserve Forces Leave Unpaid</td>
+                            <td>No</td>
+                            <td>No</td>
+                            <td>Unpaid leave for the armed forces</td>
+                        </tr>
+                        <tr>
+                            <td>Sabbatical Unpaid</td>
+                            <td>No</td>
+                            <td>No</td>
+                            <td>Subject to application and approval</td>
+                        </tr>
+                        <tr>
+                            <td>Sick</td>
+                            <td>Yes</td>
+                            <td>Yes</td>
+                            <td>Included in your SOH until the colleague is deemed to be on long term sick leave</td>
+                        </tr>
+                        <tr>
+                            <td>Suspension Paid</td>
+                            <td>Yes</td>
+                            <td>Yes</td>
+                            <td>Use this pay code for all suspension unless instructed to the contrary by HR</td>
+                        </tr>
+                        <tr>
+                            <td>Suspension Unpaid</td>
+                            <td>No</td>
+                            <td>No</td>
+                            <td>Always use the 'Suspension Paid' pay code unless instructed to the contrary by HR</td>
+                        </tr>
+                        <tr>
+                            <td>Time Off for Dependants</td>
+                            <td>No</td>
+                            <td>No</td>
+                            <td>Used if a colleague needs time off to support someone in their care</td>
+                        </tr>
+                        <tr>
+                            <td>Travel Time for Transfer</td>
+                            <td>Yes</td>
+                            <td>Yes</td>
+                            <td>Used for scheduling travel time if it is outside the Company policy for reasonable distance</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </row>
+
+    @Html.Partial("~/Views/Partials/_ScheduleOptions.cshtml")
+
+    <div class="row">
+        <div class="col-md-6">
+        </div>
+    </div>
+</section>

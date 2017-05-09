@@ -1,0 +1,28 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
+@model MyTeamViewModel
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel-body">
+            <table class="table table-condensed table-bordered col-md-12">
+                <thead style="background-color:#002249; color:aliceblue">
+                    <tr>
+                        <th class="text-center">Employee Name</th>
+                        <th class="text-center">Job Role</th>
+                        <th class="text-center">Contract Hours</th>
+                        <th class="text-center">Current Holiday Balance</th>
+                    </tr>
+                </thead>
+                @foreach (var item in Model.MyTeam)
+                {
+                    <tr>
+                        <td>@string.Format("{0}, {1}", item.SURNAME, item.FORENAME)</td>
+                        <td>@item.ROLE</td>
+                        <td class="text-center">@item.CONTRACT_HOURS</td>
+                        <td class="text-center">@item.TODAYS_BALANCE</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>

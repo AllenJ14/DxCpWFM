@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewBag.Title = "STAR Handbook";
+}
+
+<section class="content">
+    <row>
+        &emsp;
+    </row>
+
+    <row>
+        <ol class="breadcrumb">
+            <li><a href="@Url.Action("Index","STARHandbook")">STAR Handbook</a></li>
+            <li><a href="@Url.Action("Scheduling","STARHandbook")">Scheduling</a></li>
+            <li class="active">Holiday Balance & Entitlement</li>
+        </ol>
+    </row>
+
+    <row>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title"><strong>Holiday Balance & Entitlement</strong></h4>
+            </div>
+            <div class="panel-body">
+                <p>Holidays and Birthday Holiday Balances are displayed in the format <strong>days:hours:minutes</strong>.</p>
+                <ul>
+                    <li><strong>Available balance</strong> (as of the time period specified in the hyperfind, default is ‘Current Pay Period’</li>
+                    <li><strong>Taken to date</strong> (from the beginning of the financial year).</li>
+                    <li><strong>Planned Takings</strong> (until the end of the financial year).</li>
+                    <li><strong>Ending Balance</strong> (after any planned takings).</li>
+                    <li><strong><u>Remember</u></strong> - Birthday Holiday will only be visible and valid for a period of one month before and one-month after the colleague’s birthday. </li>
+                </ul>
+                <hr />
+                <row class="col-md-12">
+                    <img src="~/Images/CMS_Uploads/CheckingHoliday1.png" class="col-md-6" />
+                    <br />
+                    <div class="col-md-6"></div>
+                </row>
+                <div class="col-md-12">
+                    &emsp;
+                </div>
+                <row class="col-md-12">
+                    <img src="~/Images/CMS_Uploads/CheckingHoliday2.png" class="col-md-6" />
+                    <br />
+                    <div class="col-md-6"></div>
+                </row>
+                <div class="col-md-12">
+                    &emsp;
+                </div>
+            </div>
+        </div>
+    </row>
+
+    @Html.Partial("~/Views/Partials/_ScheduleOptions.cshtml")
+
+    <div class="row">
+        <div class="col-md-6">
+        </div>
+    </div>
+</section>

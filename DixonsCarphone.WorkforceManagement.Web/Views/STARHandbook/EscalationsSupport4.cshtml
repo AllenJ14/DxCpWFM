@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewBag.Title = "STAR Handbook";
+}
+
+<section class="content">
+    <row>
+        &emsp;
+    </row>
+
+    <row>
+        <ol class="breadcrumb">
+            <li><a href="@Url.Action("Index","STARHandbook")">STAR Handbook</a></li>
+            <li><a href="@Url.Action("EscalationsSupport","STARHandbook")">Escalations & Support</a></li>
+            <li class="active">Error Messages</li>
+        </ol>
+    </row>
+
+    <row>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title"><strong>Error Messages</strong></h4>
+            </div>
+            <div class="panel-body">
+                <h4><strong>Colleague Unable to enrol/punch</strong></h4>
+                <p>If you get the error ‘Valid for Home Employees Only’, or ‘Unknown Home Employee’ you will need to contact GIS and ask them to refresh your Touch-ID terminal.</p>
+                <hr />
+                <h4><strong>STAR displays a blank page</strong></h4>
+                <p>When accessing STAR, please ensure you are using Internet Explorer as Google Chrome is not currently compatible and will simply display a blank page.</p>
+            </div>
+        </div>
+    </row>
+
+    @Html.Partial("~/Views/Partials/_EscalationsSupportOptions.cshtml")
+
+    <div class="row">
+        <div class="col-md-6">
+        </div>
+    </div>
+</section>

@@ -1,0 +1,80 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
+@model Dictionary<string, List<ScoresAndUtilizationViewModel>>
+
+@{ 
+    Func<int, string> GetColor = (i) =>
+    {
+        var rtn = "primary";
+        switch (i)
+        {
+            case 1:
+                rtn = "green";
+                break;
+            case 2:
+                rtn = "yellow";
+                break;
+            case 3:
+                rtn = "red";
+                break;
+        }
+
+        return rtn;
+    };
+
+    var x = 0;
+}
+
+    @foreach (var week in Model)
+            {
+        @*<div class="col-md-4">
+            <div class="box box-widget widget-user-2">
+                <!-- Add the bg color to the header using any of the bg-* classes -->
+                <div class="widget-user-header bg-@GetColor(week.Key)">
+                    <div class="widget-user-image">
+                        <img class="img-circle" src="~/Content/Lte/dist/img/user7-128x128.jpg" alt="User Avatar">
+                    </div>
+                    <!-- /.widget-user-image -->
+                    <h3 class="widget-user-username">@week.Key</h3>
+                    <h5 class="widget-user-desc">Compliance &Aacute; Deployment Scores</h5>
+                </div>
+                <div class="box-footer no-padding">
+                    <ul class="nav nav-stacked">
+                        @foreach (var score in week.Value)
+        {
+                            <li><a href="@Url.Action("Wfm", "Reports", new { report = score.Title })">@score.Title<span class="pull-right badge bg-blue">@score.Score</span></a></li>
+                        }
+                    </ul>
+                </div>
+            </div>
+            <!-- /.widget-user -->
+        </div>*@
+
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-@GetColor(x)">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-comments fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">@week.Key</div>
+                            <div>Compliance &amp; Deployment Scores!</div>
+                        </div>
+                    </div>
+                </div>
+                @foreach (var score in week.Value)
+                {
+                    <a href="@Url.Action("Wfm", "Reports", new { report = score.Title })">
+                        <div class="panel-footer">
+                            <span class="pull-left">@score.Title &nbsp;&nbsp;&nbsp;<span class="pull-right badge bg-blue">@score.Score</span></span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                }
+            </div>
+        </div>
+        x++;
+    }
+
+

@@ -1,0 +1,19 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels.Cms
+@model ContentViewModel
+
+<a href="@Url.Action("Index", "BestPractice")">
+    <i class="fa fa-th"></i> <span>Help &amp; Support<span class="fa arrow" /></span>
+    <span class="pull-right-container">
+        <i class="fa fa-angle-left pull-right"></i>
+    </span>
+</a>
+
+@if (Model != null && Model.ContentCollection.Count > 0)
+{
+    <ul class="nav nav-second-level">
+        @foreach (var detail in Model.ContentCollection)
+        {
+            <li class="active"><a href="@Url.Action("GetContent", "BestPractice", new { contentHeaderId = detail.ContentHeaderId })"> @detail.HeaderTitle</a></li>
+        }
+    </ul>
+}

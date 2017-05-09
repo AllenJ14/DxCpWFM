@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PublishScripts", "PublishScripts", "{54068F7E-1FF3-43FA-9974-484F8363CFB2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{D9CC256A-7E4C-491D-B756-AE21645D0C93}"
+	ProjectSection(SolutionItems) = preProject
+		PublishScripts\Scripts\Deploy-AzureResourceGroup.ps1 = PublishScripts\Scripts\Deploy-AzureResourceGroup.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Templates", "Templates", "{7A9C4320-DF95-4A37-9AAC-4E14F04FC1C9}"
+	ProjectSection(SolutionItems) = preProject
+		PublishScripts\Templates\DixonsCarphoneWorkforceManagementWeb.json = PublishScripts\Templates\DixonsCarphoneWorkforceManagementWeb.json
+		PublishScripts\Templates\DixonsCarphoneWorkforceManagementWeb.param.dev.json = PublishScripts\Templates\DixonsCarphoneWorkforceManagementWeb.param.dev.json
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DixonsCarphone.WorkforceManagement.ViewModels", "DixonsCarphone.WorkforceManagement.ViewModels\DixonsCarphone.WorkforceManagement.ViewModels.csproj", "{C56AA418-AFA5-4712-AAAD-29FBFD4EBD2A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DixonsCarphone.WorkforceManagement.Business", "DixonsCarphone.WorkforceManagement.Business\DixonsCarphone.WorkforceManagement.Business.csproj", "{84E62555-AAF9-4BDC-B1BA-816B8F30E5BB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DixonsCarphone.WorkforceManagement.BusinessTests", "DixonsCarphone.WorkforceManagement.BusinessTests\DixonsCarphone.WorkforceManagement.BusinessTests.csproj", "{C122AC1A-2A62-41B2-8B58-716129F4683A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DixonsCarphone.WorkforceManagement.Web", "DixonsCarphone.WorkforceManagement.Web\DixonsCarphone.WorkforceManagement.Web.csproj", "{60D1319D-7560-4902-9511-F663A7313F53}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C56AA418-AFA5-4712-AAAD-29FBFD4EBD2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C56AA418-AFA5-4712-AAAD-29FBFD4EBD2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C56AA418-AFA5-4712-AAAD-29FBFD4EBD2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C56AA418-AFA5-4712-AAAD-29FBFD4EBD2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84E62555-AAF9-4BDC-B1BA-816B8F30E5BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84E62555-AAF9-4BDC-B1BA-816B8F30E5BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84E62555-AAF9-4BDC-B1BA-816B8F30E5BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84E62555-AAF9-4BDC-B1BA-816B8F30E5BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C122AC1A-2A62-41B2-8B58-716129F4683A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C122AC1A-2A62-41B2-8B58-716129F4683A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C122AC1A-2A62-41B2-8B58-716129F4683A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C122AC1A-2A62-41B2-8B58-716129F4683A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60D1319D-7560-4902-9511-F663A7313F53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60D1319D-7560-4902-9511-F663A7313F53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60D1319D-7560-4902-9511-F663A7313F53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60D1319D-7560-4902-9511-F663A7313F53}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D9CC256A-7E4C-491D-B756-AE21645D0C93} = {54068F7E-1FF3-43FA-9974-484F8363CFB2}
+		{7A9C4320-DF95-4A37-9AAC-4E14F04FC1C9} = {54068F7E-1FF3-43FA-9974-484F8363CFB2}
+	EndGlobalSection
+EndGlobal

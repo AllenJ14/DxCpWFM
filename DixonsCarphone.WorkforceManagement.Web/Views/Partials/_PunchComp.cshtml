@@ -1,0 +1,269 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
+@model PunchCompVM
+
+@Html.Partial("~/Views/Shared/_WeekPicker.cshtml", new WeekPickerViewModel { Action = "PunchCompliance", Controller = "Reports", WeeksOfYear = Model.WeeksOfYear, SelectedDate = Model.SelectedDate })
+
+
+<div class="row">
+    &nbsp;
+</div>
+
+@if (HttpContext.Current.Session["_RegionNumber"] != null && Model.RegionDetail.Count() > 0)
+{
+    var subtotal = Model.RegionDetail.Where(x => x.Name == null).Single();
+    var subtotalComp = 100 - ((decimal)subtotal.MissedIn + subtotal.MissedOut) / subtotal.ShiftCount * 100 / 2;
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="col-lg-10 col-lg-offset-1 col-md-12">
+                        <table class="table table-bordered-blue table-condensed">
+                            <thead>
+                                <tr>
+                                    <th class="text-center col-md-4" style="vertical-align:middle" rowspan="2">Name</th>
+                                    <th class="text-center col-md-1" style="vertical-align:middle" rowspan="2">Count of Shifts</th>
+                                    <th class="text-center col-md-1" style="vertical-align:middle" rowspan="2">Punch Compliance</th>
+                                    <th class="text-center" colspan="2" style="border-bottom-width: 0px">Missed Clocks</th>
+                                    <th class="text-center" colspan="2" style="border-bottom-width: 0px">Lateness</th>
+                                </tr>
+                                <tr>
+                                    <th class="text-center col-md-1">In</th>
+                                    <th class="text-center col-md-1">Out</th>
+                                    <th class="text-center col-md-1">In</th>
+                                    <th class="text-center col-md-1">%</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.RegionDetail.Where(x => x.Name != null))
+                                {
+                                    <tr>
+                                        <td>@item.Name</td>
+                                        <td class="text-center">@item.ShiftCount</td>
+                                        <td class="text-center @(item.PunchCompliance >= 5 ? "danger" : "")">@string.Format("{0:0}%", 100 - item.PunchCompliance)</td>
+                                        <td class="text-center">@item.MissedIn</td>
+                                        <td class="text-center">@item.MissedOut</td>
+                                        <td class="text-center">@item.LateIn</td>
+                                        <td class="text-center">@string.Format("{0:0}%", item.Lateness)</td>
+                                    </tr>
+                                }
+                                <tr>
+                                    <td><strong>Region Total</strong></td>
+                                    <td class="text-center"><strong>@subtotal.ShiftCount</strong></td>
+                                    <td class="text-center @(subtotalComp < 95 ? "danger" : "")"><strong>@(string.Format("{0:0.0}%", subtotalComp))</strong></td>
+                                    <td class="text-center"><strong>@subtotal.MissedIn</strong></td>
+                                    <td class="text-center"><strong>@subtotal.MissedOut</strong></td>
+                                    <td class="text-center"><strong>@subtotal.LateIn</strong></td>
+                                    <td class="text-center"><strong>@string.Format("{0:0.0}%", subtotal.LateIn / subtotal.ShiftCount * 100)</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+else if (HttpContext.Current.Session["_DivisionName"] != null && Model.RegionDetail.Count() > 0)
+{
+    var subtotal = Model.RegionDetail.Where(x => x.Name == null).Single();
+    var subtotalComp = 100 - ((decimal)subtotal.MissedIn + subtotal.MissedOut) / subtotal.ShiftCount * 100 / 2;
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="col-lg-10 col-lg-offset-1 col-md-12">
+                        <table class="table table-bordered-blue table-condensed">
+                            <thead>
+                                <tr>
+                                    <th class="text-center col-md-4" style="vertical-align:middle" rowspan="2">Name</th>
+                                    <th class="text-center col-md-1" style="vertical-align:middle" rowspan="2">Count of Shifts</th>
+                                    <th class="text-center col-md-1" style="vertical-align:middle" rowspan="2">Punch Compliance</th>
+                                    <th class="text-center" colspan="2" style="border-bottom-width: 0px">Missed Clocks</th>
+                                    <th class="text-center" colspan="2" style="border-bottom-width: 0px">Lateness</th>
+                                </tr>
+                                <tr>
+                                    <th class="text-center col-md-1">In</th>
+                                    <th class="text-center col-md-1">Out</th>
+                                    <th class="text-center col-md-1">In</th>
+                                    <th class="text-center col-md-1">%</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.RegionDetail.Where(x => x.Name != null))
+                                {
+                                    <tr>
+                                        <td>Region @item.Name</td>
+                                        <td class="text-center">@item.ShiftCount</td>
+                                        <td class="text-center @(item.PunchCompliance >= 5 ? "danger" : "")">@string.Format("{0:0}%", 100 - item.PunchCompliance)</td>
+                                        <td class="text-center">@item.MissedIn</td>
+                                        <td class="text-center">@item.MissedOut</td>
+                                        <td class="text-center">@item.LateIn</td>
+                                        <td class="text-center">@string.Format("{0:0}%", item.Lateness)</td>
+                                    </tr>
+                                }
+                                <tr>
+                                    <td><strong>Division Total</strong></td>
+                                    <td class="text-center"><strong>@subtotal.ShiftCount</strong></td>
+                                    <td class="text-center @(subtotalComp < 95 ? "danger" : "")"><strong>@(string.Format("{0:0.0}%", subtotalComp))</strong></td>
+                                    <td class="text-center"><strong>@subtotal.MissedIn</strong></td>
+                                    <td class="text-center"><strong>@subtotal.MissedOut</strong></td>
+                                    <td class="text-center"><strong>@subtotal.LateIn</strong></td>
+                                    <td class="text-center"><strong>@string.Format("{0:0.0}%", subtotal.LateIn / subtotal.ShiftCount * 100)</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+else if (HttpContext.Current.Session["_ChannelName"] != null && Model.RegionDetail.Count() > 0)
+{
+    var subtotal = Model.RegionDetail.Where(x => x.Name == null).Single();
+    var subtotalComp = 100 - ((decimal)subtotal.MissedIn + subtotal.MissedOut) / subtotal.ShiftCount * 100 / 2;
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="col-lg-10 col-lg-offset-1 col-md-12">
+                        <table class="table table-bordered-blue table-condensed">
+                            <thead>
+                                <tr>
+                                    <th class="text-center col-md-4" style="vertical-align:middle" rowspan="2">Name</th>
+                                    <th class="text-center col-md-1" style="vertical-align:middle" rowspan="2">Count of Shifts</th>
+                                    <th class="text-center col-md-1" style="vertical-align:middle" rowspan="2">Punch Compliance</th>
+                                    <th class="text-center" colspan="2" style="border-bottom-width: 0px">Missed Clocks</th>
+                                    <th class="text-center" colspan="2" style="border-bottom-width: 0px">Lateness</th>
+                                </tr>
+                                <tr>
+                                    <th class="text-center col-md-1">In</th>
+                                    <th class="text-center col-md-1">Out</th>
+                                    <th class="text-center col-md-1">In</th>
+                                    <th class="text-center col-md-1">%</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.RegionDetail.Where(x => x.Name != null))
+                                {
+                                    <tr>
+                                        <td>@item.Name</td>
+                                        <td class="text-center">@item.ShiftCount</td>
+                                        <td class="text-center @(item.PunchCompliance >= 5 ? "danger" : "")">@string.Format("{0:0}%", 100 - item.PunchCompliance)</td>
+                                        <td class="text-center">@item.MissedIn</td>
+                                        <td class="text-center">@item.MissedOut</td>
+                                        <td class="text-center">@item.LateIn</td>
+                                        <td class="text-center">@string.Format("{0:0}%", item.Lateness)</td>
+                                    </tr>
+                                }
+                                <tr>
+                                    <td><strong>Channel Total</strong></td>
+                                    <td class="text-center"><strong>@subtotal.ShiftCount</strong></td>
+                                    <td class="text-center @(subtotalComp < 95 ? "danger" : "")"><strong>@(string.Format("{0:0.0}%", subtotalComp))</strong></td>
+                                    <td class="text-center"><strong>@subtotal.MissedIn</strong></td>
+                                    <td class="text-center"><strong>@subtotal.MissedOut</strong></td>
+                                    <td class="text-center"><strong>@subtotal.LateIn</strong></td>
+                                    <td class="text-center"><strong>@string.Format("{0:0.0}%", subtotal.LateIn / subtotal.ShiftCount * 100)</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+else if (Model.PunchDetail != null && Model.PunchDetail.Count() != 0)
+{
+    var summary = Model.PunchDetail.GroupBy(x => new { x.FORENAME, x.EMP_NUM }).Select(s => new { EmpNum = s.Key.EMP_NUM, FullName = s.Key.FORENAME, ShiftCount = s.Count(), MissedIn = s.Sum(x => x.Count_In_Missing), MissedOut = s.Sum(x => x.Count_Out_Missing), LateIn = s.Sum(x => x.Clock_In_Not_Acceptable) }).OrderBy(x => x.FullName).ToList();
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="col-lg-10 col-lg-offset-1 col-md-12">
+                        <table class="table table-bordered-blue table-condensed">
+                            <thead>
+                                <tr>
+                                    <th class="text-center col-md-4" style="vertical-align:middle" rowspan="2">Name</th>
+                                    <th class="text-center col-md-1" style="vertical-align:middle" rowspan="2">Count of Shifts</th>
+                                    <th class="text-center col-md-1" style="vertical-align:middle" rowspan="2">Punch Compliance</th>
+                                    <th class="text-center" colspan="2" style="border-bottom-width: 0px">Missed Clocks</th>
+                                    <th class="text-center" colspan="2" style="border-bottom-width: 0px">Lateness</th>
+                                </tr>
+                                <tr>
+                                    <th class="text-center col-md-1">In</th>
+                                    <th class="text-center col-md-1">Out</th>
+                                    <th class="text-center col-md-1">In</th>
+                                    <th class="text-center col-md-1">%</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in summary)
+        {
+                                    <tr>
+                                        <td><button data-toggle="collapse" data-target="#@item.EmpNum" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-plus"></span></button> @item.FullName</td>
+                                        <td class="text-center">@item.ShiftCount</td>
+                                        <td class="text-center @((((decimal)item.MissedIn + item.MissedOut) / item.ShiftCount * 100 / 2) >= 5 ? "danger" : "")">@string.Format("{0:0.0}%", 100 - ((decimal)item.MissedIn + item.MissedOut) / item.ShiftCount * 100 / 2)</td>
+                                        <td class="text-center">@item.MissedIn</td>
+                                        <td class="text-center">@item.MissedOut</td>
+                                        <td class="text-center">@item.LateIn</td>
+                                        <td class="text-center">@string.Format("{0:0.0}%", (decimal)item.LateIn / item.ShiftCount * 100)</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="12" class="hiddenRow">
+                                            <div class="accordion-body collapse" id="@item.EmpNum">
+                                                <table class="table table-bordered table-condensed table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th colspan="12">&emsp;</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="text-center">Day</th>
+                                                            <th class="text-center">Start</th>
+                                                            <th class="text-center">Punch In</th>
+                                                            <th class="text-center">End</th>
+                                                            <th class="text-center">Punch Out</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach(var detail in Model.PunchDetail.Where(x => x.EMP_NUM == item.EmpNum).OrderBy(x => x.DAY_NUM))
+                                                        {
+                                                            <tr>
+                                                                <td class="text-center">@Enum.GetName(typeof(DayOfWeek),detail.DAY_NUM -1)</td>
+                                                                <td class="text-center">@detail.StartTime</td>
+                                                                <td class="text-center @(detail.Count_In_Missing == 1 || detail.Clock_In_Not_Acceptable == 1? "danger" : "")">@detail.PUNCHTIME_IN</td>
+                                                                <td class="text-center">@detail.EndTime</td>
+                                                                <td class="text-center @(detail.Count_Out_Missing == 1 ? "danger" :  "")">@detail.PUNCHTIME_OUT</td>
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                                }
+                                <tr>
+                                    <td><strong>Branch Total</strong></td>
+                                    <td class="text-center"><strong>@summary.Select(x => x.ShiftCount).Sum()</strong></td>
+                                    <td class="text-center"><strong>@(string.Format("{0:0.0}%",100-((decimal)summary.Select(x => x.MissedIn).Sum() + summary.Select(x => x.MissedOut).Sum())/ summary.Select(x => x.ShiftCount).Sum() *100 /2))</strong></td>
+                                    <td class="text-center"><strong>@summary.Select(x => x.MissedIn).Sum()</strong></td>
+                                    <td class="text-center"><strong>@summary.Select(x => x.MissedOut).Sum()</strong></td>
+                                    <td class="text-center"><strong>@summary.Select(x => x.LateIn).Sum()</strong></td>
+                                    <td class="text-center"><strong>@string.Format("{0:0.0}%", (decimal)summary.Select(x => x.LateIn).Sum() / summary.Select(x => x.ShiftCount).Sum() * 100)</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="alert alert-danger text-center"><strong>No data found for the selected period!</strong></div>
+}

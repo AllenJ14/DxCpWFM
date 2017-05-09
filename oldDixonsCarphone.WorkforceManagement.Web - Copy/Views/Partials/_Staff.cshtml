@@ -1,0 +1,78 @@
+﻿@model DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels.PeopleViewModel
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Staff</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table id="staffData" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Payroll Code</th>
+                                <th>Job Role</th>
+                                <th>Contract Hours</th>
+                                <th>Availability</th>
+                                <th>Holiday Balance</th>
+                                <th>Holiday Entitlement</th>
+                                <th>Holiday Booked</th>
+                                <th>Holiday Taken</th>
+                                <th>Record Mismatch</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var staff in Model.Staff)
+                            {
+                                <tr>
+                                    <td>@string.Format("{0} {1}", staff.FORENAME, staff.SURNAME)</td>
+                                    <td>@staff.EMP_NUM</td>
+                                    <td>@staff.ROLE</td>
+                                    <td>@staff.CONTRACT_HOURS</td>
+                                    <td>tba</td>
+                                    <td>@string.Format("{0} days", staff.TODAYS_BALANCE / 8)</td>
+                                    <td>@string.Format("{0} days", staff.MAY_01_BALANCE / 8)</td>
+                                    <td>tba</td>
+                                    <td>@staff.ABSENCE_TAKEN</td>
+                                    <td>tba</td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Name</th>
+                                <th>Payroll Code</th>
+                                <th>Job Role</th>
+                                <th>Contract Hours</th>
+                                <th>Availability</th>
+                                <th>Holiday Balance</th>
+                                <th>Holiday Entitlement</th>
+                                <th>Holiday Booked</th>
+                                <th>Holiday Taken</th>
+                                <th>Record Mismatch</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            </div>
+        </div>
+@section myScripts {
+<script src="~/Content/Lte/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="~/Content/Lte/plugins/datatables/dataTables.bootstrap.min.js"></script>
+<script>
+  $(function () {
+    $('#staffData').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false
+    });
+  });
+</script>
+}

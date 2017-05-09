@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewBag.Title = "STAR Handbook";
+}
+
+<section class="content">
+    <row>
+        &emsp;
+    </row>
+
+    <row>
+        <ol class="breadcrumb">
+            <li><a href="@Url.Action("Index","STARHandbook")">STAR Handbook</a></li>
+            <li><a href="@Url.Action("EscalationsSupport","STARHandbook")">Escalations & Support</a></li>
+            <li class="active">STAR Issues</li>
+        </ol>
+    </row>
+
+    <row>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title"><strong>STAR Issues</strong></h4>
+            </div>
+            <div class="panel-body">
+                <p>
+                    <ul>
+                        <li>The process for Touch-ID Terminal and the STAR Application escalations is to contact the GIS team on <strong>0845 655 5235</strong>.</li>
+                        <li>They will first attempt to complete some trouble shooting to restore service to your store as soon as possible. If the error cannot be fixed during the call the GIS team will raise a Remedy ticket. It is important that you keep a note of the Remedy ticket number. All standard GIS SLAs apply.</li>
+                        <li>Please be aware that while you are waiting for your Touch-ID Terminal to be fixed or replaced you may need to manually enter your team’s time and attendance. This is only in instances of fallback and all colleagues must be using the Touch-ID Terminal to record all time and attendance.</li>
+                    </ul>
+                </p>
+                <hr />
+                <p>
+                    <strong>Supervisor Card Replacements</strong><br />
+                    If you require an S (Supervisor) Card replacement for your Kronos terminal contact your TPC and a replacement will be sent out to your store.  
+                </p>
+            </div>
+        </div>
+    </row>
+
+    @Html.Partial("~/Views/Partials/_EscalationsSupportOptions.cshtml")
+
+    <div class="row">
+        <div class="col-md-6">
+        </div>
+    </div>
+</section>

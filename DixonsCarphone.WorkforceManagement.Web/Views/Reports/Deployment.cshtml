@@ -1,0 +1,107 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
+@model DeploymentViewModel
+@{
+    ViewBag.Title = "Deployment";
+}
+
+<section class="content">
+    <div class="row">
+        &nbsp;
+    </div>
+    @Html.Partial("~/Views/Partials/_PageBlurb.cshtml", (BaseViewModel)Model)
+
+    @Html.Partial("~/Views/Partials/_Deployment.cshtml", Model)
+    <div class="row">
+        <div class="col-md-6">
+        </div>
+    </div>
+</section>
+
+@section myScripts {
+    @if (Model.DailyDetails != null)
+    {
+        <script>
+            $(function(){
+                var ctx = document.getElementById("deployment-bar-chart");
+                var testChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+                        datasets: [
+                        {
+                            label: 'Required %',
+                            data: @Model.RequiredGraphArray.ToString(),
+                            backgroundColor: 'rgba(53, 83, 214,0.9)'
+                        },
+                        {
+                            label: 'Deployed %',
+                            data: @Model.DeployedGraphArray.ToString(),
+                            backgroundColor: 'rgba(39, 147, 153,0.9)'
+                        }
+                        ]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        },
+                        maintainAspectRatio: false
+                    }
+                });
+            });
+            </script>
+    }
+    @if (Model._dashboardView != null)
+    {
+        <script>
+            $(function () {
+                var ctx = document.getElementById("spend-bar-chart");
+                var testChart = new Chart(ctx, {
+                    type: 'horizontalBar',
+                    data: {
+                        labels: ["Spend", "Budget"],
+                        datasets: [
+                        {
+                            data: [@(Model._dashboardView.SOH > Model._dashboardView.FinalTarget ? Model._dashboardView.FinalTarget.ToString() : Model._dashboardView.SOH.ToString()), @Model._dashboardView.FinalTarget],
+                            backgroundColor: [
+                                'rgba(92, 214, 92,0.9)',
+                                'rgba(53, 83, 214,0.9)'
+                            ]
+                        },
+                        {
+                            data:[@(Model._dashboardView.SOH > Model._dashboardView.FinalTarget ? Math.Round((double)Model._dashboardView.SOH - (double)Model._dashboardView.FinalTarget,2).ToString() : "0"),0],
+                            backgroundColor: [
+                                'rgba(255, 77, 77,0.9)',
+                                'rgba(53, 83, 214,0.9)'
+                                ]
+                        }
+                        ]
+                    },
+                    options: {
+                        legend:{
+                            display: false
+                        },
+                        scales: {
+                            xAxes: [{
+                                stacked: true,
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }],
+                            yAxes: [{
+                                stacked: true
+                            }]
+                        },
+                        maintainAspectRatio: false
+                    }
+                });
+            });
+
+        </script>
+    }   
+   
+}
+

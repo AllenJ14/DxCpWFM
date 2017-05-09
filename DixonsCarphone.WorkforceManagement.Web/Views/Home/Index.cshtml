@@ -1,0 +1,340 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.Model;
+@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
+@using DixonsCarphone.WorkforceManagement.ViewModels
+
+@model HomeViewModel
+
+@{
+    Layout = "~/Views/Shared/_DashBoardLayout.cshtml";
+    var topNews = Model.Activities.OrderByDescending(x => x.ActivityDate).ThenBy(x => x.StartTime).Where(x => x.ActivityType.ActivityType1 == "News").ToList();
+    //var topAction = Model.Activities.OrderByDescending(x => x.ActivityDate).ThenBy(x => x.StartTime).FirstOrDefault(x => x.ActivityType.ActivityType1 == "Actions");
+
+    var newsId = (int)ActivityType.News;
+    //var actionsId = (int)ActivityType.Actions;
+
+    ViewBag.Title = "Workforce Management";
+
+}
+
+<div class="modal fade" id="feedback" tabindex="-1" role="form">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="branchSearchLabel">
+                    Submit feedback:
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form" method="post">
+                    <div class="form-group"  style="padding:15px">
+                        <fieldset>
+                            <textarea class="form-control" id="feedbackText" name="feedbackText" required></textarea>
+                        </fieldset>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" value="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="content">
+    <div class="row">
+        &nbsp;
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            @Html.Partial("~/Views/Shared/_Messages.cshtml", Model)
+        </div>
+    </div>
+
+    @Html.Partial("~/Views/Partials/_PageBlurb.cshtml", (BaseViewModel)Model)
+
+    <div class="row">
+        @Html.Partial("~/Views/Partials/_ScoresAndUtilization.cshtml", Model.Scores)
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <h3 style="margin-top:2px" class="text-center"><strong>Welcome to Workforce Management</strong></h3>
+            <p>Welcome to your new workforce management intranet site. The new site will give you greater access to reporting, forms and schedules along with containing all the information and support you need to help manage your team.</p>
+            <p>
+                <strong><u>Features include:</u></strong>
+                </p><div class="row">
+                    <div class="col-md-4">
+                        <ul>
+                            <li>Weekly reporting of SOH spend versus budget</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <ul>
+                            <li>Analysis of daily deployment compared to customer demand</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <ul>
+                            <li>Full detail of WFM compliance risk and issues</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <ul>
+                            <li>Form for feeding back changes to standard trading hours</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <ul>
+                            <li>Tool for confirmation of peak trading hours</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <ul>
+                            <li>Store level Profit &amp; Loss statements</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <ul>
+                            <li>Summary of team information held by HR</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <ul>
+                            <li>STAR knowledge base and user guide</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <ul></ul>
+                    </div>
+                </div>
+            <p></p>
+            <hr>
+            <p>
+                <strong><u>Coming soon:</u></strong>
+                </p><div class="row">
+                    <div class="col-md-4">
+                        <ul>
+                            <li>Holiday planning tracker and guidance</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <ul>
+                            <li>SOH spend history and insight</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <ul>
+                            <li>Hr feedback forms</li>
+                        </ul>
+                    </div>
+                </div>
+            <hr />
+            <div class="col-md-12">
+                <p class="text-center"><strong>We have loads of useful features and reporting we are planning on bringing to the site but feedback and suggestions are always welcome. If you have any ideas for a new report or improvements to an existing feature please use the button below to submit a suggestion.</strong></p>
+                <div class="text-center"><button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#feedback">Submit Feedback</button></div>
+            </div>
+        </div>
+    </div>
+
+
+    @if (topNews.Count() != 0)
+    {
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h5 class="panel-title"><strong>News</strong></h5>
+            </div>
+            <div class="panel-body">
+                @for (int i = 0; i < topNews.Count(); i++)
+            {
+                    <p>
+                        <h4 style="color:#279399"><u><strong>@topNews[i].ActivityName - @string.Format("{0:d}", topNews[i].ActivityDate)</strong></u></h4>
+                        @topNews[i].Detail
+                    </p>
+                }
+                <a href="@Url.Action("GetActivities", "Planning", new { activityTypeId = newsId })" class="btn btn-primary btn-lg pull-right" role="button">View Archive</a>
+            </div>
+        </div>
+    }
+            
+
+
+</section>
+    @section myScripts {
+
+        @*<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>*@
+        @*<script src="~/Content/Lte/plugins/fullcalendar/fullcalendar.min.js"></script>*@
+        <!-- Page specific script -->
+        <script>
+            $(document).ready(function () {
+
+                $('[data-toggle="tooltip"]').tooltip();
+
+            });
+            //$(function () {
+
+            //    /* initialize the external events
+            //     -----------------------------------------------------------------*/
+            //    function ini_events(ele) {
+            //        ele.each(function () {
+
+            //            // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
+            //            // it doesn't need to have a start or end
+            //            var eventObject = {
+            //                title: $.trim($(this).text()) // use the element's text as the event title
+            //            };
+
+            //            // store the Event Object in the DOM element so we can get to it later
+            //            $(this).data('eventObject', eventObject);
+
+            //            // make the event draggable using jQuery UI
+            //            $(this).draggable({
+            //                zIndex: 1070,
+            //                revert: true, // will cause the event to go back to its
+            //                revertDuration: 0  //  original position after the drag
+            //            });
+
+            //        });
+            //    }
+
+            //    ini_events($('#external-events div.external-event'));
+
+            //    /* initialize the calendar
+            //     -----------------------------------------------------------------*/
+            //    //Date for the calendar events (dummy data)
+            //    var date = new Date();
+            //    var d = date.getDate(),
+            //        m = date.getMonth(),
+            //        y = date.getFullYear();
+            //    $('#calendar').fullCalendar({
+            //        header: {
+            //            left: 'prev,next today',
+            //            center: 'title',
+            //            right: 'month,agendaWeek,agendaDay'
+            //        },
+            //        buttonText: {
+            //            today: 'today',
+            //            month: 'month',
+            //            week: 'week',
+            //            day: 'day'
+            //        },
+            //        //Random default events
+            //        events: [
+            //          {
+            //              title: 'All Day Event',
+            //              start: new Date(y, m, 1),
+            //              backgroundColor: "#f56954", //red
+            //              borderColor: "#f56954" //red
+            //          },
+            //          {
+            //              title: 'Long Event',
+            //              start: new Date(y, m, d - 5),
+            //              end: new Date(y, m, d - 2),
+            //              backgroundColor: "#f39c12", //yellow
+            //              borderColor: "#f39c12" //yellow
+            //          },
+            //          {
+            //              title: 'Meeting',
+            //              start: new Date(y, m, d, 10, 30),
+            //              allDay: false,
+            //              backgroundColor: "#0073b7", //Blue
+            //              borderColor: "#0073b7" //Blue
+            //          },
+            //          {
+            //              title: 'Lunch',
+            //              start: new Date(y, m, d, 12, 0),
+            //              end: new Date(y, m, d, 14, 0),
+            //              allDay: false,
+            //              backgroundColor: "#00c0ef", //Info (aqua)
+            //              borderColor: "#00c0ef" //Info (aqua)
+            //          },
+            //          {
+            //              title: 'Birthday Party',
+            //              start: new Date(y, m, d + 1, 19, 0),
+            //              end: new Date(y, m, d + 1, 22, 30),
+            //              allDay: false,
+            //              backgroundColor: "#00a65a", //Success (green)
+            //              borderColor: "#00a65a" //Success (green)
+            //          },
+            //          {
+            //              title: 'Click for Google',
+            //              start: new Date(y, m, 28),
+            //              end: new Date(y, m, 29),
+            //              url: 'http://google.com/',
+            //              backgroundColor: "#3c8dbc", //Primary (light-blue)
+            //              borderColor: "#3c8dbc" //Primary (light-blue)
+            //          }
+            //        ],
+            //        editable: true,
+            //        droppable: true, // this allows things to be dropped onto the calendar !!!
+            //        drop: function (date, allDay) { // this function is called when something is dropped
+
+            //            // retrieve the dropped element's stored Event Object
+            //            var originalEventObject = $(this).data('eventObject');
+
+            //            // we need to copy it, so that multiple events don't have a reference to the same object
+            //            var copiedEventObject = $.extend({}, originalEventObject);
+
+            //            // assign it the date that was reported
+            //            copiedEventObject.start = date;
+            //            copiedEventObject.allDay = allDay;
+            //            copiedEventObject.backgroundColor = $(this).css("background-color");
+            //            copiedEventObject.borderColor = $(this).css("border-color");
+
+            //            // render the event on the calendar
+            //            // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
+            //            $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
+
+            //            // is the "remove after drop" checkbox checked?
+            //            if ($('#drop-remove').is(':checked')) {
+            //                // if so, remove the element from the "Draggable Events" list
+            //                $(this).remove();
+            //            }
+
+            //        }
+            //    });
+
+            //    /* ADDING EVENTS */
+            //    var currColor = "#3c8dbc"; //Red by default
+            //    //Color chooser button
+            //    var colorChooser = $("#color-chooser-btn");
+            //    $("#color-chooser > li > a").click(function (e) {
+            //        e.preventDefault();
+            //        //Save color
+            //        currColor = $(this).css("color");
+            //        //Add color effect to button
+            //        $('#add-new-event').css({ "background-color": currColor, "border-color": currColor });
+            //    });
+            //    $("#add-new-event").click(function (e) {
+            //        e.preventDefault();
+            //        //Get value and make sure it is not null
+            //        var val = $("#new-event").val();
+            //        if (val.length == 0) {
+            //            return;
+            //        }
+
+            //        //Create events
+            //        var event = $("<div />");
+            //        event.css({ "background-color": currColor, "border-color": currColor, "color": "#fff" }).addClass("external-event");
+            //        event.html(val);
+            //        $('#external-events').prepend(event);
+
+            //        //Add draggable funtionality
+            //        ini_events(event);
+
+            //        //Remove event from text input
+            //        $("#new-event").val("");
+            //    });
+            //});
+        </script>
+
+    }
+
+
+

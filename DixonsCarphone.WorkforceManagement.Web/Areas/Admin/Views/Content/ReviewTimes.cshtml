@@ -1,0 +1,208 @@
+﻿@model DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels.AdminHoursReview
+
+<div class="modal fade" id="addcomment" tabindex="-1" role="form">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="addcommentlabel">
+                    Add comment Below:
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal col-lg-offset-1 col-md-offset-1" role="form" method="post">
+                    <input type="hidden" name="entryID" id="entryID" value="@Model.ProposedTime.EntryID" />
+                    <input type="hidden" name="storeNum" id="storeNum" value="@Model.ProposedTime.StoreNumber" />
+                    <div class="form-group">
+                        <label class="control-label" for="Comment">Add comment:</label>
+                        <div>
+                            <input rows="3" autofocus type="text" required class="form-control text-box" name="Comment" id="Comment" />
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-offset-10 col-md-offset-10">
+                        <button type="submit" value="submit" class="btn btn-default">Add</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h2>Review Submission for Branch @Model.ProposedTime.StoreNumber</h2>
+
+<table class="table table-bordered table-condensed text-center">
+    <thead>
+        <tr>
+            <th rowspan="2" class="text-center">Status</th>
+            <th colspan="2" class="text-center">Sunday</th>
+            <th colspan="2" class="text-center">Monday</th>
+            <th colspan="2" class="text-center">Tuesday</th>
+            <th colspan="2" class="text-center">Wednesday</th>
+            <th colspan="2" class="text-center">Thursday</th>
+            <th colspan="2" class="text-center">Friday</th>
+            <th colspan="2" class="text-center">Saturday</th>
+        </tr>
+        <tr>
+            <th class="text-center">Open</th>
+            <th class="text-center">Close</th>
+            <th class="text-center">Open</th>
+            <th class="text-center">Close</th>
+            <th class="text-center">Open</th>
+            <th class="text-center">Close</th>
+            <th class="text-center">Open</th>
+            <th class="text-center">Close</th>
+            <th class="text-center">Open</th>
+            <th class="text-center">Close</th>
+            <th class="text-center">Open</th>
+            <th class="text-center">Close</th>
+            <th class="text-center">Open</th>
+            <th class="text-center">Close</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Current</td>
+            <td>@(Model.CurrentTime.SundayOpen.ToString() == "00:00:00" ? "Closed" : Model.CurrentTime.SundayOpen.ToString("hh\\:mm"))</td>
+            <td>@(Model.CurrentTime.SundayClose.ToString() == "00:00:00" ? "Closed" : Model.CurrentTime.SundayClose.ToString("hh\\:mm"))</td>
+            <td>@(Model.CurrentTime.MondayOpen.ToString() == "00:00:00" ? "Closed" : Model.CurrentTime.MondayOpen.ToString("hh\\:mm"))</td>
+            <td>@(Model.CurrentTime.MondayClose.ToString() == "00:00:00" ? "Closed" : Model.CurrentTime.MondayClose.ToString("hh\\:mm"))</td>
+            <td>@(Model.CurrentTime.TuesdayOpen.ToString() == "00:00:00" ? "Closed" : Model.CurrentTime.TuesdayOpen.ToString("hh\\:mm"))</td>
+            <td>@(Model.CurrentTime.TuesdayClose.ToString() == "00:00:00" ? "Closed" : Model.CurrentTime.TuesdayClose.ToString("hh\\:mm"))</td>
+            <td>@(Model.CurrentTime.WednesdayOpen.ToString() == "00:00:00" ? "Closed" : Model.CurrentTime.WednesdayOpen.ToString("hh\\:mm"))</td>
+            <td>@(Model.CurrentTime.WednesdayClose.ToString() == "00:00:00" ? "Closed" : Model.CurrentTime.WednesdayClose.ToString("hh\\:mm"))</td>
+            <td>@(Model.CurrentTime.ThursdayOpen.ToString() == "00:00:00" ? "Closed" : Model.CurrentTime.ThursdayOpen.ToString("hh\\:mm"))</td>
+            <td>@(Model.CurrentTime.ThursdayClose.ToString() == "00:00:00" ? "Closed" : Model.CurrentTime.ThursdayClose.ToString("hh\\:mm"))</td>
+            <td>@(Model.CurrentTime.FridayOpen.ToString() == "00:00:00" ? "Closed" : Model.CurrentTime.FridayOpen.ToString("hh\\:mm"))</td>
+            <td>@(Model.CurrentTime.FridayClose.ToString() == "00:00:00" ? "Closed" : Model.CurrentTime.FridayClose.ToString("hh\\:mm"))</td>
+            <td>@(Model.CurrentTime.SaturdayOpen.ToString() == "00:00:00" ? "Closed" : Model.CurrentTime.SaturdayOpen.ToString("hh\\:mm"))</td>
+            <td>@(Model.CurrentTime.SaturdayClose.ToString() == "00:00:00" ? "Closed" : Model.CurrentTime.SaturdayClose.ToString("hh\\:mm"))</td>
+        </tr>
+        <tr>
+            <td>Proposed</td>
+            <td>@(Model.ProposedTime.SundayOpen.ToString() == "00:00:00" ? "Closed" : Model.ProposedTime.SundayOpen.ToString("hh\\:mm"))</td>
+            <td>@(Model.ProposedTime.SundayClose.ToString() == "00:00:00" ? "Closed" : Model.ProposedTime.SundayClose.ToString("hh\\:mm"))</td>
+            <td>@(Model.ProposedTime.MondayOpen.ToString() == "00:00:00" ? "Closed" : Model.ProposedTime.MondayOpen.ToString("hh\\:mm"))</td>
+            <td>@(Model.ProposedTime.MondayClose.ToString() == "00:00:00" ? "Closed" : Model.ProposedTime.MondayClose.ToString("hh\\:mm"))</td>
+            <td>@(Model.ProposedTime.TuesdayOpen.ToString() == "00:00:00" ? "Closed" : Model.ProposedTime.TuesdayOpen.ToString("hh\\:mm"))</td>
+            <td>@(Model.ProposedTime.TuesdayClose.ToString() == "00:00:00" ? "Closed" : Model.ProposedTime.TuesdayClose.ToString("hh\\:mm"))</td>
+            <td>@(Model.ProposedTime.WednesdayOpen.ToString() == "00:00:00" ? "Closed" : Model.ProposedTime.WednesdayOpen.ToString("hh\\:mm"))</td>
+            <td>@(Model.ProposedTime.WednesdayClose.ToString() == "00:00:00" ? "Closed" : Model.ProposedTime.WednesdayClose.ToString("hh\\:mm"))</td>
+            <td>@(Model.ProposedTime.ThursdayOpen.ToString() == "00:00:00" ? "Closed" : Model.ProposedTime.ThursdayOpen.ToString("hh\\:mm"))</td>
+            <td>@(Model.ProposedTime.ThursdayClose.ToString() == "00:00:00" ? "Closed" : Model.ProposedTime.ThursdayClose.ToString("hh\\:mm"))</td>
+            <td>@(Model.ProposedTime.FridayOpen.ToString() == "00:00:00" ? "Closed" : Model.ProposedTime.FridayOpen.ToString("hh\\:mm"))</td>
+            <td>@(Model.ProposedTime.FridayClose.ToString() == "00:00:00" ? "Closed" : Model.ProposedTime.FridayClose.ToString("hh\\:mm"))</td>
+            <td>@(Model.ProposedTime.SaturdayOpen.ToString() == "00:00:00" ? "Closed" : Model.ProposedTime.SaturdayOpen.ToString("hh\\:mm"))</td>
+            <td>@(Model.ProposedTime.SaturdayClose.ToString() == "00:00:00" ? "Closed" : Model.ProposedTime.SaturdayClose.ToString("hh\\:mm"))</td>
+        </tr>
+        <tr>
+            <td>Difference</td>
+            <td colspan="2">@Model.Differences[0].TotalMinutes</td>
+            <td colspan="2">@Model.Differences[1].TotalMinutes</td>
+            <td colspan="2">@Model.Differences[2].TotalMinutes</td>
+            <td colspan="2">@Model.Differences[3].TotalMinutes</td>
+            <td colspan="2">@Model.Differences[4].TotalMinutes</td>
+            <td colspan="2">@Model.Differences[5].TotalMinutes</td>
+            <td colspan="2">@Model.Differences[6].TotalMinutes</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="panel panel-default">
+    <div class="panel-heading"><h3 class="panel-title text-center"><strong>Total Variance : @Model.Differences[7].TotalMinutes</strong></h3></div>
+    <div class="panel-body text-center">
+        Effective Date : @Model.ProposedTime.EffectiveDate.ToShortDateString()<br />
+        Temporary Change : @(Model.ProposedTime.TemporaryChange.Value ? "Yes" : "No")<br />
+        End Date : @(Model.ProposedTime.TemporaryChange.Value ? Model.ProposedTime.EndDate.ToString() : "N/A")<br />
+        Submitted By User : @Model.ProposedTime.SubmittedByUser<br />
+        Reason For Change : @(Model.ProposedTime.ReasonForChange.IsEmpty() ? "None Given" : Html.Encode(Model.ProposedTime.ReasonForChange))<br />
+        <br />
+        <div>
+            <a class="btn btn-success" href="@Url.Action("ApproveOpeningTime", "Content", new { EntryID = Model.ProposedTime.EntryID })">Approve proposed hours</a>
+            <a class="btn btn-danger" href="@Url.Action("DeclineOpeningTime", "Content", new { EntryID = Model.ProposedTime.EntryID })">Decline proposed hours</a>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addcomment">Add Comment</button>
+        </div>
+    </div>
+
+</div>
+
+@if (Model.OutstandingChanges.Count() > 0)
+{
+    <div class="panel panel-danger">
+        <div class="panel-heading text-center"><h2 class="panel-title"><strong>Outstanding Changes</strong></h2></div>
+        <div class="panel-body">
+            <table class="table table-bordered table-condensed text-center">
+                <thead>
+                    <tr>
+                        <th rowspan="2" class="text-center">Effective Date</th>
+                        <th colspan="2" class="text-center">Sunday</th>
+                        <th colspan="2" class="text-center">Monday</th>
+                        <th colspan="2" class="text-center">Tuesday</th>
+                        <th colspan="2" class="text-center">Wednesday</th>
+                        <th colspan="2" class="text-center">Thursday</th>
+                        <th colspan="2" class="text-center">Friday</th>
+                        <th colspan="2" class="text-center">Saturday</th>
+                    </tr>
+                    <tr>
+                        <th class="text-center">Open</th>
+                        <th class="text-center">Close</th>
+                        <th class="text-center">Open</th>
+                        <th class="text-center">Close</th>
+                        <th class="text-center">Open</th>
+                        <th class="text-center">Close</th>
+                        <th class="text-center">Open</th>
+                        <th class="text-center">Close</th>
+                        <th class="text-center">Open</th>
+                        <th class="text-center">Close</th>
+                        <th class="text-center">Open</th>
+                        <th class="text-center">Close</th>
+                        <th class="text-center">Open</th>
+                        <th class="text-center">Close</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.OutstandingChanges)
+                {
+                        <tr>
+                            <td>@item.EffectiveDate.ToShortDateString()</td>
+                            <td>@(item.SundayOpen.ToString() == "00:00:00" ? "Closed" : item.SundayOpen.ToString("hh\\:mm"))</td>
+                            <td>@(item.SundayClose.ToString() == "00:00:00" ? "Closed" : item.SundayClose.ToString("hh\\:mm"))</td>
+                            <td>@(item.MondayOpen.ToString() == "00:00:00" ? "Closed" : item.MondayOpen.ToString("hh\\:mm"))</td>
+                            <td>@(item.MondayClose.ToString() == "00:00:00" ? "Closed" : item.MondayClose.ToString("hh\\:mm"))</td>
+                            <td>@(item.TuesdayOpen.ToString() == "00:00:00" ? "Closed" : item.TuesdayOpen.ToString("hh\\:mm"))</td>
+                            <td>@(item.TuesdayClose.ToString() == "00:00:00" ? "Closed" : item.TuesdayClose.ToString("hh\\:mm"))</td>
+                            <td>@(item.WednesdayOpen.ToString() == "00:00:00" ? "Closed" : item.WednesdayOpen.ToString("hh\\:mm"))</td>
+                            <td>@(item.WednesdayClose.ToString() == "00:00:00" ? "Closed" : item.WednesdayClose.ToString("hh\\:mm"))</td>
+                            <td>@(item.ThursdayOpen.ToString() == "00:00:00" ? "Closed" : item.ThursdayOpen.ToString("hh\\:mm"))</td>
+                            <td>@(item.ThursdayClose.ToString() == "00:00:00" ? "Closed" : item.ThursdayClose.ToString("hh\\:mm"))</td>
+                            <td>@(item.FridayOpen.ToString() == "00:00:00" ? "Closed" : item.FridayOpen.ToString("hh\\:mm"))</td>
+                            <td>@(item.FridayClose.ToString() == "00:00:00" ? "Closed" : item.FridayClose.ToString("hh\\:mm"))</td>
+                            <td>@(item.SaturdayOpen.ToString() == "00:00:00" ? "Closed" : item.SaturdayOpen.ToString("hh\\:mm"))</td>
+                            <td>@(item.SaturdayClose.ToString() == "00:00:00" ? "Closed" : item.SaturdayClose.ToString("hh\\:mm"))</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+
+@if (Model.Comments.Count() > 0)
+{
+    foreach (var item in Model.Comments)
+    {
+        <div class="panel panel-primary">
+            <div class="panel-heading text-center"><h4 class="panel-title"><strong>@item.Datetime</strong></h4></div>
+            <div class="panel-body text-center">
+                <Strong>@item.Comment</Strong>
+            </div>
+            <div class="panel-footer text-center">Added by : @item.AddedBy</div>
+        </div>
+    }
+}
+
+<div class="id">
+    @Html.ActionLink("Back", "PendingTimes")
+</div>
+

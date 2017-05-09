@@ -1,0 +1,86 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
+@model ScheduleVm
+
+@Html.Partial("~/Views/Shared/_WeekPicker.cshtml", new WeekPickerViewModel { Action = "GetSchedule", Controller = "Planning", WeeksOfYear = Model.WeeksOfYear, SelectedDate = Model.SelectedDate })
+
+
+
+<div class="row">
+    &nbsp;
+</div>
+
+@if (Model.ScheduleCollection == null)
+{
+
+}
+
+else if (Model.ScheduleCollection.Count() != 0)
+{
+    var colList = Model.ScheduleCollection.GroupBy(x => x.PersonNumber).Select(x => x.Key.Value).ToList();
+    var sohTotal = Model.ScheduleCollection.GroupBy(x => x.PersonNumber).Select(x => x.FirstOrDefault()).ToList();
+    <table class="table table-bordered">
+        <thead>
+            <tr class="active">
+                <th class="text-center" style="width:20%">Name</th>
+                <th class="text-center" style="width:10%">Sun</th>
+                <th class="text-center" style="width:10%">Mon</th>
+                <th class="text-center" style="width:10%">Tue</th>
+                <th class="text-center" style="width:10%">Wed</th>
+                <th class="text-center" style="width:10%">Thu</th>
+                <th class="text-center" style="width:10%">Fri</th>
+                <th class="text-center" style="width:10%">Sat</th>
+                <th class="text-center" style="width:10%">Emp Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < colList.Count(); i++)
+            {
+                <tr>
+                    <td>@Model.ScheduleCollection.Where(x => x.PersonNumber == colList[i]).First().FullName</td>
+                    @for (int j = 1; j <= 7; j++)
+                    {
+                        var selected = Model.ScheduleCollection.Where(x => x.PersonNumber == colList[i] && x.DayNum == j).FirstOrDefault();
+                        if (selected != null)
+                        {
+                            if (selected.ShiftType == "Regular" && selected.TransferBranch != null)
+                            {
+                                <td class="text-center"><small>@string.Format("{0:hh\\:mm} - {1:hh\\:mm} : {2}", selected.StartTime, selected.EndTime, selected.TransferBranch)</small></td>
+                            }
+                            else if (selected.ShiftType == "Regular")
+                            {
+                                <td class="text-center"><small>@string.Format("{0:hh\\:mm} - {1:hh\\:mm}", selected.StartTime, selected.EndTime)</small></td>
+                            }
+                            else
+                            {
+                                <td class="text-center"><small>@selected.ShiftType.ToString()</small></td>
+                            }
+                        }
+                        else
+                        {
+                            <td></td>
+                        }
+                    }
+                    <td class="text-center active"><small><strong>@Model.ScheduleCollection.Where(x => x.PersonNumber == colList[i]).First().PersonWeekTotal</strong></small></td>
+                </tr>
+            }
+            <tr>
+                <td class="active"><strong>Day Total</strong></td>
+                <td class="text-center active"><small><strong>@(Model.ScheduleCollection.Where(x => x.DayNum == 1).Count() == 0 ? 0 : Model.ScheduleCollection.Where(x => x.DayNum == 1).FirstOrDefault().DayWeekTotal)</strong></small></td>
+                <td class="text-center active"><small><strong>@(Model.ScheduleCollection.Where(x => x.DayNum == 2).Count() == 0 ? 0 : Model.ScheduleCollection.Where(x => x.DayNum == 2).FirstOrDefault().DayWeekTotal)</strong></small></td>
+                <td class="text-center active"><small><strong>@(Model.ScheduleCollection.Where(x => x.DayNum == 3).Count() == 0 ? 0 : Model.ScheduleCollection.Where(x => x.DayNum == 3).FirstOrDefault().DayWeekTotal)</strong></small></td>
+                <td class="text-center active"><small><strong>@(Model.ScheduleCollection.Where(x => x.DayNum == 4).Count() == 0 ? 0 : Model.ScheduleCollection.Where(x => x.DayNum == 4).FirstOrDefault().DayWeekTotal)</strong></small></td>
+                <td class="text-center active"><small><strong>@(Model.ScheduleCollection.Where(x => x.DayNum == 5).Count() == 0 ? 0 : Model.ScheduleCollection.Where(x => x.DayNum == 5).FirstOrDefault().DayWeekTotal)</strong></small></td>
+                <td class="text-center active"><small><strong>@(Model.ScheduleCollection.Where(x => x.DayNum == 6).Count() == 0 ? 0 : Model.ScheduleCollection.Where(x => x.DayNum == 6).FirstOrDefault().DayWeekTotal)</strong></small></td>
+                <td class="text-center active"><small><strong>@(Model.ScheduleCollection.Where(x => x.DayNum == 7).Count() == 0 ? 0 : Model.ScheduleCollection.Where(x => x.DayNum == 7).FirstOrDefault().DayWeekTotal)</strong></small></td>
+                <td class="text-center active"><small><strong>@sohTotal.Select(x => x.PersonWeekTotal).Sum()</strong></small></td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="row hidden-print text-center">
+        <p><strong>@string.Format("Last Updated : {0:g}", Model.ScheduleCollection[0].DateTimeUpdated)</strong></p>
+    </div>
+}
+else
+{
+    <div class="alert alert-danger text-center"><strong>No schedules found for the selected period!</strong></div>
+}

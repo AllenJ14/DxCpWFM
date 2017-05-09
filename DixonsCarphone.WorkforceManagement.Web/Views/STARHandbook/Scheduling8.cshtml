@@ -1,0 +1,70 @@
+﻿
+@{
+    ViewBag.Title = "STAR Handbook";
+}
+
+<section class="content">
+    <row>
+        &emsp;
+    </row>
+
+    <row>
+        <ol class="breadcrumb">
+            <li><a href="@Url.Action("Index","STARHandbook")">STAR Handbook</a></li>
+            <li><a href="@Url.Action("Scheduling","STARHandbook")">Scheduling</a></li>
+            <li class="active">Adding a Cover Shift</li>
+        </ol>
+    </row>
+
+    <row>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title"><strong>Adding a Cover Shift</strong></h4>
+            </div>
+            <div class="panel-body">
+                <p>It is the responsibility of a colleague’s line manager to schedule them if they are covering in another branch. Therefore, if you need cover you will need to liaise with the colleague’s line manager.</p>
+                <p>This is how you schedule a colleague when they are covering a different store. </p>
+                <hr />
+                <row class="col-md-12">
+                    <img src="~/Images/CMS_Uploads/AddCover1.png" class="col-md-6" />
+                    <br />
+                    <div class="col-md-6">1. Right click the required box and select 'Add' and then 'Shift'. This will bring up the 'Add Shift' box.</div>
+                </row>
+                <div class="col-md-12">
+                    &emsp;
+                </div>
+                <row class="col-md-12">
+                    <img src="~/Images/CMS_Uploads/AddCover2.png" class="col-md-6" />
+                    <br />
+                    <div class="col-md-6">2. Enter the start and end times in the relevant boxes then select 'Search' from the 'Transfer' drop down menu</div>
+                </row>
+                <div class="col-md-12">
+                    &emsp;
+                </div>
+                <row class="col-md-12">
+                    <img src="~/Images/CMS_Uploads/AddCover3.png" class="col-md-6" />
+                    <br />
+                    <div class="col-md-6">
+                        <p>3. Select 'branch' from the options in the right hand box and then type the branch number where you are transferring the colleague's shift to in the search box on the left hand side. This must be formatted as either '*Store Number*' or 'UK Store Number'.</p>
+                        <p>Select the correct branch from the list of options and click 'ok' and then 'save'. <strong>Do not manually type in the branch number</strong></p>
+                    </div>
+                </row>
+                <div class="col-md-12">
+                    &emsp;
+                </div>
+                <row class="col-md-12">
+                    <img src="~/Images/CMS_Uploads/AddCover4.png" class="col-md-6" />
+                    <br />
+                    <div class="col-md-6">4. The shift has now been added to your schedule, the (x) indicates that it is a transferred shift</div>
+                </row>
+            </div>
+        </div>
+    </row>
+
+    @Html.Partial("~/Views/Partials/_ScheduleOptions.cshtml")
+
+    <div class="row">
+        <div class="col-md-6">
+        </div>
+    </div>
+</section>

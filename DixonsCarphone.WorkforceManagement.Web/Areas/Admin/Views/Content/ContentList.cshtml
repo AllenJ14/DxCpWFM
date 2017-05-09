@@ -1,0 +1,15 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
+
+@model DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels.Cms.ContentViewModel
+@{
+    ViewBag.Title = "Content List";
+}
+
+<section class="content">
+    <div class="row">
+        &nbsp;
+    </div>
+
+    @Html.Partial("~/Areas/Admin/Views/Partials/_ContentList.cshtml", Model)
+</section>
+

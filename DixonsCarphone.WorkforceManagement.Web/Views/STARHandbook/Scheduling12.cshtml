@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewBag.Title = "STAR Handbook";
+}
+
+<section class="content">
+    <row>
+        &emsp;
+    </row>
+
+    <row>
+        <ol class="breadcrumb">
+            <li><a href="@Url.Action("Index","STARHandbook")">STAR Handbook</a></li>
+            <li><a href="@Url.Action("Scheduling","STARHandbook")">Scheduling</a></li>
+            <li class="active">Viewing Intervals</li>
+        </ol>
+    </row>
+
+    <row>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title"><strong>Viewing Intervals</strong></h4>
+            </div>
+            <div class="panel-body">
+                <p>The default view for schedules is daily, which is the best view for creating and amending schedules.</p>
+                <hr />
+                <row class="col-md-12">
+                    <div class="col-md-6 text-center"><img src="~/Images/CMS_Uploads/ViewingInterval1.png" style="height:205px;width:126px;" /></div>
+                    <br />
+                    <div class="col-md-6">Use the view menu in order to change the current interval</div>
+                </row>
+                <div class="col-md-12">
+                    &emsp;
+                </div>
+                <row class="col-md-12">
+                    <img src="~/Images/CMS_Uploads/ViewingInterval2.png" class="col-md-6"/>
+                    <br />
+                    <div class="col-md-6">It is recommended that once you have created your schedule that you use the 15-minute view to quality check.</div>
+                </row>
+                <div class="col-md-12">
+                    &emsp;
+                </div>
+            </div>
+        </div>
+    </row>
+
+    @Html.Partial("~/Views/Partials/_ScheduleOptions.cshtml")
+
+    <div class="row">
+        <div class="col-md-6">
+        </div>
+    </div>
+</section>

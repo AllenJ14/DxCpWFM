@@ -1,0 +1,104 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
+
+@model ActivityAdminViewModel
+<section class="content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Add Events/Tasks/Notifications
+                </div>
+
+                @if(Model.MessageType == MessageType.Info)
+                {
+                    <div class="alert alert-success" role="alert">@Model.Message</div>
+                }
+
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    @using (Html.BeginForm("CreateActivity", "Content", null, FormMethod.Post, new { @class = "form-horizontal" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="col-xs-12">
+                            <div class="box">
+                                <div class="box-body">
+                                    <fieldset>
+                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.ActivityName, htmlAttributes: new { @class = "col-sm-2 control-label" })
+                                            <div class="col-sm-4">
+                                                @Html.EditorFor(model => model.ActivityName, new { htmlAttributes = new { @class = "form-control col-sm-4 " } })
+                                                @Html.ValidationMessageFor(model => model.ActivityName, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.ActivityTypes, htmlAttributes: new { @class = "col-sm-2 control-label" })
+                                            <div class="col-sm-4">
+                                                @Html.DropDownListFor(model => model.SelectedType, Model.ActivityTypes, "--Select Type--", new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.SelectedType, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Priority, htmlAttributes: new { @class = "col-sm-2 control-label" })
+                                            <div class="col-sm-4">
+                                                @Html.DropDownListFor(model => model.SelectedPriority, Model.Priority, "--Select Type--", new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Summary, htmlAttributes: new { @class = "col-sm-2 control-label" })
+                                            <div class="col-sm-4">
+                                                @Html.EditorFor(model => model.Summary, new { htmlAttributes = new { @class = "form-control" } })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Detail, htmlAttributes: new { @class = "col-sm-2 control-label" })
+                                            <div class="col-sm-4">
+                                                @Html.TextAreaFor(model => model.Detail, new { htmlAttributes = new { @class = "form-control" } })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.ActivityDate, htmlAttributes: new { @class = "col-sm-2 control-label" })
+
+                                            <div class="col-sm-3">
+                                                <div class="input-group date" data-provide="datepicker" data-date-format="dd/mm/yyyy">
+                                                    @Html.TextBoxFor(model => model.ActivityDate, new { @class = "form-control", placeholder = "Enter date here..." })
+                                                    <div class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-th"></span>
+                                                    </div>
+                                                </div>
+                                                @Html.ValidationMessageFor(model => model.ActivityDate, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.SelectedStartTime, htmlAttributes: new { @class = "col-sm-2 control-label" })
+                                            <div class="col-sm-4">
+                                                @Html.DropDownListFor(model => model.SelectedStartTime, Model.Times, "--Select Start Time--", new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.SelectedStartTime, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.SelectedEndTime, htmlAttributes: new { @class = "col-sm-2 control-label" })
+                                            <div class="col-sm-4">
+                                                @Html.DropDownListFor(model => model.SelectedEndTime, Model.Times, "--Select End Time--", new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.SelectedEndTime, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        <div class="box-footer col-sm-4 text-center">
+                                            <input type="submit" value="Add New Activity" class="btn btn-primary btn-block" />
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

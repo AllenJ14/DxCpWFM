@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewBag.Title = "STAR Handbook";
+}
+
+<section class="content">
+    <row>
+        &emsp;
+    </row>
+
+    <row>
+        <ol class="breadcrumb">
+            <li><a href="@Url.Action("Index","STARHandbook")">STAR Handbook</a></li>
+            <li><a href="@Url.Action("TimecardExceptions","STARHandbook")">Timecard Exceptions</a></li>
+            <li class="active">Recognising Exceptions</li>
+        </ol>
+    </row>
+
+    <row>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title"><strong>Recognising Exceptions</strong></h4>
+            </div>
+            <div class="panel-body">
+                <p>
+                    Exceptions are created when one of the following occurs:
+                    </p><ul>
+                        <li>The colleague's clock time differs from the schedule by more than 5 minutes when a colleague is <i>Late in, Early out, Early in, Late out</i>.</li>
+                        <li>A colleague forgets to clock in or out</li>
+                        <li>The colleague is absent from work</li>
+                        <li>The timecard times do not match the schedule</li>
+                        <li>No schedule exists for the colleague</li>
+                    </ul>
+                <p></p>
+                <p>All Exceptions can be seen in the timecard and will show in one of the ways shown in this topic.</p>
+            </div>
+        </div>
+    </row>
+
+    @Html.Partial("~/Views/Partials/_TimecardExceptionsOptions.cshtml")
+
+    <div class="row">
+        <div class="col-md-6">
+        </div>
+    </div>
+</section>

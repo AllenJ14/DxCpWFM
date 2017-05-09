@@ -1,0 +1,25 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
+
+@model DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels.Cms.ContentDetailViewModel
+
+@{
+    ViewBag.Title = "Content Editor";
+}
+
+<div class="row">
+    @Html.Partial("~/Views/Shared/_Messages.cshtml", (BaseViewModel)Model)
+</div>
+
+@Html.Partial("~/Areas/Admin/Views/Partials/_ContentEditor.cshtml", Model)
+
+@section scripts {
+ <script src="https://cdn.ckeditor.com/4.5.7/standard/ckeditor.js"></script>
+<script>
+  $(function () {
+    // Replace the <textarea id="editor1"> with a CKEditor
+    // instance, using default configuration.
+      CKEDITOR.replace('ContentDetailText');
+  });
+</script>
+}
+

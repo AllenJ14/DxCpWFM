@@ -1,0 +1,43 @@
+﻿@*Terminal Functions*@
+
+@{
+    ViewBag.Title = "STAR Handbook";
+}
+
+<section class="content">
+    <row>
+        &emsp;
+    </row>
+
+    <row>
+        <ol class="breadcrumb">
+            <li><a href="@Url.Action("Index","STARHandbook")">STAR Handbook</a></li>
+            <li><a href="@Url.Action("KronosTerminal","STARHandbook")">Kronos Terminal</a></li>
+            <li class="active">Terminal Functions</li>
+        </ol>
+    </row>
+
+    <row>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title"><strong>Terminal Functions</strong></h4>
+            </div>
+            <div class="panel-body">
+                <p>In addition to using the Touch-ID terminal for clocking in and out, all colleagues can also use it to:
+                <ul>
+                    <li><strong>View Schedule: </strong>This displays the colleague’s schedule for the next 14 days.</li>
+                    <li><strong>View Timecard: </strong>View punches and any exceptions for the selected time period.</li>
+                </ul>
+                    To use any of these options the colleague presses the relevant soft key then enters their badge number.
+                </p>
+            </div>
+        </div>
+    </row>
+    
+    @Html.Partial("~/Views/Partials/_KronosTerminalOptions.cshtml")
+
+    <div class="row">
+        <div class="col-md-6">
+        </div>
+    </div>
+</section>

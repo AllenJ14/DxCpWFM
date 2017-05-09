@@ -1,0 +1,20 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
+@model List<KpiViewModel>
+
+@{
+    
+}
+<h2>Dash Board Data</h2>
+<section class="content">
+    @Html.Partial("~/Views/Partials/_Kpis.cshtml", Model)
+</section>
+
+@section myScripts {
+    <script>
+    $(document).ready(function() {
+        $('#dataTables-kpis').DataTable({
+            responsive: true
+        });
+    });
+    </script>
+}

@@ -1,0 +1,50 @@
+﻿
+@{
+    ViewBag.Title = "STAR Handbook";
+}
+
+<section class="content">
+    <row>
+        &emsp;
+    </row>
+
+    <row>
+        <ol class="breadcrumb">
+            <li><a href="@Url.Action("Index","STARHandbook")">STAR Handbook</a></li>
+            <li><a href="@Url.Action("Scheduling","STARHandbook")">Scheduling</a></li>
+            <li class="active">Scheduling Holidays</li>
+        </ol>
+    </row>
+
+    <row>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title"><strong>Scheduling Holidays</strong></h4>
+            </div>
+            <div class="panel-body">
+                <p>To schedule a holiday, see <a href="@Url.Action("Scheduling", "StarHandbook", new { articleNumber =  5})"><strong><u>Entering an Absence</u></strong></a>.</p>
+                <p>Holidays for <i>full-timers</i> are always scheduled as either a full day (9 hours) or a half day (4.5 hours) irrelevant of which day of the week the holiday is scheduled for. Scheduling any other amount will cause a discrepancy between STAR and Oracle, which can result in pay deductions.</p>
+                <p>Holidays for <i>part-timers</i> are scheduled in hours, and should correspond as closely as possible to their regular working pattern.</p>
+                <p>
+                    <strong><u>Important to know:</u></strong>
+                    <ul>
+                        <li>No colleague can take more holidays than their contractual hours.</li>
+                        <li>For both full-timers and part-timers when the colleague takes any birthday or holiday days their total hours scheduled for that week must not exceed their contract hours.</li>
+                        <li>E.g. If someone is on a 30-hour contract and is working 15 hours, then they can take up to 15 hours of holiday, but no more. Taking more will result in it being deducted from their holiday allowance, but not paid.</li>
+                    </ul>
+                </p>
+                <hr />
+                <h4><strong>Bank Holidays</strong></h4>
+                <p>All Bank Holidays have been added to the colleagues' holiday balance</p>
+                <p>If you will not be working on a bank holiday (and it is not your scheduled day off) you must ensure this is booked as a holiday.</p>
+            </div>
+        </div>
+    </row>
+
+    @Html.Partial("~/Views/Partials/_ScheduleOptions.cshtml")
+
+    <div class="row">
+        <div class="col-md-6">
+        </div>
+    </div>
+</section>

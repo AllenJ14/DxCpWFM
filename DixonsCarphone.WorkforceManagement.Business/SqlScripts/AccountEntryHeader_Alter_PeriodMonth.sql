@@ -1,0 +1,1 @@
+  ALTER TABLE AccountEntryHeader ALTER COLUMN PeriodMonth smallint

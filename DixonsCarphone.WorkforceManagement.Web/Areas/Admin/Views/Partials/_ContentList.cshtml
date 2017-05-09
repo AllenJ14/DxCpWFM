@@ -1,0 +1,60 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
+@model DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels.Cms.ContentViewModel
+
+
+@foreach (var item in Model.ContentCollection)
+{
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    @item.HeaderTitle
+                    <a class="pull-right" href="#" data-toggle="modal" data-target="#uploadFile">Upload Image File <span class="glyphicon glyphicon-upload" aria-hidden="true"></span></a>
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                        @Html.ActionLink("Create New Section", "ContentEditor", "Content", new { contentId = "0", contentHeaderId = "1" })
+                        
+                    
+                    @foreach (var detail in item.ContentDetails)
+                    {
+                            <a href="@Url.Action("ContentEditor", "Content", new  { contentId = detail.ContentDetailId })">
+                                <div class="alert alert-info">
+                                    <h4>@detail.ContentDetailTitle</h4><br />
+                                    @detail.ContentDetailSummary
+                                </div>
+                            </a>
+                    }
+                </div>
+                <!-- .panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-6 -->
+    </div>
+}
+
+
+<div class="modal fade" id="uploadFile" tabindex="-1" role="form">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="uploadFileLabel">
+                    Add comment Below:
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post" enctype="multipart/form-data">
+
+                    <label for="file">Filename:</label>
+                    <input type="file" name="file" id="file" />
+
+                    <input type="submit" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

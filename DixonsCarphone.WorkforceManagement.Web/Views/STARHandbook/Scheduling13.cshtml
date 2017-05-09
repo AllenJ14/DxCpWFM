@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewBag.Title = "STAR Handbook";
+}
+
+<section class="content">
+    <row>
+        &emsp;
+    </row>
+
+    <row>
+        <ol class="breadcrumb">
+            <li><a href="@Url.Action("Index","STARHandbook")">STAR Handbook</a></li>
+            <li><a href="@Url.Action("Scheduling","STARHandbook")">Scheduling</a></li>
+            <li class="active">Schedule Guidelines</li>
+        </ol>
+    </row>
+
+    <row>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title"><strong>Schedule Guidelines</strong></h4>
+            </div>
+            <div class="panel-body">
+                <p>Our colleagues are paid in 15 minute intervals; therefore, all schedules must be planned to 15 minute intervals. There are 3 reasons for this:</p>
+                <ol>
+                    <li>If you schedule a colleague to start 5 minutes before an interval (e.g. 8:55) at the start of a shift, or 5 minutes after an interval (e.g. 18:05) at the end of the shift then their shift will be rounded down to the nearest intervals and you will be asking the colleague to work for free (e.g. 8:55 to 18:05 is a 9-hour shift, not a 9:10 shift).</li>
+                    <li>If you schedule a colleague to start 10 minutes before an interval (e.g. 8:50) at the start of a shift, or 10 minutes after an interval (e.g. 18:10) at the end of the shift then their shift will be rounded up and you will be over paying the colleague and loosing SOH/productivity</li>
+                    <li>All punches are rounded to the nearest 15 minutes in line with pay. So long as you are scheduling to 15 minute intervals then all colleagues are treated the same and fairly. 7 minutes late in or out will round down, 8 minutes late in or out will round up. However, if you schedule to 5 or 10 minute intervals then the tolerance for rounding will be different and uneven.</li>
+                </ol>
+                <p>A schedule must reflect the actual hours you require your colleagues to work. This includes opening the store, closing the store, and out of trading hours work such as POS change.</p>
+                <p>You will need to schedule a minimum of 2 colleagues to start a minimum of 15 minutes before your store opens and a minimum of 2 colleagues to finish a minimum of 15 minutes after your store closes. This may be more depending on the needs of your business.</p>
+            </div>
+        </div>
+    </row>
+
+    @Html.Partial("~/Views/Partials/_ScheduleOptions.cshtml")
+
+    <div class="row">
+        <div class="col-md-6">
+        </div>
+    </div>
+</section>

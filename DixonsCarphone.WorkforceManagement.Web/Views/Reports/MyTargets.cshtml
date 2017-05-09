@@ -1,0 +1,28 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
+@model MyTargetsViewModel
+
+@{
+    ViewBag.Title = "My Targets";
+}
+
+<section class="content">
+    <div class="row">
+        &nbsp;
+    </div>
+
+    @Html.Partial("~/Views/Partials/_PageBlurb.cshtml", (BaseViewModel)Model)
+
+    <div class="row">
+        @Html.Partial("~/Views/Partials/_MyTargets.cshtml", Model)
+    </div>
+</section>
+@section myScripts {
+    <script>
+    //$(document).ready(function() {
+    //    $('#dataTables-myTargets').DataTable({
+    //        responsive: true
+    //    });
+    //});
+    </script>
+}
+

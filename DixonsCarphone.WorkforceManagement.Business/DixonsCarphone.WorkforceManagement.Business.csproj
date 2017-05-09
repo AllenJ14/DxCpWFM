@@ -1,0 +1,334 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{84E62555-AAF9-4BDC-B1BA-816B8F30E5BB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DixonsCarphone.WorkforceManagement.Business</RootNamespace>
+    <AssemblyName>DixonsCarphone.WorkforceManagement.Business</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Entities\AccountEntryDetail.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\AccountEntryDetailBreakdown.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\AccountEntryHeader.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\AccountEntryType.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\AccountEntySubType.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Activity.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ActivityType.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\BestPracticeCategoryType.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\BestPracticeContent.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ContentDetail.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ContentHeader.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CPW_Clocking_Data.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DailyDeployment.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DailyFootfall.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DashBoardData.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DxCpReportingModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DxCpReportingModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DxCpReportingModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DxCpReportingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DxCpReportingModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DxCpReportingModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DxCpWfmModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DxCpWfmModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DxCpWfmModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DxCpWfmModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DxCpWfmModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\EmpComplianceDetail.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\FileUploadRecord.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\fn_LatestPLRecord_Result.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\fn_UnmatchedRoles_Result.cs">
+      <DependentUpon>DxCpReportingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\fn_UnmatchedStores_Result.cs">
+      <DependentUpon>DxCpReportingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\HrFeed.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\IncorrectBranchLog.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\IpRef.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\OpeningTimesComment.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\PriorityType.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\RoleReference.cs">
+      <DependentUpon>DxCpReportingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ScheduleData.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SiteFeedback.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\sp_AllChannelDashboardData_Result.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\sp_AllDivisionDashboardData_Result.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\sp_BranchPunchCompliance_Result.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\sp_ChannelDashboardData_Result.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\sp_ChannelPunchCompliance_Result.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\sp_DivisionDashboardData_Result.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\sp_DivisionPunchCompliance_Result.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\sp_RegionDashboardData_Result.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\sp_RegionPunchCompliance_Result.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\StaffType.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Store.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\StoreOpeningTime.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\StoreReference.cs">
+      <DependentUpon>DxCpReportingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\StoreRegion.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\udsp_GetPandLChannel_Result.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\udsp_GetPandLDivision_Result.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\udsp_GetPandLRegion_Result.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\udsp_GetPandL_Result.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\UserAccess.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\WeeklyFootfall.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\Extensions.cs" />
+    <Compile Include="Helpers\Utils.cs" />
+    <Compile Include="Kronos\HyperFindResult.cs" />
+    <Compile Include="Kronos\KronosApi.cs" />
+    <Compile Include="Kronos\Person.cs" />
+    <Compile Include="Kronos\PersonData.cs" />
+    <Compile Include="Kronos\ScheduleItems.cs" />
+    <Compile Include="Kronos\ShiftSegment.cs" />
+    <Compile Include="Managers\ActivityManager.cs" />
+    <Compile Include="Managers\ContentManager.cs" />
+    <Compile Include="Managers\DashBoardDataManager.cs" />
+    <Compile Include="Managers\DashMaintenance.cs" />
+    <Compile Include="Managers\IActivityManager.cs" />
+    <Compile Include="Managers\IContentManager.cs" />
+    <Compile Include="Managers\IDashBoardDataManager.cs" />
+    <Compile Include="Managers\IDashMaintenance.cs" />
+    <Compile Include="Managers\IKronosManager.cs" />
+    <Compile Include="Managers\IPeopleManager.cs" />
+    <Compile Include="Managers\IStoreManager.cs" />
+    <Compile Include="Managers\KronosManager.cs" />
+    <Compile Include="Managers\PeopleManager.cs" />
+    <Compile Include="Managers\StoreManager.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <EntityDeploy Include="Entities\DxCpWfmModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>DxCpWfmModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <EntityDeploy Include="Entities\DxCpReportingModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>DxCpReportingModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Entities\DxCpReportingModel.edmx.diagram">
+      <DependentUpon>DxCpReportingModel.edmx</DependentUpon>
+    </None>
+    <None Include="Entities\DxCpWfmModel.edmx.diagram">
+      <DependentUpon>DxCpWfmModel.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Entities\DxCpReportingModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DxCpReportingModel.edmx</DependentUpon>
+      <LastGenOutput>DxCpReportingModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Entities\DxCpReportingModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DxCpReportingModel.edmx</DependentUpon>
+      <LastGenOutput>DxCpReportingModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="Entities\DxCpWfmModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DxCpWfmModel.edmx</DependentUpon>
+      <LastGenOutput>DxCpWfmModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Entities\DxCpWfmModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DxCpWfmModel.edmx</DependentUpon>
+      <LastGenOutput>DxCpWfmModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="SqlScripts\AccountEntryBreakDown_Create_WithData.sql" />
+    <Content Include="SqlScripts\AccountEntryHeader_Alter_PeriodMonth.sql" />
+    <Content Include="SqlScripts\Alter_Store_AddKronosStoreName.sql" />
+    <Content Include="SqlScripts\CpwDbSchemaOnly.sql" />
+    <Content Include="SqlScripts\CpwDbSchemaOnly_Create.sql" />
+    <Content Include="SqlScripts\CpwWfm.sql" />
+    <Content Include="SqlScripts\Cpw_Activity_Alter_StoreNumber.sql" />
+    <Content Include="SqlScripts\Cpw_Content_SchemaAndData.sql" />
+    <Content Include="SqlScripts\Cpw_PendingOpenTimes.sql" />
+    <Content Include="SqlScripts\Cpw_Store_Region.sql" />
+    <Content Include="SqlScripts\fnCalculatePeriodTotals_Create.sql" />
+    <Content Include="SqlScripts\PriorityType_CreateAndData.sql" />
+    <Content Include="SqlScripts\StorePandLScript_SchemaAndData.sql" />
+    <Content Include="SqlScripts\udsp_GetPandL_Create.sql" />
+    <Content Include="SqlScripts\WeeklyDeployment_Create_WithData.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DixonsCarphone.WorkforceManagement.ViewModels\DixonsCarphone.WorkforceManagement.ViewModels.csproj">
+      <Project>{c56aa418-afa5-4712-aaad-29fbfd4ebd2a}</Project>
+      <Name>DixonsCarphone.WorkforceManagement.ViewModels</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

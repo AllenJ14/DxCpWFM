@@ -1,0 +1,44 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
+@model PunchCompVM
+
+@{
+    ViewBag.Title = "Punch Compliance";
+}
+<section class="content">
+    <div class="row">
+        &nbsp;
+    </div>
+    
+    <div class="row">
+        <div class="col-lg-12">
+            @Html.Partial("~/Views/Shared/_Messages.cshtml", Model)
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading text-center">
+                    <strong>Punch Compliance</strong>
+                </div>
+                <div class="panel-body">
+                    <p>This report measures the compliance of the colleague’s physical punches.  If a colleague forgets to clock in for their shift it will trigger on this report as a missed punch, even if the punch has since been manually added to the timecard. The punch compliance shows the percentage of expected punches that were present.</p>
+                    <p>Lateness is only monitored for punches at the start of the shift and is measured against the schedule that was present at the end of the week, rather than what was submitted on the colleague's timecard. The colleague will show as late if the physical punch is more than 7 minutes later than what has been recorded on the schedule.</p>
+                    <p><strong>If a colleague is not scheduled for some of the shifts they punched in for they will not be penalised, unless they failed to punch in/out. However, if a colleague has no schedule for the week every shift will be counted as non compliant.</strong></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    @Html.Partial("~/Views/Partials/_PunchComp.cshtml", Model)
+
+</section>
+@section myScripts {
+    <script>
+        function dateChanged(ev) {
+            if ($('#SelectedDate').val() != '') {
+                $('#complianceDateForm').submit();
+            }
+        }
+    </script>
+}

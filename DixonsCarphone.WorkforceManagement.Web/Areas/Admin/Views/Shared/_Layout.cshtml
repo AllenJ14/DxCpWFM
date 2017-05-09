@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Carphone Warehouse Admin</title>
+    @*@Styles.Render("~/Content/css")*@
+    <link rel="shortcut icon" type="image/png" href="~/Images/ADC95AB0513840DAADA5E205ED39351B.png" />
+    <link href="~/Content/New/bootstrap.min.css" rel="stylesheet" media="all">
+    <link href="~/Content/New/sb-admin-2.css" rel="stylesheet">
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="@Url.Action("Index", "Home", new { area = "" })">Carphone Warehouse Admin</a>
+            <ul class="nav navbar-top-links navbar-right">
+                <li>
+                    <a href="@Url.Action("PendingTimes", "Content", new { area = "Admin" })">Pending Open Times</a>
+                </li>
+                @if (HttpContext.Current.Session["_AccessLevel"].ToString() == "Admin")
+                {
+                    <li>
+                        <a href="@Url.Action("NewsAndActions", "Content", new { area = "Admin" })">News/Actions</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Index", "DashboardMaintenance", new { area = "Admin" })">Maintain WFM Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Index", "UAC", new { area = "Admin" })">User Access Control</a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </nav>
+
+        <div class="container body-content">
+            @RenderBody()
+            <hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - Carphone Warehouse</p>
+            </footer>
+        </div>
+        <script>
+                //session end
+                var sessionTimeoutWarning = @Session.Timeout -1;
+
+                var sTimeout = parseInt(sessionTimeoutWarning) * 60 * 1000;
+                setTimeout('SessionEnd()', sTimeout);
+
+                function SessionEnd() {
+                    window.location = "/Login/Logoff";
+                }
+        </script>
+    <!-- Custom Theme JavaScript -->
+    <script src="~/Content/New/sb-admin-2.js"></script>
+    <!-- jQuery -->
+    <script src="~/Content/New/jquery.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="~/Content/New/bootstrap.min.js"></script>
+        @RenderSection("myScripts", false)
+</body>
+</html>

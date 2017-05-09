@@ -1,0 +1,41 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
+@model ScheduleVm
+
+@{
+    ViewBag.Title = "Schedule";
+}
+<section class="content">
+    <div class="row">
+        &nbsp;
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            @Html.Partial("~/Views/Shared/_Messages.cshtml", Model)
+        </div>
+    </div>
+
+    @if (Model.ScheduleCollection != null && Model.ScheduleCollection.Count > 0)
+    {
+        <div class="row visible-print-block text-center">
+            <h4>@string.Format("{0} - Week Commencing : {1}", ViewBag.store, Model.SelectedDate)</h4>
+        </div>
+        @Html.Partial("~/Views/Partials/_Schedule.cshtml", Model)
+        <div class="row visible-print-block text-center">
+            &nbsp;
+        </div>
+        <div class="row visible-print-block text-center">
+            <h4>@DateTime.Now.ToString()</h4>
+        </div>
+    }
+
+</section>
+@section myScripts {
+    <script>
+        function dateChanged(ev) {
+            if ($('#SelectedDate').val() != '') {
+                $('#complianceDateForm').submit();
+            }
+        }
+    </script>
+}
+

@@ -1,0 +1,22 @@
+﻿@model DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels.StandardReportViewModel
+
+@{
+    ViewBag.Title = "Wfm";
+}
+
+<h2>Wfm</h2>
+<section class="content">
+    <div class="row">
+        @Html.Partial("~/Views/Partials/_StandardReport.cshtml", Model)
+    </div>
+</section>
+@section myScripts {
+    <script>
+    $(document).ready(function() {
+        $('#dataTables-standardReport').DataTable({
+            responsive: true
+        });
+    });
+    </script>
+}
+

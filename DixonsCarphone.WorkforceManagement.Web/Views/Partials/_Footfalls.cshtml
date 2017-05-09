@@ -1,0 +1,76 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
+@model DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels.FootFallsViewModel
+
+
+@using (Html.BeginForm("Footfall", "Planning", new { SelectedDate = Model.SelectedDate, selectedDay = Model.SelectedDay }, FormMethod.Get, new { @class = "form-horizontal", id = "footFallDateForm" }))
+{
+    <div class="row">
+        @Html.LabelFor(model => model.SelectedDate, htmlAttributes: new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-3">
+            @Html.DropDownListFor(model => model.SelectedDate, Model.WeeksOfYear, "--Please Select--", new { onchange = "this.form.submit();", @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.SelectedDate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="row">
+        &nbsp;
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Weekly FootFall
+                </div>
+                <div class="panel-body">
+                    <div class="col-lg-12">
+                        <div class="box-body">
+                            <div class="chart">
+                                <canvas id="weeklyFootFallareaChart" style="height:250px"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        &nbsp;
+    </div>
+
+    <div class="row">
+        <div class="form-group">
+            <div class="col-sm-3">
+                Select Day:
+                @Html.DropDownListFor(m => m.SelectedDay, Model.Days, new { onchange = "this.form.submit();" })
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Daily FootFall
+                </div>
+                <div class="panel-body">
+                    <div class="col-lg-12">
+                        <div class="box-body">
+                            <div class="chart">
+                                <canvas id="dailyFootFallAreaChart" style="height:250px"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+
+
+
+

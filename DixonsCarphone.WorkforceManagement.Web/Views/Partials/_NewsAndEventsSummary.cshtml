@@ -1,0 +1,46 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
+@model List<ActivityView>
+
+@{ 
+    var i = 0;
+}
+
+<div class="row">
+    &nbsp;
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h1 class="panel-title"><strong>News, Actions and Events</strong></h1>
+            </div>
+            <!-- .panel-heading -->
+            <div class="panel-body">
+                <div class="panel-group" id="accordion">
+                    @foreach (var activity in Model)
+                    {
+                        var col = i == 0 ? "collapse in" : "collapse";
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title"><strong>
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#@string.Format("collapse{0}", activity.Activityid)">@activity.ActivityName (@string.Format("{0:d} {1} - {2}", activity.ActivityDate, activity.StartTime, activity.EndTime))</a>
+                                </strong></h4>
+                            </div>
+
+                            <div id="@string.Format("collapse{0}", activity.Activityid)" class="panel-collapse @col">
+                                <div class="panel-body">
+                                    @activity.Detail
+                                </div>
+                            </div>
+                        </div>
+                        i++;
+                    }
+                </div>
+            </div>
+            <!-- .panel-body -->
+        </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-12 -->
+</div>

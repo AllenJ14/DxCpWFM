@@ -1,0 +1,61 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.Model
+@using DixonsCarphone.WorkforceManagement.ViewModels
+
+@model StoreDetailViewModel
+@{ 
+    var openingTime = Model.OpeningTimes;
+}
+
+<div class="box-body">
+    <table id="tbOpenTimes" class="table table-bordered table-hover">
+        <caption style="text-align: center"><b>Opening Times - @string.Format("{0} - {1}", Model.StoreName, Model.StoreAddress)</b></caption>
+    <thead>
+        <tr>
+            <th></th>
+            <th>Open</th>
+            <th>Close</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Sunday</td>
+            <td>@openingTime.SUN_OPEN.ToTime()</td>
+            <td>@openingTime.SUN_CLOSE.ToTime()</td>
+        </tr>
+        <tr>
+            <td>Monday</td>
+            <td>@openingTime.MON_OPEN.ToTime()</td>
+            <td>@openingTime.MON_CLOSE.ToTime()</td>
+        </tr>
+        <tr>
+            <td>Tuesday</td>
+            <td>@openingTime.TUE_OPEN.ToTime()</td>
+            <td>@openingTime.TUE_CLOSE.ToTime()</td>
+        </tr>
+        <tr>
+            <td>Wednesday</td>
+            <td>@openingTime.WED_OPEN.ToTime()</td>
+            <td>@openingTime.WED_CLOSE.ToTime()</td>
+        </tr>
+        <tr>
+            <td>Thursday</td>
+            <td>@openingTime.THU_OPEN.ToTime()</td>
+            <td>@openingTime.THU_CLOSE.ToTime()</td>
+        </tr>
+        <tr>
+            <td>Friday</td>
+            <td>@openingTime.FRI_OPEN.ToTime()</td>
+            <td>@openingTime.FRI_CLOSE.ToTime()</td>
+        </tr>
+        <tr>
+            <td>Saturday</td>
+            <td>@openingTime.SAT_OPEN.ToTime()</td>
+            <td>@openingTime.SAT_CLOSE.ToTime()</td>
+        </tr>
+    </tbody>
+    <tfoot>
+
+    </tfoot>
+</table>
+</div>
+

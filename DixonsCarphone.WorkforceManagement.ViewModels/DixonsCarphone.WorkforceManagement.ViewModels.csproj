@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C56AA418-AFA5-4712-AAAD-29FBFD4EBD2A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DixonsCarphone.WorkforceManagement.ViewModels</RootNamespace>
+    <AssemblyName>DixonsCarphone.WorkforceManagement.ViewModels</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BusinessModels\AccountEntryDetailBreakdownView.cs" />
+    <Compile Include="BusinessModels\AccountEntryDetailView.cs" />
+    <Compile Include="BusinessModels\AccountEntryView.cs" />
+    <Compile Include="BusinessModels\AdminHoursReview.cs" />
+    <Compile Include="BusinessModels\AdminOpeningTimes.cs" />
+    <Compile Include="BusinessModels\Cms\ContentViewModel.cs" />
+    <Compile Include="BusinessModels\CompFTLeakageDetail.cs" />
+    <Compile Include="BusinessModels\CompOverContractDetail.cs" />
+    <Compile Include="BusinessModels\CompOverTargetDetail.cs" />
+    <Compile Include="BusinessModels\CompTimecardDetail.cs" />
+    <Compile Include="BusinessModels\DailyDeploymentArrayForm.cs" />
+    <Compile Include="BusinessModels\DailyDeploymentView.cs" />
+    <Compile Include="BusinessModels\DashboardErrors.cs" />
+    <Compile Include="BusinessModels\DashboardViewChannel.cs" />
+    <Compile Include="BusinessModels\MyTeamViewModel.cs" />
+    <Compile Include="BusinessModels\MyTargetsViewModel.cs" />
+    <Compile Include="BusinessModels\PandLView.cs" />
+    <Compile Include="BusinessModels\PunchCompView.cs" />
+    <Compile Include="BusinessModels\PunchCompVM.cs" />
+    <Compile Include="BusinessModels\RegionPunchComplianceItem.cs" />
+    <Compile Include="BusinessModels\RoleReferenceView.cs" />
+    <Compile Include="BusinessModels\ScheduledColleaguesViewModel.cs" />
+    <Compile Include="BusinessModels\ScheduleDetail.cs" />
+    <Compile Include="BusinessModels\ScheduleVm.cs" />
+    <Compile Include="BusinessModels\SohSpendViewModel.cs" />
+    <Compile Include="BusinessModels\StoreHoursForApproval.cs" />
+    <Compile Include="BusinessModels\StorePandLViewModel.cs" />
+    <Compile Include="BusinessModels\ActivityView.cs" />
+    <Compile Include="BusinessModels\ActivityAdminViewModel.cs" />
+    <Compile Include="BusinessModels\AdminContentViewModel.cs" />
+    <Compile Include="BusinessModels\BaseViewModel.cs" />
+    <Compile Include="BusinessModels\BestPracticeContent.cs" />
+    <Compile Include="BusinessModels\BestPracticeUploadViewModel.cs" />
+    <Compile Include="BusinessModels\CalendarViewModel.cs" />
+    <Compile Include="BusinessModels\ChangeStoreOpeningTimeViewModel.cs" />
+    <Compile Include="BusinessModels\Cms\BestPracticeContentView.cs" />
+    <Compile Include="BusinessModels\Cms\ContentDetailViewModel.cs" />
+    <Compile Include="BusinessModels\Cms\ContentHeaderViewModel.cs" />
+    <Compile Include="BusinessModels\ComplianceViewModel.cs" />
+    <Compile Include="BusinessModels\DashBoardView.cs" />
+    <Compile Include="BusinessModels\DailyFootfallView.cs" />
+    <Compile Include="BusinessModels\DayOpeningTimes.cs" />
+    <Compile Include="BusinessModels\DeploymentViewModel.cs" />
+    <Compile Include="BusinessModels\FooterContent.cs" />
+    <Compile Include="BusinessModels\FootFallsViewModel.cs" />
+    <Compile Include="BusinessModels\HrFeedView.cs" />
+    <Compile Include="BusinessModels\KpiViewModel.cs" />
+    <Compile Include="BusinessModels\NonScheduledColleguesViewModel.cs" />
+    <Compile Include="BusinessModels\PendingOpeningTimeView.cs" />
+    <Compile Include="BusinessModels\PeopleViewModel.cs" />
+    <Compile Include="BusinessModels\ScheduledCollegues.cs" />
+    <Compile Include="BusinessModels\ScoresAndUtilizationViewModel.cs" />
+    <Compile Include="BusinessModels\StandardReportViewModel.cs" />
+    <Compile Include="BusinessModels\StoreReferenceView.cs" />
+    <Compile Include="BusinessModels\StoreReferenceViewModel.cs" />
+    <Compile Include="BusinessModels\StoresMenuViewModel.cs" />
+    <Compile Include="BusinessModels\StoreViewModel.cs" />
+    <Compile Include="BusinessModels\UserAccessDetail.cs" />
+    <Compile Include="BusinessModels\UserAccessSummary.cs" />
+    <Compile Include="BusinessModels\WeeklyFootfallView.cs" />
+    <Compile Include="BusinessModels\WeekPickerViewModel.cs" />
+    <Compile Include="Enums.cs" />
+    <Compile Include="Helpers.cs" />
+    <Compile Include="BusinessModels\EmpComplianceDetailView.cs" />
+    <Compile Include="Model\HomeViewModel.cs" />
+    <Compile Include="Model\OpeningTimeCommentView.cs" />
+    <Compile Include="Model\SingleOpeningTimeViewModel.cs" />
+    <Compile Include="Model\StoreDetailViewModel.cs" />
+    <Compile Include="Model\StoreOpeningTimeView.cs" />
+    <Compile Include="Model\WidgetsAndControls.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

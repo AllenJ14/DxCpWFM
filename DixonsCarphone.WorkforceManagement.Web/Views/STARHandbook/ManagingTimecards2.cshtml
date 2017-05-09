@@ -1,0 +1,59 @@
+﻿
+@{
+    ViewBag.Title = "STAR Handbook";
+}
+
+<section class="content">
+    <row>
+        &emsp;
+    </row>
+
+    <row>
+        <ol class="breadcrumb">
+            <li><a href="@Url.Action("Index","STARHandbook")">STAR Handbook</a></li>
+            <li><a href="@Url.Action("ManagingTimecards","STARHandbook")">Managing Timecards</a></li>
+            <li class="active">Viewing a Timecard</li>
+        </ol>
+    </row>
+
+    <row>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title"><strong>Viewing a Timecard</strong></h4>
+            </div>
+            <div class="panel-body">
+                <p>
+                    The 'Timecard Manager' screen will list your colleagues and show an overview of their individual Timecards
+                    <br /><br />
+                    <img src="~/Images/CMS_Uploads/ViewingATimecard1.png" class="img-responsive" alt="ScheduleMenu1" />
+                </p>
+                <br />
+                <p>
+                    <ul>
+                        <li><strong>Biometric status</strong> indicates whether or not the colleague is enrolled on the Touch – ID Terminal</li>
+                        <li><strong>Scheduled Time Worked</strong> shows a total of all hours worked as per the Schedule</li>
+                        <li><strong>Approved and Unapproved time</strong> shows a total of all hours worked outside of Schedule</li>
+                        <li><strong>Exceptions</strong> indicate if the colleague has deviated from the schedule in any way</li>
+                    </ul>
+                </p>
+                <br />
+                <strong><i>To view all timecards, click 'Actions' then 'Select All' right click on any name and select 'Timecards'</i></strong>
+                <br /><br />
+                <row>
+                    <div class="col-md-4"><img src="~/Images/CMS_Uploads/ViewingATimecard2.png" /></div>
+                    <div class="col-md-4"><img src="~/Images/CMS_Uploads/ViewingATimecard3.png" /></div>
+                </row>                
+            </div>
+            <div class="panel-footer">
+                <p><span class="glyphicon glyphicon-info-sign"></span><strong><u> Quick Tip</u></strong> - To view an individual colleague timecard, Double click on the Colleague line</p>
+            </div>
+        </div>
+    </row>
+
+    @Html.Partial("~/Views/Partials/_ManagingTimecardsOptions.cshtml")
+
+    <div class="row">
+        <div class="col-md-6">
+        </div>
+    </div>
+</section>

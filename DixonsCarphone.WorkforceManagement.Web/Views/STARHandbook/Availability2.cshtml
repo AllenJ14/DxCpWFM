@@ -1,0 +1,87 @@
+﻿
+@{
+    ViewBag.Title = "STAR Handbook";
+}
+
+<section class="content">
+    <row>
+        &emsp;
+    </row>
+
+    <row>
+        <ol class="breadcrumb">
+            <li><a href="@Url.Action("Index","STARHandbook")">STAR Handbook</a></li>
+            <li><a href="@Url.Action("Availability","STARHandbook")">Colleague Availability</a></li>
+            <li class="active">Amending an Availability Pattern</li>
+        </ol>
+    </row>
+
+    <row>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title"><strong>Amending an Availability Pattern</strong></h4>
+            </div>
+            <div class="panel-body">
+                <row class="col-md-12">
+                    <img src="~/Images/CMS_Uploads/AddAvailability1.png" class="col-md-6 img-responsive" />
+                    <div class="col-md-6">To edit an availability pattern for a colleague, you need to click on the <strong>Scheduling tab</strong> and select <strong>'UK Schedule Planner'</strong>.</div>
+                </row>
+                <div class="col-md-12">
+                    &emsp;
+                </div>
+                <row class="col-md-12">
+                    <img src="~/Images/CMS_Uploads/AddAvailability3.png" class="col-md-6 img-responsive" />
+                    <br />
+                    <div class="col-md-6">Select your store from the 'Show' hyperfind.<br />Select the required date range from the 'Time Period' hyperfind.</div>
+                </row>
+                <div class="col-md-12">
+                    &emsp;
+                </div>
+                <row class="col-md-12">
+                    <img src="~/Images/CMS_Uploads/AmendAvailability1.png" class="col-md-6 img-responsive" />
+                    <div class="col-md-6">This is your store schedule view. Click on the colleague you wish to add the pattern and click on 'Availability' tab and select 'Edit Pattern'.</div>
+                </row>
+                <div class="col-md-12">
+                    &emsp;
+                </div>
+                <row class="col-md-12">
+                    <img src="~/Images/CMS_Uploads/AmendAvailability2.png" class="col-md-6 img-responsive" />
+                    <br />
+                    <div class="col-md-6">Double click on the day you wish to edit the pattern.</div>
+                </row>
+                <div class="col-md-12">
+                    &emsp;
+                </div>
+                <row class="col-md-12">
+                    <img src="~/Images/CMS_Uploads/AmendAvailability3.png" class="col-md-6 img-responsive" />
+                    <br />
+                    <div class="col-md-6">
+                        <p>Enter the time and select the availability type for that day, then click 'Apply'.</p>
+                        <p>Review the added change and click 'OK'.</p>
+                    </div>
+                </row>
+                <div class="col-md-12">
+                    &emsp;
+                </div>
+                <row class="col-md-12">
+                    <img src="~/Images/CMS_Uploads/AmendAvailability4.png" class="col-md-6 img-responsive" />
+                    <br />
+                    <div class="col-md-6">
+                        <p>Repeat this for the rest of the days in the week. Ensure the correct Pattern & Availability start date is selected. Once applied, click ‘OK’.</p>
+                        <p>The changes to the availability pattern have been added for the selected colleague.</p>
+                    </div>
+                </row>
+                <div class="col-md-12">
+                    &emsp;
+                </div>
+            </div>
+        </div>
+    </row>
+
+    @Html.Partial("~/Views/Partials/_AvailabilityOptions.cshtml")
+
+    <div class="row">
+        <div class="col-md-6">
+        </div>
+    </div>
+</section>

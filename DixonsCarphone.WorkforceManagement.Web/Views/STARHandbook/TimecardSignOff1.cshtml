@@ -1,0 +1,64 @@
+﻿
+@{
+    ViewBag.Title = "STAR Handbook";
+}
+
+<section class="content">
+    <row>
+        &emsp;
+    </row>
+
+    <row>
+        <ol class="breadcrumb">
+            <li><a href="@Url.Action("Index","STARHandbook")">STAR Handbook</a></li>
+            <li><a href="@Url.Action("TimecardSignOff","STARHandbook")">Timecard Sign Off</a></li>
+            <li class="active">Signing Off</li>
+        </ol>
+    </row>
+
+    <row>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title"><strong>Signing Off</strong></h4>
+            </div>
+            <div class="panel-body">
+                <p>Timecards can be signed off from Sunday for the <i>previous week</i>. And can only be signed off once all exceptions have been cleared.</p>
+                <p><strong><i>**Please Note- All exceptions need to be cleared before signing off the timecard.</i></strong></p>
+                <div class="col-md-12">
+                    &emsp;
+                </div>
+                <hr />
+                <row class="col-md-12">
+                    <div class="col-md-6 text-center"><img src="~/Images/CMS_Uploads/TimecardSignOff1.png" class="img-responsive" /></div>
+                    <br />
+                    <div class="col-md-6">From the colleague's timecard click 'Approvals' and then click 'Sign off'</div>
+                </row>
+                <div class="col-md-12">
+                    &emsp;
+                </div>
+                <p>Once the timecard has been signed off the blue boxes on the left hand side will disappear, indicating the timecard can no longer be edited.</p>
+                <div class="col-md-12">
+                    <hr />
+                </div>
+                <p><h4><strong><u>Before Sign Off:</u></strong></h4></p>
+                <row class="col-md-12">
+                    <div class="col-md-12 text-center"><img src="~/Images/CMS_Uploads/TimecardSignOff2.png" class="img-responsive" /></div>
+                </row>
+                <div class="col-md-12">
+                    &emsp;
+                </div>
+                <p><h4><strong><u>After Sign Off:</u></strong></h4></p>
+                <row class="col-md-12">
+                    <div class="col-md-12 text-center"><img src="~/Images/CMS_Uploads/TimecardSignOff3.png" class="img-responsive" /></div>
+                </row>
+            </div>
+        </div>
+    </row>
+
+    @Html.Partial("~/Views/Partials/_TimecardSignOffOptions.cshtml")
+
+    <div class="row">
+        <div class="col-md-6">
+        </div>
+    </div>
+</section>

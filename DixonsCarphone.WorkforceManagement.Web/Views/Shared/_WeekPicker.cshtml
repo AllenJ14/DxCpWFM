@@ -1,0 +1,19 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels
+@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
+
+@model WeekPickerViewModel
+@using (Html.BeginForm(Model.Action, Model.Controller, FormMethod.Post, new { @class = "form-horizontal", id = "deploymentDateForm" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="row text-center hidden-print">
+            @Html.LabelFor(model => model.SelectedDate, htmlAttributes: new { @class = "col-md-4 control-label" })
+            <div class="col-md-5">
+                <select class="form-control" data-val="true" data-val-required="The Select Date field is required." id="SelectedDate" name="SelectedDate" onchange="this.form.submit();">
+                    @foreach (var item in Model.WeeksOfYear)
+                {
+                        <option value=@item.Value selected=@item.Selected>@item.Text</option>
+                    }
+                </select>
+            </div>
+    </div>
+}

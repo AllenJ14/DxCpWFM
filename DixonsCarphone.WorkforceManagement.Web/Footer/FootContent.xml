@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<ArrayOfFooterContent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <FooterContent>
+    <Category>Best Practice</Category>
+    <Title>Test</Title>
+    <PathToContent>C:\Dev\DixonsCarphone.WorkforceManagement\DixonsCarphone.WorkforceManagement.Web\Uploads\Best Practice\New Text Document.txt</PathToContent>
+  </FooterContent>
+  <FooterContent>
+    <Category>Star Handbook</Category>
+    <Title>Signing Off Time Cards</Title>
+    <PathToContent>C:\Dev\DixonsCarphone.WorkforceManagement\DixonsCarphone.WorkforceManagement.Web\Uploads\Star Handbook\New Text Document.txt</PathToContent>
+  </FooterContent>
+</ArrayOfFooterContent>

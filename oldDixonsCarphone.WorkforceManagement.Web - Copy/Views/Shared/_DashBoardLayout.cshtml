@@ -1,0 +1,421 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Workforce Management System</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="~/Content/SbAdmin/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- MetisMenu CSS -->
+    <link href="~/Content/SbAdmin/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="~/Content/SbAdmin/dist/css/sb-admin-2.css" rel="stylesheet">
+    <!-- Morris Charts CSS -->
+    <link href="~/Content/SbAdmin/vendor/morrisjs/morris.css" rel="stylesheet">
+    <!-- DataTables CSS -->
+    <link href="~/Content/SbAdmin/vendor/datatables-plugins/dataTables.bootstrap.css" rel="stylesheet">
+    <!-- DataTables Responsive CSS -->
+    <link href="~/Content/SbAdmin/vendor/datatables-responsive/dataTables.responsive.css" rel="stylesheet">
+    <!-- Custom Fonts -->
+    <link href="~/Content/SbAdmin/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- fullCalendar 2.2.5-->
+    <link rel="stylesheet" href="~/Content/Lte/plugins/fullcalendar/fullcalendar.min.css">
+    <link rel="stylesheet" href="~/Content/Lte/plugins/fullcalendar/fullcalendar.print.css" media="print">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+<body>
+    <div id="wrapper">
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="@Url.Action("Index", "AltHome")" title="CPW WFM" class="navbar-brand">
+                    <img alt="CPW WFM" src="@Url.Content("~/Images/logo_carphonewarehouse.png")">Workforce Management
+                </a>
+            </div>
+            <!-- /.navbar-header -->
+            <ul class="nav navbar-top-links navbar-right">
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-envelope fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-messages">
+                        <li>
+                            <a href="#">
+                                <div>
+                                    <strong>John Smith</strong>
+                                    <span class="pull-right text-muted">
+                                        <em>Yesterday</em>
+                                    </span>
+                                </div>
+                                <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#">
+                                <div>
+                                    <strong>John Smith</strong>
+                                    <span class="pull-right text-muted">
+                                        <em>Yesterday</em>
+                                    </span>
+                                </div>
+                                <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#">
+                                <div>
+                                    <strong>John Smith</strong>
+                                    <span class="pull-right text-muted">
+                                        <em>Yesterday</em>
+                                    </span>
+                                </div>
+                                <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a class="text-center" href="#">
+                                <strong>Read All Messages</strong>
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-messages -->
+                </li>
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-tasks fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-tasks">
+                        <li>
+                            <a href="#">
+                                <div>
+                                    <p>
+                                        <strong>Task 1</strong>
+                                        <span class="pull-right text-muted">40% Complete</span>
+                                    </p>
+                                    <div class="progress progress-striped active">
+                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+                                            <span class="sr-only">40% Complete (success)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#">
+                                <div>
+                                    <p>
+                                        <strong>Task 2</strong>
+                                        <span class="pull-right text-muted">20% Complete</span>
+                                    </p>
+                                    <div class="progress progress-striped active">
+                                        <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+                                            <span class="sr-only">20% Complete</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#">
+                                <div>
+                                    <p>
+                                        <strong>Task 3</strong>
+                                        <span class="pull-right text-muted">60% Complete</span>
+                                    </p>
+                                    <div class="progress progress-striped active">
+                                        <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
+                                            <span class="sr-only">60% Complete (warning)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#">
+                                <div>
+                                    <p>
+                                        <strong>Task 4</strong>
+                                        <span class="pull-right text-muted">80% Complete</span>
+                                    </p>
+                                    <div class="progress progress-striped active">
+                                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
+                                            <span class="sr-only">80% Complete (danger)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a class="text-center" href="#">
+                                <strong>See All Tasks</strong>
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-tasks -->
+                </li>
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-bell fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-alerts">
+                        <li>
+                            <a href="#">
+                                <div>
+                                    <i class="fa fa-comment fa-fw"></i> New Comment
+                                    <span class="pull-right text-muted small">4 minutes ago</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#">
+                                <div>
+                                    <i class="fa fa-twitter fa-fw"></i> 3 New Followers
+                                    <span class="pull-right text-muted small">12 minutes ago</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#">
+                                <div>
+                                    <i class="fa fa-envelope fa-fw"></i> Message Sent
+                                    <span class="pull-right text-muted small">4 minutes ago</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#">
+                                <div>
+                                    <i class="fa fa-tasks fa-fw"></i> New Task
+                                    <span class="pull-right text-muted small">4 minutes ago</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#">
+                                <div>
+                                    <i class="fa fa-upload fa-fw"></i> Server Rebooted
+                                    <span class="pull-right text-muted small">4 minutes ago</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a class="text-center" href="#">
+                                <strong>See All Alerts</strong>
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-alerts -->
+                </li>
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li>
+                            <a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+            <!-- /.navbar-top-links -->
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+
+                    <ul id="side-menu" class="nav">
+                        <li class="sidebar-search">
+                            <div class="input-group custom-search-form">
+                                <input type="text" class="form-control" placeholder="Search...">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </span>
+                            </div>
+                            <!-- /input-group -->
+                        </li>
+
+                        <li class="current-menu-item">@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-dashboard"></i> <span>Reports <span class="fa arrow" /></span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="nav nav-second-level">
+
+                                <li>
+                                    <a href="@Url.Action("DashboardData", "Reports")"> Dashboard</a></li>
+                                <li class="active"><a href="@Url.Action("Wfm", "Reports", new { report = "Compliance" })">WFM Compliance</a></li>
+                                <li class="active"><a href="@Url.Action("Wfm", "Reports", new { report = "Deployment" })">WFM Deployment</a></li>
+                                <li class="active"><a href="@Url.Action("StorePandL", "Reports")">Store Costs</a></li>
+                                <li class="active"><a href="@Url.Action("Cgm", "Reports")">SOH Budgets</a></li>
+                                <li class="active"><a href="@Url.Action("Cgm", "Reports")">Cost Budgets</a></li>
+                            </ul>
+                                </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-th"></i> <span>My Store<span class="fa arrow" /></span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="nav nav-second-level">
+                                <li class="active"><a href="@Url.Action("Index", "Planning")"> Opening Times</a></li>
+                                <li class="active"><a href="@Url.Action("Footfall", "Planning")"> FootFall</a></li>
+                                <li class="active"><a href="@Url.Action("Calendar", "Planning")"> Calendar</a></li>
+
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Index", "BestPractice")">
+                                <i class="fa fa-th"></i> <span>Best Practices<span class="fa arrow" /></span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="nav nav-second-level">
+                                <li class="active"><a href="@Url.Action("Section", "BestPractice", new { sectionName = "Overviews", cateGory="Weekly Process" })"> Overviews</a></li>
+                                <li class="active"><a href="@Url.Action("Section", "BestPractice", new { sectionName = "FAQs", cateGory="Faq" })"> FAQs</a></li>
+                                <li class="active"><a href="@Url.Action("Section", "BestPractice", new { sectionName = "Best Pratices", cateGory="How To" })"> Best Practice</a></li>
+                                <li class="active"><a href="@Url.Action("Section", "BestPractice", new { sectionName = "Star", cateGory="Handbook" })"> Star HandBook</a></li>
+                                <li class="active"><a href="@Url.Action("Section", "BestPractice", new { sectionName = "Escalation", cateGory="Process" })"> Escalations Process</a></li>
+                                <li class="active"><a href="@Url.Action("Section", "BestPractice", new { sectionName = "Scheduling", cateGory= "Scheduling" })"> Scheduling<span class="fa arrow" /></a>
+                                    <ul class="nav nav-third-level">
+                                        <li> <a href="@Url.Action("Section", "BestPractice", new { sectionName = "Overview", cateGory= "Scheduling" })">Overview</a></li>
+                                        <li><a href="@Url.Action("Section", "BestPractice", new { sectionName = "Best Practice", cateGory="Scheduling" })">Best Practice</a></li>
+                                        <li><a href="@Url.Action("Section", "BestPractice", new { sectionName = "How To", cateGory= "Scheduling" })">How 2</a></li>
+                                        <li><a href="@Url.Action("Section", "BestPractice", new { sectionName = "Training", cateGory= "Scheduling" })">Training</a></li>
+                                    </ul>                                
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-th"></i> <span>My People <span class="fa arrow" /></span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="nav nav-second-level">
+                                <li class="active"><a href="@Url.Action("Index", "Profiles")"> Store</a></li>
+
+                                <li class="active"><a href="@Url.Action("People", "Profiles")"> Staff</a></li>
+
+                            </ul>
+                        </li>
+                    </ul>
+
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+
+        <div id="page-wrapper">
+            @RenderBody()
+            <hr />
+            <!--footer >
+            </!--footer-->
+        </div>
+        <footer class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    @Html.Partial("~/Views/Shared/_footer.cshtml")
+
+
+                    <p>Copyright &copy; Carphone Warehouse @DateTime.Now.Year</p>
+                </div>
+            </div>
+        </footer>
+        <!-- jQuery -->
+        <script src="~/Content/SbAdmin/vendor/jquery/jquery.min.js"></script>
+        <!-- Bootstrap Core JavaScript -->
+        <script src="~/Content/SbAdmin/vendor/bootstrap/js/bootstrap.min.js"></script>
+        <!-- Metis Menu Plugin JavaScript -->
+        <script src="~/Content/SbAdmin/vendor/metisMenu/metisMenu.min.js"></script>
+        <!-- Morris Charts JavaScript -->
+        <script src="~/Content/SbAdmin/vendor/raphael/raphael.min.js"></script>
+        <script src="~/Content/SbAdmin/vendor/morrisjs/morris.min.js"></script>
+        <script src="~/Content/SbAdmin/data/morris-data.js"></script>
+
+        <!-- DataTables JavaScript -->
+        <script src="~/Content/SbAdmin/vendor/datatables/js/jquery.dataTables.min.js"></script>
+        <script src="~/Content/SbAdmin/vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+        <script src="~/Content/SbAdmin/vendor/datatables-responsive/dataTables.responsive.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="~/Content/SbAdmin/dist/js/sb-admin-2.js"></script>
+
+        <!-- jQuery 2.2.3 -->
+        @Scripts.Render("~/Content/SbAdmin/vendor/jquery/jquery.min.js")
+        <!-- Bootstrap 3.3.6 -->
+        @Scripts.Render("~/Content/SbAdmin/vendor/bootstrap/js/bootstrap.min.js")
+        <!-- FastClick -->
+        @Scripts.Render("~/Content/SbAdmin/vendor/metisMenu/metisMenu.min.js")
+        <!-- AdminLTE App -->
+        @Scripts.Render("~/Content/SbAdmin/vendor/raphael/raphael.min.js")
+        <!-- Sparkline -->
+        @Scripts.Render("~/Content/SbAdmin/vendor/morrisjs/morris.min.js")
+        <!-- jvectormap -->
+        @Scripts.Render("~/Content/SbAdmin/data/morris-data.js")
+        @Scripts.Render("~/Content/SbAdmin/dist/js/sb-admin-2.js")
+
+        @Scripts.Render("~/Content/Lte/plugins/chartjs/Chart.min.js")
+        @Scripts.Render("~/Content/Lte/dist/js/demo.js")
+
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+        @Scripts.Render("~/Content/Lte/plugins/fullcalendar/fullcalendar.min.js")
+
+        @RenderSection("myScripts", false)
+    </div>
+</body>
+</html>
+

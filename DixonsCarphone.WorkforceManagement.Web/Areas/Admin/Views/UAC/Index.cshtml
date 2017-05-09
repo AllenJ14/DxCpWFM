@@ -1,0 +1,48 @@
+﻿@model IEnumerable<DixonsCarphone.WorkforceManagement.Business.Entities.UserAccess>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>User Access List</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table text-center">
+    <tr>
+        <th class="text-center">
+            User Login
+        </th>
+        <th class="text-center">
+            Access Level
+        </th>
+        <th class="text-center">
+            Area
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr class="text-center">
+            <td>
+                @Html.DisplayFor(modelItem => item.User)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AccessLevel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Area)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+            </td>
+        </tr>
+    }
+
+</table>
+
+@Html.ActionLink("Back", "Index", "Admin")

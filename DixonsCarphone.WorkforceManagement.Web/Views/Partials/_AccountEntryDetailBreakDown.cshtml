@@ -1,0 +1,51 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
+@model List<BreakDownsDetails>
+
+@{ 
+    var modalId = string.Format("myModal{0}", Model.FirstOrDefault()?.AccountEntryDetailId);
+    var modalLabel = string.Format("myModalLabel{0}", Model.FirstOrDefault()?.AccountEntryDetailId);
+
+}
+
+<div class="panel-default">
+    <!-- Button trigger modal -->
+    <button class="btn-link" data-toggle="modal" data-target="#@modalId">
+        <small>View Detail</small>
+    </button>
+    <!-- Modal -->
+    <div class="modal fade" id="@modalId" tabindex="-1" role="dialog" aria-labelledby="@modalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="@modalLabel">Break Down</h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table">
+                        <tr>
+                            <th>Title</th>
+                            <th>Text</th>
+                            <th>Actual</th>
+                        </tr>
+                        @foreach (var breakDown in Model)
+                        {
+                            <tr>
+                                <td>@breakDown.BreakdownTitle</td>
+                                <td>@string.Format("{0:c}", breakDown.BreakdownText)</td>
+                                <td>@string.Format("{0:c}", breakDown.BreakdownActualAmount)</td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+</div>
+
+

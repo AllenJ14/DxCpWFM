@@ -1,0 +1,79 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
+@using System.Linq.Expressions
+
+@model ChangeStoreOpeningTimeViewModel
+
+@{ 
+    Func<string, Expression<Func<ChangeStoreOpeningTimeViewModel, string>>> GetModelFor = (s) => Model.GetModelFor(s);
+}
+
+@using (Html.BeginForm("ChangeTimes", "Planning", null, FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="box-body">
+    <h4>Change Opening time</h4>
+    <hr />
+    <div class="form-group">
+        @Html.LabelFor(model => model.AvailableWeeks, htmlAttributes: new { @class = "col-sm-2 control-label" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(m => m.SelectedWeek, Model.AvailableWeeks, "--Select Week--")
+        </div>
+    </div>
+        <table>
+            <tr>
+                <th>Day</th>
+                <th>New Opening Time</th>
+                <th>New Closing Time</th>
+            </tr>
+            <tr>
+                <td>@Html.Label("Sunday", htmlAttributes: new { @class = "col-sm-2 control-label" })</td>
+                <td>@Html.DropDownListFor(m => m.NewSunOpening, Model.Times, "--Select New Opening Time--")</td>
+                <td>@Html.DropDownListFor(m => m.NewSunClosing, Model.Times, "--Select New Closing Time--")</td>
+            </tr>
+            <tr>
+                <td>@Html.Label("Monday", htmlAttributes: new { @class = "col-sm-2 control-label" })</td>
+                <td>@Html.DropDownListFor(m => m.NewMonOpening, Model.Times, "--Select New Opening Time--")</td>
+                <td>@Html.DropDownListFor(m => m.NewMonClosing, Model.Times, "--Select New Closing Time--")</td>
+            </tr>
+            <tr>
+                <td>@Html.Label("Tuesday", htmlAttributes: new { @class = "col-sm-2 control-label" })</td>
+                <td>@Html.DropDownListFor(m => m.NewTuesOpening, Model.Times, "--Select New Opening Time--")</td>
+                <td>@Html.DropDownListFor(m => m.NewTuesClosing, Model.Times, "--Select New Closing Time--")</td>
+            </tr>
+            <tr>
+                <td>@Html.Label("Wednesday", htmlAttributes: new { @class = "col-sm-2 control-label" })</td>
+                <td>@Html.DropDownListFor(m => m.NewWedOpening, Model.Times, "--Select New Opening Time--")</td>
+                <td>@Html.DropDownListFor(m => m.NewWedClosing, Model.Times, "--Select New Closing Time--")</td>
+            </tr>
+            <tr>
+                <td>@Html.Label("Thursday", htmlAttributes: new { @class = "col-sm-2 control-label" })</td>
+                <td>@Html.DropDownListFor(m => m.NewThursOpening, Model.Times, "--Select New Opening Time--")</td>
+                <td>@Html.DropDownListFor(m => m.NewThursClosing, Model.Times, "--Select New Closing Time--")</td>
+            </tr>
+            <tr>
+                <td>@Html.Label("Friday", htmlAttributes: new { @class = "col-sm-2 control-label" })</td>
+                <td>@Html.DropDownListFor(m => m.NewFriOpening, Model.Times, "--Select New Opening Time--")</td>
+                <td>@Html.DropDownListFor(m => m.NewFriClosing, Model.Times, "--Select New Closing Time--")</td>
+            </tr>
+            <tr>
+                <td>@Html.Label("Saturday", htmlAttributes: new { @class = "col-sm-2 control-label" })</td>
+                <td>@Html.DropDownListFor(m => m.NewSatOpening, Model.Times, "--Select New Opening Time--")</td>
+                <td>@Html.DropDownListFor(m => m.NewSatClosing, Model.Times, "--Select New Closing Time--")</td>
+            </tr>
+            @*@foreach (var openingTime in Model.OpeningTimes)
+            {
+                <tr>
+                    <td>@Html.Label(openingTime.Day, htmlAttributes: new { @class = "col-sm-2 control-label" })</td>
+                    <td>@Html.DropDownListFor(m => GetModelFor(string.Format("{0}Opening", openingTime.Day)), openingTime.NewOpeningTimes, "--Select New Opening Time--")</td>
+                    <td>@Html.DropDownListFor(m => GetModelFor(string.Format("{0}Closing", openingTime.Day)), openingTime.NewClosingTimes, "--Select New Closing Time--")</td>
+                </tr>
+            }*@
+        </table>
+
+        <div class="box-footer">
+            <input type="submit" value="Change Opening Times" />
+        </div>
+    </div>
+}
+
+

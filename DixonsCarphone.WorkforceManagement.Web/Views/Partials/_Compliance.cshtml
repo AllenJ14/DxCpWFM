@@ -1,0 +1,352 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
+@model ComplianceViewModel
+
+
+@{
+    string cssColour = "#009900";
+    if (Model._dashboardView != null)
+    {
+        if (Model._dashboardView.ComplianceScore < 4)
+        {
+            cssColour = "#ff0000";
+        }
+        else if (Model._dashboardView.ComplianceScore < 8)
+        {
+            cssColour = "#ffcc00";
+        }
+    }
+    Func<int, string> GetColor = (i) =>
+    {
+        var rtn = "danger";
+        if (i >= 8)
+        {
+            rtn = "success";
+        }
+        else if (i >= 4)
+        {
+            rtn = "warning";
+        }
+
+        return rtn;
+    };
+}
+
+@Html.Partial("~/Views/Shared/_WeekPicker.cshtml", new WeekPickerViewModel { Action = "GetCompliance", Controller = "Reports", WeeksOfYear = Model.WeeksOfYear, SelectedDate = Model.SelectedDate })
+
+
+<div class="row">
+    &nbsp;
+</div>
+
+@if (Model.MessageType == MessageType.Warning)
+{
+    <div class="alert alert-danger text-center"><strong>Budgets for the selected period have not yet been finalised, check back once you have received more information.</strong></div>
+}
+else if (Model._dashboardView != null)
+{
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading text-center">
+                    <strong>WFM Compliance</strong>
+                </div>
+                <!-- .panel-heading -->
+                <div class="panel-body">
+                    <h3><strong>Compliance Score : <span style="color:@cssColour">@Model._dashboardView.ComplianceScore</span></strong></h3>
+                    <br />
+                    <div class="panel-group" id="accordion">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <strong>
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOverTarget">SOH Spend Over Target - @(Model.OverTarget.Variance <= 0 ? "No overspend!" : "(" + Model.OverTarget.HeadlineFigure + ")")</a>
+                                    </strong>
+                                </h4>
+                            </div>
+                            <div id="collapseOverTarget" class="panel-collapse collapse">
+                                @if (Model.OverTarget.Variance > 0)
+        {
+                                    <div class="panel-body">
+                                        <p>
+                                            <h5>What is the risk?</h5>
+                                            <ul>
+                                                <li>Payroll risk - if spend is not controlled, this can lead to a reduction in budgets for your store later in the year</li>
+                                                <li>Budget Risk - as a manager you should be managing your hours correctly and are directly accountable for your SOH spend, just as you are for stock loss.</li>
+                                            </ul>
+                                        </p>
+                                        <table class="table table-bordered-blue table-condensed">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-md-1 text-center">SOH Spend</th>
+                                                    <th class="col-md-1 text-center">SOH Target</th>
+                                                    <th class="col-md-1 text-center">Variance</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="text-center">@string.Format("{0:0.0}", Model.OverTarget.SOHSpend)</td>
+                                                    <td class="text-center">@string.Format("{0:0.0}", Model.OverTarget.SOHTarget)</td>
+                                                    <td class="text-center">@string.Format("{0:0.0}", Model.OverTarget.Variance)</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <strong>
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOverContract">Over Contract Base - @(Model.OverContract.Variance <= 0 ? "Not over contract!" : "(" + Model.OverContract.HeadlineFigure + ")" )</a>
+                                    </strong>
+                                </h4>
+                            </div>
+                            <div id="collapseOverContract" class="panel-collapse collapse">
+                                @if (Model.OverContract.Variance > 0)
+    {
+                                    <div class="panel-body">
+                                        <p>
+                                            <h5>What is the risk?</h5>
+                                            <ul>
+                                                <li>Budget Risk – Your store will be unable to reduce SOH spend in months where the SOH budget is lower.</li>
+                                                <li>Financial Risk – Money spent on payroll for hours worked but not needed due to obligation to meet contracts.</li>
+                                            </ul>
+                                        </p>
+                                        <table class="table table-bordered-blue table-condensed">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-md-1 text-center">Contract Base Target</th>
+                                                    <th class="col-md-1 text-center">Current Contract</th>
+                                                    <th class="col-md-1 text-center">Variance</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="text-center">@Model.OverContract.ContractBase</td>
+                                                    <td class="text-center">@Model.OverContract.CurrentContract</td>
+                                                    <td class="text-center">@Model.OverContract.HeadlineFigure</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <strong>
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseFTLeakage">Full Time Leakage - @(Model.FTLeakage.FTLeakageDetail.Count() == 0 ? "No FT leakage!" : "(" + Model.FTLeakage.HeadlineFigure + ")")</a>
+                                    </strong>
+                                </h4>
+                            </div>
+                            <div id="collapseFTLeakage" class="panel-collapse collapse">
+                                @if (Model.FTLeakage.FTLeakageDetail.Count() > 0)
+                                {
+                                    <div class="panel-body">
+                                        <p>
+                                            <h5>What is the risk?</h5>
+                                            <ul>
+                                                <li>Financial Risk – Overpayment of Hours (FT colleagues are salaried and so receive their full pay for each week even if they haven’t worked all their contracted hours)</li>
+                                                <li>Recruitment risk – The store may not be able to recruit when needed due to being over their Contract Base by hours that are not being used.</li>
+                                                <li>Shop floor coverage risk – Hours that are not being used, could have been used by another colleague to provide more shop floor coverage where needed</li>
+                                            </ul>
+                                        </p>
+                                        <table class="table table-bordered-blue table-condensed">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-md-1 text-center">Employee Name</th>
+                                                    <th class="col-md-1 text-center">Contract Hours</th>
+                                                    <th class="col-md-1 text-center">Worked Hours</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in Model.FTLeakage.FTLeakageDetail)
+{
+                                                    <tr>
+                                                        <td class="text-center">@item.empName</td>
+                                                        <td class="text-center">@item.ContractHours</td>
+                                                        <td class="text-center">@item.WorkedHours</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <strong>
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTimecard">Timecard Non Compliance - @(Model.Timecard.TimecardDetail.Count() == 0 ? "No timecard issues!" : "(" + Model.Timecard.HeadlineFigure + ")")</a>
+                                    </strong>
+                                </h4>
+                            </div>
+                            <div id="collapseTimecard" class="panel-collapse collapse">
+                                @if (Model.Timecard.TimecardDetail.Count() > 0)
+                                {
+                                    <div class="panel-body">
+                                        <p>
+                                            <h5>What is the risk?</h5>
+                                            <ul>
+                                                <li>Payroll Risk – Colleagues not paid for hours they have worked, Inaccurate SOH Reporting</li>
+                                                <li>Financial risk – Colleagues paid for hours they have not worked (FT).</li>
+                                            </ul>
+                                        </p>
+                                        <table class="table table-bordered-blue table-condensed">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-md-1 text-center">Employee Name</th>
+                                                    <th class="col-md-1 text-center">Not Submitted / Zero Hours</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in Model.Timecard.TimecardDetail)
+{
+                                                    <tr>
+                                                        <td class="text-center">@item.empName</td>
+                                                        <td class="text-center">@item.type</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- .panel-body -->
+    </div>
+
+}
+else if (HttpContext.Current.Session["_RegionNumber"] != null)
+{
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <table class="table table-bordered-blue table-condensed col-md-6">
+                <thead>
+                    <tr>
+                        <th class="text-center col-md-2" style="vertical-align:middle">Branch Name</th>
+                        <th class="text-center col-md-1" style="vertical-align:middle">Spend Over Target</th>
+                        <th class="text-center col-md-1" style="vertical-align:middle">Over Contract Base</th>
+                        <th class="text-center col-md-1" style="vertical-align:middle">Full Time Leakage</th>
+                        <th class="text-center col-md-1" style="vertical-align:middle">Zero Hour/Missing Timecard</th>
+                        <th class="text-center col-md-1" style="vertical-align:middle">Compliance Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model._dashboardViewCollection)
+{
+                        <tr>
+                            <td>@(item.BranchNumber + " - " + item.StoreName)</td>
+                            <td class="text-center">@((bool)item.OverTargetFlag ? string.Format("{0:0.0}", item.SOH - item.FinalTarget) : "-")</td>
+                            <td class="text-center">@((bool)item.OverContractFlag ? string.Format("{0:0.0}", item.ContractHours - item.ContractBaseTarget) : "-")</td>
+                            <td class="text-center">@(item.FTLeakage > 0 ? item.LeakageCount.ToString() : "-")</td>
+                            <td class="text-center">@(item.ZeroHour > 0 ? item.ZeroHour.ToString() : "-")/@(item.TotalHeadCount - item.TimeCardsCompleted > 0 ? (item.TotalHeadCount - item.TimeCardsCompleted).ToString() : "-")</td>
+                            <td class="text-center @GetColor((int)item.ComplianceScore)">@item.ComplianceScore</td>
+                        </tr>
+                    }
+                    <tr>
+                        <td><strong>Region Total</strong></td>
+                        <td class="text-center"><strong>@string.Format("{0:0}", Model._dashboardViewCollection.Where(x => (bool)x.OverTargetFlag).Count())</strong></td>
+                        <td class="text-center"><strong>@string.Format("{0:0}", Model._dashboardViewCollection.Where(x => (bool)x.OverContractFlag).Count())</strong></td>
+                        <td class="text-center"><strong>@string.Format("{0:0.0}", Model._dashboardViewCollection.Sum(x => x.LeakageCount))</strong></td>
+                        <td class="text-center"><strong>@(Model._dashboardViewCollection.Sum(x => x.ZeroHour))/@(Model._dashboardViewCollection.Sum(x => x.TotalHeadCount) - Model._dashboardViewCollection.Sum(x => x.TimeCardsCompleted))</strong></td>
+                        <td class="text-center @GetColor((int)Model._dashboardViewCollection.Average(x => x.ComplianceScore))">@string.Format("{0:0}", Model._dashboardViewCollection.Average(x => x.ComplianceScore))</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+else if (HttpContext.Current.Session["_DivisionName"] != null)
+{
+    var subtotal = Model._dashboardViewCollectionChannel.Where(x => x.Region == null).Single();
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <table class="table table-bordered-blue table-condensed col-md-6">
+                <thead>
+                    <tr>
+                        <th class="text-center col-md-2" style="vertical-align:middle">Region Number</th>
+                        <th class="text-center col-md-1" style="vertical-align:middle">Spend Over Target</th>
+                        <th class="text-center col-md-1" style="vertical-align:middle">Over Contract Base</th>
+                        <th class="text-center col-md-1" style="vertical-align:middle">Full Time Leakage</th>
+                        <th class="text-center col-md-1" style="vertical-align:middle">Zero Hour/Missing Timecard</th>
+                        <th class="text-center col-md-1" style="vertical-align:middle">Compliance Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model._dashboardViewCollectionChannel.Where(x => x.Region != null))
+                    {
+                        <tr>
+                            <td>Region @item.Region</td>
+                            <td class="text-center">@(item.OverTargetFlag > 0 ? string.Format("{0:0}", item.OverTargetFlag) : "-")</td>
+                            <td class="text-center">@(item.OverContractFlag > 0 ? string.Format("{0:0}", item.OverContractFlag) : "-")</td>
+                            <td class="text-center">@(item.LeakageCount > 0 ? item.LeakageCount.ToString() : "-")</td>
+                            <td class="text-center">@(item.ZeroHour > 0 ? item.ZeroHour.ToString() : "-")/@(item.TotalHeadcount - item.TimeCardsCompleted > 0 ? (item.TotalHeadcount - item.TimeCardsCompleted).ToString() : "-")</td>
+                            <td class="text-center @GetColor((int)item.ComplianceScore)">@item.ComplianceScore</td>
+                        </tr>
+                    }
+                    <tr>
+                        <td><strong>Division Total</strong></td>
+                        <td class="text-center"><strong>@string.Format("{0:0}", subtotal.OverTargetFlag)</strong></td>
+                        <td class="text-center"><strong>@string.Format("{0:0}", subtotal.OverContractFlag)</strong></td>
+                        <td class="text-center"><strong>@string.Format("{0:0}", subtotal.LeakageCount)</strong></td>
+                        <td class="text-center"><strong>@(subtotal.ZeroHour)/@(subtotal.TotalHeadcount - subtotal.TimeCardsCompleted)</strong></td>
+                        <td class="text-center @GetColor((int)subtotal.ComplianceScore)">@string.Format("{0:0}", subtotal.ComplianceScore)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+else if (HttpContext.Current.Session["_ChannelName"] != null)
+{
+    var subtotal = Model._dashboardViewCollectionChannel.Where(x => x.Division == null).Single();
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <table class="table table-bordered-blue table-condensed col-md-6">
+                <thead>
+                    <tr>
+                        <th class="text-center col-md-2" style="vertical-align:middle">Division Name</th>
+                        <th class="text-center col-md-1" style="vertical-align:middle">Spend Over Target</th>
+                        <th class="text-center col-md-1" style="vertical-align:middle">Over Contract Base</th>
+                        <th class="text-center col-md-1" style="vertical-align:middle">Full Time Leakage</th>
+                        <th class="text-center col-md-1" style="vertical-align:middle">Zero Hour/Missing Timecard</th>
+                        <th class="text-center col-md-1" style="vertical-align:middle">Compliance Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model._dashboardViewCollectionChannel.Where(x => x.Division != null))
+                    {
+                        <tr>
+                            <td>@item.Division</td>
+                            <td class="text-center">@(item.OverTargetFlag > 0 ? string.Format("{0:0}", item.OverTargetFlag) : "-")</td>
+                            <td class="text-center">@(item.OverContractFlag > 0 ? string.Format("{0:0}", item.OverContractFlag) : "-")</td>
+                            <td class="text-center">@(item.LeakageCount > 0 ? item.LeakageCount.ToString() : "-")</td>
+                            <td class="text-center">@(item.ZeroHour > 0 ? item.ZeroHour.ToString() : "-")/@(item.TotalHeadcount - item.TimeCardsCompleted > 0 ? (item.TotalHeadcount - item.TimeCardsCompleted).ToString() : "-")</td>
+                            <td class="text-center @GetColor((int)item.ComplianceScore)">@item.ComplianceScore</td>
+                        </tr>
+                    }
+                    <tr>
+                        <td><strong>Channel Total</strong></td>
+                        <td class="text-center"><strong>@string.Format("{0:0}", subtotal.OverTargetFlag)</strong></td>
+                        <td class="text-center"><strong>@string.Format("{0:0}", subtotal.OverContractFlag)</strong></td>
+                        <td class="text-center"><strong>@string.Format("{0:0}", subtotal.LeakageCount)</strong></td>
+                        <td class="text-center"><strong>@(subtotal.ZeroHour)/@(subtotal.TotalHeadcount - subtotal.TimeCardsCompleted)</strong></td>
+                        <td class="text-center @GetColor((int)subtotal.ComplianceScore)">@string.Format("{0:0}", subtotal.ComplianceScore)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+else
+{
+    <div class="alert alert-danger text-center"><strong>No dashboard data found for the selected period!</strong></div>
+}

@@ -1,0 +1,58 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
+@model MyTeamViewModel
+
+@{ 
+    var ftPerc = Model.FT.GetValueOrDefault() > 0 && Model.CurrentContractHours > 0 ? (Model.FT / Model.CurrentContractHours) * 100 : null;
+    var ptPerc = Model.PT.GetValueOrDefault() > 0 && Model.CurrentContractHours > 0 ? (Model.PT / Model.CurrentContractHours) * 100 : null;
+
+}
+
+<div class="col-lg-6">
+    <div class="panel-body">
+        <table class="table table-striped table-bordered table-hover" id="dataTables-mySchedule">
+            <thead>
+                <tr class="text-center">
+                    <th class="text-center">Current Contract Hours</th>
+                    <th class="text-center">Contract Base Target</th>
+                    <th class="text-center">FT/PT Split</th>
+                    <th class="text-center">Average Contract Hours</th>
+                </tr>
+                <tr class="text-center">
+                    <td>@string.Format("{0}", Model.CurrentContractHours)</td>
+                    <td>@string.Format("{0}", Model.ContractBaseTarget)</td>
+                    <td>@string.Format("{0:0}/{1:0}", ftPerc, ptPerc)</td>
+                    <td>@string.Format("{0:0.0}", Model.AverageContractHours)</td>
+
+                </tr>
+
+            </thead>
+
+        </table>
+
+        <table class="table table-striped table-bordered table-hover" id="dataTables-myTeamData">
+            <thead>
+                <tr class="text-center">
+                    <td>&nbsp;</td>
+                    <td>Head Count</td>
+                    <td>Contract Hours</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var detail in Model.Details)
+                {
+                    <tr class="text-center">
+                        <td>@detail.Title</td>
+                        <td>@detail.HeadCount</td>
+                        <td>@detail.ContractHours</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+</div>
+</div>
+
+<div class="col-xs-6 col-md-3 text-center">
+    <input type="text" readonly class="knob" data-thickness="0.2" data-angleArc="250" data-angleOffset="-125" value="@string.Format("{0:0}", Model.AverageContractHours)" data-width="180" data-height="180" data-fgColor="#00c0ef">
+    <div class="knob-label">&nbsp;</div>
+</div>
+

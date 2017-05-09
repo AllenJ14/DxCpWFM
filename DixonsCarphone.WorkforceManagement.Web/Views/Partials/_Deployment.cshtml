@@ -1,0 +1,330 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
+
+@model DeploymentViewModel
+@{
+    Func<int, string> GetColor = (i) =>
+    {
+        var rtn = "danger";
+        if (i >= 8)
+        {
+            rtn = "success";
+        }
+        else if (i >= 4)
+        {
+            rtn = "warning";
+        }
+
+        return rtn;
+    };
+    DateTime Today = DateTime.Today;
+}
+
+<div class="row">
+    <div class="col-lg-12 col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading text-center">
+                <strong>WFM Deployment</strong>
+            </div>
+            <div class="panel-body">
+                <p>WFM deployment is a measure of how well you are utilising the hours that have been made available to your store. Good deployment ensures appropriate shop floor coverage in order to take full advantage of the customer opportunity.</p>
+                <p>
+                    When looking at the current and future weeks in the below report the SOH spend is calculated based on your schedules as they currently exist in STAR. Schedule information is refreshed overnight each day so if you have made improvements to these schedules check back the following day to see your new score.<br />
+                    <strong>Note:</strong>The SOH spend for the previous week is not published until <u>3PM Monday</u> to allow for sign off and data validation, before this time the schedule information will continue to be shown.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("~/Views/Shared/_WeekPicker.cshtml", new WeekPickerViewModel { Action = "GetDeployment", Controller = "Reports", WeeksOfYear = Model.WeeksOfYear, SelectedDate = Model.SelectedDate })
+
+<div class="row">
+    &nbsp;
+</div>
+
+@if (HttpContext.Current.Session["_RegionNumber"] != null)
+{
+    if (Model._dashboardViewCollection.Sum(x => x.FinalTarget) != 0)
+    {
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <table class="table table-bordered-blue table-condensed col-md-6">
+                    <thead>
+                        <tr>
+                            <th class="text-center col-4">Branch Name</th>
+                            <th class="text-center col-md-2">SOH Spend</th>
+                            <th class="text-center col-md-2">SOH Budget</th>
+                            <th class="text-center col-md-2">Variance</th>
+                            <th class="text-center col-md-2">Deployment Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model._dashboardViewCollection)
+                    {
+                            <tr>
+                                <td>@(item.BranchNumber + " - " + item.StoreName)</td>
+                                <td class="text-center">@string.Format("{0:0.0}", item.SOH)</td>
+                                <td class="text-center">@string.Format("{0:0.0}", item.FinalTarget)</td>
+                                <td class="text-center">@string.Format("{0:0.0}", (item.SOH - item.FinalTarget))</td>
+                                <td class="text-center @GetColor((int)item.SOHUtilization)">@item.SOHUtilization</td>
+                            </tr>
+                        }
+                        <tr>
+                            <td><strong>Region Total</strong></td>
+                            <td class="text-center"><strong>@string.Format("{0:0.0}", Model._dashboardViewCollection.Sum(x => x.SOH))</strong></td>
+                            <td class="text-center"><strong>@string.Format("{0:0.0}", Model._dashboardViewCollection.Sum(x => x.FinalTarget))</strong></td>
+                            <td class="text-center"><strong>@string.Format("{0:0.0}", Model._dashboardViewCollection.Sum(x => x.SOH) - Model._dashboardViewCollection.Sum(x => x.FinalTarget))</strong></td>
+                            <td class="text-center @GetColor((int)Model._dashboardViewCollection.Average(x=> x.SOHUtilization))"><strong>@string.Format("{0:0}", Model._dashboardViewCollection.Average(x => x.SOHUtilization))</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger text-center"><strong>Budgets for the selected period have not yet been finalised, check back once you have received more information.</strong></div>
+    }
+}
+
+else if (HttpContext.Current.Session["_DivisionName"] != null)
+{
+    if (Model._dashboardViewCollection.Sum(x => x.FinalTarget) != 0)
+    {
+        var subtotal = Model._dashboardViewCollection.Where(x => x.Region == null).Single();
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <table class="table table-bordered-blue table-condensed col-md-6">
+                    <thead>
+                        <tr>
+                            <th class="text-center col-4">Region Number</th>
+                            <th class="text-center col-md-2">SOH Spend</th>
+                            <th class="text-center col-md-2">SOH Budget</th>
+                            <th class="text-center col-md-2">Variance</th>
+                            <th class="text-center col-md-2">Deployment Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model._dashboardViewCollection.Where(x => x.Region != null))
+                        {
+                            <tr>
+                                <td>Region @item.Region</td>
+                                <td class="text-center">@string.Format("{0:0.0}", item.SOH)</td>
+                                <td class="text-center">@string.Format("{0:0.0}", item.FinalTarget)</td>
+                                <td class="text-center">@string.Format("{0:0.0}", (item.SOH - item.FinalTarget))</td>
+                                <td class="text-center @GetColor((int)item.SOHUtilization)">@item.SOHUtilization</td>
+                            </tr>
+                        }
+                        
+                        <tr>
+                            <td><strong>Division Total</strong></td>
+                            <td class="text-center"><strong>@string.Format("{0:0.0}", subtotal.SOH)</strong></td>
+                            <td class="text-center"><strong>@string.Format("{0:0.0}", subtotal.FinalTarget)</strong></td>
+                            <td class="text-center"><strong>@string.Format("{0:0.0}", subtotal.SOH - subtotal.FinalTarget)</strong></td>
+                            <td class="text-center @GetColor((int)subtotal.SOHUtilization)"><strong>@string.Format("{0:0}", subtotal.SOHUtilization)</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger text-center"><strong>Budgets for the selected period have not yet been finalised, check back once you have received more information.</strong></div>
+    }
+}
+
+else if (HttpContext.Current.Session["_ChannelName"] != null)
+{
+    if (Model._dashboardViewCollection.Sum(x => x.FinalTarget) != 0)
+    {
+        var subtotal = Model._dashboardViewCollection.Where(x => x.Division == null).Single();
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <table class="table table-bordered-blue table-condensed col-md-6">
+                    <thead>
+                        <tr>
+                            <th class="text-center col-4">Division Name</th>
+                            <th class="text-center col-md-2">SOH Spend</th>
+                            <th class="text-center col-md-2">SOH Budget</th>
+                            <th class="text-center col-md-2">Variance</th>
+                            <th class="text-center col-md-2">Deployment Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model._dashboardViewCollection.Where(x => x.Division != null))
+                        {
+                            <tr>
+                                <td>@item.Division</td>
+                                <td class="text-center">@string.Format("{0:0.0}", item.SOH)</td>
+                                <td class="text-center">@string.Format("{0:0.0}", item.FinalTarget)</td>
+                                <td class="text-center">@string.Format("{0:0.0}", (item.SOH - item.FinalTarget))</td>
+                                <td class="text-center @GetColor((int)item.SOHUtilization)">@item.SOHUtilization</td>
+                            </tr>
+                        }
+
+                        <tr>
+                            <td><strong>Channel Total</strong></td>
+                            <td class="text-center"><strong>@string.Format("{0:0.0}", subtotal.SOH)</strong></td>
+                            <td class="text-center"><strong>@string.Format("{0:0.0}", subtotal.FinalTarget)</strong></td>
+                            <td class="text-center"><strong>@string.Format("{0:0.0}", subtotal.SOH - subtotal.FinalTarget)</strong></td>
+                            <td class="text-center @GetColor((int)subtotal.SOHUtilization)"><strong>@string.Format("{0:0}", subtotal.SOHUtilization)</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger text-center"><strong>Budgets for the selected period have not yet been finalised, check back once you have received more information.</strong></div>
+    }
+}
+
+else if (Model._dashboardView == null)
+{
+    <div class="alert alert-danger text-center"><strong>No dashboard data found for the selected period!</strong></div>
+}
+
+else if (Model._dashboardView.FinalTarget == null)
+{
+    <div class="alert alert-danger text-center"><strong>Budgets for the selected period have not yet been finalised, check back once you have received more information.</strong></div>
+}
+
+else if (Model._dashboardView != null)
+{
+    if (Model._dashboardView.TotalHeadCount == null)
+    {
+        <p class="text-center"><strong>@(string.Format("Last Update: {0}", Today.AddHours(1).ToString())) &emsp; @(string.Format("Next Update: {0}", Today.AddDays(1).AddHours(1).ToString()))</strong></p>
+    }
+
+
+    <div class="row text-center">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <strong>Deployment - Sales Fit</strong>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-bordered-blue table-condensed col-md-6">
+                        <thead>
+                            <tr>
+                                <th class="text-center col-md-3">SOH Spend</th>
+                                <th class="text-center col-md-3">SOH Budget</th>
+                                <th class="text-center col-md-3">Variance</th>
+                                <th class="text-center col-md-3">Deployment Score</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-center">@string.Format("{0:0.0}", Model._dashboardView.SOH)</td>
+                                <td class="text-center">@string.Format("{0:0.0}", Model._dashboardView.FinalTarget)</td>
+                                <td class="text-center">@string.Format("{0:0.0}", (Model._dashboardView.SOH - Model._dashboardView.FinalTarget)) </td>
+                                <td class="text-center @(GetColor((int)Model._dashboardView.SOHUtilization))">@Model._dashboardView.SOHUtilization</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="col-md-12">
+                        <div class="box-body">
+                            <div class="chart">
+                                <canvas id="spend-bar-chart" style="height:200px"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <p>The deployment score given is from <strong>0</strong> to <strong>10</strong> based on the variation between the SOH target and the SOH spend. 2 points are lost for every 5% away from 100% deployment of weekly SOH hours.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+else
+{
+    <div class="alert alert-danger text-center"><strong>No dashboard data found for the selected period!</strong></div>
+}
+
+<div class="row">
+    &nbsp;
+</div>
+
+@if (Model.DailyDetails == null)
+{
+
+}
+else if (Model.DailyDetails.Count != 0)
+{
+    <div class="row text-center">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <strong>Daily Deployment - Customer Fit</strong>
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="col-md-12">
+                        <div class="box-body">
+                            <div class="chart">
+                                <canvas id="deployment-bar-chart" style="height:250px"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-bordered table-condensed col-md-12">
+                        <thead>
+                            <tr>
+                                <th class="col-md-5 text-center"></th>
+                                <th class="col-md-1 text-center">Sun</th>
+                                <th class="col-md-1 text-center">Mon</th>
+                                <th class="col-md-1 text-center">Tue</th>
+                                <th class="col-md-1 text-center">Wed</th>
+                                <th class="col-md-1 text-center">Thu</th>
+                                <th class="col-md-1 text-center">Fri</th>
+                                <th class="col-md-1 text-center">Sat</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="background-color:#d5dbf6">
+                                <td>This is where you should put your hours</td>
+                                <td>@string.Format("{0:0}%", Model.DailyDetails[0].Required)</td>
+                                <td>@string.Format("{0:0}%", Model.DailyDetails[1].Required)</td>
+                                <td>@string.Format("{0:0}%", Model.DailyDetails[2].Required)</td>
+                                <td>@string.Format("{0:0}%", Model.DailyDetails[3].Required)</td>
+                                <td>@string.Format("{0:0}%", Model.DailyDetails[4].Required)</td>
+                                <td>@string.Format("{0:0}%", Model.DailyDetails[5].Required)</td>
+                                <td>@string.Format("{0:0}%", Model.DailyDetails[6].Required)</td>
+                            </tr>
+                            <tr style="background-color:#d6f3f5">
+                                <td>This is where you've currently put your hours</td>
+                                <td>@string.Format("{0:0}%", Model.DailyDetails[0].Deployed)</td>
+                                <td>@string.Format("{0:0}%", Model.DailyDetails[1].Deployed)</td>
+                                <td>@string.Format("{0:0}%", Model.DailyDetails[2].Deployed)</td>
+                                <td>@string.Format("{0:0}%", Model.DailyDetails[3].Deployed)</td>
+                                <td>@string.Format("{0:0}%", Model.DailyDetails[4].Deployed)</td>
+                                <td>@string.Format("{0:0}%", Model.DailyDetails[5].Deployed)</td>
+                                <td>@string.Format("{0:0}%", Model.DailyDetails[6].Deployed)</td>
+                            </tr>
+                            <tr>
+                                <td>This is what you need to do</td>
+                                @foreach (var item in Model.DailyDetailAdvisory)
+    {
+                                    <td><small>@item</small></td>
+                                }
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div>
+                        <p>Customer fit simply looks at how well you're deploying the hours you're using in store. So you might be using less or more than your available budget, but it will still help you understand if you're making best use of these hours.</p>
+                        <p>It simply rates your scheduled/deployed hours by looking at how they're spread across the days of the week. It then compares this to the customer flow in your specific store for that specific week.</p>
+                        @*<p>There isn't lots of numbers and percentages, just simple clear guidance as to how you could move some hours to make your schedule better.</p>*@
+                    </div>
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+    </div>
+}
+@*else if (Model._dashboardViewCollection == null)
+{
+    <div class="alert alert-danger text-center"><strong>No daily deployment data found for the selected period!</strong></div>
+}*@
+

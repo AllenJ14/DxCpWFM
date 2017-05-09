@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "STAR Handbook";
+}
+
+<section class="content">
+    <row>
+        &emsp;
+    </row>
+
+    <row>
+        <ol class="breadcrumb">
+            <li><a href="@Url.Action("Index","STARHandbook")">STAR Handbook</a></li>
+            <li><a href="@Url.Action("Scheduling","STARHandbook")">Scheduling</a></li>
+            <li class="active">Scheduling a Transfer</li>
+        </ol>
+    </row>
+
+    <row>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title"><strong>Scheduling a Transfer</strong></h4>
+            </div>
+            <div class="panel-body">
+                <p>When a colleague transfers permanently to another store, you will need to request the transfer through your <strong>TPC</strong> and will still need to maintain their 4 weeks schedules until the move is reflected in STAR.</p>
+                <p>This will involve you liaising with the store manager of the store they are transferring to in order to ascertain their shifts, and then scheduling them for cover shifts. (Please see <a href="@Url.Action("Scheduling","STARHandbook",new { articleNumber = 8 })"><strong><u>Adding a cover shift</u></strong></a>).</p>
+            </div>
+        </div>
+    </row>
+
+    @Html.Partial("~/Views/Partials/_ScheduleOptions.cshtml")
+
+    <div class="row">
+        <div class="col-md-6">
+        </div>
+    </div>
+</section>

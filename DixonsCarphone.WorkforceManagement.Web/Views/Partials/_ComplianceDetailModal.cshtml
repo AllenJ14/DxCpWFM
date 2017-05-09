@@ -1,0 +1,31 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
+@model ComplianceData
+
+<div class="panel-default">
+    <!-- Button trigger modal -->
+    <button class="btn-link" data-toggle="modal" data-target="#@string.Format("{0}Modal", Model.ComplianceName)">
+        @string.Format("{0}", Model.ComplianceValue.GetValueOrDefault())
+    </button>
+    <!-- Modal -->
+    <div class="modal fade" id="@string.Format("{0}Modal", Model.ComplianceName)" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="@string.Format("{0}ModalLabel", Model.ComplianceName)">Detail</h4>
+                </div>
+                <div class="modal-body">
+                    This will hold detail                
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+</div>
+
+

@@ -1,0 +1,63 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.Model;
+@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels;
+
+@model StoreDetailViewModel
+@{
+    ViewBag.Title = "Opening Times";
+}
+<div class="row">
+    &nbsp;
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        @Html.Partial("~/Views/Shared/_Messages.cshtml", Model)
+    </div>
+</div>
+
+
+@if (HttpContext.Current.Session["_ChannelName"] != null)
+{
+
+}
+
+else if (HttpContext.Current.Session["_DivisionName"] != null)
+{
+
+}
+
+else if (HttpContext.Current.Session["_RegionNumber"] != null)
+{
+
+}
+
+else if (Model.CurrentTime == null)
+{
+    @:<h4>This page is only intended for use by SAS. SIS stores should use the existing Currys PC World process.</h4>
+}
+else
+{
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading text-center">
+                    <strong>Opening Times</strong>
+                </div>
+                <div class="panel-body">
+                    <p>Shown below are the current trading hours held for your store, including any exceptional weeks when appropriate.</p>
+                    <p>Please use the 'Change Standard Trading Hours' form if you need to make a change and allow 1-2 working days for this change to be confirmed and accepted.</p>
+                    <p><i><strong><u>Please Note</u></strong>: Once accepted it will take a further 1-2 working days for the CPW website to pick up the change of hours.</i></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            @Html.Partial("~/Views/Partials/_StoreOpeningTimes.cshtml", Model)
+        </div>
+    </div>
+
+}
+
+
+
+

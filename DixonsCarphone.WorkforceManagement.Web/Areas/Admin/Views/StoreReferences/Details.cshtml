@@ -1,0 +1,73 @@
+﻿@model DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels.StoreReferenceView
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details: @Model.Br_</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Branch Number
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Br_)
+        </dd>
+
+        <dt>
+            UK Br
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UK_BR)
+        </dd>
+
+        <dt>
+            Store Name
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Store_Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Division)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Division)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Region)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Region)
+        </dd>
+
+        <dt>
+            Region Name
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Region_name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Channel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Channel)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Br_ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

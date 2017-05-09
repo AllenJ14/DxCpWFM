@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewBag.Title = "STAR Handbook";
+}
+
+<section class="content">
+    <row>
+        &emsp;
+    </row>
+
+    <row>
+        <ol class="breadcrumb">
+            <li><a href="@Url.Action("Index","STARHandbook")">STAR Handbook</a></li>
+            <li><a href="@Url.Action("ManagingTimecards","STARHandbook")">Managing Timecards</a></li>
+            <li class="active">Navigating to View</li>
+        </ol>
+    </row>
+
+    <row>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title"><strong>Navigating to View</strong></h4>
+            </div>
+            <div class="panel-body">
+                <p>
+                    To view a timecard, you need to click on the <strong>My Genies tab</strong> and select <strong>'UK Timecard Manager':</strong>
+                    <br /><br />
+                    <img src="~/Images/CMS_Uploads/TimecardMenu1.png" class="img-responsive" alt="ScheduleMenu1" />
+                </p>
+                <br />
+                <p>
+                    Select 'All Home and Transferred-in' the 'Show' hyperfind:
+                    <br /><br />
+                    <img src="~/Images/CMS_Uploads/TimecardMenu2.png" class="img-responsive" alt="ScheduleMenu2" />
+                </p>
+                <br />
+                <p>
+                    Select the required data range from the 'Time Period' hyperfind:
+                    <br /><br />
+                    <img src="~/Images/CMS_Uploads/TimecardMenu3.png" class="img-responsive" alt="ScheduleMenu3" />
+                </p>
+            </div>
+        </div>
+    </row>
+
+    @Html.Partial("~/Views/Partials/_ManagingTimecardsOptions.cshtml")
+
+    <div class="row">
+        <div class="col-md-6">
+        </div>
+    </div>
+</section>

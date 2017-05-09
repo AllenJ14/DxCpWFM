@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<ArrayOfBestPracticeContent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <BestPracticeContent>
+    <Category>Faqs</Category>
+    <Title>Test</Title>
+    <PathToContent>C:\Dev\DixonsCarphone.WorkforceManagement\DixonsCarphone.WorkforceManagement.Web\Uploads\Faqs\Cpw_Mind_Flow.docx</PathToContent>
+  </BestPracticeContent>
+</ArrayOfBestPracticeContent>

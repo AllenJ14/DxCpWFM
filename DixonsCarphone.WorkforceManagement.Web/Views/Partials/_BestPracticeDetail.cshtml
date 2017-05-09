@@ -1,0 +1,17 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels.Cms
+@model ContentDetailViewModel
+
+<div class="panel">
+    <div class="panel-heading">
+        <h2><strong>@Model.ContentDetailTitle</strong></h2>
+    </div>
+    <div class="panel-body">
+        <div>
+            @Model.ContentDetailSummary
+        </div>
+        <div class="col-md-12">
+            @Html.Raw(Model.ContentDetailText)
+        </div>
+    </div>
+</div>
+

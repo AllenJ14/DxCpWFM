@@ -1,0 +1,68 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.Model
+@using System.Linq.Expressions
+
+@model SingleOpeningTimeViewModel
+
+<div class="panel panel-default">
+    <div class="panel-heading"><h4 class="panel-title"><strong>Remove</strong></h4></div>
+    <div class="table-responsive">
+    <table class="table table-bordered table-condensed text-center col-md-12 col-lg-12">
+        @Html.Partial("~/Views/Partials/_OpeningHeader.cshtml")
+
+        <tr>
+            <td>
+                @(Model.TimeToEdit.SundayOpen.ToString() == "00:00:00" ? "Closed" : Model.TimeToEdit.SundayOpen.ToString("hh\\:mm"))
+            </td>
+            <td>
+                @(Model.TimeToEdit.SundayClose.ToString() == "00:00:00" ? "Closed" : Model.TimeToEdit.SundayClose.ToString("hh\\:mm"))
+            </td>
+            <td>
+                @(Model.TimeToEdit.MondayOpen.ToString() == "00:00:00" ? "Closed" : Model.TimeToEdit.MondayOpen.ToString("hh\\:mm"))
+            </td>
+            <td>
+                @(Model.TimeToEdit.MondayClose.ToString() == "00:00:00" ? "Closed" : Model.TimeToEdit.MondayClose.ToString("hh\\:mm"))
+            </td>
+            <td>
+                @(Model.TimeToEdit.TuesdayOpen.ToString() == "00:00:00" ? "Closed" : Model.TimeToEdit.TuesdayOpen.ToString("hh\\:mm"))
+            </td>
+            <td>
+                @(Model.TimeToEdit.TuesdayClose.ToString() == "00:00:00" ? "Closed" : Model.TimeToEdit.TuesdayClose.ToString("hh\\:mm"))
+            </td>
+            <td>
+                @(Model.TimeToEdit.WednesdayOpen.ToString() == "00:00:00" ? "Closed" : Model.TimeToEdit.WednesdayOpen.ToString("hh\\:mm"))
+            </td>
+            <td>
+                @(Model.TimeToEdit.WednesdayClose.ToString() == "00:00:00" ? "Closed" : Model.TimeToEdit.WednesdayClose.ToString("hh\\:mm"))
+            </td>
+            <td>
+                @(Model.TimeToEdit.ThursdayOpen.ToString() == "00:00:00" ? "Closed" : Model.TimeToEdit.ThursdayOpen.ToString("hh\\:mm"))
+            </td>
+            <td>
+                @(Model.TimeToEdit.ThursdayClose.ToString() == "00:00:00" ? "Closed" : Model.TimeToEdit.ThursdayClose.ToString("hh\\:mm"))
+            </td>
+            <td>
+                @(Model.TimeToEdit.FridayOpen.ToString() == "00:00:00" ? "Closed" : Model.TimeToEdit.FridayOpen.ToString("hh\\:mm"))
+            </td>
+            <td>
+                @(Model.TimeToEdit.FridayClose.ToString() == "00:00:00" ? "Closed" : Model.TimeToEdit.FridayClose.ToString("hh\\:mm"))
+            </td>
+            <td>
+                @(Model.TimeToEdit.SaturdayOpen.ToString() == "00:00:00" ? "Closed" : Model.TimeToEdit.SaturdayOpen.ToString("hh\\:mm"))
+            </td>
+            <td>
+                @(Model.TimeToEdit.SaturdayClose.ToString() == "00:00:00" ? "Closed" : Model.TimeToEdit.SaturdayClose.ToString("hh\\:mm"))
+            </td>
+        </tr>
+
+    </table>
+    </div>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-actions no-color col-md-10 col-md-offset-5">
+        <input type="submit" value="Delete" class="btn btn-danger" />
+    </div>
+}

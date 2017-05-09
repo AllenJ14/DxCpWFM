@@ -1,0 +1,268 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels
+@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
+@model StorePandLDetailViewModel
+
+@{ 
+    var subCat = 0;
+    bool prevLiability = false;
+    var prevSubCat = string.Empty;
+    PandLView detail = null;
+    var prevSubCatStr = string.Empty;
+    SectionTotals sectionTotal = null;
+    string sectionTitle = string.Empty;
+    string cssClass = string.Empty;
+    switch (Model.PandLDetails.First().AccountEntryTypeId)
+    {
+        case 1:
+            sectionTitle = "Margin Total";
+            cssClass = "info";
+            break;
+        case 2:
+            sectionTitle = "Costs Total";
+            cssClass = "warning";
+            break;
+        case 3:
+            sectionTitle = "Non Controllable Costs Total";
+            cssClass = "success";
+            break;
+    }
+    Func<string, string> GetBlurb = (i) =>
+    {
+        var rtn = "";
+        if (i == "Stationery")
+        {
+            rtn = "Stationery ordered via Commercial Grp";
+        }
+        else if (i == "Maintenance Complete (ipsos/videra)")
+        {
+            rtn = "Repair call out charges for Ipsos (FF counters) & Videra (Digital Signage) where no fault was found";
+        }
+        else if (i == "Trade In Non Compliance")
+        {
+            rtn = "Non-compliance with handset trade ins";
+        }
+        else if (i == "SOH")
+        {
+            rtn = "SOH spend costed at a notional amount of £11.78 per hour";
+        }
+        else if (i == "FMIP non compliance")
+        {
+            rtn = "Non-compliance for iPhones traded in with FMiP activated";
+        }
+        else if (i == "Cash/Banking Losses")
+        {
+            rtn = "Money lost when cashing up or banking";
+        }
+        else if (i == "Electricity")
+        {
+            rtn = "Electricity used in store, for lights, etc.";
+        }
+        else if (i == "Petty cash Expenses")
+        {
+            rtn = "Expenses processed through PIE";
+        }
+        else if (i == "Refuse")
+        {
+            rtn = "Bin service charges, including penalties";
+        }
+        return rtn;
+    };
+ }
+
+    @if (Model.PandLDetails.FirstOrDefault()?.AccountEntryTypeId == 3)
+    {
+        <tr>
+            <td colspan="11" class="text-center">&nbsp;</td>
+        </tr>
+        <tr style="background-color:lightblue">
+            <td colspan="11" class="text-center"><b>Non Controllable Costs</b></td>
+        </tr>
+        <tr>
+            <td colspan="11" class="text-center">&nbsp;</td>
+        </tr>
+    }
+
+@foreach (var entry in Model.PandLDetails)
+    {
+        var breakDowns = Model.BreakDowns.Where(x => x.AccountEntryDetailId == entry.AccountEntryDetailId).ToList();
+        detail = entry;
+
+        var isLiability = entry.AccountEntrySubTypeId > 1;
+
+        var actual = isLiability && entry.ActualAmount.HasValue ? string.Format("- {0:c0}", entry.ActualAmount) : string.Format("{0:c0}", entry.ActualAmount);
+        var budget = isLiability && entry.BudgetAmount.HasValue ? string.Format("- {0:c0}", entry.BudgetAmount) : string.Format("{0:c0}", entry.BudgetAmount);
+
+        var qtdActual = isLiability && entry.QtdActualAmount.HasValue ? string.Format("- {0:c0}", entry.QtdActualAmount) : string.Format("{0:c0}", entry.QtdActualAmount);
+        var qtdBudget = isLiability && entry.QtdBudgetAmount.HasValue ? string.Format("- {0:c0}", entry.QtdBudgetAmount) : string.Format("{0:c0}", entry.QtdBudgetAmount);
+
+        var ytdActual = isLiability && entry.YtdActualAmount.HasValue ? string.Format("- {0:c0}", entry.YtdActualAmount) : string.Format("{0:c0}", entry.YtdActualAmount);
+        var ytdBudget = isLiability && entry.YtdBudgetAmount.HasValue ? string.Format("- {0:c0}", entry.YtdBudgetAmount) : string.Format("{0:c0}", entry.YtdBudgetAmount);
+    
+        if (subCat != entry.AccountEntrySubTypeId)
+        {
+            var prefix = "Total";
+
+            prevSubCatStr = string.Format("{0} {1}", prefix, prevSubCat);
+            if (subCat != 0)
+            {
+                sectionTotal = Model.SubTypeSectionTotals.FirstOrDefault(x => x.AccountEntrySubTypeId == subCat);
+
+            <tr>
+                <td colspan="2"><b>Subtotal</b></td>
+                <td><b>@(prevLiability ? string.Format("- {0:C0}", sectionTotal?.ActualTotal) : string.Format("{0:C0}", sectionTotal?.ActualTotal))</b></td>
+                <td><b>@(prevLiability ? string.Format("- {0:C0}", sectionTotal?.BudgetTotal) : string.Format("{0:C0}", sectionTotal?.BudgetTotal))</b></td>
+                <td><b>@string.Format("{0:0}%", sectionTotal?.PercToBudgetTotal)</b></td>
+
+                <td><b>@(prevLiability ? string.Format("- {0:C0}", sectionTotal?.QtdActualTotal) : string.Format("{0:C0}", sectionTotal?.QtdActualTotal))</b></td>
+                <td><b>@(prevLiability ? string.Format("- {0:C0}", sectionTotal?.QtdBudgetTotal) : string.Format("{0:C0}", sectionTotal?.QtdBudgetTotal))</b></td>
+                <td><b>@string.Format("{0:0}%", sectionTotal?.QtdPercToBudgetTotal)</b></td>
+
+                <td><b>@(prevLiability ? string.Format("- {0:C0}", sectionTotal?.YtdActualTotal) : string.Format("{0:C0}", sectionTotal?.YtdActualTotal))</b></td>
+                <td><b>@(prevLiability ? string.Format("- {0:C0}", sectionTotal?.YtdBudgetTotal) : string.Format("{0:C0}", sectionTotal?.YtdBudgetTotal))</b></td>
+                <td><b>@string.Format("{0:0}%", sectionTotal?.YtdPercToBudgetTotal)</b></td>
+            </tr>
+            <tr>
+                <td colspan="2"><b><small>Variance</small></b></td>
+                <td><b></b></td>
+                <td><b></b></td>
+                <td><b style="color:@(sectionTotal?.var<0 ? "#ff0000" : "#000000")"><small>@string.Format("{0:£#,##0 ;(£#,##0);-   }", sectionTotal?.var)</small></b></td>
+
+                <td><b></b></td>
+                <td><b></b></td>
+                <td><b style="color:@(sectionTotal?.Qtdvar<0 ? "#ff0000" : "#000000")"><small>@string.Format("{0:£#,##0 ;(£#,##0);-   }", sectionTotal?.Qtdvar)</small></b></td>
+
+                <td><b></b></td>
+                <td><b></b></td>
+                <td><b style="color:@(sectionTotal?.YtdVar<0 ? "#ff0000" : "#000000")"><small>@string.Format("{0:£#,##0 ;(£#,##0);-   }", sectionTotal?.YtdVar)</small></b></td>
+            </tr>
+        }
+
+        prevSubCat = entry.AccountEntrySubTypeText;
+
+        <tr>
+            <td colspan="11" style="padding:0px">&nbsp;</td>
+        </tr>
+
+        <tr class="text-center">
+            <td colspan="11">
+                <b>@entry.AccountEntrySubTypeText</b>
+                @if (entry.AccountEntrySubTypeText == "Sales Margin")
+                {
+                    <span class="text-center"><a tabindex="0" role="button" class="glyphicon glyphicon-info-sign" data-toggle="popover" data-placement="right" data-content="Margin values are calculated from gross sales bonus, assuming GSB is 5% of sales margin" data-trigger="focus" style="color:black"></a></span>
+                }                
+            </td>
+        </tr>
+
+        subCat = entry.AccountEntrySubTypeId.GetValueOrDefault();
+    }
+
+    if (string.IsNullOrEmpty(prevSubCat))
+    {
+        prevSubCat = entry.AccountEntrySubTypeText;
+    }
+
+    <tr class=@cssClass>
+        <td>
+            @entry.DetailTitle
+            @if (GetBlurb(entry.DetailTitle) != "")
+            {
+                <span class="pull-right text-center"><a tabindex="0" role="button" class="glyphicon glyphicon-info-sign" data-toggle="popover" data-placement="right" data-content="@GetBlurb(entry.DetailTitle)" data-trigger="focus" style="color:black"></a></span>
+            }            
+        </td>
+
+        @if (breakDowns != null && breakDowns.Count > 0)
+        {
+            <td>@Html.Partial("~/Views/Partials/_AccountEntryDetailBreakDown.cshtml", breakDowns)</td>
+        }
+        else
+        {
+            <td>&nbsp;</td>
+        }
+        <td>@actual</td>
+        <td>@budget</td>
+        <td>@string.Format("{0:0}{1}", entry.PercToBudget, entry.PercToBudget.HasValue ? "%" : string.Empty)</td>
+        <!--TODO-->
+        <td>@qtdActual</td>
+        <td>@qtdBudget</td>
+        <td>@string.Format("{0:0}{1}", entry.QtdPercToBudget, entry.QtdPercToBudget.HasValue ? "%" : string.Empty)</td>
+
+        <td>@ytdActual</td>
+        <td>@ytdBudget</td>
+        <td>@string.Format("{0:0}{1}", entry.YtdPercToBudget, entry.YtdPercToBudget.HasValue ? "%" : string.Empty)</td>
+
+    </tr>
+    prevLiability = isLiability;
+}
+
+@{
+    var overAllSectionTotal = Model.OverallSectionTotals;
+    sectionTotal = Model.SubTypeSectionTotals.FirstOrDefault(x => x.AccountEntrySubTypeId == detail.AccountEntrySubTypeId.GetValueOrDefault());
+}
+
+@{ 
+    var finalLiability = Model.PandLDetails.First().AccountEntryTypeId > 1;
+    var sectionLiability = sectionTotal.AccountEntrySubTypeId > 1;
+}
+
+<tr>
+    <td colspan="2"><b>Subtotal</b></td>
+    <td><b>@(sectionLiability ? string.Format("- {0:C0}", sectionTotal?.ActualTotal) : string.Format("{0:C0}", sectionTotal?.ActualTotal))</b></td>
+    <td><b>@(sectionLiability ? string.Format("- {0:C0}", sectionTotal?.BudgetTotal) : string.Format("{0:C0}", sectionTotal?.BudgetTotal))</b></td>
+    <td><b>@string.Format("{0:0}%", sectionTotal?.PercToBudgetTotal)</b></td>
+
+    <td><b>@(sectionLiability ? string.Format("- {0:C0}", sectionTotal?.QtdActualTotal) : string.Format("{0:C0}", sectionTotal?.QtdActualTotal))</b></td>
+    <td><b>@(sectionLiability ? string.Format("- {0:C0}", sectionTotal?.QtdBudgetTotal) : string.Format("{0:C0}", sectionTotal?.QtdBudgetTotal))</b></td>
+    <td><b>@string.Format("{0:0}%", sectionTotal?.QtdPercToBudgetTotal)</b></td>
+
+    <td><b>@(sectionLiability ? string.Format("- {0:C0}", sectionTotal?.YtdActualTotal) : string.Format("{0:C0}", sectionTotal?.YtdActualTotal))</b></td>
+    <td><b>@(sectionLiability ? string.Format("- {0:C0}", sectionTotal?.YtdBudgetTotal) : string.Format("{0:C0}", sectionTotal?.YtdBudgetTotal))</b></td>
+    <td><b>@string.Format("{0:0}%", sectionTotal?.YtdPercToBudgetTotal)</b></td>
+</tr>
+
+<tr>
+    <td colspan="2"><b><small>Variance</small></b></td>
+    <td><b></b></td>
+    <td><b></b></td>
+    <td><b style="color:@(sectionTotal?.var<0 ? "#ff0000" : "#000000")"><small>@string.Format("{0:£#,##0 ;(£#,##0);-   }", sectionTotal?.var)</small></b></td>
+
+    <td><b></b></td>
+    <td><b></b></td>
+    <td><b style="color:@(sectionTotal?.Qtdvar<0 ? "#ff0000" : "#000000")"><small>@string.Format("{0:£#,##0 ;(£#,##0);-   }", sectionTotal?.Qtdvar)</small></b></td>
+
+    <td><b></b></td>
+    <td><b></b></td>
+    <td><b style="color:@(sectionTotal?.YtdVar<0 ? "#ff0000" : "#000000")"><small>@string.Format("{0:£#,##0 ;(£#,##0);-   }", sectionTotal?.YtdVar)</small></b></td>
+</tr>
+
+<tr>
+    <td colspan="11" style="padding:0px">&nbsp;</td>
+</tr>
+
+<tr>
+    <td colspan="2"><b>@sectionTitle</b></td>
+    <td><b>@(finalLiability ? string.Format("- {0:C0}", overAllSectionTotal?.ActualTotal) : string.Format("{0:C0}", overAllSectionTotal?.ActualTotal))</b></td>
+    <td><b>@(finalLiability ? string.Format("- {0:C0}", overAllSectionTotal?.BudgetTotal) : string.Format("{0:C0}", overAllSectionTotal?.BudgetTotal))</b></td>
+    <td><b>@string.Format("{0:0}%", overAllSectionTotal?.PercToBudgetTotal)</b></td>
+
+
+    <td><b>@(finalLiability ? string.Format("- {0:C0}", overAllSectionTotal?.QtdActualTotal) : string.Format("{0:C0}", overAllSectionTotal?.QtdActualTotal))</b></td>
+    <td><b>@(finalLiability ? string.Format("- {0:C0}", overAllSectionTotal?.QtdBudgetTotal) : string.Format("{0:C0}", overAllSectionTotal?.QtdBudgetTotal))</b></td>
+    <td><b>@string.Format("{0:0}%", overAllSectionTotal?.QtdPercToBudgetTotal)</b></td>
+
+
+    <td><b>@(finalLiability ? string.Format("- {0:C0}", overAllSectionTotal?.YtdActualTotal) : string.Format("{0:C0}", overAllSectionTotal?.YtdActualTotal))</b></td>
+    <td><b>@(finalLiability ? string.Format("- {0:C0}", overAllSectionTotal?.YtdBudgetTotal) : string.Format("{0:C0}", overAllSectionTotal?.YtdBudgetTotal))</b></td>
+    <td><b>@string.Format("{0:0}%", overAllSectionTotal?.YtdPercToBudgetTotal)</b></td>
+
+</tr>
+
+@*<tr>
+    <td colspan="11" class="text-center" style="padding:0px">&nbsp;</td>
+</tr>*@
+
+@*<tr>
+    <td colspan="11" class="text-center" style="padding:0px">&nbsp;</td>
+</tr>*@
+
+
+

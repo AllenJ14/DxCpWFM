@@ -1,0 +1,68 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
+@using System.Configuration;
+
+@model ScheduledColleaguesViewModel
+
+@{
+    ViewBag.Title = "Schedules";
+}
+
+<section class="content">
+    <div class="row">
+        &nbsp;
+    </div>
+
+    @Html.Partial("~/Views/Partials/_PageBlurb.cshtml", (BaseViewModel)Model)
+
+    <div class="row">
+        @Html.Partial("~/Views/Partials/_StaffSchedule.cshtml", Model)
+    </div>
+</section>
+
+@section myScripts {
+    <script>
+    $(document).ready(function() {
+        $('#dataTables-staffSchedule').DataTable({
+            //responsive: true,
+            dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'print',
+                customize: function ( win ) {
+                    $(win.document.body)
+                        .css('font-size', '10pt')
+                    //.prepend(
+                    //    '<img src="http://datatables.net/media/images/logo-fade.png" style="position:absolute; top:0; left:0;" />'
+                    //);
+                    ;
+                    $(win.document.body).find( 'table' )
+                        .addClass( 'compact' )
+                        .css( 'font-size', 'inherit' );
+                }
+            }
+        ]
+        });
+
+    });
+
+    $(function () {
+        $('#schedulesDtp').datetimepicker({
+            daysOfWeekDisabled: [1, 2, 3, 4, 5, 6],
+            format: 'DD/MM/YYYY',
+            useCurrent: false
+            //calendarWeeks: true,
+        })
+        //Listen for the change even on the input
+        .change(dateChanged)
+        .on('dp.change', dateChanged);
+    });
+
+    function dateChanged(ev) {
+        if ($('#SelectedDate').val() != '') {
+            $('#scheduleDateForm').submit();
+        }
+    }
+
+    </script>
+}
+

@@ -1,0 +1,72 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels
+@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels;
+
+@model StoresMenuViewModel
+
+@{ 
+    int firstRegionforRegion = 1;
+    int firstRegionforStore = 1;
+    int firstDivision = 1;
+    
+}
+
+
+@if (Model.Regions != null && Model.Regions.Count > 0)
+{
+    <li>@Model.CurrentRegionNumber</li>
+    <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+            <i class="glyphicon glyphicon-th-large"></i>
+        </a>
+        <ul class="dropdown-menu dropdown-user @(Model.Regions.Count()>30 ? "scrollable-menu" : "")">
+            <li class="dropdown-header">Branch Views For</li>
+            @foreach (var region in Model.Regions)
+            {
+                if ((region.Text.Equals("1") || region.Text.StartsWith("DCPW")) && firstRegionforRegion == 1)
+                {
+                    <li role="separator" class="divider"></li>
+                    <li class="dropdown-header">Region Views For</li>
+                    firstRegionforRegion = 0;
+                }
+            <li>
+                <a href="@Url.Action("SetNewRegion", "Profiles", new { selectedRegionNumber = region.Value })">@region.Text</a>
+            </li>
+            }
+        </ul>
+    </li>
+}
+
+
+<li>@Model.CurrentStoreName</li>
+
+@if (Model.Stores != null && Model.Stores.Count > 0)
+{
+    <li class="dropdown">
+     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+        <i class="glyphicon glyphicon-collapse-down"></i>
+    </a>
+
+            <ul class="dropdown-menu dropdown-user @(Model.Stores.Count()>30 ? "scrollable-menu" : "")">
+                @foreach (var store in Model.Stores)
+                {
+                    if (store.Text.Contains("Region") && firstRegionforStore == 1)
+                    {
+                        <li role="separator" class="divider"></li>
+                        <li class="dropdown-header">Region Overview</li>
+                        firstRegionforStore = 0;
+                    }
+                    if (store.Text.Contains("DCPW") && firstDivision == 1)
+                    {
+                        <li role="separator" class="divider"></li>
+                        <li class="dropdown-header">Division Overview</li>
+                        firstDivision = 0;
+                    }
+                    
+                    <li>
+                        <a href="@Url.Action("SetNewStore", "Profiles", new { selectedStoreNumber = store.Value })">@store.Text</a>
+                    </li>
+                }
+            </ul>
+    </li>
+}
+

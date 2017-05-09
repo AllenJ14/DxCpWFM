@@ -1,0 +1,96 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!doctype html>
+<head>
+    <link href="~/Content/New/bootstrap.min.css" rel="stylesheet" media="all">
+    <link rel="shortcut icon" type="image/png" href="~/Images/ADC95AB0513840DAADA5E205ED39351B.png" />
+    <title>Workforce Management</title>
+</head>
+
+<div class="modal show" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-center">
+                    We were unable to identify your Branch.
+                </h3>
+            </div>
+            <div class="modal-body">
+                <p>
+                    Oops. Remember this site can only be accessed by store colleagues on their internal network.
+                </p>
+                <p>
+                    For Field based/Head Office roles click <a href="@Url.Action("Index","OOS")"><strong><u>here</u></strong></a> to login
+                </p>
+                <p>
+                    Still having issues, raise through the medics team <a href="@Url.Action("LinkToMedics","Profiles")"><strong><u>here</u></strong></a>.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<div class="modal show" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-center">
+                    Site Currently Unavailable
+                </h3>
+            </div>
+            <div class="modal-body text-center">
+                <p>
+                    The WFM intranet will be unavailable between <strong>27/02/2017 - 03/03/2017</strong>.
+                <p>
+                    We apologise for any inconvenience, urgent queries can be raised to the STAR inbox.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>*@
+
+@*<div class="modal show" id="branchSearch" tabindex="-1" role="form">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-center">
+                    We were unable to identify your Branch.
+                </h3>
+                <h4 class="modal-title text-center" id="branchSearchLabel">
+                    Please enter your Branch Number below:
+                </h4>
+            </div>
+
+            @if (ViewBag.StoreFindError != null)
+            {
+                @:<p class="alert alert-danger text-align" role="alert">
+                    @:<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    @:    <strong>Oops!</strong> The entered store could not be found.
+                    @:</p>
+                
+            }
+
+            <div class="modal-body col-lg-offset-1 col-md-offset-1">
+                <form class="form-horizontal" role="form" method="post">
+                    @Html.AntiForgeryToken()
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label class="control-label col-md-1" for="StoreID">Branch:</label>
+                            <div>
+                                <input autofocus type="number" required class="form-control text-box col-md-10" name="StoreID" id="StoreID" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <button type="submit" value="submit" class="btn btn-default col-md-offset-5">Go</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>*@

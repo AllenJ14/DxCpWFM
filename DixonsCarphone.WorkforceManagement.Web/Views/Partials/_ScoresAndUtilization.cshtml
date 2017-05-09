@@ -1,0 +1,107 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
+@model Dictionary<string, List<ScoresAndUtilizationViewModel>>
+
+@{ 
+    Func<int, string> GetColor = (i) =>
+    {
+        var rtn = "primary";
+        switch (i)
+        {
+            case 1:
+                rtn = "green";
+                break;
+            case 2:
+                rtn = "yellow";
+                break;
+            case 3:
+                rtn = "red";
+                break;
+        }
+
+        return rtn;
+    };
+
+    Func<ScoresAndUtilizationViewModel, string, string> GetAction = (score, week) =>
+    {
+        var action = string.Empty;
+        switch (score?.Title?.ToLower())
+        {
+            case "scheduled colleagues":
+                action = Url.Action("Schedules", "Reports", new { scheduledWeek = week });
+                break;
+            case "deployment":
+                action = Url.Action("GetDeployment", "Reports", new { selectedDate = week });
+                break;
+            case "compliance":
+                action = Url.Action("GetCompliance", "Reports", new { selectedDate = week });
+                break;
+            case "non-scheduled":
+                action = Url.Action("GetNonScheduled", "Reports");
+                break;
+
+
+        }
+
+        return action;
+    };
+
+    var x = 0;
+    var r = 0;
+}
+
+    @foreach (var week in Model)
+    {
+        r = 0;
+        //var weekStr = week.Key == "Last Week" ? "Last<br />Week" : week.Key;
+
+        <div class="col-md-6 col-lg-3">
+            <div class="panel panel-@GetColor(x)">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="hidden-sm hidden-xs glyphicon glyphicon-stats" style="font-size:35px"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            @*<span class="pull-right-container"><i class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="top" title="Compliance & Deployment Scores - @Html.Raw(week.Key)"></i></span>*@
+                            <h2 class="hidden-lg">@Html.Raw(week.Key)</h2>
+                            <h1 class="visible-lg">@Html.Raw(week.Key)</h1>
+                        </div>
+                    </div>
+                </div>
+
+                @foreach (var score in week.Value)
+                {
+                    var action = GetAction(score, week.Key);
+                    r++;
+                    
+                    <a href="@Html.Raw(action)">
+                        <div class="panel-footer">
+                            <span class="pull-left">@score.Title &nbsp;&nbsp;&nbsp;<span class="pull-right badge bg-blue">@(score.Score == -1 ? "-" : score.Score.ToString()) / 10</span></span>
+                            <span class="pull-right"><i class="glyphicon glyphicon-circle-arrow-right"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                }
+                @*@if (r < 3)
+                {
+                    <div class="panel-footer">
+                        <span class="pull-left">&nbsp;&nbsp;&nbsp;</span>
+                        <span class="pull-right">&nbsp;</span>
+                        <div class="clearfix"></div>
+                    </div>
+                }
+                @if (r < 2)
+                {
+                    <div class="panel-footer">
+                        <span class="pull-left">&nbsp;&nbsp;&nbsp;</span>
+                        <span class="pull-right">&nbsp;</span>
+                        <div class="clearfix"></div>
+                    </div>
+                }*@
+     
+            </div>
+        </div>
+        x++;
+    }
+
+

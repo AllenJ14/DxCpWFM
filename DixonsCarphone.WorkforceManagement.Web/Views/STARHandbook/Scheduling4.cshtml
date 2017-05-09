@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "STAR Handbook";
+}
+
+<section class="content">
+    <row>
+        &emsp;
+    </row>
+
+    <row>
+        <ol class="breadcrumb">
+            <li><a href="@Url.Action("Index","STARHandbook")">STAR Handbook</a></li>
+            <li><a href="@Url.Action("Scheduling","STARHandbook")">Scheduling</a></li>
+            <li class="active">Editing a Schedule</li>
+        </ol>
+    </row>
+
+    <row>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title"><strong>Editing a Schedule</strong></h4>
+            </div>
+            <div class="panel-body">
+                <p>At times you may need to amend your schedules to ensure they are accurate, either in response to trends or changes in the business, or to accommodate your team.</p>
+                <p>Changes can be made in any schedule period that has <strong>not</strong> been signed off, however you should not edit shift in the <i>current week</i> unless you need to add a cover shift. All other Ad-Hoc changes should be managed on the Timecard.</p>
+            </div>
+        </div>
+    </row>
+
+    @Html.Partial("~/Views/Partials/_ScheduleOptions.cshtml")
+
+    <div class="row">
+        <div class="col-md-6">
+        </div>
+    </div>
+</section>

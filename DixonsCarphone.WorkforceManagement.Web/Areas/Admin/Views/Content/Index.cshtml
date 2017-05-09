@@ -1,0 +1,42 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
+
+@model AdminContentViewModel
+
+@{
+    ViewBag.Title = "Cpw Admin Area";
+}
+
+<h2>CPW Admin</h2>
+
+<div class="row">
+    @Html.Partial("~/Views/Shared/_Messages.cshtml", (BaseViewModel)Model)
+</div>
+
+<div class="row text-center">
+    <div class="jumbotron">
+        This section is used to manage content. Please use tabs above
+    </div>
+</div>
+
+@section scripts {
+    <script>
+    $(document).ready(function() {
+        $(function () { // will trigger when the document is ready
+            $('.datepicker').datepicker({
+                format: 'dd/mm/yyyy',
+            }); //Initialise any date pickers
+        });
+
+        $('input').click(function () {
+            var input_class = $(this).attr('class');
+
+            $('.' + input_class).prop('checked', false);
+
+            $(this).prop('checked', true);
+        });
+    });
+
+    </script>
+}
+
+

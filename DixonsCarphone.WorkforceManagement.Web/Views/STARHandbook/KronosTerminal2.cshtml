@@ -1,0 +1,41 @@
+﻿@*Clocking In/Out*@
+
+@{
+    ViewBag.Title = "STAR Handbook";
+}
+
+<section class="content">
+    <row>
+        &emsp;
+    </row>
+
+    <row>
+        <ol class="breadcrumb">
+            <li><a href="@Url.Action("Index","STARHandbook")">STAR Handbook</a></li>
+            <li><a href="@Url.Action("KronosTerminal","STARHandbook")">Kronos Terminal</a></li>
+            <li class="active">Clocking In/Out</li>
+        </ol>
+    </row>
+
+
+    <row>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title"><strong>Clocking In/Out</strong></h4>
+            </div>
+            <div class="panel-body">
+                <p>To clock in or out on the Touch-ID terminal the colleague enters their badge number and then places the relevant finger on the finger plate.</p>
+                <p>If successful, the Touch-ID terminal will display ‘Accepted’. Else it will display ‘Rejected’ and an error code.</p>
+                <p>The most common error code is 4-01 Rejected, which happens when a colleague double clocks (clocks in/out twice within 3 minutes)</p>
+            </div>
+            
+        </div>
+    </row>
+    
+    @Html.Partial("~/Views/Partials/_KronosTerminalOptions.cshtml")
+
+    <div class="row">
+        <div class="col-md-6">
+        </div>
+    </div>
+</section>

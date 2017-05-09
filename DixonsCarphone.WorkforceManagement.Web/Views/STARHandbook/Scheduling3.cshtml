@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewBag.Title = "STAR Handbook";
+}
+
+<section class="content">
+    <row>
+        &emsp;
+    </row>
+
+    <row>
+        <ol class="breadcrumb">
+            <li><a href="@Url.Action("Index","STARHandbook")">STAR Handbook</a></li>
+            <li><a href="@Url.Action("Scheduling","STARHandbook")">Scheduling</a></li>
+            <li class="active">Deleting a Shift</li>
+        </ol>
+    </row>
+
+    <row>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title"><strong>Deleting a Shift</strong></h4>
+            </div>
+            <div class="panel-body">
+                <p>In order to delete a shift perform the following action from the 'UK Schedule Editor' page.</p>
+                <hr />
+                <row class="col-md-12">
+                    <img src="~/Images/CMS_Uploads/DeleteAShift1.png" class="col-md-6" />
+                    <br />
+                    <div class="col-md-6">1. Right click on the shift box and select 'Delete'. Once saved, the shift will be deleted from the schedule.</div>
+                </row>
+            </div>
+        </div>
+    </row>
+
+    @Html.Partial("~/Views/Partials/_ScheduleOptions.cshtml")
+
+    <div class="row">
+        <div class="col-md-6">
+        </div>
+    </div>
+</section>

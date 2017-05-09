@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewBag.Title = "STAR Handbook";
+}
+
+<section class="content">
+    <row>
+        &emsp;
+    </row>
+
+    <row>
+        <ol class="breadcrumb">
+            <li><a href="@Url.Action("Index","STARHandbook")">STAR Handbook</a></li>
+            <li><a href="@Url.Action("Scheduling","STARHandbook")">Scheduling</a></li>
+            <li class="active">Entering an Absence</li>
+        </ol>
+    </row>
+
+    <row>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title"><strong>Entering an Absence</strong></h4>
+            </div>
+            <div class="panel-body">
+                <p>A Pay code is used to specify when a colleague is not working in store, either for an absence (holiday, sickness, etc.) or for an out of store shift (Meeting, training, recruitment, etc.).</p>
+                <hr />
+                <row class="col-md-12">
+                    <img src="~/Images/CMS_Uploads/AddAnAbsence1.png" class="col-md-6" />
+                    <br />
+                    <div class="col-md-6">1. Ensure you select the correct absence type (Beginning with <strong>'UK'</strong>) from the drop down list.</div>
+                </row>
+                <div class="col-md-12">
+                    &emsp;
+                </div>
+                <row class="col-md-12">
+                    <img src="~/Images/CMS_Uploads/AddAnAbsence2.png" class="col-md-6" />
+                    <br />
+                    <div class="col-md-6">2. All absences must have comments added.</div>
+                </row>
+                <div class="col-md-12">
+                    &emsp;
+                </div>
+                <row class="col-md-12">
+                    <img src="~/Images/CMS_Uploads/AddAnAbsence3.png" class="col-md-6" />
+                    <br />
+                    <div class="col-md-6">3. The Absence has now been added to your schedule.</div>
+                </row>
+            </div>
+        </div>
+    </row>
+
+    @Html.Partial("~/Views/Partials/_ScheduleOptions.cshtml")
+
+    <div class="row">
+        <div class="col-md-6">
+        </div>
+    </div>
+</section>

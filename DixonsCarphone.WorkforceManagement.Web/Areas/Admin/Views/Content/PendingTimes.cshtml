@@ -1,0 +1,120 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
+@model AdminOpeningTimes
+
+@{
+    ViewBag.Title = "Pending Times";
+}
+
+<section class="content">
+    <div class="row">
+        &nbsp;
+    </div>
+
+    <h2>Approve Opening Times</h2>
+
+    @if (Model.PendingApproval.Count() == 0)
+    {
+        <h4>No Pending Approvals!</h4>
+    }
+    else
+    {
+        <table class="table table-bordered table-condensed text-center">
+            <thead>
+                <tr>
+                    <td>Store Number</td>
+                    <td>Date Submitted</td>
+                    <td>Effective Date</td>
+                    <td>Approve</td>
+                </tr>
+            </thead>
+            <tbody>
+                @for (var index = 0; index < Model.PendingApproval.Count(); index++)
+                {
+                    <tr>
+                        <td>@Model.PendingApproval[index].StoreNumber</td>
+                        <td>@Model.PendingApproval[index].DateTimeSubmitted.ToShortDateString()</td>
+                        <td>@Model.PendingApproval[index].EffectiveDate.ToShortDateString()</td>
+                        <td><a href=@Url.Action("ReviewTimes","Content", new { entryID = Model.PendingApproval[index].EntryId, storeID = Model.PendingApproval[index].StoreNumber })>Review</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+    @using (Html.BeginForm())
+    {
+        <p>
+            Find by branch number: @Html.TextBox("SearchString")
+            <input type="submit" value="Search" />
+            <span style="color:red">@ViewBag.ErrorMessage</span>
+        </p>
+    }
+
+    @if (Model.QueriedRecord != null)
+    {
+        <div class="panel panel-default">
+            <div class="panel-heading text-center"><strong>Standard Trading Hours</strong></div>
+            <div class="table-responsive">
+                <table class="table table-bordered table-condensed text-center">
+                    @Html.Partial("~/Views/Partials/_OpeningHeader.cshtml")
+                    <tbody>
+                        <tr>
+                            <td>
+                                @(Model.QueriedRecord.SundayOpen.ToString() == "00:00:00" ? "Closed" : Model.QueriedRecord.SundayOpen.ToString("hh\\:mm"))
+                            </td>
+                            <td>
+                                @(Model.QueriedRecord.SundayClose.ToString() == "00:00:00" ? "Closed" : Model.QueriedRecord.SundayClose.ToString("hh\\:mm"))
+                            </td>
+                            <td>
+                                @(Model.QueriedRecord.MondayOpen.ToString() == "00:00:00" ? "Closed" : Model.QueriedRecord.MondayOpen.ToString("hh\\:mm"))
+                            </td>
+                            <td>
+                                @(Model.QueriedRecord.MondayClose.ToString() == "00:00:00" ? "Closed" : Model.QueriedRecord.MondayClose.ToString("hh\\:mm"))
+                            </td>
+                            <td>
+                                @(Model.QueriedRecord.TuesdayOpen.ToString() == "00:00:00" ? "Closed" : Model.QueriedRecord.TuesdayOpen.ToString("hh\\:mm"))
+                            </td>
+                            <td>
+                                @(Model.QueriedRecord.TuesdayClose.ToString() == "00:00:00" ? "Closed" : Model.QueriedRecord.TuesdayClose.ToString("hh\\:mm"))
+                            </td>
+                            <td>
+                                @(Model.QueriedRecord.WednesdayOpen.ToString() == "00:00:00" ? "Closed" : Model.QueriedRecord.WednesdayOpen.ToString("hh\\:mm"))
+                            </td>
+                            <td>
+                                @(Model.QueriedRecord.WednesdayClose.ToString() == "00:00:00" ? "Closed" : Model.QueriedRecord.WednesdayClose.ToString("hh\\:mm"))
+                            </td>
+                            <td>
+                                @(Model.QueriedRecord.ThursdayOpen.ToString() == "00:00:00" ? "Closed" : Model.QueriedRecord.ThursdayOpen.ToString("hh\\:mm"))
+                            </td>
+                            <td>
+                                @(Model.QueriedRecord.ThursdayClose.ToString() == "00:00:00" ? "Closed" : Model.QueriedRecord.ThursdayClose.ToString("hh\\:mm"))
+                            </td>
+                            <td>
+                                @(Model.QueriedRecord.FridayOpen.ToString() == "00:00:00" ? "Closed" : Model.QueriedRecord.FridayOpen.ToString("hh\\:mm"))
+                            </td>
+                            <td>
+                                @(Model.QueriedRecord.FridayClose.ToString() == "00:00:00" ? "Closed" : Model.QueriedRecord.FridayClose.ToString("hh\\:mm"))
+                            </td>
+                            <td>
+                                @(Model.QueriedRecord.SaturdayOpen.ToString() == "00:00:00" ? "Closed" : Model.QueriedRecord.SaturdayOpen.ToString("hh\\:mm"))
+                            </td>
+                            <td>
+                                @(Model.QueriedRecord.SaturdayClose.ToString() == "00:00:00" ? "Closed" : Model.QueriedRecord.SaturdayClose.ToString("hh\\:mm"))
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div id="0" class="text-center panel-body">
+                <a class="btn btn-primary btn-default" href="@Url.Action("NewStoreTimeRequest", "Content")">Change Standard Trading Hours</a>
+            </div>
+        </div>
+    }
+
+    <div>
+        @Html.ActionLink("Back", "Index")
+    </div>
+</section>
+
+
+

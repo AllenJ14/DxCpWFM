@@ -1,0 +1,17 @@
+﻿@model IEnumerable<DixonsCarphone.WorkforceManagement.ViewModels.Model.WidgetsAndControls>
+
+@{
+    ViewBag.Title = "Widgets And Controls";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <h2>Widgets And Controls</h2>
+    <div>Widgets and Controls to show on Home Page</div>
+    @using (Html.BeginForm())
+    {
+        @Html.EditorForModel()
+        <input type="submit" value="OK" />
+    }
+</div>
+

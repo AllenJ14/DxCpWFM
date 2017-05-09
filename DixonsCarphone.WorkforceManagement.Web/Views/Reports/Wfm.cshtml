@@ -1,0 +1,29 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
+
+@model DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels.StandardReportViewModel
+
+@{
+    ViewBag.Title = "Wfm";
+}
+
+<section class="content">
+    <div class="row">
+        &nbsp;
+    </div>
+
+    @Html.Partial("~/Views/Partials/_PageBlurb.cshtml", (BaseViewModel)Model)
+
+    <div class="row">
+        @Html.Partial("~/Views/Partials/_StandardReport.cshtml", Model)
+    </div>
+</section>
+@section myScripts {
+    <script>
+    $(document).ready(function() {
+        $('#dataTables-standardReport').DataTable({
+            responsive: true
+        });
+    });
+    </script>
+}
+

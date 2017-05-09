@@ -1,0 +1,18 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
+@model ActivityAdminViewModel
+
+@{
+    ViewBag.Title = "News And Actions";
+}
+
+<section class="content">
+    <div class="row">
+        &nbsp;
+    </div>
+    <div class="row">
+        @Html.Partial("~/Views/Shared/_Messages.cshtml", (BaseViewModel)Model)
+    </div>
+
+    @Html.Partial("~/Areas/Admin/Views/Partials/_EventsAndActivitiesAdmin.cshtml", Model)
+</section>
+

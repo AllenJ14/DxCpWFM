@@ -1,0 +1,19 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
+@model NonScheduledColleguesViewModel
+@{
+    ViewBag.Title = "Non-Scheduled Colleagues";
+}
+
+<section class="content">
+    <div class="row">
+        &nbsp;
+    </div>
+
+    @Html.Partial("~/Views/Partials/_PageBlurb.cshtml", (BaseViewModel)Model)
+
+    @Html.Partial("~/Views/Partials/_NonScheduledColleagues.cshtml", Model)
+    <div class="row">
+        <div class="col-md-6">
+        </div>
+    </div>
+</section>

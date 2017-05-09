@@ -1,0 +1,26 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
+@model StorePandLViewModel
+
+@{
+    ViewBag.Title = "Store P & L";
+}
+
+<section class="content">
+    <div class="row">
+        &nbsp;
+    </div>
+
+    @Html.Partial("~/Views/Partials/_PageBlurb.cshtml", Model)
+
+    @Html.Partial("~/Views/Partials/_StorePandL.cshtml", Model)
+</section>
+
+@section myScripts{
+    <script>
+        $(document).ready(function () {
+
+            $('[data-toggle="popover"]').popover();
+
+        });
+    </script>
+}

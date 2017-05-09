@@ -1,0 +1,9 @@
+﻿@model DixonsCarphone.WorkforceManagement.ViewModels.Model.WidgetsAndControls
+
+@Html.HiddenFor(x => x.PathToPartial)
+@Html.HiddenFor(x => x.Name)
+@Html.HiddenFor(x => x.OwnRow)
+<div>
+    @Html.CheckBoxFor(x => x.ShowOnUi)
+    @Html.LabelFor(x => x.ShowOnUi, Model.Name)
+</div>

@@ -1,0 +1,308 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.Model
+@using DixonsCarphone.WorkforceManagement.ViewModels
+
+@model StoreDetailViewModel
+
+@if (Model.CurrentTime != null)
+{
+    <div class="panel panel-default">
+        <div class="panel-heading text-center"><strong>Standard Trading Hours</strong></div>
+        <div class="table-responsive">
+            <table class="table table-bordered table-condensed-smtxt text-center">
+                @Html.Partial("~/Views/Partials/_OpeningHeader.cshtml")
+                <tbody>
+                    <tr>
+                        <td>
+                            @(Model.CurrentTime.SundayOpen.ToString() == "00:00:00" ? "Closed" : Model.CurrentTime.SundayOpen.ToString("hh\\:mm"))
+                        </td>
+                        <td>
+                            @(Model.CurrentTime.SundayClose.ToString() == "00:00:00" ? "Closed" : Model.CurrentTime.SundayClose.ToString("hh\\:mm"))
+                        </td>
+                        <td>
+                            @(Model.CurrentTime.MondayOpen.ToString() == "00:00:00" ? "Closed" : Model.CurrentTime.MondayOpen.ToString("hh\\:mm"))
+                        </td>
+                        <td>
+                            @(Model.CurrentTime.MondayClose.ToString() == "00:00:00" ? "Closed" : Model.CurrentTime.MondayClose.ToString("hh\\:mm"))
+                        </td>
+                        <td>
+                            @(Model.CurrentTime.TuesdayOpen.ToString() == "00:00:00" ? "Closed" : Model.CurrentTime.TuesdayOpen.ToString("hh\\:mm"))
+                        </td>
+                        <td>
+                            @(Model.CurrentTime.TuesdayClose.ToString() == "00:00:00" ? "Closed" : Model.CurrentTime.TuesdayClose.ToString("hh\\:mm"))
+                        </td>
+                        <td>
+                            @(Model.CurrentTime.WednesdayOpen.ToString() == "00:00:00" ? "Closed" : Model.CurrentTime.WednesdayOpen.ToString("hh\\:mm"))
+                        </td>
+                        <td>
+                            @(Model.CurrentTime.WednesdayClose.ToString() == "00:00:00" ? "Closed" : Model.CurrentTime.WednesdayClose.ToString("hh\\:mm"))
+                        </td>
+                        <td>
+                            @(Model.CurrentTime.ThursdayOpen.ToString() == "00:00:00" ? "Closed" : Model.CurrentTime.ThursdayOpen.ToString("hh\\:mm"))
+                        </td>
+                        <td>
+                            @(Model.CurrentTime.ThursdayClose.ToString() == "00:00:00" ? "Closed" : Model.CurrentTime.ThursdayClose.ToString("hh\\:mm"))
+                        </td>
+                        <td>
+                            @(Model.CurrentTime.FridayOpen.ToString() == "00:00:00" ? "Closed" : Model.CurrentTime.FridayOpen.ToString("hh\\:mm"))
+                        </td>
+                        <td>
+                            @(Model.CurrentTime.FridayClose.ToString() == "00:00:00" ? "Closed" : Model.CurrentTime.FridayClose.ToString("hh\\:mm"))
+                        </td>
+                        <td>
+                            @(Model.CurrentTime.SaturdayOpen.ToString() == "00:00:00" ? "Closed" : Model.CurrentTime.SaturdayOpen.ToString("hh\\:mm"))
+                        </td>
+                        <td>
+                            @(Model.CurrentTime.SaturdayClose.ToString() == "00:00:00" ? "Closed" : Model.CurrentTime.SaturdayClose.ToString("hh\\:mm"))
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="0" class="text-center panel-body">
+            <a class="btn btn-primary btn-default" href="@Url.Action("NewStoreTimeRequest", "Planning")">Change Standard Trading Hours</a>
+        </div>
+    </div>
+}
+
+@if (Model.PeakTimes != null)
+{
+    <br />
+
+    <div class="panel panel-default">
+        <div class="panel-heading text-center"><strong>Easter Trading Hours</strong></div>
+        <div class="panel-body">
+            <p>Make any corrections to the opening times by clicking the date for the relevant week, then confirm they are correct by clicking 'Accept'. <strong>All stores must confirm their peak trading hours by 31/03/17</strong>.</p>
+            Making a change to a previously confirmed week will 'unconfirm' the hours for that week, so they must again be confirmed by clicking 'Accept'.
+        </div>
+        <div class="table-responsive">
+            <table class="table table-condensed-smtxt table-bordered text-center table-hover vertical-align">
+                <thead>
+                    <tr>
+                        <th colspan="2" rowspan="2" valign="middle" class="text-center">Week<br />Commencing</th>
+                        <th colspan="2" class="text-center">Sunday</th>
+                        <th colspan="2" class="text-center">Monday</th>
+                        <th colspan="2" class="text-center">Tuesday</th>
+                        <th colspan="2" class="text-center">Wednesday</th>
+                        <th colspan="2" class="text-center">Thursday</th>
+                        <th colspan="2" class="text-center">Friday</th>
+                        <th colspan="2" class="text-center">Saturday</th>
+                        <th rowspan="2" class="text-center"><br />Confirm</th>
+                    </tr>
+                    <tr>
+                        <th class="text-center">Open</th>
+                        <th class="text-center">Close</th>
+                        <th class="text-center">Open</th>
+                        <th class="text-center">Close</th>
+                        <th class="text-center">Open</th>
+                        <th class="text-center">Close</th>
+                        <th class="text-center">Open</th>
+                        <th class="text-center">Close</th>
+                        <th class="text-center">Open</th>
+                        <th class="text-center">Close</th>
+                        <th class="text-center">Open</th>
+                        <th class="text-center">Close</th>
+                        <th class="text-center">Open</th>
+                        <th class="text-center">Close</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (var peakIndex = 0; peakIndex < Model.PeakTimes.Count(); peakIndex++)
+                {
+                        <tr>
+                            <td colspan="2" style=@(Model.PeakTimes[peakIndex].EffectiveDate.ToShortDateString() == "09/04/2017" || Model.PeakTimes[peakIndex].EffectiveDate.ToShortDateString() == "16/04/2017" || Model.PeakTimes[peakIndex].EffectiveDate.ToShortDateString() == "25/12/2016"? "" : "padding:15px")>
+                                @Html.ActionLink(Model.PeakTimes[peakIndex].EffectiveDate.ToShortDateString(), "Edit", new { id = Model.PeakTimes[peakIndex].EntryID })
+                                <br />
+                                @if (Model.PeakTimes[peakIndex].EffectiveDate.ToShortDateString() == "20/11/2016")
+                                {
+                                    @:<small>Black Friday</small>
+                                    }
+                                else if (Model.PeakTimes[peakIndex].EffectiveDate.ToShortDateString() == "18/12/2016")
+                                {
+                                    @:<small>Xmas Week 1</small>
+                                    }
+                                else if (Model.PeakTimes[peakIndex].EffectiveDate.ToShortDateString() == "25/12/2016")
+                                {
+                                    @:<small>Xmas Week 2</small>
+                                    }
+                                else if (Model.PeakTimes[peakIndex].EffectiveDate.ToShortDateString() == "09/04/2017")
+                                {
+                                    @:<small>Good Friday</small>
+                                    }
+                                else if (Model.PeakTimes[peakIndex].EffectiveDate.ToShortDateString() == "16/04/2017")
+                                {
+                                    @:<small>Easter Sunday</small>
+                                    }
+                            </td>
+
+                            <td>
+                                @(Model.PeakTimes[peakIndex].SundayOpen.ToString() == "00:00:00" ? "Closed" : Model.PeakTimes[peakIndex].SundayOpen.ToString("hh\\:mm"))
+                            </td>
+                            <td>
+                                @(Model.PeakTimes[peakIndex].SundayClose.ToString() == "00:00:00" ? "Closed" : Model.PeakTimes[peakIndex].SundayClose.ToString("hh\\:mm"))
+                            </td>
+                            <td>
+                                @(Model.PeakTimes[peakIndex].MondayOpen.ToString() == "00:00:00" ? "Closed" : Model.PeakTimes[peakIndex].MondayOpen.ToString("hh\\:mm"))
+                            </td>
+                            <td>
+                                @(Model.PeakTimes[peakIndex].MondayClose.ToString() == "00:00:00" ? "Closed" : Model.PeakTimes[peakIndex].MondayClose.ToString("hh\\:mm"))
+                            </td>
+                            <td>
+                                @(Model.PeakTimes[peakIndex].TuesdayOpen.ToString() == "00:00:00" ? "Closed" : Model.PeakTimes[peakIndex].TuesdayOpen.ToString("hh\\:mm"))
+                            </td>
+                            <td>
+                                @(Model.PeakTimes[peakIndex].TuesdayClose.ToString() == "00:00:00" ? "Closed" : Model.PeakTimes[peakIndex].TuesdayClose.ToString("hh\\:mm"))
+                            </td>
+                            <td>
+                                @(Model.PeakTimes[peakIndex].WednesdayOpen.ToString() == "00:00:00" ? "Closed" : Model.PeakTimes[peakIndex].WednesdayOpen.ToString("hh\\:mm"))
+                            </td>
+                            <td>
+                                @(Model.PeakTimes[peakIndex].WednesdayClose.ToString() == "00:00:00" ? "Closed" : Model.PeakTimes[peakIndex].WednesdayClose.ToString("hh\\:mm"))
+                            </td>
+                            <td>
+                                @(Model.PeakTimes[peakIndex].ThursdayOpen.ToString() == "00:00:00" ? "Closed" : Model.PeakTimes[peakIndex].ThursdayOpen.ToString("hh\\:mm"))
+                            </td>
+                            <td>
+                                @(Model.PeakTimes[peakIndex].ThursdayClose.ToString() == "00:00:00" ? "Closed" : Model.PeakTimes[peakIndex].ThursdayClose.ToString("hh\\:mm"))
+                            </td>
+                            <td>
+                                @(Model.PeakTimes[peakIndex].FridayOpen.ToString() == "00:00:00" ? "Closed" : Model.PeakTimes[peakIndex].FridayOpen.ToString("hh\\:mm"))
+                            </td>
+                            <td>
+                                @(Model.PeakTimes[peakIndex].FridayClose.ToString() == "00:00:00" ? "Closed" : Model.PeakTimes[peakIndex].FridayClose.ToString("hh\\:mm"))
+                            </td>
+                            <td>
+                                @(Model.PeakTimes[peakIndex].SaturdayOpen.ToString() == "00:00:00" ? "Closed" : Model.PeakTimes[peakIndex].SaturdayOpen.ToString("hh\\:mm"))
+                            </td>
+                            <td>
+                                @(Model.PeakTimes[peakIndex].SaturdayClose.ToString() == "00:00:00" ? "Closed" : Model.PeakTimes[peakIndex].SaturdayClose.ToString("hh\\:mm"))
+                            </td>
+                            <td>
+
+                                @if (Model.PeakTimes[peakIndex].Status == "PeakPending")
+                                {
+                                    using (Html.BeginForm("AcceptPeak", "Planning", FormMethod.Post, new { id = "acceptForm" + peakIndex }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        @Html.Hidden("id", Model.PeakTimes[peakIndex].EntryID)
+                                        <a onclick="ScrollSave" class="btn btn-warning btn-sm" href='@string.Format("javascript:document.getElementById('acceptForm{0}').submit()",peakIndex)' , new { id=Model.PeakTimes[peakIndex].EntryID })">Accept</a>
+                                    }
+                                }
+                                else
+                                {
+                                    <div class="btn btn-success btn-sm">Confirmed</div>
+                                }
+                            </td>
+
+
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+
+@if (Model.PendingTimes != null && Model.PendingTimes.Count != 0)
+{
+    <br />
+        <div class="panel panel-default">
+            <div class="panel-heading text-center"><strong>Pending Changes</strong></div>
+            <div class="table-responsive">
+                <table class="table  table-condensed-smtxt table-bordered text-center vertical-align">
+                    <thead>
+                        <tr>
+                            <th colspan="1" rowspan="2" valign="middle" class="text-center">Approved</th>
+                            <th colspan="2" rowspan="2" valign="middle" class="text-center">Effective Date</th>
+                            <th colspan="2" class="text-center">Sunday</th>
+                            <th colspan="2" class="text-center">Monday</th>
+                            <th colspan="2" class="text-center">Tuesday</th>
+                            <th colspan="2" class="text-center">Wednesday</th>
+                            <th colspan="2" class="text-center">Thursday</th>
+                            <th colspan="2" class="text-center">Friday</th>
+                            <th colspan="2" class="text-center">Saturday</th>
+                            <th rowspan="2" valign="middle" class="text-center">Cancel</th>
+                        </tr>
+                        <tr>
+                            <th class="text-center">Open</th>
+                            <th class="text-center">Close</th>
+                            <th class="text-center">Open</th>
+                            <th class="text-center">Close</th>
+                            <th class="text-center">Open</th>
+                            <th class="text-center">Close</th>
+                            <th class="text-center">Open</th>
+                            <th class="text-center">Close</th>
+                            <th class="text-center">Open</th>
+                            <th class="text-center">Close</th>
+                            <th class="text-center">Open</th>
+                            <th class="text-center">Close</th>
+                            <th class="text-center">Open</th>
+                            <th class="text-center">Close</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (var pendingIndex = 0; pendingIndex < Model.PendingTimes.Count(); pendingIndex++)
+                {
+                            <tr>
+                                <td>
+                                    @(Model.PendingTimes[pendingIndex].Status.Contains("Approval") ? "No" : "Yes")
+                                </td>
+                                <td colspan="2">
+                                    @(Model.PendingTimes[pendingIndex].EffectiveDate.ToShortDateString())
+                                </td>
+                                <td>
+                                    @(Model.PendingTimes[pendingIndex].SundayOpen.ToString() == "00:00:00" ? "Closed" : Model.PendingTimes[pendingIndex].SundayOpen.ToString("hh\\:mm"))
+                                </td>
+                                <td>
+                                    @(Model.PendingTimes[pendingIndex].SundayClose.ToString() == "00:00:00" ? "Closed" : Model.PendingTimes[pendingIndex].SundayClose.ToString("hh\\:mm"))
+                                </td>
+                                <td>
+                                    @(Model.PendingTimes[pendingIndex].MondayOpen.ToString() == "00:00:00" ? "Closed" : Model.PendingTimes[pendingIndex].MondayOpen.ToString("hh\\:mm"))
+                                </td>
+                                <td>
+                                    @(Model.PendingTimes[pendingIndex].MondayClose.ToString() == "00:00:00" ? "Closed" : Model.PendingTimes[pendingIndex].MondayClose.ToString("hh\\:mm"))
+                                </td>
+                                <td>
+                                    @(Model.PendingTimes[pendingIndex].TuesdayOpen.ToString() == "00:00:00" ? "Closed" : Model.PendingTimes[pendingIndex].TuesdayOpen.ToString("hh\\:mm"))
+                                </td>
+                                <td>
+                                    @(Model.PendingTimes[pendingIndex].TuesdayClose.ToString() == "00:00:00" ? "Closed" : Model.PendingTimes[pendingIndex].TuesdayClose.ToString("hh\\:mm"))
+                                </td>
+                                <td>
+                                    @(Model.PendingTimes[pendingIndex].WednesdayOpen.ToString() == "00:00:00" ? "Closed" : Model.PendingTimes[pendingIndex].WednesdayOpen.ToString("hh\\:mm"))
+                                </td>
+                                <td>
+                                    @(Model.PendingTimes[pendingIndex].WednesdayClose.ToString() == "00:00:00" ? "Closed" : Model.PendingTimes[pendingIndex].WednesdayClose.ToString("hh\\:mm"))
+                                </td>
+                                <td>
+                                    @(Model.PendingTimes[pendingIndex].ThursdayOpen.ToString() == "00:00:00" ? "Closed" : Model.PendingTimes[pendingIndex].ThursdayOpen.ToString("hh\\:mm"))
+                                </td>
+                                <td>
+                                    @(Model.PendingTimes[pendingIndex].ThursdayClose.ToString() == "00:00:00" ? "Closed" : Model.PendingTimes[pendingIndex].ThursdayClose.ToString("hh\\:mm"))
+                                </td>
+                                <td>
+                                    @(Model.PendingTimes[pendingIndex].FridayOpen.ToString() == "00:00:00" ? "Closed" : Model.PendingTimes[pendingIndex].FridayOpen.ToString("hh\\:mm"))
+                                </td>
+                                <td>
+                                    @(Model.PendingTimes[pendingIndex].FridayClose.ToString() == "00:00:00" ? "Closed" : Model.PendingTimes[pendingIndex].FridayClose.ToString("hh\\:mm"))
+                                </td>
+                                <td>
+                                    @(Model.PendingTimes[pendingIndex].SaturdayOpen.ToString() == "00:00:00" ? "Closed" : Model.PendingTimes[pendingIndex].SaturdayOpen.ToString("hh\\:mm"))
+                                </td>
+                                <td>
+                                    @(Model.PendingTimes[pendingIndex].SaturdayClose.ToString() == "00:00:00" ? "Closed" : Model.PendingTimes[pendingIndex].SaturdayClose.ToString("hh\\:mm"))
+                                </td>
+                                <td>
+                                    <a href="@Url.Action("DeleteRequest", "Planning", new { entryId = Model.PendingTimes[pendingIndex].EntryID })">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </a>
+                                </td>
+                            </tr>
+
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+}

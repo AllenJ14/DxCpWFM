@@ -1,0 +1,62 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
+@using DixonsCarphone.WorkforceManagement.ViewModels
+
+@model ScheduledColleaguesViewModel
+
+@{ 
+    var scheduledStaff = Model.ScheduledStaff.GroupBy(x => x.PersonNumber).Select(x => x.FirstOrDefault()).ToList(); //distinct staff by person number
+}
+
+@Html.Partial("~/Views/Shared/_WeekPicker.cshtml", new WeekPickerViewModel { Action = "Schedules", Controller = "Reports" })
+
+<div class="row">
+    &nbsp;
+</div>
+
+<div class="row">
+
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Staff Schedule
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-staffSchedule">
+                    <thead>
+                        <tr>
+                            <th>Staff</th>
+                            <th>Sunday</th>
+                            <th>Monday</th>
+                            <th>Tuesday</th>
+                            <th>Wednesday</th>
+                            <th>Thursday</th>
+                            <th>Friday</th>
+                            <th>Saturday</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var staff in scheduledStaff)
+                    {
+                            <tr class="gradeA">
+                                <td>@staff.FullName</td>
+                                @for (int i = 0; i < 7; i++)
+                        {
+                            var detail = Model.ScheduledStaff.Where(x => x.PersonNumber == staff.PersonNumber && (int)x.ScheduledDate.DayOfWeek == i).FirstOrDefault();
+                            var txt = detail != null ? string.Format("{0} - {1} {2}", detail.StartTime, detail.EndTime, detail.BranchAssigned) : string.Empty;
+                                    <td>@txt</td>
+                        }
+                            </tr>
+                    }
+                    </tbody>
+                </table>
+                <!-- /.table-responsive -->
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+    </div>
+</div>
+
+
+

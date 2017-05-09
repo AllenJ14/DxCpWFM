@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewBag.Title = "STAR Handbook";
+}
+
+<section class="content">
+    <row>
+        &emsp;
+    </row>
+
+    <row>
+        <ol class="breadcrumb">
+            <li><a href="@Url.Action("Index","STARHandbook")">STAR Handbook</a></li>
+            <li><a href="@Url.Action("Scheduling","STARHandbook")">Scheduling</a></li>
+            <li class="active">Exporting a Schedule</li>
+        </ol>
+    </row>
+
+    <row>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title"><strong>Exporting a Schedule</strong></h4>
+            </div>
+            <div class="panel-body">
+                <p>You can use the following step to step guide to export and publish schedules to you team.</p>
+                <p>
+                    <ul>
+                        <li>Select the Schedule tab > <i>UK Schedule Editor</i></li>
+                        <li>Set the Show and Time Period hyperfinds based on what you want to export</li>
+                        <li>Click 'Actions' > <i>Select All</i></li>
+                        <li>If you wish to deselect any employee hold down ctrl and click on the relevant employee</li>
+                        <li>Click the 'Reports' quick link</li>
+                        <li>Click on the '+' by Scheduler</li>
+                        <li>Select 'Schedule by Labour Account -Weekly' or 'Schedule by Labour Account - Weekly (Excel)'*</li>
+                        <li>If you want to export as an excel click 'Set Options' and choose .xls from the drop down box at the bottom. The default is .pdf. Note, this can only be done with Weekly (Excel) report)</li>
+                        <li>Click E-mail and enter your email address</li>
+                    </ul>
+                </p>
+                <p>You will then have a copy of your schedule which you can distribute to your team. Please keep in mind the integrity of your schedule, and ensure that any changes are reflected in both STAR and on the team's copy of the schedule.</p>
+                <hr />
+                <img src="~/Images/CMS_Uploads/ScheduleSample.png" class="col-md-12"/>
+            </div>
+        </div>
+    </row>
+
+    @Html.Partial("~/Views/Partials/_ScheduleOptions.cshtml")
+
+    <div class="row">
+        <div class="col-md-6">
+        </div>
+    </div>
+</section>

@@ -1,0 +1,32 @@
+[
+  {
+    "outputFileName": "Content/bootstrap.min.css",
+    "inputFiles": [
+      "Content/bootstrap.css"
+    ]
+  },
+  {
+    "outputFileName": "Content/SbAdmin/vendor/bootstrap/css/bootstrap.min.css",
+    "inputFiles": [
+      "Content/SbAdmin/vendor/bootstrap/css/bootstrap.css"
+    ]
+  },
+  {
+    "outputFileName": "Content/SbAdmin/vendor/morrisjs/morris.min.js",
+    "inputFiles": [
+      "Content/SbAdmin/vendor/morrisjs/morris.js"
+    ]
+  },
+  {
+    "outputFileName": "Content/Chart.js-master/src/chart.min.js",
+    "inputFiles": [
+      "Content/Chart.js-master/src/chart.js"
+    ]
+  },
+  {
+    "outputFileName": "Content/New/bootstrap.min.css",
+    "inputFiles": [
+      "Content/New/bootstrap.css"
+    ]
+  }
+]

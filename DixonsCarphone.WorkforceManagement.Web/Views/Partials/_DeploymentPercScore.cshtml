@@ -1,0 +1,29 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
+@using DixonsCarphone.WorkforceManagement.ViewModels
+@model DeploymentDetail
+
+@{ 
+    var color = Model != null ? Model.GradeColor : string.Empty;
+    Func<double?, string> GetColor = (x) =>
+    {
+        var s = "green";
+        var i = x.GetValueOrDefault();
+
+        if (i < 80 || i > 124)
+            s = "red";
+
+        if ((i >= 80 && i < 90) || (i >= 115 && i < 125))
+            s = "darkorange";
+
+        return s;
+    };
+}
+
+<div class="col-sm-6 text-center vcenter">
+    <div class="panel-body vcenter pull-left" style="color:white; background-color: @GetColor(Model?.Perc)">
+        <div>
+            @string.Format("{0}%", Model?.Perc.FormatNumber())
+        </div>
+    </div>
+
+</div>

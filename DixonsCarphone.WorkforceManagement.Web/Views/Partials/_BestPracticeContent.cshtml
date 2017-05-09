@@ -1,0 +1,21 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels.Cms
+@model ContentHeaderViewModel
+
+<div class="panel">
+    <div class="panel-heading">
+        <h2><strong>@Model.HeaderTitle</strong></h2>
+    </div>
+    <div class="panel-body">
+        <div>
+            @Model.HeaderDescription
+        </div>
+        <div class="col-md-12">
+            @foreach (var item in Model.ContentDetails)
+            {
+                    <a href="@Url.Action("GetSection", "BestPractice", new { contentDetailId = item.ContentDetailId })" class="btn btn-primary btn-lg col-md-3" role="button">@item.ContentDetailTitle</a>
+                    <span class="col-md-1"></span>
+            }
+        </div>
+    </div>
+</div>
+

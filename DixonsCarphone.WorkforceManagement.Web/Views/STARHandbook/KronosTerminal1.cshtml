@@ -1,0 +1,57 @@
+﻿@*Enrolling Colleagues*@
+
+@{
+    ViewBag.Title = "STAR Handbook";
+}
+
+<section class="content">
+    <row>
+        &emsp;
+    </row>
+
+    <row>
+        <ol class="breadcrumb">
+            <li><a href="@Url.Action("Index","STARHandbook")">STAR Handbook</a></li>
+            <li><a href="@Url.Action("KronosTerminal","STARHandbook")">Kronos Terminal</a></li>
+            <li class="active">Enrolling Colleagues</li>
+        </ol>
+    </row>
+
+
+    <row>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title"><strong>Enrolling Colleagues</strong></h4>
+            </div>
+            <div class="panel-body">
+                <p>To enrol a new colleague you will need your <strong>S (Supervisor) card</strong> <a href="@Url.Action("EscalationsSupport","STARHandbook", new { articleNumber = 3 })"><u> (I don't have a card)</u></a>
+                <ul>
+                    <li>Swipe the S card in the Touch-ID terminal and enter the supervisor password: 00000</li>
+                    <li>Enter the colleague's badge number <span class="glyphicon glyphicon-info-sign"></span></li>
+                    <li>Follow the onscreen instructions</li>
+                </ul>
+                </p>
+            </div>
+            <div class="panel-footer">
+                <dl class="dl-horizontal">
+                    <dt><span class="glyphicon glyphicon-info-sign"></span> Badge Number:</dt>
+                    <dd>
+                        A colleague’s badge number is dependent on the length of their payroll number. Please refer to the following formats in order to enroll/punch, replacing the "123..." with the relevant payroll number:
+                        <ul>
+                            <li>A 5-digit payroll number - 10012345</li>
+                            <li>A 6 digit payroll number - 10123456</li>
+                            <li>A 7 digit payroll number - 101234567</li>
+                        </ul>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </row>
+    
+    @Html.Partial("~/Views/Partials/_KronosTerminalOptions.cshtml")
+
+    <div class="row">
+        <div class="col-md-6">
+        </div>
+    </div>
+</section>

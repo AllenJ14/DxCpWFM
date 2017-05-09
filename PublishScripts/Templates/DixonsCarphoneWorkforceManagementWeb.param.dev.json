@@ -1,0 +1,29 @@
+{
+  "siteName": {
+    "value": "DixonsCarphoneWfm"
+  },
+  "hostingPlanName": {
+    "value": "AltWfmPlan"
+  },
+  "siteLocation": {
+    "value": "North Europe"
+  },
+  "sku": {
+    "value": "Free"
+  },
+  "workerSize": {
+    "value": "0"
+  },
+  "siteMode": {
+    "value": "Limited"
+  },
+  "computeMode": {
+    "value": "0"
+  },
+  "subscriptionId": {
+    "value": "9e254e54-5629-49da-a119-5dc6b5bf515e"
+  },
+  "resourceGroup": {
+    "value": "Cpw"
+  }
+}
