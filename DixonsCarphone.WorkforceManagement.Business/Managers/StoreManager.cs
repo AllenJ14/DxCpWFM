@@ -341,17 +341,71 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
         // Queries Stores table for cost centre matching the given IP address
         public async Task<Store> GetStoreDetails(string ip)
         {
-            var ipBase = ip == "::1" ? "127.0.0" : ip.Substring(0, ip.LastIndexOf("."));
+            var ipBase = ip == "::1" ? "127.0.1" : ip.Substring(0, ip.LastIndexOf("."));
             
             using (var dbContext = new DxCpWfmContext())
             {
-                var result = await dbContext.Stores
-                    .FirstOrDefaultAsync(x => x.IpRange == ipBase);
+                var result = await dbContext.Stores.Where(x => x.IpRange == ipBase).ToListAsync();
+
+                if(result.Count() > 1)
+                {
+                    return new Store { IpRange = "DUPLICATE" };
+                }
+                else
+                {
+                    return result.FirstOrDefault();
+                }
+            }
+        }
+
+        // Queries Stores table for ALL cost centre matching the given IP address
+        public async Task<List<Store>> GetAllStoreDetails(string ip)
+        {
+            var ipBase = ip == "::1" ? "127.0.1" : ip.Substring(0, ip.LastIndexOf("."));
+
+            using (var dbContext = new DxCpWfmContext())
+            {
+                var result = await dbContext.Stores.Where(x => x.IpRange == ipBase).ToListAsync();
 
                 return result;
             }
         }
-        
+
+        // Queries Stores table for ALL cost centre matching the given IP address
+        public async Task<Store> GetStoreDetailsFullIP(string ip)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                var storenum = await dbContext.IpRefs.Where(x => x.IpRange == ip).FirstOrDefaultAsync();
+
+                if(storenum != null)
+                {
+                    var result = await dbContext.Stores.Where(x => x.CST_CNTR_ID == storenum.storeNumber).FirstOrDefaultAsync();
+                    return result;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
+        //Submit new full IP identification record
+        public async Task SubmitNewIdStoreRecord(int storeNum, string ip)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                IpRef _ipRef = new IpRef
+                {
+                    storeNumber = storeNum,
+                    IpRange = ip
+                };
+                dbContext.IpRefs.Add(_ipRef);
+                await dbContext.SaveChangesAsync();
+            }
+            return;
+        }
+
         //Get current opening time for specific store
         public async Task<StoreOpeningTime> GetCurrentOpeningTimes(int storeNumber)
         {

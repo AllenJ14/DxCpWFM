@@ -15,6 +15,12 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
 
         Task<Store> GetStoreDetails(string ip);
 
+        Task<List<Store>> GetAllStoreDetails(string ip);
+
+        Task<Store> GetStoreDetailsFullIP(string ip);
+
+        Task SubmitNewIdStoreRecord(int storeNum, string ip);
+
         Task<Store> GetStoreDetails(int storeNumber);
 
         Task<List<StoreOpeningTime>> GetStoreOpeningTimes(int storeNumber);

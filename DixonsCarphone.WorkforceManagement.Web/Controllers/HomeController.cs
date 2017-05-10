@@ -34,6 +34,10 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             {
                 return RedirectToAction("UnknownStore", "Profiles");
             }
+            if (_store.IpRange == "DUPLICATE")
+            {
+                return RedirectToAction("DuplicateRecords", "Profiles");
+            }
 
             // Loads all activities, including store specific. Orders by ActivityDate>Priority>Time
             var result = await _activityManager.GetActivities(StoreNumber);

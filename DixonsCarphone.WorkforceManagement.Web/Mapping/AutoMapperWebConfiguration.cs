@@ -54,6 +54,8 @@ namespace DixonsCarphone.WorkforceManagement.Web.Mapping
             CreateMap<RoleReferenceView, RoleReference>();
             CreateMap<UserAccessDetail, UserAccess>();
             CreateMap<UserAccess, UserAccessDetail>();
+            CreateMap<Store, StoreViewModel>();
+            CreateMap<StoreViewModel, Store>();
         }
     }
 

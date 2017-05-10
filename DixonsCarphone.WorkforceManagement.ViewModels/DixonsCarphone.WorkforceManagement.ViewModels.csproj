@@ -96,6 +96,7 @@
     <Compile Include="BusinessModels\ScheduleVm.cs" />
     <Compile Include="BusinessModels\SohSpendViewModel.cs" />
     <Compile Include="BusinessModels\StoreHoursForApproval.cs" />
+    <Compile Include="BusinessModels\StoreListViewModel.cs" />
     <Compile Include="BusinessModels\StorePandLViewModel.cs" />
     <Compile Include="BusinessModels\ActivityView.cs" />
     <Compile Include="BusinessModels\ActivityAdminViewModel.cs" />

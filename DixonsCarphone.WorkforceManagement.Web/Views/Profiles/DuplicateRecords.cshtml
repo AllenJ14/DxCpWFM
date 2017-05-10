@@ -1,0 +1,52 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
+
+@model StoreListViewModel
+
+@{
+    Layout = null;
+}
+
+<!doctype html>
+<head>
+    <link href="~/Content/New/bootstrap.min.css" rel="stylesheet" media="all">
+    <link rel="shortcut icon" type="image/png" href="~/Images/ADC95AB0513840DAADA5E205ED39351B.png" />
+    <title>Workforce Management</title>
+</head>
+
+<div class="modal show" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-center">
+                    We have found several possible matches for your branch.
+                </h3>
+            </div>
+            <div class="modal-body">
+                @if (ViewBag.storeSelectError != null)
+                {
+                    <ul>
+                        <li><span class="text-danger">The submitted selection was invalid, please try again.</span></li>
+                    </ul>
+                }
+                <p>
+                    Please select your branch from the list shown below.
+                </p>
+                <span class="text-danger"><strong>Your selection will be remembered on this device so ensure you choose the correct branch</strong></span>
+                <form class="form-horizontal" role="form" method="post">
+                    @Html.AntiForgeryToken()
+                    <div class="col-md-12" style="padding:15px">
+                        <select class="form-group control col-md-12" id="storeSelection" name="storeSelection">
+                            @foreach (var item in Model.storeList)
+                            {
+                                <option value="@item.CST_CNTR_ID">@string.Format("{0} - {1}", item.CST_CNTR_ID, item.StoreName)</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" value="submit" class="btn btn-lg btn-primary col-md-offset-5">Go</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

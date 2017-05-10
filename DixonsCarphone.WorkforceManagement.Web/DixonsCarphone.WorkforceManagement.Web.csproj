@@ -515,6 +515,7 @@
     <Content Include="Views\STARHandbook\Availability3.cshtml" />
     <Content Include="Views\STARHandbook\Availability4.cshtml" />
     <Content Include="Views\STARHandbook\Availability.cshtml" />
+    <Content Include="Views\Profiles\DuplicateRecords.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DixonsCarphone.WorkforceManagement.Business\DixonsCarphone.WorkforceManagement.Business.csproj">

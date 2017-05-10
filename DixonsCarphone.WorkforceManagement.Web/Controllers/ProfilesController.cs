@@ -169,6 +169,48 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             return View("UnknownStore");
         }
 
+        public async Task<ActionResult> DuplicateRecords()
+        {
+            if (TempData["storeSelectError"] != null)
+            {
+                ViewBag.storeSelectError = true;
+            }
+
+            var ip = MvcHelper.GetIPHelper();
+            var storeSearch = await _storeManager.GetStoreDetailsFullIP(ip);
+
+            if(storeSearch == null)
+            {
+                var vm = new StoreListViewModel
+                {
+                    storeList = mapper.Map<List<StoreViewModel>>(await _storeManager.GetAllStoreDetails(ip))
+                };
+                return View(vm);
+            }
+            else
+            {
+                System.Web.HttpContext.Current.Session.Add("_StoreDetails", storeSearch);
+                return RedirectToAction("Index", "Home");
+            }
+            
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> DuplicateRecords(int storeSelection)
+        {
+            //int storeNum;
+            //var parseable = int.TryParse(storeSelection.Substring(storeSelection.IndexOf(" ")), out storeNum);
+            //if (parseable)
+            //{
+                await _storeManager.SubmitNewIdStoreRecord(storeSelection, MvcHelper.GetIPHelper());
+                System.Web.HttpContext.Current.Session.Remove("_StoreDetails");
+                return RedirectToAction("Index", "Home");
+            //}
+            //TempData["storeSelectError"] = true;
+
+            //return RedirectToAction("DuplicateRecords");
+        }
+
         public async Task<ActionResult> LinkToMedics()
         {
             await _storeManager.LogUnknownBranch(MvcHelper.GetIPHelper(), 9999);
