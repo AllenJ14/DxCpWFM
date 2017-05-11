@@ -163,6 +163,12 @@
     <Compile Include="Entities\PriorityType.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\PublishedBudgetsBranch_Result.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\PublishedBudgetsRegion_Result.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\RoleReference.cs">
       <DependentUpon>DxCpReportingModel.tt</DependentUpon>
     </Compile>

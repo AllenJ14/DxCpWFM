@@ -50,8 +50,35 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             return View("NewsEventsNotifications", vm);
         }
 
-    //Retrieve active store opening time records
-    private async Task<StoreDetailViewModel> GetStoreOpeningTimes()
+        public async Task<ActionResult> MyBudgets()
+        {
+            PublishedBudgetsVM vm = new PublishedBudgetsVM();
+            if (System.Web.HttpContext.Current.Session["_ChannelName"] != null)
+            {
+                vm.Message = "This page is not available in the currently selected view, please select a store from the top right menu or go back.";
+                vm.MessageType = MessageType.Error;
+            }
+            else if (System.Web.HttpContext.Current.Session["_DivisionName"] != null)
+            {
+                vm.Message = "This page is not available in the currently selected view, please select a store from the top right menu or go back.";
+                vm.MessageType = MessageType.Error;
+            }
+            else if (System.Web.HttpContext.Current.Session["_RegionNumber"] != null)
+            {
+                var data = await _storeManager.GetBudgetsRegion(System.Web.HttpContext.Current.Session["_RegionNumber"].ToString());
+                vm.BudgetCollection = mapper.Map<List<PublishedBudgetBranch>>(data);
+            }
+            else
+            {
+                var data = await _storeManager.GetBudgetsBranch(_store.CST_CNTR_ID);
+                vm.BudgetCollection = mapper.Map<List<PublishedBudgetBranch>>(data);
+            }
+
+            return View("MyBudgets", vm);
+        }
+
+        //Retrieve active store opening time records
+        private async Task<StoreDetailViewModel> GetStoreOpeningTimes()
         {
             StoreDetailViewModel storeVm = new StoreDetailViewModel();
 

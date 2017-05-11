@@ -98,5 +98,9 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
         Task<List<sp_DivisionPunchCompliance_Result>> GetDivisionPunch(string Division, int weekNum);
 
         Task<List<sp_ChannelPunchCompliance_Result>> GetChannelPunch(string Channel, int weekNum);
+
+        Task<List<PublishedBudgetsBranch_Result>> GetBudgetsBranch(int storeNumber);
+
+        Task<List<PublishedBudgetsRegion_Result>> GetBudgetsRegion(string regionNumber);
     }
 }

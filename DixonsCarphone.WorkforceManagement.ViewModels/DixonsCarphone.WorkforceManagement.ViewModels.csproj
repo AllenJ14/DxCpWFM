@@ -87,6 +87,8 @@
     <Compile Include="BusinessModels\MyTeamViewModel.cs" />
     <Compile Include="BusinessModels\MyTargetsViewModel.cs" />
     <Compile Include="BusinessModels\PandLView.cs" />
+    <Compile Include="BusinessModels\PublishedBudgetBranch.cs" />
+    <Compile Include="BusinessModels\PublishedBudgetsVM.cs" />
     <Compile Include="BusinessModels\PunchCompView.cs" />
     <Compile Include="BusinessModels\PunchCompVM.cs" />
     <Compile Include="BusinessModels\RegionPunchComplianceItem.cs" />

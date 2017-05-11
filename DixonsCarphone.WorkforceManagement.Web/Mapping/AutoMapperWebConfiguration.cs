@@ -101,6 +101,10 @@ namespace DixonsCarphone.WorkforceManagement.Web.Mapping
             CreateMap<sp_AllChannelDashboardData_Result, DashboardViewChannel>();
             CreateMap<DashboardViewChannel, sp_AllDivisionDashboardData_Result>();
             CreateMap<sp_AllDivisionDashboardData_Result, DashboardViewChannel>();
+            CreateMap<PublishedBudgetsBranch_Result, PublishedBudgetBranch>();
+            CreateMap<PublishedBudgetBranch, PublishedBudgetsBranch_Result>();
+            CreateMap<PublishedBudgetsRegion_Result, PublishedBudgetBranch>();
+            CreateMap<PublishedBudgetBranch, PublishedBudgetsRegion_Result>();
         }
     }
 

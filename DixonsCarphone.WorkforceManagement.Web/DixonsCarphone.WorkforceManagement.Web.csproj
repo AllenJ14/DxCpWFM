@@ -433,7 +433,7 @@
     <Content Include="Views\Partials\_AccountEntryDetailBreakDown.cshtml" />
     <Content Include="Views\Planning\NewsEventsNotifications.cshtml" />
     <Content Include="Views\Planning\PayrollCalender.cshtml" />
-    <Content Include="Views\Planning\Budgets.cshtml" />
+    <Content Include="Views\Planning\MyBudgets.cshtml" />
     <Content Include="Views\Partials\_Compliance.cshtml" />
     <Content Include="Views\Reports\Compliance.cshtml" />
     <Content Include="Views\Partials\_Deployment.cshtml" />

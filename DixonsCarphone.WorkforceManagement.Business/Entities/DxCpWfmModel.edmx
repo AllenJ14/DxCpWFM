@@ -714,6 +714,12 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
             </CollectionType>
           </ReturnType>
         </Function>
+        <Function Name="PublishedBudgetsBranch" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Branch" Type="int" Mode="In" />
+        </Function>
+        <Function Name="PublishedBudgetsRegion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Region" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="sp_AllChannelDashboardData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Channel" Type="nvarchar" Mode="In" />
           <Parameter Name="BeginWeek" Type="int" Mode="In" />
@@ -1208,6 +1214,12 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
           </FunctionImport>
           <EntitySet Name="FileUploadRecords" EntityType="DixonsCarphone.WorkforceManagement.Business.FileUploadRecord" />
           <EntitySet Name="IpRefs" EntityType="DixonsCarphone.WorkforceManagement.Business.IpRef" />
+          <FunctionImport Name="PublishedBudgetsRegion" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.PublishedBudgetsRegion_Result)">
+          <Parameter Name="Region" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="PublishedBudgetsBranch" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.PublishedBudgetsBranch_Result)">
+            <Parameter Name="Branch" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="BestPracticeCategoryType">
           <Key>
@@ -2271,6 +2283,16 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
           <Property Name="storeNumber" Type="Int32" Nullable="false" />
           <Property Name="IpRange" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
         </EntityType>
+        <ComplexType Name="PublishedBudgetsRegion_Result">
+          <Property Type="String" Name="Branch" Nullable="true" MaxLength="133" />
+          <Property Type="Byte" Name="Week" Nullable="true" />
+          <Property Type="Double" Name="SOHTarget" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="PublishedBudgetsBranch_Result">
+          <Property Type="String" Name="Branch" Nullable="true" MaxLength="30" />
+          <Property Type="Byte" Name="Week" Nullable="true" />
+          <Property Type="Double" Name="SOHTarget" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3389,6 +3411,24 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="PublishedBudgetsRegion" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.PublishedBudgetsRegion">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.PublishedBudgetsRegion_Result">
+                <ScalarProperty Name="Branch" ColumnName="Branch" />
+                <ScalarProperty Name="Week" ColumnName="Week" />
+                <ScalarProperty Name="SOHTarget" ColumnName="SOHTarget" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PublishedBudgetsBranch" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.PublishedBudgetsBranch">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.PublishedBudgetsBranch_Result">
+                <ScalarProperty Name="Branch" ColumnName="Branch" />
+                <ScalarProperty Name="Week" ColumnName="Week" />
+                <ScalarProperty Name="SOHTarget" ColumnName="SOHTarget" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
