@@ -16,12 +16,14 @@
             <div class="panel-heading hidden-print">
                 @*Store P&amp;L For @string.Format("{0} / {1}", Model.SelectedMonth, Model.SelectedYear)*@
                 @using (Html.BeginForm("StorePandL", "Reports", new { year = Model.SelectedYear, month = Model.SelectedMonth }, FormMethod.Get, new { @class = "form-horizontal" }))
-            {
+                {
                     <div class="row">
                         <div class="col-sm-2"> @Html.DropDownListFor(m => m.SelectedYear, Model.PandLYears, new { @class = "form-control" })</div>
                         <div class="col-sm-2 col-md-4">@Html.DropDownListFor(m => m.SelectedMonth, Model.PandLMonths, new { onchange = "this.form.submit();", @class = "form-control" })</div>
+                        <a href="@Url.Action("TrainingDoc", "Reports")" class="btn btn-success pull-right col-md-2" style="margin-right:10px" role="button" target="_blank">Training Guide</a>
                     </div>
-            }
+                }
+                
             </div>
             <!-- /.panel-heading -->
             <div class="panel-body">

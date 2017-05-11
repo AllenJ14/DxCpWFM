@@ -283,6 +283,11 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             
             return View("StorePandL", vm);
         }
+
+        public FileResult TrainingDoc()
+        {
+            return File("/Uploads/ProfitLossBriefing.pdf", "application/pdf");
+        }
         
         public async Task<ActionResult> PunchCompliance(string selectedDate = "Last Week")
         {
