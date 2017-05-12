@@ -10,7 +10,8 @@
                         <th class="text-center">Employee Name</th>
                         <th class="text-center">Job Role</th>
                         <th class="text-center">Contract Hours</th>
-                        <th class="text-center">Current Holiday Balance</th>
+                        <th class="text-center">Holiday Balance (Hrs)</th>
+                        <th class="text-center">Holiday Balance (Days)</th>
                     </tr>
                 </thead>
                 @foreach (var item in Model.MyTeam)
@@ -20,6 +21,7 @@
                         <td>@item.ROLE</td>
                         <td class="text-center">@item.CONTRACT_HOURS</td>
                         <td class="text-center">@item.TODAYS_BALANCE</td>
+                        <td class="text-center">@Math.Round((double)item.TODAYS_BALANCE/9,2)</td>
                     </tr>
                 }
             </table>

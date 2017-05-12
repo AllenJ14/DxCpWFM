@@ -13,7 +13,7 @@
     //var actionsId = (int)ActivityType.Actions;
 
     ViewBag.Title = "Workforce Management";
-
+    bool firstNews = true;
 }
 
 <div class="modal fade" id="feedback" tabindex="-1" role="form">
@@ -58,6 +58,30 @@
     <div class="row">
         @Html.Partial("~/Views/Partials/_ScoresAndUtilization.cshtml", Model.Scores)
     </div>
+
+    @if (topNews.Count() != 0)
+    {
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h5 class="panel-title"><strong>News</strong></h5>
+            </div>
+            <div class="panel-body">
+                @for (int i = 0; i < topNews.Count(); i++)
+                {
+                    if (firstNews == false)
+                    {
+                        <hr />
+                    }
+                    <p>
+                        <h4 style="color:#279399"><u><strong>@topNews[i].ActivityName - @string.Format("{0:d}", topNews[i].ActivityDate)</strong></u></h4>
+                        @topNews[i].Detail
+                    </p>
+                    firstNews = false;
+                }
+                <a href="@Url.Action("GetActivities", "Planning", new { activityTypeId = newsId })" class="btn btn-primary btn-lg pull-right" role="button">View Archive</a>
+            </div>
+        </div>
+    }
 
     <div class="panel panel-default">
         <div class="panel-body">
@@ -144,24 +168,7 @@
     </div>
 
 
-    @if (topNews.Count() != 0)
-    {
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h5 class="panel-title"><strong>News</strong></h5>
-            </div>
-            <div class="panel-body">
-                @for (int i = 0; i < topNews.Count(); i++)
-            {
-                    <p>
-                        <h4 style="color:#279399"><u><strong>@topNews[i].ActivityName - @string.Format("{0:d}", topNews[i].ActivityDate)</strong></u></h4>
-                        @topNews[i].Detail
-                    </p>
-                }
-                <a href="@Url.Action("GetActivities", "Planning", new { activityTypeId = newsId })" class="btn btn-primary btn-lg pull-right" role="button">View Archive</a>
-            </div>
-        </div>
-    }
+
             
 
 

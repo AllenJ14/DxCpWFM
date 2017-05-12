@@ -64,7 +64,7 @@
                             <tr>
                                 <td>@(item.BranchNumber + " - " + item.StoreName)</td>
                                 <td class="text-center">@string.Format("{0:0.0}", item.SOH)</td>
-                                <td class="text-center">@string.Format("{0:0.0}", item.FinalTarget)</td>
+                                <td class="text-center">@string.Format("{0:0}", item.FinalTarget)</td>
                                 <td class="text-center">@string.Format("{0:0.0}", (item.SOH - item.FinalTarget))</td>
                                 <td class="text-center @GetColor((int)item.SOHUtilization)">@item.SOHUtilization</td>
                             </tr>
@@ -72,7 +72,7 @@
                         <tr>
                             <td><strong>Region Total</strong></td>
                             <td class="text-center"><strong>@string.Format("{0:0.0}", Model._dashboardViewCollection.Sum(x => x.SOH))</strong></td>
-                            <td class="text-center"><strong>@string.Format("{0:0.0}", Model._dashboardViewCollection.Sum(x => x.FinalTarget))</strong></td>
+                            <td class="text-center"><strong>@string.Format("{0:0}", Model._dashboardViewCollection.Sum(x => x.FinalTarget))</strong></td>
                             <td class="text-center"><strong>@string.Format("{0:0.0}", Model._dashboardViewCollection.Sum(x => x.SOH) - Model._dashboardViewCollection.Sum(x => x.FinalTarget))</strong></td>
                             <td class="text-center @GetColor((int)Model._dashboardViewCollection.Average(x=> x.SOHUtilization))"><strong>@string.Format("{0:0}", Model._dashboardViewCollection.Average(x => x.SOHUtilization))</strong></td>
                         </tr>

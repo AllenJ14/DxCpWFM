@@ -3,6 +3,8 @@
 
 @{
     ViewBag.Title = "SOH Budgets";
+
+    var weekList = Model.BudgetCollection.GroupBy(x => x.Week).Select(x => x.Key).ToList();
 }
 
 <section class="content">
@@ -25,7 +27,7 @@
                     </div>
                     <div class="panel-body">
                         <p>Below are the most recent set of budget numbers to be published for your branch.</p>
-                        <p>If there are any queries with the numbers shown below please aescalate to your RM in the first instance.</p>
+                        <p>If there are any queries with the numbers shown below please escalate to your RM in the first instance.</p>
                     </div>
                 </div>
             </div>
@@ -42,7 +44,7 @@
                                 {
                                     <th class="text-center col-md-3">Branch</th>
                                 }
-                                @foreach (var item in Model.BudgetCollection.GroupBy(x => x.Week).OrderBy(x => x.Key).Select(x => x.Key).ToList())
+                                @foreach (var item in weekList)
                                 {
                                     <th class="text-center">@string.Format("Week {0}", item.ToString())</th>
                                 }
@@ -71,6 +73,13 @@
                                         }
                                     </tr>
                                 }
+                                <tr>
+                                    <td><strong>Region Total</strong></td>
+                                    @foreach (var item in weekList)
+                                    {
+                                        <td class="text-center"><strong>@string.Format("{0:0}", Model.BudgetCollection.Where(x => x.Week == item.Value).Sum(x => x.SOHTarget))</strong></td>
+                                    }
+                                </tr>
                             }
                         </tbody>
                     </table>

@@ -230,7 +230,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
         }
 
         //Get P&L data for selected period
-        [UserFilter(AccessLevel = "Admin,RM,DD,RD,BM")]
+        [UserFilter(AccessLevel = "Admin,TPC,RM,DD,RD,BM")]
         public async Task<ActionResult> StorePandL(string selectedYear = null, string selectedMonth = null)
         {
             StorePandLViewModel vm = new StorePandLViewModel();
