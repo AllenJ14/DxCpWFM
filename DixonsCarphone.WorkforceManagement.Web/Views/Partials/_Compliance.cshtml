@@ -216,6 +216,26 @@ else if (Model._dashboardView != null)
                                 }
                             </div>
                         </div>
+                        @if (!(bool)HttpContext.Current.Session["_ROIFlag"])
+                        {
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <strong>
+                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapsePunch">Punch Compliance - @(Model._dashboardView.PayrollCorrections >= 0.95 ? "No punch issues!" : "(" + string.Format("{0:0}%", Model._dashboardView.PayrollCorrections * 100) + ")")</a>
+                                        </strong>
+                                    </h4>
+                                </div>
+                                <div id="collapsePunch" class="panel-collapse collapse">
+                                    @if (Model._dashboardView.PayrollCorrections < 0.95)
+                                    {
+                                        <div class="panel-body">
+                                            <div class="text-center"><a href="@Url.Action("PunchCompliance", "Reports",new { selectedDate = Model.WeeksOfYear.Where(x => x.Selected == true).First().Value})" class="btn btn-primary" role="button">Punch Compliance</a></div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
