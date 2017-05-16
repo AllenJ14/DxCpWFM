@@ -53,7 +53,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
                 var newSelectedStore = await _storeManager.GetStoreDetails(newStoreNumber);
                 if (newSelectedStore != null)
                 {
-                    if(newSelectedStore.RegionNo == System.Web.HttpContext.Current.Session["_AccessArea"].ToString() || System.Web.HttpContext.Current.Session["_AccessLevel"].ToString() == "DD")
+                    if(newSelectedStore.RegionNo == System.Web.HttpContext.Current.Session["_AccessArea"].ToString() || System.Web.HttpContext.Current.Session["_AccessLevel"].ToString() == "DD" || newSelectedStore.RegionNo == System.Web.HttpContext.Current.Session["_SecAccessArea"].ToString())
                     {
                         System.Web.HttpContext.Current.Session.Add("_StoreDetails", newSelectedStore);
                         System.Web.HttpContext.Current.Session.Add("_ROIFlag", newSelectedStore.Channel == "ROI");
@@ -72,7 +72,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             {
                 int newSelectedRegion = int.Parse(selectedStoreNumber.Replace("Region ",""));
 
-                if(newSelectedRegion.ToString() == System.Web.HttpContext.Current.Session["_AccessArea"].ToString() || System.Web.HttpContext.Current.Session["_AccessLevel"].ToString() == "DD")
+                if(newSelectedRegion.ToString() == System.Web.HttpContext.Current.Session["_AccessArea"].ToString() || System.Web.HttpContext.Current.Session["_AccessLevel"].ToString() == "DD" || newSelectedRegion.ToString() == System.Web.HttpContext.Current.Session["_SecAccessArea"].ToString())
                 {
                     System.Web.HttpContext.Current.Session.Add("_RegionNumber", newSelectedRegion);
                 }
@@ -101,7 +101,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
         }
 
         // Action when changing region in drop down list
-        [UserFilter(AccessLevel = "Admin,TPC,DD")]
+        [UserFilter(AccessLevel = "Admin,TPC,DD,RM")]
         public async Task<ActionResult> SetNewRegion(string selectedRegionNumber)
         {
             if (System.Web.HttpContext.Current.Session["_RegionNumber"] != null)

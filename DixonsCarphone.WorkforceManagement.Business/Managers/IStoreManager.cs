@@ -11,7 +11,7 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
 {
     public interface IStoreManager
     {
-        Task<UserAccess> GetAuthLevel(string userName);
+        Task<List<UserAccess>> GetAuthLevel(string userName);
 
         Task<Store> GetStoreDetails(string ip);
 

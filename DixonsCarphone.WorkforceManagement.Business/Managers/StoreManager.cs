@@ -33,11 +33,11 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
         }
 
         //Get Auth Level
-        public async Task<UserAccess> GetAuthLevel(string userName)
+        public async Task<List<UserAccess>> GetAuthLevel(string userName)
         {
             using (var dbContext = new DxCpWfmContext())
             {
-                return await dbContext.UserAccesses.Where(x => x.User == userName).SingleOrDefaultAsync();
+                return await dbContext.UserAccesses.Where(x => x.User == userName).ToListAsync();
             }
         }
 

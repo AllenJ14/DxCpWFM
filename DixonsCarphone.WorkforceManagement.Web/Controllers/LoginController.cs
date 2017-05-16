@@ -51,18 +51,22 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
                 var _accessLevel = await _storeManager.GetAuthLevel(user);
                 if(_accessLevel != null)
                 {
-                    System.Web.HttpContext.Current.Session["_AccessLevel"] = _accessLevel.AccessLevel;
-                    if(_accessLevel.AccessLevel == "Admin" || _accessLevel.AccessLevel == "TPC")
+                    System.Web.HttpContext.Current.Session["_AccessLevel"] = _accessLevel.First().AccessLevel;
+                    if(_accessLevel.First().AccessLevel == "Admin" || _accessLevel.First().AccessLevel == "TPC")
                     {
                         System.Web.HttpContext.Current.Session["_AccessArea"] = "101";
                     }
-                    else if(_accessLevel.AccessLevel == "OHAdmin")
+                    else if(_accessLevel.First().AccessLevel == "OHAdmin")
                     {
                         System.Web.HttpContext.Current.Session["_AccessArea"] = "101";
                     }
                     else
                     {
-                        System.Web.HttpContext.Current.Session["_AccessArea"] = _accessLevel.Area;
+                        System.Web.HttpContext.Current.Session["_AccessArea"] = _accessLevel.First().Area;
+                        if (_accessLevel.Count() > 1)
+                        {
+                            System.Web.HttpContext.Current.Session["_SecAccessArea"] = _accessLevel[1].Area;
+                        }
                     }
                 }
 
@@ -111,6 +115,13 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
                 var storesVm = new StoresMenuViewModel { Stores = stores.Select(x => new SelectListItem { Value = x.CST_CNTR_ID.ToString(), Text = x.CST_CNTR_ID + " - " + x.StoreName }).ToList() };
                 storesVm.Stores.Add(new SelectListItem { Value = "Region " + stores[0].RegionNo.ToString(), Text = "Region " + stores[0].RegionNo.ToString() });
                 System.Web.HttpContext.Current.Session.Add("_StoresMenu", storesVm);
+
+                if (System.Web.HttpContext.Current.Session["_SecAccessArea"] != null)
+                {
+                    storesVm.Regions = new List<SelectListItem>();
+                    storesVm.Regions.Add(new SelectListItem { Value = "Region " + AccessArea, Text = "Region " + AccessArea });
+                    storesVm.Regions.Add(new SelectListItem { Value = "Region " + System.Web.HttpContext.Current.Session["_SecAccessArea"].ToString(), Text = "Region " + System.Web.HttpContext.Current.Session["_SecAccessArea"].ToString() });
+                }
 
                 var newSelectedStore = await _storeManager.GetStoreDetails(stores.Select(x => x.CST_CNTR_ID).First());
                 if (newSelectedStore != null)
