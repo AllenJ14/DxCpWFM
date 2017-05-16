@@ -103,7 +103,7 @@ namespace DixonsCarphone.WorkforceManagement.ViewModels
         {
             if (actual.GetValueOrDefault() != 0 && budget.GetValueOrDefault() != 0)
             {
-                if (budget < 0)
+                if (budget < 0 && actual > 0)
                 {
                     return (actual / Math.Abs((decimal)budget) + 2) * 100;
                 }
