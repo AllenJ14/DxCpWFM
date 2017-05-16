@@ -17,95 +17,29 @@
 
     @Html.Partial("~/Views/Partials/_PageBlurb.cshtml", Model)
 
-
-
-    @if (Model.MyTeam != null && Model.MyTeam.Count() > 0)
-    {
-        <div class="row">
-            <div class="col-lg-12 col-md-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading text-center">
-                        <strong>My Team</strong>
-                    </div>
-                    <div class="panel-body">
-                        <p>These are the details of your team currently held by the HR system.</p>
-                        <p>If you believe any of these details are incorrect please raise with your TPC who can help get these rectified.</p>
-                    </div>
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading text-center">
+                    <strong>My Team</strong>
+                </div>
+                <div class="panel-body">
+                    <p>These are the details of your team currently held by the HR system.</p>
+                    <p>If you believe any of these details are incorrect please raise with your TPC who can help get these rectified.</p>
                 </div>
             </div>
         </div>
+    </div>
+
+    @if ((bool)HttpContext.Current.Session["_ROIFlag"])
+    {
+        <div class="alert alert-warning text-center"><strong>Coming soon!</strong></div>
+    }
+
+    @if (Model.MyTeam != null && Model.MyTeam.Count() > 0)
+    {
         <div class="row">
             @Html.Partial("~/Views/Partials/_MyTeamSimple.cshtml", Model)
         </div>
     }
 </section>
-
-@*@section myScripts {
-<!-- jQuery Knob -->
-<script src="~/Content/Lte/plugins/knob/jquery.knob.js"></script>
-<!-- Sparkline -->
-<script src="~/Content/Lte/plugins/sparkline/jquery.sparkline.min.js"></script>
-<!-- page script -->
-<script>
-    $(function () {
-        /* jQueryKnob */
-
-        $(".knob").knob({
-            /*change : function (value) {
-             //console.log("change : " + value);
-             },
-             release : function (value) {
-             console.log("release : " + value);
-             },
-             cancel : function () {
-             console.log("cancel : " + this.value);
-             },*/
-            draw: function () {
-
-                // "tron" case
-                if (this.$.data('skin') == 'tron') {
-
-                    var a = this.angle(this.cv)  // Angle
-                        , sa = this.startAngle          // Previous start angle
-                        , sat = this.startAngle         // Start angle
-                        , ea                            // Previous end angle
-                        , eat = sat + a                 // End angle
-                        , r = true;
-
-                    this.g.lineWidth = this.lineWidth;
-
-                    this.o.cursor
-                    && (sat = eat - 0.3)
-                    && (eat = eat + 0.3);
-
-                    if (this.o.displayPrevious) {
-                        ea = this.startAngle + this.angle(this.value);
-                        this.o.cursor
-                        && (sa = ea - 0.3)
-                        && (ea = ea + 0.3);
-                        this.g.beginPath();
-                        this.g.strokeStyle = this.previousColor;
-                        this.g.arc(this.xy, this.xy, this.radius - this.lineWidth, sa, ea, false);
-                        this.g.stroke();
-                    }
-
-                    this.g.beginPath();
-                    this.g.strokeStyle = r ? this.o.fgColor : this.fgColor;
-                    this.g.arc(this.xy, this.xy, this.radius - this.lineWidth, sat, eat, false);
-                    this.g.stroke();
-
-                    this.g.lineWidth = 2;
-                    this.g.beginPath();
-                    this.g.strokeStyle = this.o.fgColor;
-                    this.g.arc(this.xy, this.xy, this.radius - this.lineWidth + 1 + this.lineWidth * 2 / 3, 0, 2 * Math.PI, false);
-                    this.g.stroke();
-
-                    return false;
-                }
-            }
-        });
-    });
-      /* END JQUERY KNOB */
-      </script>
-    }*@
-

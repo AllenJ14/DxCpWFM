@@ -56,6 +56,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
                     if(newSelectedStore.RegionNo == System.Web.HttpContext.Current.Session["_AccessArea"].ToString() || System.Web.HttpContext.Current.Session["_AccessLevel"].ToString() == "DD")
                     {
                         System.Web.HttpContext.Current.Session.Add("_StoreDetails", newSelectedStore);
+                        System.Web.HttpContext.Current.Session.Add("_ROIFlag", newSelectedStore.Channel == "ROI");
                     }
                     else
                     {
@@ -131,6 +132,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
                 if (newSelectedStore != null)
                 {
                     System.Web.HttpContext.Current.Session.Add("_StoreDetails", newSelectedStore);
+                    System.Web.HttpContext.Current.Session.Add("_ROIFlag", newSelectedStore.Channel == "ROI");
                 }
 
                 System.Web.HttpContext.Current.Session.Add("_DivisionName", selectedRegionNumber);
@@ -148,6 +150,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
                 if (newSelectedStore != null)
                 {
                     System.Web.HttpContext.Current.Session.Add("_StoreDetails", newSelectedStore);
+                    System.Web.HttpContext.Current.Session.Add("_ROIFlag", newSelectedStore.Channel == "ROI");
                 }
             }            
 
@@ -190,6 +193,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             else
             {
                 System.Web.HttpContext.Current.Session.Add("_StoreDetails", storeSearch);
+                System.Web.HttpContext.Current.Session.Add("_ROIFlag", storeSearch.Channel == "ROI");
                 return RedirectToAction("Index", "Home");
             }
             

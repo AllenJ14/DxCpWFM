@@ -26,7 +26,14 @@
                 <p>This is how you schedule a colleague when they are covering a different store. </p>
                 <hr />
                 <row class="col-md-12">
-                    <img src="~/Images/CMS_Uploads/AddCover1.png" class="col-md-6" />
+                    @if ((bool)HttpContext.Current.Session["_ROIFlag"])
+                    {
+                        <img src="~/Images/CMS_Uploads/AddCover1ROI.png" class="col-md-6" />
+                    }
+                    else
+                    {
+                        <img src="~/Images/CMS_Uploads/AddCover1.png" class="col-md-6" />
+                    }
                     <br />
                     <div class="col-md-6">1. Right click the required box and select 'Add' and then 'Shift'. This will bring up the 'Add Shift' box.</div>
                 </row>

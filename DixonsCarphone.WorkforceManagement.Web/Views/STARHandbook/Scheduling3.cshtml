@@ -22,13 +22,26 @@
                 <h4 class="panel-title"><strong>Deleting a Shift</strong></h4>
             </div>
             <div class="panel-body">
-                <p>In order to delete a shift perform the following action from the 'UK Schedule Editor' page.</p>
-                <hr />
-                <row class="col-md-12">
-                    <img src="~/Images/CMS_Uploads/DeleteAShift1.png" class="col-md-6" />
-                    <br />
-                    <div class="col-md-6">1. Right click on the shift box and select 'Delete'. Once saved, the shift will be deleted from the schedule.</div>
-                </row>
+                @if ((bool)HttpContext.Current.Session["_ROIFlag"])
+                {
+                    <p>In order to delete a shift perform the following action from the 'IE Schedule Editor' page.</p>
+                    <hr />
+                    <row class="col-md-12">
+                        <img src="~/Images/CMS_Uploads/DeleteAShift1ROI.png" class="col-md-6" />
+                        <br />
+                        <div class="col-md-6">1. Right click on the shift box and select 'Delete'. Once saved, the shift will be deleted from the schedule.</div>
+                    </row>
+                }
+                else
+                {
+                    <p>In order to delete a shift perform the following action from the 'UK Schedule Editor' page.</p>
+                    <hr />
+                    <row class="col-md-12">
+                        <img src="~/Images/CMS_Uploads/DeleteAShift1.png" class="col-md-6" />
+                        <br />
+                        <div class="col-md-6">1. Right click on the shift box and select 'Delete'. Once saved, the shift will be deleted from the schedule.</div>
+                    </row>
+                }
             </div>
         </div>
     </row>

@@ -23,7 +23,14 @@
             </div>
             <div class="panel-body">
                 <p>To schedule a holiday, see <a href="@Url.Action("Scheduling", "StarHandbook", new { articleNumber =  5})"><strong><u>Entering an Absence</u></strong></a>.</p>
-                <p>Holidays for <i>full-timers</i> are always scheduled as either a full day (9 hours) or a half day (4.5 hours) irrelevant of which day of the week the holiday is scheduled for. Scheduling any other amount will cause a discrepancy between STAR and Oracle, which can result in pay deductions.</p>
+                @if ((bool)HttpContext.Current.Session["_ROIFlag"])
+                {
+                    <p>Holidays for <i>full-timers</i> are always scheduled as either a full day (8 hours) or a half day (4 hours) irrelevant of which day of the week the holiday is scheduled for. Scheduling any other amount will cause a discrepancy between STAR and Oracle, which can result in pay deductions.</p>
+                }
+                else
+                {
+                    <p>Holidays for <i>full-timers</i> are always scheduled as either a full day (9 hours) or a half day (4.5 hours) irrelevant of which day of the week the holiday is scheduled for. Scheduling any other amount will cause a discrepancy between STAR and Oracle, which can result in pay deductions.</p>
+                }
                 <p>Holidays for <i>part-timers</i> are scheduled in hours, and should correspond as closely as possible to their regular working pattern.</p>
                 <p>
                     <strong><u>Important to know:</u></strong>

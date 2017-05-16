@@ -46,7 +46,14 @@
                     <dd>The payroll deadline for timecards is 11am Monday. For stores open on a Sunday sign off should happen on a Sunday. If you are signing off on a Monday morning you should complete all timecards before 9:30am. This is to allow time before the 11am payroll deadline if necessary for troubleshooting and support.</dd>
                     <dt>&emsp;</dt>
                     <dt><u>Zero Full-time leakage</u></dt>
-                    <dd>Our full-time colleagues are contracted and paid to work 45 hours per week. If a full-timer works less than 45 hours then we are paying for non-working hours, and this is called payroll leakage. In order to optimize   SOH and maximize our productivity we need to minimize our payroll leakage. To do this we ensure that all full-time colleagues are scheduled and working 45 hours.</dd>
+                    @if ((bool)HttpContext.Current.Session["_ROIFlag"])
+                    {
+                        <dd>Our full-time colleagues are contracted and paid to work 40 hours per week. If a full-timer works less than 40 hours then we are paying for non-working hours, and this is called payroll leakage. In order to optimize   SOH and maximize our productivity we need to minimize our payroll leakage. To do this we ensure that all full-time colleagues are scheduled and working 40 hours.</dd>
+                    }
+                    else
+                    {
+                        <dd>Our full-time colleagues are contracted and paid to work 45 hours per week. If a full-timer works less than 45 hours then we are paying for non-working hours, and this is called payroll leakage. In order to optimize   SOH and maximize our productivity we need to minimize our payroll leakage. To do this we ensure that all full-time colleagues are scheduled and working 45 hours.</dd>
+                    }
                 </dl>
             </div>
         </div>

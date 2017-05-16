@@ -116,6 +116,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
                 if (newSelectedStore != null)
                 {
                     System.Web.HttpContext.Current.Session.Add("_StoreDetails", newSelectedStore);
+                    System.Web.HttpContext.Current.Session.Add("_ROIFlag", newSelectedStore.Channel == "ROI");
                 }
             }
             else if(AccessLevel == "DD")
@@ -135,6 +136,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
                 if (newSelectedStore != null)
                 {
                     System.Web.HttpContext.Current.Session.Add("_StoreDetails", newSelectedStore);
+                    System.Web.HttpContext.Current.Session.Add("_ROIFlag", newSelectedStore.Channel == "ROI");
                 }
                 System.Web.HttpContext.Current.Session.Add("_DivisionName", AccessArea);
             }
@@ -167,7 +169,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
                 var newSelectedStore = await _storeManager.GetStoreDetails(stores.Select(x => x.CST_CNTR_ID).First());
                 if (newSelectedStore != null)
                 {
-
+                    System.Web.HttpContext.Current.Session.Add("_ROIFlag", newSelectedStore.Channel == "ROI");
                     System.Web.HttpContext.Current.Session.Add("_StoreDetails", newSelectedStore);
                 }
             }

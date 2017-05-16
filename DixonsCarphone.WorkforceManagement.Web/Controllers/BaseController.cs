@@ -60,6 +60,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             var t = Task.Run(() => _storeManager.GetStoreDetails(ip));
             var store = t.Result ?? new Store();
             System.Web.HttpContext.Current.Session.Add("_StoreDetails", store);
+            System.Web.HttpContext.Current.Session.Add("_ROIFlag", store.Channel == "ROI");
 
             return store;
         }

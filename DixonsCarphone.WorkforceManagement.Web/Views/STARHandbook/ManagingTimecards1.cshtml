@@ -23,9 +23,18 @@
             </div>
             <div class="panel-body">
                 <p>
-                    To view a timecard, you need to click on the <strong>My Genies tab</strong> and select <strong>'UK Timecard Manager':</strong>
-                    <br /><br />
-                    <img src="~/Images/CMS_Uploads/TimecardMenu1.png" class="img-responsive" alt="ScheduleMenu1" />
+                    @if ((bool)HttpContext.Current.Session["_ROIFlag"])
+                    {
+                        <span>To view a timecard, you need to click on the <strong>Timekeeping tab</strong> and select <strong>'IE - Reconcile Timecard':</strong></span>
+                        <br /><br />
+                        <img src="~/Images/CMS_Uploads/TimecardMenu1ROI.png" class="img-responsive" alt="ScheduleMenu1" />
+                    }
+                    else
+                    {
+                        <span>To view a timecard, you need to click on the <strong>My Genies tab</strong> and select <strong>'UK Timecard Manager':</strong></span>
+                        <br /><br />
+                        <img src="~/Images/CMS_Uploads/TimecardMenu1.png" class="img-responsive" alt="ScheduleMenu1" />
+                    }
                 </p>
                 <br />
                 <p>

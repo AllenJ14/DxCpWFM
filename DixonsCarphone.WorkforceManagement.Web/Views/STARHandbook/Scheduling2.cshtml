@@ -22,59 +22,119 @@
                 <h4 class="panel-title"><strong>Adding a Standard Shift</strong></h4>
             </div>
             <div class="panel-body">
-                <p>Adding shifts in UK Schedule Editor' can be done in two ways.</p>
-                <h3><strong>Method 1</strong></h3>
-                <row class="col-md-12">
-                    <img src="~/Images/CMS_Uploads/AddAShift1.png" class="col-md-6" />
-                    <br />
-                    <div class="col-md-6">1. Right click the required box and type in the shift times. This must be formatted as either '845-1745' or '8:45-17:45'.</div>
-                </row>
-                <div class="col-md-12">
-                    &emsp;
-                </div>
-                <row class="col-md-12">
-                    <img src="~/Images/CMS_Uploads/AddAShift2.png" class="col-md-6" />
-                    <br />
-                    <div class="col-md-6">2. 'UK Schedule Editor' is highlighted in orange which means changes still need to be saved.</div>
-                </row>
-                <div class="col-md-12">
-                    &emsp;
-                </div>
-                <row class="col-md-12">
-                    <img src="~/Images/CMS_Uploads/AddAShift3.png" class="col-md-6" />
-                    <br />
-                    <div class="col-md-6">3. Click 'save' and 'UK Schedule Editor' will turn black which means changes have been saved.</div>
-                </row>
-                <div class="col-md-12">
-                    <hr>
-                </div>
-                <div>                    
-                    <h3><strong>Method 2</strong></h3>
+                @if ((bool)HttpContext.Current.Session["_ROIFlag"])
+                {
+                    <p>Adding shifts in IE Schedule Editor' can be done in two ways.</p>
+                    <h3><strong>Method 1</strong></h3>
                     <row class="col-md-12">
-                        <img src="~/Images/CMS_Uploads/AddAShift4.png" class="col-md-6" />
+                        <img src="~/Images/CMS_Uploads/AddAShift1ROI.png" class="col-md-6" />
                         <br />
-                        <div class="col-md-6">1. Right click the required box and select 'Add' and then 'Shift'. This will bring up the 'Add Shift' box.</div>
+                        <div class="col-md-6">1. Right click the required box and type in the shift times. This must be formatted as either '845-1745' or '8:45-17:45'.</div>
                     </row>
                     <div class="col-md-12">
                         &emsp;
                     </div>
                     <row class="col-md-12">
-                        <img src="~/Images/CMS_Uploads/AddAShift5.png" class="col-md-6" />
+                        <img src="~/Images/CMS_Uploads/AddAShift2ROI.png" class="col-md-6" />
                         <br />
-                        <div class="col-md-6">2. Enter the start and end times in the 'Start Time' and 'End Time' boxes and click 'OK'</div>
+                        <div class="col-md-6">2. 'IE Schedule Editor' is highlighted in orange which means changes still need to be saved.</div>
                     </row>
                     <div class="col-md-12">
                         &emsp;
                     </div>
                     <row class="col-md-12">
-                        <img src="~/Images/CMS_Uploads/AddAShift6.png" class="col-md-6" />
+                        <img src="~/Images/CMS_Uploads/AddAShift3ROI.png" class="col-md-6" />
                         <br />
-                        <div class="col-md-6">3. Right click the required box and select 'Add' and then 'Shift'. This will bring up the 'Add Shift' box.</div>
+                        <div class="col-md-6">3. Click 'save' and 'IE Schedule Editor' will turn black which means changes have been saved.</div>
+                    </row>
+                    <div class="col-md-12">
+                        <hr>
+                    </div>
+                    <div>
+                        <h3><strong>Method 2</strong></h3>
+                        <row class="col-md-12">
+                            <img src="~/Images/CMS_Uploads/AddAShift4ROI.png" class="col-md-6" />
+                            <br />
+                            <div class="col-md-6">1. Right click the required box and select 'Add' and then 'Shift'. This will bring up the 'Add Shift' box.</div>
+                        </row>
+                        <div class="col-md-12">
+                            &emsp;
+                        </div>
+                        <row class="col-md-12">
+                            <img src="~/Images/CMS_Uploads/AddAShift5.png" class="col-md-6" />
+                            <br />
+                            <div class="col-md-6">2. Enter the start and end times in the 'Start Time' and 'End Time' boxes and click 'OK'</div>
+                        </row>
+                        <div class="col-md-12">
+                            &emsp;
+                        </div>
+                        <row class="col-md-12">
+                            <img src="~/Images/CMS_Uploads/AddAShift6ROI.png" class="col-md-6" />
+                            <br />
+                            <div class="col-md-6">3. Right click the required box and select 'Add' and then 'Shift'. This will bring up the 'Add Shift' box.</div>
+                        </row>
+                        <div class="col-md-12">
+                            &emsp;
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <p>Adding shifts in UK Schedule Editor' can be done in two ways.</p>
+                    <h3><strong>Method 1</strong></h3>
+                    <row class="col-md-12">
+                        <img src="~/Images/CMS_Uploads/AddAShift1.png" class="col-md-6" />
+                        <br />
+                        <div class="col-md-6">1. Right click the required box and type in the shift times. This must be formatted as either '845-1745' or '8:45-17:45'.</div>
                     </row>
                     <div class="col-md-12">
                         &emsp;
                     </div>
-                </div>
+                    <row class="col-md-12">
+                        <img src="~/Images/CMS_Uploads/AddAShift2.png" class="col-md-6" />
+                        <br />
+                        <div class="col-md-6">2. 'UK Schedule Editor' is highlighted in orange which means changes still need to be saved.</div>
+                    </row>
+                    <div class="col-md-12">
+                        &emsp;
+                    </div>
+                    <row class="col-md-12">
+                        <img src="~/Images/CMS_Uploads/AddAShift3.png" class="col-md-6" />
+                        <br />
+                        <div class="col-md-6">3. Click 'save' and 'UK Schedule Editor' will turn black which means changes have been saved.</div>
+                    </row>
+                    <div class="col-md-12">
+                        <hr>
+                    </div>
+                    <div>
+                        <h3><strong>Method 2</strong></h3>
+                        <row class="col-md-12">
+                            <img src="~/Images/CMS_Uploads/AddAShift4.png" class="col-md-6" />
+                            <br />
+                            <div class="col-md-6">1. Right click the required box and select 'Add' and then 'Shift'. This will bring up the 'Add Shift' box.</div>
+                        </row>
+                        <div class="col-md-12">
+                            &emsp;
+                        </div>
+                        <row class="col-md-12">
+                            <img src="~/Images/CMS_Uploads/AddAShift5.png" class="col-md-6" />
+                            <br />
+                            <div class="col-md-6">2. Enter the start and end times in the 'Start Time' and 'End Time' boxes and click 'OK'</div>
+                        </row>
+                        <div class="col-md-12">
+                            &emsp;
+                        </div>
+                        <row class="col-md-12">
+                            <img src="~/Images/CMS_Uploads/AddAShift6.png" class="col-md-6" />
+                            <br />
+                            <div class="col-md-6">3. Right click the required box and select 'Add' and then 'Shift'. This will bring up the 'Add Shift' box.</div>
+                        </row>
+                        <div class="col-md-12">
+                            &emsp;
+                        </div>
+                    </div>
+                }
+                
             </div>
         </div>
     </row>

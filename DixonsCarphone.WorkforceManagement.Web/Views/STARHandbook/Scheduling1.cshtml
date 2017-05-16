@@ -23,9 +23,18 @@
             </div>
             <div class="panel-body">
                 <p>
-                    To view a schedule, you need to click on the <strong>Scheduling tab</strong> and select <strong>'UK Schedule Editor':</strong>
-                    <br /><br />
-                    <img src="~/Images/CMS_Uploads/ScheduleMenu1.png" class="img-responsive" alt="ScheduleMenu1" />
+                    @if ((bool)HttpContext.Current.Session["_ROIFlag"])
+                    {
+                        <span>To view a schedule, you need to click on the <strong>Scheduling tab</strong> and select <strong>'IE Schedule Editor':</strong></span>
+                        <br /><br />
+                        <img src="~/Images/CMS_Uploads/ScheduleMenu1ROI.png" class="img-responsive" alt="ScheduleMenu1ROI" />
+                    }
+                    else
+                    {
+                        <span>To view a schedule, you need to click on the <strong>Scheduling tab</strong> and select <strong>'UK Schedule Editor':</strong></span>
+                        <br /><br />
+                        <img src="~/Images/CMS_Uploads/ScheduleMenu1.png" class="img-responsive" alt="ScheduleMenu1" />
+                    }
                 </p>
                 <br />
                 <p>
@@ -43,7 +52,15 @@
                 <p>
                     This will be your schedule view before any shifts are added:
                     <br /><br />
-                    <img src="~/Images/CMS_Uploads/ScheduleMenu4.png" class="img-responsive" alt="ScheduleMenu4" />
+                    @if ((bool)HttpContext.Current.Session["_ROIFlag"])
+                    {
+                        <img src="~/Images/CMS_Uploads/ScheduleMenu4ROI.png" class="img-responsive" alt="ScheduleMenu4ROI" />
+                    }
+                    else
+                    {
+                        <img src="~/Images/CMS_Uploads/ScheduleMenu4.png" class="img-responsive" alt="ScheduleMenu4" />
+                    }
+                    
                 </p>
             </div>
         </div>

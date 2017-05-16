@@ -22,20 +22,39 @@
                 <h4 class="panel-title"><strong>Viewing a Timecard</strong></h4>
             </div>
             <div class="panel-body">
-                <p>
-                    The 'Timecard Manager' screen will list your colleagues and show an overview of their individual Timecards
-                    <br /><br />
-                    <img src="~/Images/CMS_Uploads/ViewingATimecard1.png" class="img-responsive" alt="ScheduleMenu1" />
-                </p>
-                <br />
-                <p>
-                    <ul>
-                        <li><strong>Biometric status</strong> indicates whether or not the colleague is enrolled on the Touch – ID Terminal</li>
-                        <li><strong>Scheduled Time Worked</strong> shows a total of all hours worked as per the Schedule</li>
-                        <li><strong>Approved and Unapproved time</strong> shows a total of all hours worked outside of Schedule</li>
-                        <li><strong>Exceptions</strong> indicate if the colleague has deviated from the schedule in any way</li>
-                    </ul>
-                </p>
+                @if ((bool)HttpContext.Current.Session["_ROIFlag"])
+                {
+                    <p>
+                        The 'Reconcile Timecard' screen will list your colleagues and show an overview of their individual Timecards
+                        <br /><br />
+                        <img src="~/Images/CMS_Uploads/ViewingATimecard1ROI.png" class="img-responsive" alt="ScheduleMenu1" />
+                    </p>
+                    <br />
+                    <p>
+                        <ul>
+                            <li><strong>Biometric status</strong> indicates whether or not the colleague is enrolled on the Touch – ID Terminal</li>
+                            <li><strong>Scheduled Time Worked</strong> shows a total of all hours worked as per the Schedule</li>
+                            <li><strong>Exceptions</strong> indicate if the colleague has deviated from the schedule in any way</li>
+                        </ul>
+                    </p>
+                }
+                else
+                {
+                    <p>
+                        The 'Timecard Manager' screen will list your colleagues and show an overview of their individual Timecards
+                        <br /><br />
+                        <img src="~/Images/CMS_Uploads/ViewingATimecard1.png" class="img-responsive" alt="ScheduleMenu1" />
+                    </p>
+                    <br />
+                    <p>
+                        <ul>
+                            <li><strong>Biometric status</strong> indicates whether or not the colleague is enrolled on the Touch – ID Terminal</li>
+                            <li><strong>Scheduled Time Worked</strong> shows a total of all hours worked as per the Schedule</li>
+                            <li><strong>Approved and Unapproved time</strong> shows a total of all hours worked outside of Schedule</li>
+                            <li><strong>Exceptions</strong> indicate if the colleague has deviated from the schedule in any way</li>
+                        </ul>
+                    </p>
+                }
                 <br />
                 <strong><i>To view all timecards, click 'Actions' then 'Select All' right click on any name and select 'Timecards'</i></strong>
                 <br /><br />

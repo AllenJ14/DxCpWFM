@@ -31,19 +31,38 @@
                     <li><strong><u>Remember</u></strong> - Birthday Holiday will only be visible and valid for a period of one month before and one-month after the colleague’s birthday. </li>
                 </ul>
                 <hr />
-                <row class="col-md-12">
-                    <img src="~/Images/CMS_Uploads/CheckingHoliday1.png" class="col-md-6" />
-                    <br />
-                    <div class="col-md-6"></div>
-                </row>
-                <div class="col-md-12">
-                    &emsp;
-                </div>
-                <row class="col-md-12">
-                    <img src="~/Images/CMS_Uploads/CheckingHoliday2.png" class="col-md-6" />
-                    <br />
-                    <div class="col-md-6"></div>
-                </row>
+                @if ((bool)HttpContext.Current.Session["_ROIFlag"])
+                {
+                    <row class="col-md-12">
+                        <img src="~/Images/CMS_Uploads/CheckingHoliday1ROI.png" class="col-md-6" />
+                        <br />
+                        <div class="col-md-6"></div>
+                    </row>
+                    <div class="col-md-12">
+                        &emsp;
+                    </div>
+                    <row class="col-md-12">
+                        <img src="~/Images/CMS_Uploads/CheckingHoliday2ROI.png" class="col-md-6" />
+                        <br />
+                        <div class="col-md-6"></div>
+                    </row>
+                }
+                else
+                {
+                    <row class="col-md-12">
+                        <img src="~/Images/CMS_Uploads/CheckingHoliday1.png" class="col-md-6" />
+                        <br />
+                        <div class="col-md-6"></div>
+                    </row>
+                    <div class="col-md-12">
+                        &emsp;
+                    </div>
+                    <row class="col-md-12">
+                        <img src="~/Images/CMS_Uploads/CheckingHoliday2.png" class="col-md-6" />
+                        <br />
+                        <div class="col-md-6"></div>
+                    </row>
+                }
                 <div class="col-md-12">
                     &emsp;
                 </div>

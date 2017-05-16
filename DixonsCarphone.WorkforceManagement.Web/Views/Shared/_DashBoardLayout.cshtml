@@ -131,11 +131,14 @@
                                 <li>
                                 <li class="active"><a href="@Url.Action("GetCompliance", "Reports")">WFM Compliance</a></li>
                                 <li class="active"><a href="@Url.Action("GetDeployment", "Reports")">WFM Deployment</a></li>
-                                <li class="active"><a href="@Url.Action("StorePandL", "Reports")">Profit &amp; Loss</a></li>
+                                @if (!(bool)HttpContext.Current.Session["_ROIFlag"])
+                                {
+                                    <li class="active"><a href="@Url.Action("StorePandL", "Reports")">Profit &amp; Loss</a></li>
+                                }
                                 <li class="active"><a href="@Url.Action("PunchCompliance", "Reports")">Punch Compliance</a></li>
                                 @*<li class="active"><a href="@Url.Action("MyTargets", "Reports")">My Targets</a></li>
-                                    <li class="active"><a href="@Url.Action("SohSpend", "Reports")">SOH Spend</a></li>
-                                    <li class="active"><a href="@Url.Action("Schedules", "Reports")">My Schedule</a></li>*@
+            <li class="active"><a href="@Url.Action("SohSpend", "Reports")">SOH Spend</a></li>
+            <li class="active"><a href="@Url.Action("Schedules", "Reports")">My Schedule</a></li>*@
                             </ul>
                         </li>
                         <li>
@@ -146,9 +149,12 @@
                                 </span>
                             </a>
                             <ul class="nav nav-second-level">
-                                <li class="active"><a href="@Url.Action("MyBudgets", "Planning")">My Budget</a></li>
+                                <li class="active"><a href="@Url.Action("MyBudgets", "Planning")">My Budgets</a></li>
                                 <li class="active"><a href="@Url.Action("Index", "Planning")"> Opening Times</a></li>
-                                <li class="active"><a href="@Url.Action("MyTeam", "Reports")">My Team</a></li>
+                                @if (!(bool)HttpContext.Current.Session["_ROIFlag"])
+                                {
+                                    <li class="active"><a href="@Url.Action("MyTeam", "Reports")">My Team</a></li>
+                                }
                                 <li class="active"><a href="@Url.Action("GetSchedule", "Planning")">Schedules</a></li>
                                     @*<li class="active"><a href="@Url.Action("PayrollCalender", "Planning")"> Payroll Calender</a></li>
                                     <li class="active"><a href="@Url.Action("Budgets", "Planning")">Budgets</a></li>

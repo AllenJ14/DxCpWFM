@@ -23,7 +23,14 @@
             </div>
             <div class="panel-body">
                 <p>After a colleague hands in their notice you will still need to maintain 4 weeks of schedules for them until they are removed from STAR (which should happen the week after their last shift).</p>
-                <p>In UK Schedule Editor, set the Time Period to be 4 weeks after the colleague’s last shift. </p>
+                @if ((bool)HttpContext.Current.Session["_ROIFlag"])
+                {
+                    <p>In IE Schedule Editor, set the Time Period to be 4 weeks after the colleague’s last shift. </p>
+                }
+                else
+                {
+                    <p>In UK Schedule Editor, set the Time Period to be 4 weeks after the colleague’s last shift. </p>
+                }
                 <p>Schedule the colleague for <strong>Approved Unpaid Leave</strong> for their contract hours for each of the 4 weeks</p>
                 <p>Use the Comment header <i>'IE-UK Manager Approved'</i> and the Note: 'Colleague left the business as of [date]'</p>
                 <p>This will notify, the Store Manager hasn't just neglected to schedule the colleague, and ensures they aren't paid when they shouldn't be.</p>

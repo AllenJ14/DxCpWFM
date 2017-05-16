@@ -1,7 +1,7 @@
 ﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
 @model Dictionary<string, List<ScoresAndUtilizationViewModel>>
 
-@{ 
+@{
     Func<int, string> GetColor = (i) =>
     {
         var rtn = "primary";
@@ -49,40 +49,47 @@
     var r = 0;
 }
 
-    @foreach (var week in Model)
-    {
-        r = 0;
-        //var weekStr = week.Key == "Last Week" ? "Last<br />Week" : week.Key;
+@foreach (var week in Model)
+{
+    r = 0;
+    //var weekStr = week.Key == "Last Week" ? "Last<br />Week" : week.Key;
 
-        <div class="col-md-6 col-lg-3">
-            <div class="panel panel-@GetColor(x)">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-xs-3">
-                            <i class="hidden-sm hidden-xs glyphicon glyphicon-stats" style="font-size:35px"></i>
-                        </div>
-                        <div class="col-xs-9 text-right">
-                            @*<span class="pull-right-container"><i class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="top" title="Compliance & Deployment Scores - @Html.Raw(week.Key)"></i></span>*@
-                            <h2 class="hidden-lg">@Html.Raw(week.Key)</h2>
-                            <h1 class="visible-lg">@Html.Raw(week.Key)</h1>
-                        </div>
+    <div class="col-md-6 col-lg-3">
+        <div class="panel panel-@GetColor(x)">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="hidden-sm hidden-xs glyphicon glyphicon-stats" style="font-size:35px"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        @*<span class="pull-right-container"><i class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="top" title="Compliance & Deployment Scores - @Html.Raw(week.Key)"></i></span>*@
+                        <h2 class="hidden-lg">@Html.Raw(week.Key)</h2>
+                        <h1 class="visible-lg">@Html.Raw(week.Key)</h1>
                     </div>
                 </div>
+            </div>
 
-                @foreach (var score in week.Value)
-                {
-                    var action = GetAction(score, week.Key);
-                    r++;
-                    
-                    <a href="@Html.Raw(action)">
-                        <div class="panel-footer">
+            @foreach (var score in week.Value)
+            {
+                var action = GetAction(score, week.Key);
+                r++;
+
+                <a href="@Html.Raw(action)">
+                    <div class="panel-footer">
+                        @if ((bool)HttpContext.Current.Session["_ROIFlag"] && score.ScoreType == ScoreType.Compliance)
+                        {
+                            <span class="pull-left">@score.Title &nbsp;&nbsp;&nbsp;<span class="pull-right badge bg-blue">@(score.Score == -1 ? "-" : score.Score.ToString()) / 8</span></span>
+                        }
+                        else
+                        {
                             <span class="pull-left">@score.Title &nbsp;&nbsp;&nbsp;<span class="pull-right badge bg-blue">@(score.Score == -1 ? "-" : score.Score.ToString()) / 10</span></span>
-                            <span class="pull-right"><i class="glyphicon glyphicon-circle-arrow-right"></i></span>
-                            <div class="clearfix"></div>
-                        </div>
-                    </a>
-                }
-                @*@if (r < 3)
+                        }
+                        <span class="pull-right"><i class="glyphicon glyphicon-circle-arrow-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            }
+            @*@if (r < 3)
                 {
                     <div class="panel-footer">
                         <span class="pull-left">&nbsp;&nbsp;&nbsp;</span>
@@ -98,10 +105,10 @@
                         <div class="clearfix"></div>
                     </div>
                 }*@
-     
-            </div>
+
         </div>
-        x++;
-    }
+    </div>
+    x++;
+}
 
 

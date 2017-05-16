@@ -35,14 +35,23 @@
             <div class="panel-footer">
                 <dl class="dl-horizontal">
                     <dt><span class="glyphicon glyphicon-info-sign"></span> Badge Number:</dt>
-                    <dd>
-                        A colleague’s badge number is dependent on the length of their payroll number. Please refer to the following formats in order to enroll/punch, replacing the "123..." with the relevant payroll number:
-                        <ul>
-                            <li>A 5-digit payroll number - 10012345</li>
-                            <li>A 6 digit payroll number - 10123456</li>
-                            <li>A 7 digit payroll number - 101234567</li>
-                        </ul>
-                    </dd>
+                    @if ((bool)HttpContext.Current.Session["_ROIFlag"])
+                    {
+                        <dd>
+                            A collegue's badge number is the same as their payroll number.
+                        </dd>
+                    }
+                    else
+                    {
+                        <dd>
+                            A colleague’s badge number is dependent on the length of their payroll number. Please refer to the following formats in order to enroll/punch, replacing the "123..." with the relevant payroll number:
+                            <ul>
+                                <li>A 5-digit payroll number - 10012345</li>
+                                <li>A 6 digit payroll number - 10123456</li>
+                                <li>A 7 digit payroll number - 101234567</li>
+                            </ul>
+                        </dd>
+                    }
                 </dl>
             </div>
         </div>

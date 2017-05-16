@@ -22,29 +22,58 @@
                 <h4 class="panel-title"><strong>Entering an Absence</strong></h4>
             </div>
             <div class="panel-body">
-                <p>A Pay code is used to specify when a colleague is not working in store, either for an absence (holiday, sickness, etc.) or for an out of store shift (Meeting, training, recruitment, etc.).</p>
-                <hr />
-                <row class="col-md-12">
-                    <img src="~/Images/CMS_Uploads/AddAnAbsence1.png" class="col-md-6" />
-                    <br />
-                    <div class="col-md-6">1. Ensure you select the correct absence type (Beginning with <strong>'UK'</strong>) from the drop down list.</div>
-                </row>
-                <div class="col-md-12">
-                    &emsp;
-                </div>
-                <row class="col-md-12">
-                    <img src="~/Images/CMS_Uploads/AddAnAbsence2.png" class="col-md-6" />
-                    <br />
-                    <div class="col-md-6">2. All absences must have comments added.</div>
-                </row>
-                <div class="col-md-12">
-                    &emsp;
-                </div>
-                <row class="col-md-12">
-                    <img src="~/Images/CMS_Uploads/AddAnAbsence3.png" class="col-md-6" />
-                    <br />
-                    <div class="col-md-6">3. The Absence has now been added to your schedule.</div>
-                </row>
+                @if ((bool)HttpContext.Current.Session["_ROIFlag"])
+                {
+                    <p>A Pay code is used to specify when a colleague is not working in store, either for an absence (holiday, sickness, etc.) or for an out of store shift (Meeting, training, recruitment, etc.).</p>
+                    <hr />
+                    <row class="col-md-12">
+                        <img src="~/Images/CMS_Uploads/AddAnAbsence1ROI.png" class="col-md-6" />
+                        <br />
+                        <div class="col-md-6">1. Ensure you select the correct absence type (Beginning with <strong>'IE'</strong>) from the drop down list.</div>
+                    </row>
+                    <div class="col-md-12">
+                        &emsp;
+                    </div>
+                    <row class="col-md-12">
+                        <img src="~/Images/CMS_Uploads/AddAnAbsence2ROI.png" class="col-md-6" />
+                        <br />
+                        <div class="col-md-6">2. All absences must have comments added.</div>
+                    </row>
+                    <div class="col-md-12">
+                        &emsp;
+                    </div>
+                    <row class="col-md-12">
+                        <img src="~/Images/CMS_Uploads/AddAnAbsence3ROI.png" class="col-md-6" />
+                        <br />
+                        <div class="col-md-6">3. The Absence has now been added to your schedule.</div>
+                    </row>
+                }
+                else
+                {
+                    <p>A Pay code is used to specify when a colleague is not working in store, either for an absence (holiday, sickness, etc.) or for an out of store shift (Meeting, training, recruitment, etc.).</p>
+                    <hr />
+                    <row class="col-md-12">
+                        <img src="~/Images/CMS_Uploads/AddAnAbsence1.png" class="col-md-6" />
+                        <br />
+                        <div class="col-md-6">1. Ensure you select the correct absence type (Beginning with <strong>'UK'</strong>) from the drop down list.</div>
+                    </row>
+                    <div class="col-md-12">
+                        &emsp;
+                    </div>
+                    <row class="col-md-12">
+                        <img src="~/Images/CMS_Uploads/AddAnAbsence2.png" class="col-md-6" />
+                        <br />
+                        <div class="col-md-6">2. All absences must have comments added.</div>
+                    </row>
+                    <div class="col-md-12">
+                        &emsp;
+                    </div>
+                    <row class="col-md-12">
+                        <img src="~/Images/CMS_Uploads/AddAnAbsence3.png" class="col-md-6" />
+                        <br />
+                        <div class="col-md-6">3. The Absence has now been added to your schedule.</div>
+                    </row>
+                }
             </div>
         </div>
     </row>
