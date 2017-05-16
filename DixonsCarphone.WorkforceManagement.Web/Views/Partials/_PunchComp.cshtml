@@ -179,6 +179,7 @@ else if (HttpContext.Current.Session["_ChannelName"] != null && Model.RegionDeta
 else if (Model.PunchDetail != null && Model.PunchDetail.Count() != 0)
 {
     var summary = Model.PunchDetail.GroupBy(x => new { x.FORENAME, x.EMP_NUM }).Select(s => new { EmpNum = s.Key.EMP_NUM, FullName = s.Key.FORENAME, ShiftCount = s.Count(), MissedIn = s.Sum(x => x.Count_In_Missing), MissedOut = s.Sum(x => x.Count_Out_Missing), LateIn = s.Sum(x => x.Clock_In_Not_Acceptable) }).OrderBy(x => x.FullName).ToList();
+    var subtotalComp = 100 - ((decimal)summary.Select(x => x.MissedIn).Sum() + summary.Select(x => x.MissedOut).Sum()) / summary.Select(x => x.ShiftCount).Sum() * 100 / 2;
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
@@ -249,7 +250,7 @@ else if (Model.PunchDetail != null && Model.PunchDetail.Count() != 0)
                                 <tr>
                                     <td><strong>Branch Total</strong></td>
                                     <td class="text-center"><strong>@summary.Select(x => x.ShiftCount).Sum()</strong></td>
-                                    <td class="text-center"><strong>@(string.Format("{0:0.0}%",100-((decimal)summary.Select(x => x.MissedIn).Sum() + summary.Select(x => x.MissedOut).Sum())/ summary.Select(x => x.ShiftCount).Sum() *100 /2))</strong></td>
+                                    <td class="text-center @(subtotalComp < 95 ? "danger" : "")"><strong>@(string.Format("{0:0.0}%",subtotalComp))</strong></td>
                                     <td class="text-center"><strong>@summary.Select(x => x.MissedIn).Sum()</strong></td>
                                     <td class="text-center"><strong>@summary.Select(x => x.MissedOut).Sum()</strong></td>
                                     <td class="text-center"><strong>@summary.Select(x => x.LateIn).Sum()</strong></td>
