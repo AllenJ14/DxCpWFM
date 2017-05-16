@@ -36,11 +36,11 @@ else if (Model.ScheduleCollection.Count() != 0)
             @for (int i = 0; i < colList.Count(); i++)
             {
                 <tr>
-                    <td>@Model.ScheduleCollection.Where(x => x.PersonNumber == colList[i]).First().FullName</td>
+                    <td>@string.Format("{0} ({1})", Model.ScheduleCollection.Where(x => x.PersonNumber == colList[i]).First().FullName, Model.ScheduleCollection.Where(x => x.PersonNumber == colList[i]).First().ContractHours)</td>
                     @for (int j = 1; j <= 7; j++)
                     {
                         var selected = Model.ScheduleCollection.Where(x => x.PersonNumber == colList[i] && x.DayNum == j).FirstOrDefault();
-                        if (selected != null)
+                        if (selected != null && selected.StartTime != null)
                         {
                             if (selected.ShiftType == "Regular" && selected.TransferBranch != null)
                             {
@@ -76,7 +76,7 @@ else if (Model.ScheduleCollection.Count() != 0)
             </tr>
         </tbody>
     </table>
-    <div class="row hidden-print text-center">
+    <div class="row text-center">
         <p><strong>@string.Format("Last Updated : {0:g}", Model.ScheduleCollection[0].DateTimeUpdated)</strong></p>
     </div>
 }
