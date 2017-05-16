@@ -4,7 +4,11 @@
 @{
     ViewBag.Title = "SOH Budgets";
 
-    var weekList = Model.BudgetCollection.GroupBy(x => x.Week).Select(x => x.Key).ToList();
+    List<byte?> weekList = new List<byte?>();
+    if(Model.BudgetCollection != null && Model.BudgetCollection.Count() > 0)
+    {
+        weekList = Model.BudgetCollection.GroupBy(x => x.Week).Select(x => x.Key).ToList();
+    }
 }
 
 <section class="content">
@@ -87,7 +91,7 @@
             </div>
         </div>
 
-        
-        
+
+
     }
 </section>

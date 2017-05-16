@@ -222,7 +222,7 @@ else if (Model._dashboardView != null)
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
                                         <strong>
-                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapsePunch">Punch Compliance - @(Model._dashboardView.PayrollCorrections >= 0.95 ? "No punch issues!" : "(" + string.Format("{0:0}%", Model._dashboardView.PayrollCorrections * 100) + ")")</a>
+                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapsePunch">Punch Compliance - @(Model._dashboardView.PayrollCorrections >= 0.95 || Model._dashboardView.PayrollCorrections == null ? "No punch issues!" : "(" + string.Format("{0:0}%", Model._dashboardView.PayrollCorrections * 100) + ")")</a>
                                         </strong>
                                     </h4>
                                 </div>
