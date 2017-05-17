@@ -6,7 +6,7 @@
 
 @{
     Layout = "~/Views/Shared/_DashBoardLayout.cshtml";
-    var topNews = Model.Activities.OrderByDescending(x => x.ActivityDate).ThenBy(x => x.StartTime).Where(x => x.ActivityType.ActivityType1 == "News").ToList();
+    var topNews = Model.Activities.OrderByDescending(x => x.ActivityDate).ThenBy(x => x.StartTime).Where(x => x.ActivityType.ActivityType1 == "News").Take(2).ToList();
     //var topAction = Model.Activities.OrderByDescending(x => x.ActivityDate).ThenBy(x => x.StartTime).FirstOrDefault(x => x.ActivityType.ActivityType1 == "Actions");
 
     var newsId = (int)ActivityType.News;
