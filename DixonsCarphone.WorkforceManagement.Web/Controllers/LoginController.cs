@@ -18,9 +18,13 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
     public class LoginController : BaseController
     {
         [AllowAnonymous]
-        public virtual ActionResult Index()
+        public virtual ActionResult Index(bool o = false)
         {
             ViewBag.ReturnUrl = Request.QueryString["returnUrl"];
+            if (!o)
+            {
+                ViewBag.SecureCheck = true;
+            }            
             return View();
         }
 
@@ -49,7 +53,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
                 //System.Web.HttpContext.Current.Session.Add("_UserName", model.Username);
                 var user = System.Web.HttpContext.Current.Session["_UserName"].ToString();
                 var _accessLevel = await _storeManager.GetAuthLevel(user);
-                if(_accessLevel != null)
+                if(_accessLevel.Count() > 0)
                 {
                     System.Web.HttpContext.Current.Session["_AccessLevel"] = _accessLevel.First().AccessLevel;
                     if(_accessLevel.First().AccessLevel == "Admin" || _accessLevel.First().AccessLevel == "TPC")

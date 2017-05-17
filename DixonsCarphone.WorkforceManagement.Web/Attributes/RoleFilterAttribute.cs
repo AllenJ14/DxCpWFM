@@ -31,7 +31,6 @@ namespace DixonsCarphone.WorkforceManagement.Web.Attributes
                         returnUrl = returnUrl
                     })
                 );
-
                 return;
             }
 

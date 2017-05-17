@@ -90,9 +90,9 @@
             <!-- /.navbar-header -->
             <ul class="nav navbar-top-links navbar-right">
                 @Html.Partial("_StoresMenu", storesMenu)
-                @if (storesMenu.Stores != null)
+                @if (storesMenu.Stores == null && Request.IsAuthenticated)
                 {
-                    string.Format(" | ");
+                    <span>&nbsp;&nbsp;</span>
                 }
                 @Html.Partial("_LoginPartial")
                 <!-- /.dropdown -->
