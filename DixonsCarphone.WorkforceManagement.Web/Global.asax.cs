@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DixonsCarphone.WorkforceManagement.Business.Entities;
 using DixonsCarphone.WorkforceManagement.Business.Managers;
 using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels.Cms;
 using DixonsCarphone.WorkforceManagement.Web.App_Start;
@@ -38,8 +39,9 @@ namespace DixonsCarphone.WorkforceManagement.Web
             var ip = MvcHelper.GetIPHelper();
             var storeManager = new StoreManager();
             var t = Task.Run(() => storeManager.GetStoreDetails(ip));
-            var store = t.Result;
+            var store = t.Result ?? new Store();
             HttpContext.Current.Session.Add("_StoreDetails", store);
+            HttpContext.Current.Session.Add("_ROIFlag", store.Channel == "ROI");
             HttpContext.Current.Session.Add("_AccessLevel", "");
             HttpContext.Current.Session.Add("_AccessArea", "");
         }

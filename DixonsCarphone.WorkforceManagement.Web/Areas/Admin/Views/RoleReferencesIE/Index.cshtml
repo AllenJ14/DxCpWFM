@@ -1,0 +1,48 @@
+﻿@model IEnumerable<DixonsCarphone.WorkforceManagement.Business.Entities.RoleReference>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Role Reference List</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table text-center">
+    <tr>
+        <th class="text-center">
+            @Html.DisplayNameFor(model => model.Role)
+        </th>
+        <th class="text-center">
+            Reporting Role Flag
+        </th>
+        <th class="text-center">
+            Sales Role Flag
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr class="text-center">
+            <td>
+                @Html.DisplayFor(modelItem => item.Role)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Reporting_Role_Flag)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sales_Role_Flag)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Role }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Role }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Role })
+            </td>
+        </tr>
+    }
+
+</table>
+
+@Html.ActionLink("Back", "Index", "DashboardMaintenanceIE")

@@ -103,6 +103,21 @@
     <Compile Include="Entities\DashBoardData.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\DxCpIEReportingModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DxCpIEReportingModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DxCpIEReportingModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DxCpIEReportingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DxCpIEReportingModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DxCpIEReportingModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Entities\DxCpReportingModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -170,7 +185,7 @@
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\RoleReference.cs">
-      <DependentUpon>DxCpReportingModel.tt</DependentUpon>
+      <DependentUpon>DxCpIEReportingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\ScheduleData.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
@@ -215,7 +230,7 @@
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\StoreReference.cs">
-      <DependentUpon>DxCpReportingModel.tt</DependentUpon>
+      <DependentUpon>DxCpIEReportingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\StoreRegion.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
@@ -249,6 +264,7 @@
     <Compile Include="Managers\ActivityManager.cs" />
     <Compile Include="Managers\ContentManager.cs" />
     <Compile Include="Managers\DashBoardDataManager.cs" />
+    <Compile Include="Managers\DashMaintenanceIE.cs" />
     <Compile Include="Managers\DashMaintenance.cs" />
     <Compile Include="Managers\IActivityManager.cs" />
     <Compile Include="Managers\IContentManager.cs" />
@@ -272,6 +288,13 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>DxCpReportingModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <EntityDeploy Include="Entities\DxCpIEReportingModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>DxCpIEReportingModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Entities\DxCpIEReportingModel.edmx.diagram">
+      <DependentUpon>DxCpIEReportingModel.edmx</DependentUpon>
+    </None>
     <None Include="Entities\DxCpReportingModel.edmx.diagram">
       <DependentUpon>DxCpReportingModel.edmx</DependentUpon>
     </None>
@@ -284,6 +307,16 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Entities\DxCpIEReportingModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DxCpIEReportingModel.edmx</DependentUpon>
+      <LastGenOutput>DxCpIEReportingModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Entities\DxCpIEReportingModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DxCpIEReportingModel.edmx</DependentUpon>
+      <LastGenOutput>DxCpIEReportingModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Entities\DxCpReportingModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>DxCpReportingModel.edmx</DependentUpon>

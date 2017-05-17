@@ -1,0 +1,74 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
+@model DashboardErrors
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>WFM Dashboard Maintenance</h2>
+
+@if (ViewBag.PackageRunning != null)
+{
+    @:<p class="alert alert-success text-center" role="alert">
+        @:<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        @:    The job has been started and should take no more than 1 minute to complete.
+
+        @:</p>
+}
+
+
+
+@if (Model.RoleErrors.Count() > 0 || Model.StoreErrors.Count() > 0)
+{
+    <div class="panel panel-danger">
+        <div class="panel panel-heading"><strong>There are errors present in the reference tables!</strong></div>
+        <div class="panel panel-body">
+            @if (Model.RoleErrors.Count() > 0)
+            {
+                <p>The following unmatched roles exist:</p>
+                <ul>
+                    @foreach (var r in Model.RoleErrors)
+                    {
+                        <li>@r.ToString() - <a href="@Url.Action("Create","RoleReferencesIE",new { SeedRole=r.ToString() })">Add</a></li>
+                    }
+                </ul>
+            }
+            @if (Model.StoreErrors.Count() > 0)
+            {
+                <p>The following unmatched stores exist:</p>
+                <ul>
+                    @foreach (var r in Model.StoreErrors)
+                    {
+                        <li>@r.ToString() - <a href="@Url.Action("Create","StoreReferencesIE",new { SeedNumber=r.ToString() })">Add</a></li>
+                    }
+                </ul>
+            }
+        </div>
+    </div>
+}
+
+<div>
+    <a class="btn btn-primary btn-default" href="@Url.Action("Index","RoleReferencesIE")">Role Reference</a>
+</div>
+<br />
+<div>
+    <a class="btn btn-primary btn-default" href="@Url.Action("Index","StoreReferencesIE")">Store Reference</a>
+</div>
+<br />
+<div>
+    <a class="btn btn-success btn-default" href="@Url.Action("RunBudgets","DashboardMaintenanceIE")">Import Budget Data</a>
+</div>
+<br />
+<hr />
+<div>
+    <a class="btn btn-success btn-default" href="@Url.Action("RunBuild","DashboardMaintenanceIE")">Re-Run Data Build</a>
+</div>
+<br />
+<div>
+    <a class="btn btn-success btn-default" href="@Url.Action("RunBuildNewData","DashboardMaintenanceIE")">Re-Run Data Build with new data</a>
+</div>
+<br />
+<hr />
+<div>
+    <a id="pushBtn"class="btn btn-success btn-default" href="@Url.Action("PushData","DashboardMaintenanceIE")">Push data to site</a><span class="text-danger" style="padding-left:2em"><strong>Only press when dashboard data has been validated</strong></span>
+</div>

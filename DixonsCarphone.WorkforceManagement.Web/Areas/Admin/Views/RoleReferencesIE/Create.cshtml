@@ -1,0 +1,50 @@
+﻿@model DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels.RoleReferenceView
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create new entry</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <label class="control-label col-md-2">Role</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Role, new { htmlAttributes = new { @class = "form-control", Value = ViewBag.SeedRole } })
+                @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Reporting Role Flag</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Reporting_Role_Flag, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Reporting_Role_Flag, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Sales Role Flag</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Sales_Role_Flag, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Sales_Role_Flag, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

@@ -1,20 +1,29 @@
 ﻿@model DixonsCarphone.WorkforceManagement.Web.Controllers.LoginViewModel
 
+
 @{
-    ViewBag.Title = "Login";
+    Layout = null;
 }
 
+<!doctype html>
+<head>
+    <link href="~/Content/New/bootstrap.min.css" rel="stylesheet" media="all">
+    <link rel="shortcut icon" type="image/png" href="~/Images/ADC95AB0513840DAADA5E205ED39351B.png" />
+    <title>Workforce Management</title>
+</head>
+
+<div class="row">
+    <div class="alert alert-warning text-center">
+        You are trying to access a restricted section. Please Log In.
+    </div>
+</div>
+
 <div class="container">
-    <div class="row">
+    <div class="row col-md-12">
         &nbsp;
     </div>
-    <div class="row col-md-12">
-        <div class="alert alert-warning text-center">
-            You are trying to access restricted section. Please Log In.
-        </div>
-    </div>
     <div class="row">
-        <div class="col-sm-6 col-md-6 col-sm-offset-3 col-md-offset-3">
+        <div class="col-sm-4 col-md-4 col-sm-offset-4 col-md-offset-4">
             <div class="login-panel panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">Please Sign In</h3>
@@ -22,10 +31,15 @@
                 <div class="panel-body">
                     @using (Html.BeginForm("Index", "Login", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                     {
-                                    @Html.AntiForgeryToken()
-                                    <fieldset>
-                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                        <div class="form-group">
+                        @Html.AntiForgeryToken()
+                        <fieldset>
+                            @if (ViewBag.errorMessage != null)
+                            {
+                                <ul>
+                                    <li class="text-danger">@ViewBag.errorMessage</li>
+                                </ul>
+                            }
+                            <div class="form-group">
                                 <div class="col-md-12">
                                     @Html.TextBoxFor(m => m.Username, new { @class = "form-control", placeholder = "UserName", autofocus = "" })
                                     @Html.ValidationMessageFor(m => m.Username, "", new { @class = "text-danger" })
@@ -51,5 +65,3 @@
     </div>
 
 </div>
-
-

@@ -1,0 +1,33 @@
+﻿@model DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels.RoleReferenceView
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details: @Model.Role</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Reporting Role Flag
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Reporting_Role_Flag)
+        </dd>
+
+        <dt>
+            Sales Role Flag
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sales_Role_Flag)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Role }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

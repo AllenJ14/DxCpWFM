@@ -1,0 +1,88 @@
+﻿@model PagedList.IPagedList<DixonsCarphone.WorkforceManagement.Business.Entities.StoreReference>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Store Reference List</h2>
+
+@using (Html.BeginForm())
+{
+    <p>
+        Find by branch number: @Html.TextBox("SearchString")
+        <input type="submit" value="Search" />
+    </p>
+}
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Branch Number
+        </th>
+        <th>
+            UK BR
+        </th>
+        <th>
+            Store Name
+        </th>
+        <th>
+            Division
+        </th>
+        <th>
+            Region
+        </th>
+        <th>
+            Region Name
+        </th>
+        <th>
+            Channel
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Br_)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UK_BR)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Store_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Division)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Region)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Region_name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Channel)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Br_ }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Br_ }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Br_ })
+            </td>
+        </tr>
+    }
+
+</table>
+
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page }))
+
+@Html.ActionLink("Back", "Index", "DashboardMaintenanceIE")
