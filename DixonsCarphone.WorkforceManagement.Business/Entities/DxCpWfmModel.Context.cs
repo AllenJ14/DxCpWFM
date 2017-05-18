@@ -57,6 +57,7 @@ namespace DixonsCarphone.WorkforceManagement.Business.Entities
         public virtual DbSet<ScheduleData> ScheduleDatas { get; set; }
         public virtual DbSet<FileUploadRecord> FileUploadRecords { get; set; }
         public virtual DbSet<IpRef> IpRefs { get; set; }
+        public virtual DbSet<ROIIpRef> ROIIpRefs { get; set; }
     
         public virtual ObjectResult<udsp_GetPandL_Result> udsp_GetPandL(Nullable<int> storeNumber, string periodYear, Nullable<short> periodMonth, Nullable<short> qtdStartMonth, Nullable<short> ytdStartMonth)
         {

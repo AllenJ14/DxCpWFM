@@ -47,6 +47,7 @@
         <EntityTypeShape EntityType="DixonsCarphone.WorkforceManagement.Business.ScheduleData" Width="1.5" PointX="12.375" PointY="15.75" />
         <EntityTypeShape EntityType="DixonsCarphone.WorkforceManagement.Business.FileUploadRecord" Width="1.5" PointX="14.375" PointY="15.75" />
         <EntityTypeShape EntityType="DixonsCarphone.WorkforceManagement.Business.IpRef" Width="1.5" PointX="12.375" PointY="4.75" />
+        <EntityTypeShape EntityType="DixonsCarphone.WorkforceManagement.Business.ROIIpRef" Width="1.5" PointX="16.375" PointY="15.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

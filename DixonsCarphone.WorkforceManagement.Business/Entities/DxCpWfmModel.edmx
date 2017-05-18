@@ -431,6 +431,14 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
           <Property Name="DateCreated" Type="datetime" />
           <Property Name="DateModified" Type="datetime" />
         </EntityType>
+        <EntityType Name="ROIIpRef">
+          <Key>
+            <PropertyRef Name="EntryId" />
+          </Key>
+          <Property Name="EntryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="storeNumber" Type="int" Nullable="false" />
+          <Property Name="IpRange" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
         <EntityType Name="ScheduleData">
           <Key>
             <PropertyRef Name="EntryId" />
@@ -447,8 +455,8 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
           <Property Name="StartTime" Type="time" Precision="0" />
           <Property Name="EndTime" Type="time" Precision="0" />
           <Property Name="DayNum" Type="tinyint" />
-          <Property Name="PersonWeekTotal" Type="numeric" Precision="4" Scale="1" />
-          <Property Name="DayWeekTotal" Type="numeric" Precision="4" Scale="1" />
+          <Property Name="PersonWeekTotal" Type="numeric" Precision="5" Scale="2" />
+          <Property Name="DayWeekTotal" Type="numeric" Precision="5" Scale="2" />
           <Property Name="DateTimeUpdated" Type="datetime" />
         </EntityType>
         <EntityType Name="SiteFeedback">
@@ -813,6 +821,7 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
           <EntitySet Name="IpRef" EntityType="Self.IpRef" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OpeningTimesComments" EntityType="Self.OpeningTimesComments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PriorityType" EntityType="Self.PriorityType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ROIIpRef" EntityType="Self.ROIIpRef" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ScheduleData" EntityType="Self.ScheduleData" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SiteFeedback" EntityType="Self.SiteFeedback" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StaffType" EntityType="Self.StaffType" Schema="dbo" store:Type="Tables" />
@@ -1218,8 +1227,9 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
           <Parameter Name="Region" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="PublishedBudgetsBranch" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.PublishedBudgetsBranch_Result)">
-            <Parameter Name="Branch" Mode="In" Type="Int32" />
+          <Parameter Name="Branch" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="ROIIpRefs" EntityType="DixonsCarphone.WorkforceManagement.Business.ROIIpRef" />
         </EntityContainer>
         <EntityType Name="BestPracticeCategoryType">
           <Key>
@@ -2097,8 +2107,8 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
           <Property Name="StartTime" Type="Time" Precision="0" />
           <Property Name="EndTime" Type="Time" Precision="0" />
           <Property Name="DayNum" Type="Byte" />
-          <Property Name="PersonWeekTotal" Type="Decimal" Precision="4" Scale="1" />
-          <Property Name="DayWeekTotal" Type="Decimal" Precision="4" Scale="1" />
+          <Property Name="PersonWeekTotal" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="DayWeekTotal" Type="Decimal" Precision="5" Scale="2" />
           <Property Name="DateTimeUpdated" Type="DateTime" Precision="3" />
         </EntityType>
         <ComplexType Name="sp_RegionPunchCompliance_Result">
@@ -2293,6 +2303,14 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
           <Property Type="Byte" Name="Week" Nullable="true" />
           <Property Type="Double" Name="SOHTarget" Nullable="true" />
         </ComplexType>
+        <EntityType Name="ROIIpRef">
+          <Key>
+            <PropertyRef Name="EntryId" />
+          </Key>
+          <Property Name="EntryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="storeNumber" Type="Int32" Nullable="false" />
+          <Property Name="IpRange" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3429,6 +3447,15 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="ROIIpRefs">
+            <EntityTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.ROIIpRef">
+              <MappingFragment StoreEntitySet="ROIIpRef">
+                <ScalarProperty Name="IpRange" ColumnName="IpRange" />
+                <ScalarProperty Name="storeNumber" ColumnName="storeNumber" />
+                <ScalarProperty Name="EntryId" ColumnName="EntryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

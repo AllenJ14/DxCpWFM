@@ -171,6 +171,16 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             }
         }
 
+        //Returns list of all stores in a given channel
+        public async Task<List<Store>> GetAllROIStores()
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                var result = await dbContext.Stores.Where(x => x.Channel == "ROI").OrderBy(x => x.CST_CNTR_ID).ToListAsync();
+                return result;
+            }
+        }
+
         //Get Store from branch number
         public async Task<Store> GetStoreDetails(int storeNumber)
         {
@@ -401,6 +411,22 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
                     IpRange = ip
                 };
                 dbContext.IpRefs.Add(_ipRef);
+                await dbContext.SaveChangesAsync();
+            }
+            return;
+        }
+
+        //Submit new ROI full IP identification record
+        public async Task SubmitROIStoreRecord(int storeNum, string ip)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                ROIIpRef _ipRef = new ROIIpRef
+                {
+                    storeNumber = storeNum,
+                    IpRange = ip
+                };
+                dbContext.ROIIpRefs.Add(_ipRef);
                 await dbContext.SaveChangesAsync();
             }
             return;

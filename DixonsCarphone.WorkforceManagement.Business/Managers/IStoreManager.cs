@@ -17,9 +17,13 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
 
         Task<List<Store>> GetAllStoreDetails(string ip);
 
+        Task<List<Store>> GetAllROIStores();
+
         Task<Store> GetStoreDetailsFullIP(string ip);
 
         Task SubmitNewIdStoreRecord(int storeNum, string ip);
+
+        Task SubmitROIStoreRecord(int storeNum, string ip);
 
         Task<Store> GetStoreDetails(int storeNumber);
 

@@ -184,6 +184,9 @@
     <Compile Include="Entities\PublishedBudgetsRegion_Result.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\ROIIpRef.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\RoleReference.cs">
       <DependentUpon>DxCpIEReportingModel.tt</DependentUpon>
     </Compile>

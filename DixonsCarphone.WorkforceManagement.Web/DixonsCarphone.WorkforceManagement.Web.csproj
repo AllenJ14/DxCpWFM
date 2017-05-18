@@ -197,6 +197,7 @@
     <Compile Include="Controllers\PlanningController.cs" />
     <Compile Include="Controllers\ProfilesController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
+    <Compile Include="Controllers\ROIController.cs" />
     <Compile Include="Controllers\STARHandbookController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -546,6 +547,8 @@
     <Content Include="Views\STARHandbook\Availability.cshtml" />
     <Content Include="Views\Profiles\DuplicateRecords.cshtml" />
     <Content Include="Uploads\ProfitLossBriefing.pdf" />
+    <Content Include="Views\ROI\Index.cshtml" />
+    <Content Include="Views\ROI\Confirmed.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DixonsCarphone.WorkforceManagement.Business\DixonsCarphone.WorkforceManagement.Business.csproj">
