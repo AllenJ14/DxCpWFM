@@ -72,188 +72,199 @@
 
 </head>
 <body>
-    <div id="wrapper">
-        <!-- Navigation -->
-        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a style="padding:0px; padding-left: 8px;" href="@Url.Action("Index", "Home")" title="CPW WFM" class="navbar-brand">
-                    <img alt="CPW WFM" src="@Url.Content("~/Images/LogoSmall.png")">
-                </a>
-            </div>
-            <!-- /.navbar-header -->
-            <ul class="nav navbar-top-links navbar-right">
-                @Html.Partial("_StoresMenu", storesMenu)
-                @if (storesMenu.Stores == null && Request.IsAuthenticated)
-                {
-                    <span>&nbsp;&nbsp;</span>
-                }
-                @Html.Partial("_LoginPartial")
-                <!-- /.dropdown -->
-            </ul>
-
-            <!-- /.navbar-top-links -->
-            <div class="navbar-default sidebar" role="navigation">
-                <div class="sidebar-nav navbar-collapse">
-
-                    <ul id="side-menu" class="nav">
-                        @*<li class="sidebar-search">
-                                <div class="input-group custom-search-form">
-                                    <input type="text" class="form-control" placeholder="Search...">
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-default" type="button">
-                                            <i class="fa fa-search"></i>
-                                        </button>
-                                    </span>
-                                </div>
-                                 /input-group
-                            </li>*@
-                        @if (HttpContext.Current.Session["_AccessLevel"].ToString() == "Admin" || HttpContext.Current.Session["_AccessLevel"].ToString() == "OHAdmin")
-                        {
-                            <li>@Html.ActionLink("Admin", "Index", "Admin", new { area = "Admin" }, null)</li>
-                        }
-                        <li class="current-menu-item">@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
-                        <li>
-                            <a href="#">
-                                <i class="glyphicon glyphicon-dashboard"></i> <span>Reports</span>
-                                <span class="pull-right-container">
-                                    <i class="glyphicon glyphicon-menu-left pull-right"></i>
-                                </span>
-                            </a>
-                            <ul class="nav nav-second-level">
-
-                                <li>
-                                <li class="active"><a href="@Url.Action("GetCompliance", "Reports")">WFM Compliance</a></li>
-                                <li class="active"><a href="@Url.Action("GetDeployment", "Reports")">WFM Deployment</a></li>
-                                @if (!(bool)HttpContext.Current.Session["_ROIFlag"])
-                                {
-                                    <li class="active"><a href="@Url.Action("StorePandL", "Reports")">Profit &amp; Loss</a></li>
-                                }
-                                <li class="active"><a href="@Url.Action("PunchCompliance", "Reports")">Punch Compliance</a></li>
-                                @*<li class="active"><a href="@Url.Action("MyTargets", "Reports")">My Targets</a></li>
-            <li class="active"><a href="@Url.Action("SohSpend", "Reports")">SOH Spend</a></li>
-            <li class="active"><a href="@Url.Action("Schedules", "Reports")">My Schedule</a></li>*@
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="glyphicon glyphicon-th"></i> <span>My Store</span>
-                                <span class="pull-right-container">
-                                    <i class="glyphicon glyphicon-menu-left pull-right"></i>
-                                </span>
-                            </a>
-                            <ul class="nav nav-second-level">
-                                <li class="active"><a href="@Url.Action("MyBudgets", "Planning")">My Budgets</a></li>
-                                <li class="active"><a href="@Url.Action("Index", "Planning")"> Opening Times</a></li>
-                                @if (!(bool)HttpContext.Current.Session["_ROIFlag"])
-                                {
-                                    <li class="active"><a href="@Url.Action("MyTeam", "Reports")">My Team</a></li>
-                                }
-                                <li class="active"><a href="@Url.Action("GetSchedule", "Planning")">Schedules</a></li>
-                                    @*<li class="active"><a href="@Url.Action("PayrollCalender", "Planning")"> Payroll Calender</a></li>
-                                    <li class="active"><a href="@Url.Action("Budgets", "Planning")">Budgets</a></li>
-                                    <li class="active"><a href="@Url.Action("Calendar", "Planning")"> Calendar</a></li>*@
-                            </ul>
-                        </li>
-                        @*<li>
-                                <a href="@Url.Action("People", "Profiles")">
-                                    <i class="fa fa-th"></i> <span>Holiday Planning</span>
-                                </a>
-                                @*<ul class="nav nav-second-level">
-                                    <li class="active"><a href="@Url.Action("Index", "Profiles")"> Store</a></li>
-
-                                    <li class="active"><a href="@Url.Action("People", "Profiles")"> Staff</a></li>
-
-                                </ul>
-                            </li>*@
-                        <li>
-                            <a href="#">
-                                <i class="glyphicon glyphicon-th"></i> <span>Help & Support</span>
-                                <span class="pull-right-container">
-                                    <i class="glyphicon glyphicon-menu-left pull-right"></i>
-                                </span>
-                            </a>
-                            <ul class="nav nav-second-level">
-                                <li class="active"><a href="@Url.Action("Index","STARHandbook")">STAR Handbook</a></li>
-                                <li class="active"><a href="@Url.Action("LinkToMedics","Profiles")">Medic Feedback</a></li>
-                            </ul>
-                            @*@Html.Partial("_BestPracticeMenu", bestPractices)*@
-                        </li>
-                    </ul>
-
-                </div>
-                <!-- /.sidebar-collapse -->
-            </div>
-            <!-- /.navbar-static-side -->
-        </nav>
-
-        <div id="page-wrapper">
-            <!--[if IE]><div class="alert alert-danger text-center col-md-12"><strong>The site is not optimised for older version if Internet Explorer, please reopen in Chrome.</strong></div><![endif]-->
-            @RenderBody()
-            <hr />
-            <!--footer >
-            </!--footer-->
+    @if (Request.Browser.Browser == "IE" || Request.Browser.Browser == "InternetExplorer")
+    {
+        <div class="row">
+            <div class="alert alert-danger text-center" style="position:absolute; top:50%; width:80%; left:10%"><strong>The site is not optimised for older versions of Internet Explorer, please reopen in Chrome.</strong></div>
         </div>
-        <footer class="container">
-            <div class="row">
-                <div class="col-lg-6 col-lg-offset-5 col-md-6 col-md-offset-5 hidden-print">
-                    @*@Html.Partial("~/Views/Shared/_footer.cshtml")*@
-
-                    <p>Copyright &copy; Carphone Warehouse @DateTime.Now.Year</p>
-                </div>
-            </div>
-        </footer>
-        <!-- jQuery -->
-        <script src="~/Content/New/jquery.min.js"></script>
-        <!-- Bootstrap Core JavaScript -->
-        <script src="~/Content/New/bootstrap.min.js"></script>
-        <!-- Metis Menu Plugin JavaScript -->
-        <script src="~/Content/New/metisMenu.min.js"></script>
-        <!-- Morris Charts JavaScript -->
-        <script src="~/Content/New/raphael.min.js"></script>
-        <script src="~/Content/New/morris.min.js"></script>
-        <!-- Morris.js charts -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-
-        <!-- Chart.js JavaScript -->
-        <script src="~/Content/New/Chart.min.js"></script>
-        <!-- Custom Theme JavaScript -->
-        <script src="~/Content/New/sb-admin-2.js"></script>
-
-        <!-- INCLUDE ONLY IN RELEASE-->
-        @*<script>
-              (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-              (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-              })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-              ga('create', 'UA-97493047-1', 'auto');
-              ga('send', 'pageview');
-            </script>*@
-
-        @if (Request.IsAuthenticated)
-        {
-            <script>
-            //session end
-            var sessionTimeoutWarning = @Session.Timeout -1;
-
-            var sTimeout = parseInt(sessionTimeoutWarning) * 60 * 1000;
-            setTimeout('SessionEnd()', sTimeout);
-
-            function SessionEnd() {
-                window.location = "/Login/Logoff";
-            }
-            </script>
-        }
-
         @RenderSection("myScripts", false)
-    </div>
+    }
+    else
+    {
+        <div id="wrapper">
+            <!-- Navigation -->
+            <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a style="padding:0px; padding-left: 8px;" href="@Url.Action("Index", "Home")" title="CPW WFM" class="navbar-brand">
+                        <img alt="CPW WFM" src="@Url.Content("~/Images/LogoSmall.png")">
+                    </a>
+                </div>
+                <!-- /.navbar-header -->
+                <ul class="nav navbar-top-links navbar-right">
+                    @Html.Partial("_StoresMenu", storesMenu)
+                    @if (storesMenu.Stores == null && Request.IsAuthenticated)
+                {
+                        <span>&nbsp;&nbsp;</span>
+                    }
+                    @Html.Partial("_LoginPartial")
+                    <!-- /.dropdown -->
+                </ul>
+
+                <!-- /.navbar-top-links -->
+                <div class="navbar-default sidebar" role="navigation">
+                    <div class="sidebar-nav navbar-collapse">
+
+                        <ul id="side-menu" class="nav">
+                            @*<li class="sidebar-search">
+                                    <div class="input-group custom-search-form">
+                                        <input type="text" class="form-control" placeholder="Search...">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                     /input-group
+                                </li>*@
+                            @if (HttpContext.Current.Session["_AccessLevel"].ToString() == "Admin" || HttpContext.Current.Session["_AccessLevel"].ToString() == "OHAdmin")
+                            {
+                                <li>@Html.ActionLink("Admin", "Index", "Admin", new { area = "Admin" }, null)</li>
+                            }
+                            <li class="current-menu-item">@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
+                            <li>
+                                <a href="#">
+                                    <i class="glyphicon glyphicon-dashboard"></i> <span>Reports</span>
+                                    <span class="pull-right-container">
+                                        <i class="glyphicon glyphicon-menu-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="nav nav-second-level">
+
+                                    <li>
+                                    <li class="active"><a href="@Url.Action("GetCompliance", "Reports")">WFM Compliance</a></li>
+                                    <li class="active"><a href="@Url.Action("GetDeployment", "Reports")">WFM Deployment</a></li>
+                                    @if (!(bool)HttpContext.Current.Session["_ROIFlag"])
+                                    {
+                                        <li class="active"><a href="@Url.Action("StorePandL", "Reports")">Profit &amp; Loss</a></li>
+                                    }
+                                    <li class="active"><a href="@Url.Action("PunchCompliance", "Reports")">Punch Compliance</a></li>
+                                    @*<li class="active"><a href="@Url.Action("MyTargets", "Reports")">My Targets</a></li>
+                                        <li class="active"><a href="@Url.Action("SohSpend", "Reports")">SOH Spend</a></li>
+                                        <li class="active"><a href="@Url.Action("Schedules", "Reports")">My Schedule</a></li>*@
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="glyphicon glyphicon-th"></i> <span>My Store</span>
+                                    <span class="pull-right-container">
+                                        <i class="glyphicon glyphicon-menu-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="nav nav-second-level">
+                                    <li class="active"><a href="@Url.Action("MyBudgets", "Planning")">My Budgets</a></li>
+                                    <li class="active"><a href="@Url.Action("Index", "Planning")"> Opening Times</a></li>
+                                    @if (!(bool)HttpContext.Current.Session["_ROIFlag"])
+                                    {
+                                        <li class="active"><a href="@Url.Action("MyTeam", "Reports")">My Team</a></li>
+                                    }
+                                    <li class="active"><a href="@Url.Action("GetSchedule", "Planning")">Schedules</a></li>
+                                    @*<li class="active"><a href="@Url.Action("PayrollCalender", "Planning")"> Payroll Calender</a></li>
+                                        <li class="active"><a href="@Url.Action("Budgets", "Planning")">Budgets</a></li>
+                                        <li class="active"><a href="@Url.Action("Calendar", "Planning")"> Calendar</a></li>*@
+                                </ul>
+                            </li>
+                            @*<li>
+                                    <a href="@Url.Action("People", "Profiles")">
+                                        <i class="fa fa-th"></i> <span>Holiday Planning</span>
+                                    </a>
+                                    @*<ul class="nav nav-second-level">
+                                        <li class="active"><a href="@Url.Action("Index", "Profiles")"> Store</a></li>
+
+                                        <li class="active"><a href="@Url.Action("People", "Profiles")"> Staff</a></li>
+
+                                    </ul>
+                                </li>*@
+                            <li>
+                                <a href="#">
+                                    <i class="glyphicon glyphicon-th"></i> <span>Help & Support</span>
+                                    <span class="pull-right-container">
+                                        <i class="glyphicon glyphicon-menu-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="nav nav-second-level">
+                                    <li class="active"><a href="@Url.Action("Index","STARHandbook")">STAR Handbook</a></li>
+                                    <li class="active"><a href="@Url.Action("LinkToMedics","Profiles")">Medic Feedback</a></li>
+                                </ul>
+                                @*@Html.Partial("_BestPracticeMenu", bestPractices)*@
+                            </li>
+                        </ul>
+
+                    </div>
+                    <!-- /.sidebar-collapse -->
+                </div>
+                <!-- /.navbar-static-side -->
+            </nav>
+
+            <div id="page-wrapper">
+                <!--[if IE]><![endif]-->
+                @RenderBody()
+                <hr />
+                <!--footer >
+                </!--footer-->
+            </div>
+            <footer class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-lg-offset-5 col-md-6 col-md-offset-5 hidden-print">
+                        @*@Html.Partial("~/Views/Shared/_footer.cshtml")*@
+
+                        <p>Copyright &copy; Carphone Warehouse @DateTime.Now.Year</p>
+                    </div>
+                </div>
+            </footer>
+            <!-- jQuery -->
+            <script src="~/Content/New/jquery.min.js"></script>
+            <!-- Bootstrap Core JavaScript -->
+            <script src="~/Content/New/bootstrap.min.js"></script>
+            <!-- Metis Menu Plugin JavaScript -->
+            <script src="~/Content/New/metisMenu.min.js"></script>
+            <!-- Morris Charts JavaScript -->
+            <script src="~/Content/New/raphael.min.js"></script>
+            <script src="~/Content/New/morris.min.js"></script>
+            <!-- Morris.js charts -->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+
+            <!-- Chart.js JavaScript -->
+            <script src="~/Content/New/Chart.min.js"></script>
+            <!-- Custom Theme JavaScript -->
+            <script src="~/Content/New/sb-admin-2.js"></script>
+
+            <!-- INCLUDE ONLY IN RELEASE-->
+            @*<script>
+                  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+                  ga('create', 'UA-97493047-1', 'auto');
+                  ga('send', 'pageview');
+                </script>*@
+
+            @if (Request.IsAuthenticated)
+            {
+                <script>
+                    //session end
+                    var sessionTimeoutWarning = @Session.Timeout -1;
+
+                    var sTimeout = parseInt(sessionTimeoutWarning) * 60 * 1000;
+                    setTimeout('SessionEnd()', sTimeout);
+
+                    function SessionEnd() {
+                        window.location = "/Login/Logoff";
+                    }
+                </script>
+            }
+
+            @RenderSection("myScripts", false)
+        </div>
+    }
+
 </body>
 </html>
 
