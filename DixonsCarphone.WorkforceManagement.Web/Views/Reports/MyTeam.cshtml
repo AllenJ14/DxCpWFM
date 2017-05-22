@@ -22,7 +22,7 @@
         <div class="alert alert-warning text-center"><strong>Coming soon!</strong></div>
     }
 
-    @if (Model.ContractBases != null)
+    @*@if (Model.ContractBases != null)
     {
         <div class="row">
             <div class="col-lg-12 col-md-12">
@@ -34,7 +34,7 @@
                         <p>
                             These contract bases provide guidance as to where the store's contracted cost needs to sit for the remainder of the year. Contract bases are used in order to:
                             <ul>
-                                <li>Keep payroll (SOH) controlled,</li>
+                                <li>Keep payroll (SOH) controlled,</li>s
                                 <li>Ensure we recruit into the right stores,</li>
                                 <li>Enable us to react to changes in trade.</li>
                             </ul>
@@ -51,7 +51,7 @@
                         <p>
                             Great holiday management will enable you to contract to the max contract base and deliver your SOH budget each week.<br />
                             Holiday needs to be used inline with the needs of the business so at some points we'll encourage more holiday e.g. at quiet times of the year. At other points, e.g. peak periods, holiday may be controlled to ensure we can deploy enough hours to capatalise on business opportunities.<br />
-                            The below is store specific guidance on how much holiday should be taken throughout the year, with the goal being 100% taken at the end of the year.
+                            The below is store specific guidance on how much of your store's holiday entitlement should be taken throughout the year, with the goal being 100% taken at the end of the year.
                         </p>
                         <div class="row">
                             @Html.Partial("~/Views/Partials/_MyHolidayPhasing.cshtml", Model)
@@ -60,7 +60,7 @@
                 </div>
             </div>
         </div>
-    }
+    }*@
 
     @if (Model.MyTeam != null && Model.MyTeam.Count() > 0)
     {

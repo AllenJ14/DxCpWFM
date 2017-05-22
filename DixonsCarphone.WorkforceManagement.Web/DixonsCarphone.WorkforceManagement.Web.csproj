@@ -290,6 +290,10 @@
     <Content Include="Images\CMS_Uploads\DeletingAvailability1.png" />
     <Content Include="Images\CMS_Uploads\DeletingAvailability2.png" />
     <Content Include="Images\CMS_Uploads\ExceptionsReport1.png" />
+    <Content Include="Images\CMS_Uploads\LieuEarned1.png" />
+    <Content Include="Images\CMS_Uploads\LieuEarned2.png" />
+    <Content Include="Images\CMS_Uploads\LieuEarned3.png" />
+    <Content Include="Images\CMS_Uploads\LieuEarned4.png" />
     <Content Include="Images\CMS_Uploads\MissedPunch1.png" />
     <Content Include="Images\CMS_Uploads\PunchOutsideSchedule1.png" />
     <Content Include="Images\CMS_Uploads\PunchOutsideSchedule2.png" />
@@ -551,6 +555,7 @@
     <Content Include="Views\ROI\Confirmed.cshtml" />
     <Content Include="Views\Partials\_MyContractBase.cshtml" />
     <Content Include="Views\Partials\_MyHolidayPhasing.cshtml" />
+    <Content Include="Views\STARHandbook\TimecardExceptions8.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DixonsCarphone.WorkforceManagement.Business\DixonsCarphone.WorkforceManagement.Business.csproj">

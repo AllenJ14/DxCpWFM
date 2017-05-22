@@ -1,0 +1,88 @@
+﻿
+@{
+    ViewBag.Title = "STAR Handbook";
+}
+
+<section class="content">
+    <row>
+        &emsp;
+    </row>
+
+    <row>
+        <ol class="breadcrumb">
+            <li><a href="@Url.Action("Index","STARHandbook")">STAR Handbook</a></li>
+            <li><a href="@Url.Action("TimecardExceptions","STARHandbook")">Timecard Exceptions</a></li>
+            <li class="active">Transferring Time to Lieu Earned</li>
+        </ol>
+    </row>
+
+    <row>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title"><strong>Transferring Time to Lieu Earned</strong></h4>
+            </div>
+            <div class="panel-body">
+                <row class="col-md-12">
+                    <p>If a Full-Time colleague works over 40 hours in a week, the additional time can be moved to Lieu Earned to be taken at a later date. Time moved to Lieu Earned must be used within 30 days of the effective day or it will expire.</p>
+                    <p>Check the cumulative total for the week in the right hand column of the timecard to see if there is any time eligible to be moved to lieu.</p>
+                </row>
+                <div class="col-md-12">
+                    &emsp;
+                </div>
+                <row class="col-md-12">
+                    <div class="col-md-12 text-center"><img src="~/Images/CMS_Uploads/LieuEarned1.png" class="img-responsive" /></div>
+                </row>
+                <div class="col-md-12">
+                    &emsp;
+                </div>
+                <row class="col-md-12">
+                    <p>Look for the "IE - Non-Scheduled" amount int the Totals section on the bottom left of the screen. Right-click on it and select "move"</p>
+                </row>
+                <div class="col-md-12">
+                    &emsp;
+                </div>
+                <row class="col-md-12">
+                    <div class="col-md-12 text-center"><img src="~/Images/CMS_Uploads/LieuEarned2.png" class="img-responsive" /></div>
+                </row>
+                <div class="col-md-12">
+                    &emsp;
+                </div>
+                <row class="col-md-12">
+                    <p>
+                        In the move amount dialogue box enter the following in the "To" section:
+                        <ul>
+                            <li>Pay code: Select "IE - Lieu Earmed" from the drop down list</li>
+                            <li>Amount: Type in the total amount of time you want to move to lieu in the format hh:mm. The amount must not exceed the total time currently assigned to the "IE - Non Scheduled" paycode or it will negatively affect your FT leakage.</li>
+                            <li>Effective Date: Set this to the Sunday immediately following the period that the timecard is for.</li>
+                        </ul>
+                    </p>
+                </row>
+                <div class="col-md-12">
+                    &emsp;
+                </div>
+                <row class="col-md-12">
+                    <div class="col-md-12 text-center"><img src="~/Images/CMS_Uploads/LieuEarned3.png" class="img-responsive" /></div>
+                </row>
+                <div class="col-md-12">
+                    &emsp;
+                </div>
+                <row class="col-md-12">
+                    <p>Finally, hit the save button on the timecard screen for the totals to update."</p>
+                </row>
+                <div class="col-md-12">
+                    &emsp;
+                </div>
+                <row class="col-md-12">
+                    <div class="col-md-12 text-center"><img src="~/Images/CMS_Uploads/LieuEarned4.png" class="img-responsive" /></div>
+                </row>
+            </div>
+        </div>
+    </row>
+
+    @Html.Partial("~/Views/Partials/_TimecardExceptionsOptions.cshtml")
+
+    <div class="row">
+        <div class="col-md-6">
+        </div>
+    </div>
+</section>
