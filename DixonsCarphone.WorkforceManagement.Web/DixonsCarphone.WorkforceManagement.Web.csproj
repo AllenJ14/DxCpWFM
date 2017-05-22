@@ -549,6 +549,8 @@
     <Content Include="Uploads\ProfitLossBriefing.pdf" />
     <Content Include="Views\ROI\Index.cshtml" />
     <Content Include="Views\ROI\Confirmed.cshtml" />
+    <Content Include="Views\Partials\_MyContractBase.cshtml" />
+    <Content Include="Views\Partials\_MyHolidayPhasing.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DixonsCarphone.WorkforceManagement.Business\DixonsCarphone.WorkforceManagement.Business.csproj">

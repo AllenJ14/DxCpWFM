@@ -110,7 +110,7 @@
                 {
                         <tr>
                             <td colspan="2" style=@(Model.PeakTimes[peakIndex].EffectiveDate.ToShortDateString() == "09/04/2017" || Model.PeakTimes[peakIndex].EffectiveDate.ToShortDateString() == "16/04/2017" || Model.PeakTimes[peakIndex].EffectiveDate.ToShortDateString() == "25/12/2016"? "" : "padding:15px")>
-                                @Html.ActionLink(Model.PeakTimes[peakIndex].EffectiveDate.ToShortDateString(), "Edit", new { id = Model.PeakTimes[peakIndex].EntryID })
+                                @Html.ActionLink(Model.PeakTimes[peakIndex].EffectiveDate.ToShortDateString(), "EditSingleTime", new { EntryId = Model.PeakTimes[peakIndex].EntryID })
                                 <br />
                                 @if (Model.PeakTimes[peakIndex].EffectiveDate.ToShortDateString() == "20/11/2016")
                                 {

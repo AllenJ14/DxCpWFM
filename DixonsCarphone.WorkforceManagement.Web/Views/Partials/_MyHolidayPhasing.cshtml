@@ -1,0 +1,44 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
+@model MyTeamViewModel
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel-body">
+            <table class="table table-condensed table-bordered col-md-12">
+                <thead style="background-color:#002249; color:aliceblue">
+                    <tr>
+                        <th class="text-center" colspan="12">Holiday Phasing 17/18</th>
+                    </tr>
+                    <tr>
+                        <th class="text-center col-md-1">P1</th>
+                        <th class="text-center col-md-1">P2</th>
+                        <th class="text-center col-md-1">P3</th>
+                        <th class="text-center col-md-1">P4</th>
+                        <th class="text-center col-md-1">P5</th>
+                        <th class="text-center col-md-1">P6</th>
+                        <th class="text-center col-md-1">P7</th>
+                        <th class="text-center col-md-1">P8</th>
+                        <th class="text-center col-md-1">P9</th>
+                        <th class="text-center col-md-1">P10</th>
+                        <th class="text-center col-md-1">P11</th>
+                        <th class="text-center col-md-1">P12</th>
+                    </tr>
+                </thead>
+                    <tr>
+                        <td class="text-center">@string.Format("{0:0}%", Model.ContractBases.P1 * 100)</td>
+                        <td class="text-center">@string.Format("{0:0}%", Model.ContractBases.P2 * 100)</td>
+                        <td class="text-center">@string.Format("{0:0}%", Model.ContractBases.P3 * 100)</td>
+                        <td class="text-center">@string.Format("{0:0}%", Model.ContractBases.P4 * 100)</td>
+                        <td class="text-center">@string.Format("{0:0}%", Model.ContractBases.P5 * 100)</td>
+                        <td class="text-center">@string.Format("{0:0}%", Model.ContractBases.P6 * 100)</td>
+                        <td class="text-center">@string.Format("{0:0}%", Model.ContractBases.P7 * 100)</td>
+                        <td class="text-center">@string.Format("{0:0}%", Model.ContractBases.P8 * 100)</td>
+                        <td class="text-center">@string.Format("{0:0}%", Model.ContractBases.P9 * 100)</td>
+                        <td class="text-center">@string.Format("{0:0}%", Model.ContractBases.P10 * 100)</td>
+                        <td class="text-center">@string.Format("{0:0}%", Model.ContractBases.P11 * 100)</td>
+                        <td class="text-center">@string.Format("{0:0}%", Model.ContractBases.P12 * 100)</td>
+                    </tr>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,25 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
+@model MyTeamViewModel
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel-body">
+            <table class="table table-condensed table-bordered col-md-12">
+                <thead style="background-color:#002249; color:aliceblue">
+                    <tr>
+                        <th class="text-center col-md-3">Current Contract Hours</th>
+                        <th class="text-center col-md-3">Max Contract Base</th>
+                        <th class="text-center col-md-3">Forecasted Highest Week (Non Peak)</th>
+                        <th class="text-center col-md-3">Forecasted Lowest Week</th>
+                    </tr>
+                </thead>
+                    <tr>
+                        <td class="text-center">@Model.MyTeam.Where(x => x.ROLE != "Specialist.Retail").Sum(x => x.CONTRACT_HOURS)</td>
+                        <td class="text-center">@Model.ContractBases.Contract_Base</td>
+                        <td class="text-center">@Model.ContractBases.Highest_Week</td>
+                        <td class="text-center">@Model.ContractBases.Lowest_Week</td>
+                    </tr>
+            </table>
+        </div>
+    </div>
+</div>

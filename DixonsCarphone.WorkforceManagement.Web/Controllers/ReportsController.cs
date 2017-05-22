@@ -223,6 +223,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             else
             {
                 vm.MyTeam = mapper.Map<List<HrFeedView>>(await _peopleManager.GetStoreStaff(StoreNumber));
+                vm.ContractBases = mapper.Map<ContractBaseView>(await _peopleManager.GetContractBase(StoreNumber));
             }
 
             vm.PageBlurb = ConfigurationManager.AppSettings["MyTeamBlurb"];

@@ -17,29 +17,69 @@
 
     @Html.Partial("~/Views/Partials/_PageBlurb.cshtml", Model)
 
-    <div class="row">
-        <div class="col-lg-12 col-md-12">
-            <div class="panel panel-default">
-                <div class="panel-heading text-center">
-                    <strong>My Team</strong>
-                </div>
-                <div class="panel-body">
-                    <p>These are the details of your team currently held by the HR system.</p>
-                    <p>If you believe any of these details are incorrect please raise with your TPC who can help get these rectified.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
     @if ((bool)HttpContext.Current.Session["_ROIFlag"])
     {
         <div class="alert alert-warning text-center"><strong>Coming soon!</strong></div>
     }
 
+    @if (Model.ContractBases != null)
+    {
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading text-center">
+                        <strong>Contract Bases</strong>
+                    </div>
+                    <div class="panel-body">
+                        <p>
+                            These contract bases provide guidance as to where the store's contracted cost needs to sit for the remainder of the year. Contract bases are used in order to:
+                            <ul>
+                                <li>Keep payroll (SOH) controlled,</li>
+                                <li>Ensure we recruit into the right stores,</li>
+                                <li>Enable us to react to changes in trade.</li>
+                            </ul>
+                        </p>
+                        <p>
+                            Please remember these are <u>max</u> contract bases and not targets - you should only recruit to these numbers if you have robust plans in place to deliver your SOH, including good holiday management.
+                        </p>
+                        <p class="text-center">
+                            <i><u>Geek Squad hours are not included in the max contract base.</u></i>
+                        </p>
+                        <div class="row">
+                            @Html.Partial("~/Views/Partials/_MyContractBase.cshtml", Model)
+                        </div>
+                        <p>
+                            Great holiday management will enable you to contract to the max contract base and deliver your SOH budget each week.<br />
+                            Holiday needs to be used inline with the needs of the business so at some points we'll encourage more holiday e.g. at quiet times of the year. At other points, e.g. peak periods, holiday may be controlled to ensure we can deploy enough hours to capatalise on business opportunities.<br />
+                            The below is store specific guidance on how much holiday should be taken throughout the year, with the goal being 100% taken at the end of the year.
+                        </p>
+                        <div class="row">
+                            @Html.Partial("~/Views/Partials/_MyHolidayPhasing.cshtml", Model)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
     @if (Model.MyTeam != null && Model.MyTeam.Count() > 0)
     {
         <div class="row">
-            @Html.Partial("~/Views/Partials/_MyTeamSimple.cshtml", Model)
+            <div class="col-lg-12 col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading text-center">
+                        <strong>My Team</strong>
+                    </div>
+                    <div class="panel-body">
+                        <p>These are the details of your team currently held by the HR system.</p>
+                        <p>If you believe any of these details are incorrect please raise with your TPC who can help get these rectified.</p>
+                        <div class="row">
+                            @Html.Partial("~/Views/Partials/_MyTeamSimple.cshtml", Model)
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     }
+
 </section>

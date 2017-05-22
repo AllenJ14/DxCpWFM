@@ -11,6 +11,8 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
     {
         Task<List<HrFeed>> GetStoreStaff(int storeNum);
 
+        Task<ContractBaseDetail> GetContractBase(int storeNum);
+
         Task<List<UserAccess>> GetUACList();
 
         Task<UserAccess> GetUACSingle(int ID);

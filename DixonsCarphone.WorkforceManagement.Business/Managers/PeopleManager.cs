@@ -21,6 +21,16 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             }
         }
 
+        public async Task<ContractBaseDetail> GetContractBase(int storeNum)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                var result = await dbContext.ContractBaseDetails.FindAsync(storeNum);
+
+                return result;
+            }
+        }
+
         // Get UAC List
         public async Task<List<UserAccess>> GetUACList()
         {

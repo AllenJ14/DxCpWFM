@@ -142,6 +142,27 @@
           <Property Name="DateModified" Type="datetime" />
           <Property Name="isActive" Type="bit" />
         </EntityType>
+        <EntityType Name="ContractBaseDetail">
+          <Key>
+            <PropertyRef Name="Branch" />
+          </Key>
+          <Property Name="Branch" Type="smallint" Nullable="false" />
+          <Property Name="Contract Base" Type="smallint" />
+          <Property Name="Highest Week" Type="smallint" />
+          <Property Name="Lowest Week" Type="smallint" />
+          <Property Name="P1" Type="numeric" Precision="3" Scale="2" />
+          <Property Name="P2" Type="numeric" Precision="3" Scale="2" />
+          <Property Name="P3" Type="numeric" Precision="3" Scale="2" />
+          <Property Name="P4" Type="numeric" Precision="3" Scale="2" />
+          <Property Name="P5" Type="numeric" Precision="3" Scale="2" />
+          <Property Name="P6" Type="numeric" Precision="3" Scale="2" />
+          <Property Name="P7" Type="numeric" Precision="3" Scale="2" />
+          <Property Name="P8" Type="numeric" Precision="3" Scale="2" />
+          <Property Name="P9" Type="numeric" Precision="3" Scale="2" />
+          <Property Name="P10" Type="numeric" Precision="3" Scale="2" />
+          <Property Name="P11" Type="numeric" Precision="3" Scale="2" />
+          <Property Name="P12" Type="numeric" Precision="3" Scale="2" />
+        </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="CPW_Clocking_Data">
@@ -811,6 +832,7 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
           <EntitySet Name="BestPracticeContent" EntityType="Self.BestPracticeContent" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ContentDetail" EntityType="Self.ContentDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ContentHeader" EntityType="Self.ContentHeader" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ContractBaseDetail" EntityType="Self.ContractBaseDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DailyDeployment" EntityType="Self.DailyDeployment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DailyFootfall" EntityType="Self.DailyFootfall" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DashBoardData" EntityType="Self.DashBoardData" Schema="dbo" store:Type="Tables" />
@@ -1230,6 +1252,7 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
           <Parameter Name="Branch" Mode="In" Type="Int32" />
           </FunctionImport>
           <EntitySet Name="ROIIpRefs" EntityType="DixonsCarphone.WorkforceManagement.Business.ROIIpRef" />
+          <EntitySet Name="ContractBaseDetails" EntityType="DixonsCarphone.WorkforceManagement.Business.ContractBaseDetail" />
         </EntityContainer>
         <EntityType Name="BestPracticeCategoryType">
           <Key>
@@ -2310,6 +2333,27 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
           <Property Name="EntryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="storeNumber" Type="Int32" Nullable="false" />
           <Property Name="IpRange" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ContractBaseDetail">
+          <Key>
+            <PropertyRef Name="Branch" />
+          </Key>
+          <Property Name="Branch" Type="Int16" Nullable="false" />
+          <Property Name="Contract_Base" Type="Int16" />
+          <Property Name="Highest_Week" Type="Int16" />
+          <Property Name="Lowest_Week" Type="Int16" />
+          <Property Name="P1" Type="Decimal" Precision="3" Scale="2" />
+          <Property Name="P2" Type="Decimal" Precision="3" Scale="2" />
+          <Property Name="P3" Type="Decimal" Precision="3" Scale="2" />
+          <Property Name="P4" Type="Decimal" Precision="3" Scale="2" />
+          <Property Name="P5" Type="Decimal" Precision="3" Scale="2" />
+          <Property Name="P6" Type="Decimal" Precision="3" Scale="2" />
+          <Property Name="P7" Type="Decimal" Precision="3" Scale="2" />
+          <Property Name="P8" Type="Decimal" Precision="3" Scale="2" />
+          <Property Name="P9" Type="Decimal" Precision="3" Scale="2" />
+          <Property Name="P10" Type="Decimal" Precision="3" Scale="2" />
+          <Property Name="P11" Type="Decimal" Precision="3" Scale="2" />
+          <Property Name="P12" Type="Decimal" Precision="3" Scale="2" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -3453,6 +3497,28 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
                 <ScalarProperty Name="IpRange" ColumnName="IpRange" />
                 <ScalarProperty Name="storeNumber" ColumnName="storeNumber" />
                 <ScalarProperty Name="EntryId" ColumnName="EntryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ContractBaseDetails">
+            <EntityTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.ContractBaseDetail">
+              <MappingFragment StoreEntitySet="ContractBaseDetail">
+                <ScalarProperty Name="P12" ColumnName="P12" />
+                <ScalarProperty Name="P11" ColumnName="P11" />
+                <ScalarProperty Name="P10" ColumnName="P10" />
+                <ScalarProperty Name="P9" ColumnName="P9" />
+                <ScalarProperty Name="P8" ColumnName="P8" />
+                <ScalarProperty Name="P7" ColumnName="P7" />
+                <ScalarProperty Name="P6" ColumnName="P6" />
+                <ScalarProperty Name="P5" ColumnName="P5" />
+                <ScalarProperty Name="P4" ColumnName="P4" />
+                <ScalarProperty Name="P3" ColumnName="P3" />
+                <ScalarProperty Name="P2" ColumnName="P2" />
+                <ScalarProperty Name="P1" ColumnName="P1" />
+                <ScalarProperty Name="Lowest_Week" ColumnName="Lowest Week" />
+                <ScalarProperty Name="Highest_Week" ColumnName="Highest Week" />
+                <ScalarProperty Name="Contract_Base" ColumnName="Contract Base" />
+                <ScalarProperty Name="Branch" ColumnName="Branch" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

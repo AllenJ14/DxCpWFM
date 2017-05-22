@@ -80,6 +80,7 @@
     <Compile Include="BusinessModels\CompOverContractDetail.cs" />
     <Compile Include="BusinessModels\CompOverTargetDetail.cs" />
     <Compile Include="BusinessModels\CompTimecardDetail.cs" />
+    <Compile Include="BusinessModels\ContractBaseView.cs" />
     <Compile Include="BusinessModels\DailyDeploymentArrayForm.cs" />
     <Compile Include="BusinessModels\DailyDeploymentView.cs" />
     <Compile Include="BusinessModels\DashboardErrors.cs" />
