@@ -256,6 +256,7 @@ else if (HttpContext.Current.Session["_RegionNumber"] != null)
                         <th class="text-center col-md-1" style="vertical-align:middle">Over Contract Base</th>
                         <th class="text-center col-md-1" style="vertical-align:middle">Full Time Leakage</th>
                         <th class="text-center col-md-1" style="vertical-align:middle">Zero Hour/Missing Timecard</th>
+                        <th class="text-center col-md-1" style="vertical-align:middle">Punch Compliance</th>
                         <th class="text-center col-md-1" style="vertical-align:middle">Compliance Score</th>
                     </tr>
                 </thead>
@@ -268,6 +269,7 @@ else if (HttpContext.Current.Session["_RegionNumber"] != null)
                             <td class="text-center">@((bool)item.OverContractFlag ? string.Format("{0:0.0}", item.ContractHours - item.ContractBaseTarget) : "-")</td>
                             <td class="text-center">@(item.FTLeakage > 0 ? item.LeakageCount.ToString() : "-")</td>
                             <td class="text-center">@(item.ZeroHour > 0 ? item.ZeroHour.ToString() : "-")/@(item.TotalHeadCount - item.TimeCardsCompleted > 0 ? (item.TotalHeadCount - item.TimeCardsCompleted).ToString() : "-")</td>
+                            <td class="text-center">@string.Format("{0:0.0}%", item.PayrollCorrections * 100)</td>
                             <td class="text-center @GetColor((int)item.ComplianceScore)">@item.ComplianceScore</td>
                         </tr>
                     }
@@ -277,6 +279,7 @@ else if (HttpContext.Current.Session["_RegionNumber"] != null)
                         <td class="text-center"><strong>@string.Format("{0:0}", Model._dashboardViewCollection.Where(x => (bool)x.OverContractFlag).Count())</strong></td>
                         <td class="text-center"><strong>@string.Format("{0:0.0}", Model._dashboardViewCollection.Sum(x => x.LeakageCount))</strong></td>
                         <td class="text-center"><strong>@(Model._dashboardViewCollection.Sum(x => x.ZeroHour))/@(Model._dashboardViewCollection.Sum(x => x.TotalHeadCount) - Model._dashboardViewCollection.Sum(x => x.TimeCardsCompleted))</strong></td>
+                        <td class="text-center"><strong>@string.Format("{0:0.0}%", Model._dashboardViewCollection.Average(x => x.PayrollCorrections) * 100)</strong></td>
                         <td class="text-center @GetColor((int)Model._dashboardViewCollection.Average(x => x.ComplianceScore))">@string.Format("{0:0}", Model._dashboardViewCollection.Average(x => x.ComplianceScore))</td>
                     </tr>
                 </tbody>
@@ -297,6 +300,7 @@ else if (HttpContext.Current.Session["_DivisionName"] != null)
                         <th class="text-center col-md-1" style="vertical-align:middle">Over Contract Base</th>
                         <th class="text-center col-md-1" style="vertical-align:middle">Full Time Leakage</th>
                         <th class="text-center col-md-1" style="vertical-align:middle">Zero Hour/Missing Timecard</th>
+                        <th class="text-center col-md-1" style="vertical-align:middle">Punch Compliance</th>
                         <th class="text-center col-md-1" style="vertical-align:middle">Compliance Score</th>
                     </tr>
                 </thead>
@@ -309,6 +313,7 @@ else if (HttpContext.Current.Session["_DivisionName"] != null)
                             <td class="text-center">@(item.OverContractFlag > 0 ? string.Format("{0:0}", item.OverContractFlag) : "-")</td>
                             <td class="text-center">@(item.LeakageCount > 0 ? item.LeakageCount.ToString() : "-")</td>
                             <td class="text-center">@(item.ZeroHour > 0 ? item.ZeroHour.ToString() : "-")/@(item.TotalHeadcount - item.TimeCardsCompleted > 0 ? (item.TotalHeadcount - item.TimeCardsCompleted).ToString() : "-")</td>
+                            <td class="text-center">@string.Format("{0:0.0}%", item.PayrollCorrections * 100)</td>
                             <td class="text-center @GetColor((int)item.ComplianceScore)">@item.ComplianceScore</td>
                         </tr>
                     }
@@ -318,6 +323,7 @@ else if (HttpContext.Current.Session["_DivisionName"] != null)
                         <td class="text-center"><strong>@string.Format("{0:0}", subtotal.OverContractFlag)</strong></td>
                         <td class="text-center"><strong>@string.Format("{0:0}", subtotal.LeakageCount)</strong></td>
                         <td class="text-center"><strong>@(subtotal.ZeroHour)/@(subtotal.TotalHeadcount - subtotal.TimeCardsCompleted)</strong></td>
+                        <td class="text-center"><strong>@string.Format("{0:0.0}%", subtotal.PayrollCorrections * 100)</strong></td>
                         <td class="text-center @GetColor((int)subtotal.ComplianceScore)">@string.Format("{0:0}", subtotal.ComplianceScore)</td>
                     </tr>
                 </tbody>
@@ -338,6 +344,7 @@ else if (HttpContext.Current.Session["_ChannelName"] != null)
                         <th class="text-center col-md-1" style="vertical-align:middle">Over Contract Base</th>
                         <th class="text-center col-md-1" style="vertical-align:middle">Full Time Leakage</th>
                         <th class="text-center col-md-1" style="vertical-align:middle">Zero Hour/Missing Timecard</th>
+                        <th class="text-center col-md-1" style="vertical-align:middle">Punch Compliance</th>
                         <th class="text-center col-md-1" style="vertical-align:middle">Compliance Score</th>
                     </tr>
                 </thead>
@@ -350,6 +357,7 @@ else if (HttpContext.Current.Session["_ChannelName"] != null)
                             <td class="text-center">@(item.OverContractFlag > 0 ? string.Format("{0:0}", item.OverContractFlag) : "-")</td>
                             <td class="text-center">@(item.LeakageCount > 0 ? item.LeakageCount.ToString() : "-")</td>
                             <td class="text-center">@(item.ZeroHour > 0 ? item.ZeroHour.ToString() : "-")/@(item.TotalHeadcount - item.TimeCardsCompleted > 0 ? (item.TotalHeadcount - item.TimeCardsCompleted).ToString() : "-")</td>
+                            <td class="text-center">@string.Format("{0:0.0}%", item.PayrollCorrections * 100)</td>
                             <td class="text-center @GetColor((int)item.ComplianceScore)">@item.ComplianceScore</td>
                         </tr>
                     }
@@ -359,6 +367,7 @@ else if (HttpContext.Current.Session["_ChannelName"] != null)
                         <td class="text-center"><strong>@string.Format("{0:0}", subtotal.OverContractFlag)</strong></td>
                         <td class="text-center"><strong>@string.Format("{0:0}", subtotal.LeakageCount)</strong></td>
                         <td class="text-center"><strong>@(subtotal.ZeroHour)/@(subtotal.TotalHeadcount - subtotal.TimeCardsCompleted)</strong></td>
+                        <td class="text-center"><strong>@string.Format("{0:0.0}%", subtotal.PayrollCorrections * 100)</strong></td>
                         <td class="text-center @GetColor((int)subtotal.ComplianceScore)">@string.Format("{0:0}", subtotal.ComplianceScore)</td>
                     </tr>
                 </tbody>
