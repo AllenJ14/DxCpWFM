@@ -2,7 +2,7 @@
 @using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
 @model StorePandLViewModel
 
-@{ 
+@{
     var prevSubCat = string.Empty;
 
     var marginCosts = Model.PandLDetails.Where(x => x.AccountEntryTypeId == 1).GroupBy(x => x.AccountEntryDetailId).Select(x => x.FirstOrDefault()).OrderBy(x => x.AccountEntrySubTypeId).ThenBy(x => x.AccountEntryDetailId).ThenBy(x => x.AccountEntrySubTypeText).ToList();
@@ -23,49 +23,51 @@
                         <a href="@Url.Action("TrainingDoc", "Reports")" class="btn btn-success pull-right col-md-2" style="margin-right:10px" role="button" target="_blank">Training Guide</a>
                     </div>
                 }
-                
+
             </div>
             <!-- /.panel-heading -->
             <div class="panel-body">
                 @if (Model?.PandLDetails?.Count > 0)
-            {
-                    <table class="table table-striped table-bordered table-hover table-condensed-smtxt persist-area" id="dataTables-storePL">
-                        <thead class="persist-header">
-                            <tr>
-                                <th colspan="2">&nbsp;</th>
-                                <th colspan="3" class="text-center">Month</th>
-                                <th colspan="3" class="text-center">QTD</th>
-                                <th colspan="3" class="text-center">YTD</th>
-                            </tr>
-                            <tr class="text-center">
-                                <th class="text-center col-md-2">Item</th>
-                                <th class="text-center col-md-1">Detail</th>
-                                <th class="text-center col-md-1">Actual</th>
-                                <th class="text-center col-md-1">Target</th>
-                                <th class="text-center col-md-1">% To Target</th>
-                                <th class="text-center col-md-1">Actual</th>
-                                <th class="text-center col-md-1">Target</th>
-                                <th class="text-center col-md-1">% To Target</th>
-                                <th class="text-center col-md-1">Actual</th>
-                                <th class="text-center col-md-1">Target</th>
-                                <th class="text-center col-md-1">% To Target</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                {
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover table-condensed-smtxt persist-area" id="dataTables-storePL">
+                            <thead class="persist-header">
+                                <tr>
+                                    <th colspan="2">&nbsp;</th>
+                                    <th colspan="3" class="text-center">Month</th>
+                                    <th colspan="3" class="text-center">QTD</th>
+                                    <th colspan="3" class="text-center">YTD</th>
+                                </tr>
+                                <tr class="text-center">
+                                    <th class="text-center col-md-2">Item</th>
+                                    <th class="text-center col-md-1">Detail</th>
+                                    <th class="text-center col-md-1">Actual</th>
+                                    <th class="text-center col-md-1">Target</th>
+                                    <th class="text-center col-md-1">% To Target</th>
+                                    <th class="text-center col-md-1">Actual</th>
+                                    <th class="text-center col-md-1">Target</th>
+                                    <th class="text-center col-md-1">% To Target</th>
+                                    <th class="text-center col-md-1">Actual</th>
+                                    <th class="text-center col-md-1">Target</th>
+                                    <th class="text-center col-md-1">% To Target</th>
+                                </tr>
+                            </thead>
+                            <tbody>
                                 @if (marginCosts.Count() != 0)
                                 {
                                     @Html.Partial("~/Views/Partials/_StorePandLDetail.cshtml", new StorePandLDetailViewModel
-                           {
-                               BreakDowns = Model.BreakDowns,
-                               PandLDetails = marginCosts,
-                               OverallSectionTotals = Model.MarginCostSectionTotals,
-                               SubTypeSectionTotals = Model.SubTypeSectionTotals
-                           })
+                               {
+                                   BreakDowns = Model.BreakDowns,
+                                   PandLDetails = marginCosts,
+                                   OverallSectionTotals = Model.MarginCostSectionTotals,
+                                   SubTypeSectionTotals = Model.SubTypeSectionTotals
+                               })
                                 }
                             </tbody>
                         </table>
+                    </div>
                         <div class="visible-print page-break"></div>
-                        <table class="table table-striped table-bordered table-hover table-condensed-smtxt persist-area" >
+                        <div class="table-responsive"><table class="table table-striped table-bordered table-hover table-condensed-smtxt persist-area">
                             <thead>
                                 <tr>
                                     <th colspan="2">&nbsp;</th>
@@ -88,62 +90,61 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            @if (controllableCosts.Count() != 0)
-							{
-								@Html.Partial("~/Views/Partials/_StorePandLDetail.cshtml", new StorePandLDetailViewModel
-									{
-										BreakDowns = Model.BreakDowns,
-										PandLDetails = controllableCosts,
-										OverallSectionTotals = Model.ControllableCostSectionTotals,
-										SubTypeSectionTotals = Model.SubTypeSectionTotals
-									})
-							}
+                                @if (controllableCosts.Count() != 0)
+                                {
+                                    @Html.Partial("~/Views/Partials/_StorePandLDetail.cshtml", new StorePandLDetailViewModel
+                           {
+                               BreakDowns = Model.BreakDowns,
+                               PandLDetails = controllableCosts,
+                               OverallSectionTotals = Model.ControllableCostSectionTotals,
+                               SubTypeSectionTotals = Model.SubTypeSectionTotals
+                           })
+                                }
 
-                            @if (nonControllableCosts.Count() != 0)
-                            {
-                                @Html.Partial("~/Views/Partials/_StorePandLDetail.cshtml", new StorePandLDetailViewModel
-                                    {
-                                        BreakDowns = Model.BreakDowns,
-                                        PandLDetails = nonControllableCosts,
-                                        OverallSectionTotals = Model.NonControllableCostSectionTotals,
-                                        SubTypeSectionTotals = Model.SubTypeSectionTotals
-                                    })
-                            }
+                                @if (nonControllableCosts.Count() != 0)
+                                {
+                                    @Html.Partial("~/Views/Partials/_StorePandLDetail.cshtml", new StorePandLDetailViewModel
+                           {
+                               BreakDowns = Model.BreakDowns,
+                               PandLDetails = nonControllableCosts,
+                               OverallSectionTotals = Model.NonControllableCostSectionTotals,
+                               SubTypeSectionTotals = Model.SubTypeSectionTotals
+                           })
+                                }
 
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <td colspan="11" class="text-center" style="padding:0px">&nbsp;</td>
-                            </tr>
-                            <tr class="success">
-                                <td colspan="2"><b>Overall Contribution</b></td>
-                                <td><b>@string.Format("{0:C0}", Model.OverallTotals?.ActualTotal)</b></td>
-                                <td><b>@string.Format("{0:C0}", Model.OverallTotals?.BudgetTotal)</b></td>
-                                <td><b>@string.Format("{0:0}%", Model.OverallTotals?.PercToBudgetTotal)</b></td>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="11" class="text-center" style="padding:0px">&nbsp;</td>
+                                </tr>
+                                <tr class="success">
+                                    <td colspan="2"><b>Overall Contribution</b></td>
+                                    <td><b>@string.Format("{0:C0}", Model.OverallTotals?.ActualTotal)</b></td>
+                                    <td><b>@string.Format("{0:C0}", Model.OverallTotals?.BudgetTotal)</b></td>
+                                    <td><b>@string.Format("{0:0}%", Model.OverallTotals?.PercToBudgetTotal)</b></td>
 
-                                <td><b>@string.Format("{0:C0}", Model.OverallTotals?.QtdActualTotal)</b></td>
-                                <td><b>@string.Format("{0:C0}", Model.OverallTotals?.QtdBudgetTotal)</b></td>
-                                <td><b>@string.Format("{0:0}%", Model.OverallTotals?.QtdPercToBudgetTotal)</b></td>
+                                    <td><b>@string.Format("{0:C0}", Model.OverallTotals?.QtdActualTotal)</b></td>
+                                    <td><b>@string.Format("{0:C0}", Model.OverallTotals?.QtdBudgetTotal)</b></td>
+                                    <td><b>@string.Format("{0:0}%", Model.OverallTotals?.QtdPercToBudgetTotal)</b></td>
 
-                                <td><b>@string.Format("{0:C0}", Model.OverallTotals?.YtdActualTotal)</b></td>
-                                <td><b>@string.Format("{0:C0}", Model.OverallTotals?.YtdBudgetTotal)</b></td>
-                                <td><b>@string.Format("{0:0}%", Model.OverallTotals?.YtdPercToBudgetTotal)</b></td>
+                                    <td><b>@string.Format("{0:C0}", Model.OverallTotals?.YtdActualTotal)</b></td>
+                                    <td><b>@string.Format("{0:C0}", Model.OverallTotals?.YtdBudgetTotal)</b></td>
+                                    <td><b>@string.Format("{0:0}%", Model.OverallTotals?.YtdPercToBudgetTotal)</b></td>
 
-                            </tr>
-                        </tfoot>
-                    </table>
+                                </tr>
+                            </tfoot>
+                        </table></div>
             <!-- /.table-responsive -->
-            }
-            else
-            {
+                }
+                else
+                {
                     <div class="alert alert-info">
                         No P&amp;L Data for selected Period.
                     </div>
-            }
+                }
             </div>
             <!-- /.panel-body -->
         </div>
         <!-- /.panel -->
     </div>
 </div>
-
