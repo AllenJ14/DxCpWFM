@@ -56,6 +56,8 @@ namespace DixonsCarphone.WorkforceManagement.Web.Mapping
             CreateMap<UserAccess, UserAccessDetail>();
             CreateMap<Store, StoreViewModel>();
             CreateMap<StoreViewModel, Store>();
+            CreateMap<Business.Entities.FileUploadRecord, ViewModels.BusinessModels.FileUploadRecord>();
+            CreateMap<ViewModels.BusinessModels.FileUploadRecord, Business.Entities.FileUploadRecord>();
         }
     }
 

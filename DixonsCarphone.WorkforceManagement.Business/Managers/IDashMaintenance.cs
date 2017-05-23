@@ -41,5 +41,7 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
         Task DeleteRoleReferenceRecord(string id);
 
         bool ImportPLSheet(string type);
+
+        Task<List<Entities.FileUploadRecord>> GetFileRecords(string type);
     }
 }

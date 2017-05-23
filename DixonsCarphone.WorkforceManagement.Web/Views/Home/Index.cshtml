@@ -59,7 +59,7 @@
         @Html.Partial("~/Views/Partials/_ScoresAndUtilization.cshtml", Model.Scores)
     </div>
 
-    @if (topNews.Count() != 0)
+    @if (topNews.Count() != 0 && !(bool)HttpContext.Current.Session["_ROIFlag"])
     {
         <div class="panel panel-default">
             <div class="panel-heading">

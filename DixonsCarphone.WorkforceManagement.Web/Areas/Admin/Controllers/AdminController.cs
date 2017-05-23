@@ -10,7 +10,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Areas.Admin.Controllers
     public class AdminController : Controller
     {
         // GET: Admin/Admin
-        [UserFilter(AccessLevel ="Admin, OHAdmin")]
+        [UserFilter(AccessLevel ="Admin, OHAdmin, PLAdmin")]
         public ActionResult Index()
         {
             return View();

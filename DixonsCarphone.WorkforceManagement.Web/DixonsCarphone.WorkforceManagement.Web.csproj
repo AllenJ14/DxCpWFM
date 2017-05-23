@@ -181,6 +181,7 @@
     <Compile Include="Areas\Admin\Controllers\ContentController.cs" />
     <Compile Include="Areas\Admin\Controllers\DashboardMaintenanceIEController.cs" />
     <Compile Include="Areas\Admin\Controllers\DashboardMaintenanceController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PLController.cs" />
     <Compile Include="Areas\Admin\Controllers\RoleReferencesIEController.cs" />
     <Compile Include="Areas\Admin\Controllers\RoleReferencesController.cs" />
     <Compile Include="Areas\Admin\Controllers\StoreReferencesIEController.cs" />
@@ -381,6 +382,7 @@
     <Content Include="Areas\Admin\Views\StoreReferencesIE\Details.cshtml" />
     <Content Include="Areas\Admin\Views\StoreReferencesIE\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\StoreReferencesIE\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\PL\Index.cshtml" />
     <None Include="bundleconfig.json" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />

@@ -184,5 +184,15 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
                 return true;
             }
         }
+
+        //Get File Upload records
+        public async Task<List<Entities.FileUploadRecord>> GetFileRecords(string type)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                var result = await dbContext.FileUploadRecords.Where(x => x.FileCat == type).ToListAsync();
+                return result;
+            }
+        }
     }
 }

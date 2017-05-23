@@ -85,6 +85,8 @@
     <Compile Include="BusinessModels\DailyDeploymentView.cs" />
     <Compile Include="BusinessModels\DashboardErrors.cs" />
     <Compile Include="BusinessModels\DashboardViewChannel.cs" />
+    <Compile Include="BusinessModels\FileUploadRecord.cs" />
+    <Compile Include="BusinessModels\FileUploadView.cs" />
     <Compile Include="BusinessModels\MyTeamViewModel.cs" />
     <Compile Include="BusinessModels\MyTargetsViewModel.cs" />
     <Compile Include="BusinessModels\PandLView.cs" />

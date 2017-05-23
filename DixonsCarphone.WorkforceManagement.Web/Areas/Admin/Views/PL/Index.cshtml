@@ -1,0 +1,33 @@
+﻿@model DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels.FileUploadView
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>P&L File Upload Reference</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th class="text-center col-md-2">File Type</th>
+            <th class="text-center">File Name</th>
+            <th class="text-center col-md-2">Last Uploaded</th>
+            <th class="text-center col-md-2">Upload</th>
+            <th class="text-center col-md-2">Error</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var item in Model._recordCollection)
+        {
+            <tr>
+                <td class="text-center">@item.FileCat</td>
+                <td class="text-center">@item.FileName</td>
+                <td class="text-center">@item.LastUploaded</td>
+                <td class="text-center"><a class="btn btn-success" href=@Url.Action("UploadFile", "PL",new { fileName = item.FileName})>Upload</a></td>
+                <td class="text-danger">@((bool)item.UploadFailed? "Last Upload Failed" : "")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@Html.ActionLink("Back", "Index", "Admin")

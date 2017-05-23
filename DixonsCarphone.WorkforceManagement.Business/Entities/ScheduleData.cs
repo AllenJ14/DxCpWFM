@@ -29,5 +29,6 @@ namespace DixonsCarphone.WorkforceManagement.Business.Entities
         public Nullable<decimal> PersonWeekTotal { get; set; }
         public Nullable<decimal> DayWeekTotal { get; set; }
         public Nullable<System.DateTime> DateTimeUpdated { get; set; }
+        public Nullable<short> JobCode { get; set; }
     }
 }

@@ -381,6 +381,7 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
           <Property Name="FileCat" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="FileName" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="LastUploaded" Type="datetime" />
+          <Property Name="UploadFailed" Type="bit" />
         </EntityType>
         <EntityType Name="HrFeed">
           <Key>
@@ -479,6 +480,7 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
           <Property Name="PersonWeekTotal" Type="numeric" Precision="5" Scale="2" />
           <Property Name="DayWeekTotal" Type="numeric" Precision="5" Scale="2" />
           <Property Name="DateTimeUpdated" Type="datetime" />
+          <Property Name="JobCode" Type="smallint" />
         </EntityType>
         <EntityType Name="SiteFeedback">
           <Key>
@@ -2133,6 +2135,7 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
           <Property Name="PersonWeekTotal" Type="Decimal" Precision="5" Scale="2" />
           <Property Name="DayWeekTotal" Type="Decimal" Precision="5" Scale="2" />
           <Property Name="DateTimeUpdated" Type="DateTime" Precision="3" />
+          <Property Name="JobCode" Type="Int16" />
         </EntityType>
         <ComplexType Name="sp_RegionPunchCompliance_Result">
           <Property Type="String" Name="Name" Nullable="true" MaxLength="533" />
@@ -2307,6 +2310,7 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
           <Property Name="FileCat" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="FileName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="LastUploaded" Type="DateTime" Precision="3" />
+          <Property Name="UploadFailed" Type="Boolean" />
         </EntityType>
         <EntityType Name="IpRef">
           <Key>
@@ -3251,6 +3255,7 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
           <EntitySetMapping Name="ScheduleDatas">
             <EntityTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.ScheduleData">
               <MappingFragment StoreEntitySet="ScheduleData">
+                <ScalarProperty Name="JobCode" ColumnName="JobCode" />
                 <ScalarProperty Name="DateTimeUpdated" ColumnName="DateTimeUpdated" />
                 <ScalarProperty Name="DayWeekTotal" ColumnName="DayWeekTotal" />
                 <ScalarProperty Name="PersonWeekTotal" ColumnName="PersonWeekTotal" />
@@ -3457,6 +3462,7 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
           <EntitySetMapping Name="FileUploadRecords">
             <EntityTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.FileUploadRecord">
               <MappingFragment StoreEntitySet="FileUploadRecord">
+                <ScalarProperty Name="UploadFailed" ColumnName="UploadFailed" />
                 <ScalarProperty Name="LastUploaded" ColumnName="LastUploaded" />
                 <ScalarProperty Name="FileName" ColumnName="FileName" />
                 <ScalarProperty Name="FileCat" ColumnName="FileCat" />
