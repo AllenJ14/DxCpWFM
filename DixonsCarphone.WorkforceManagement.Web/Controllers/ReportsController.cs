@@ -289,7 +289,12 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
         {
             return File("/Uploads/ProfitLossBriefing.pdf", "application/pdf");
         }
-        
+
+        public FileResult TeamTrainingDoc()
+        {
+            return File("/Uploads/ContractBases.pdf", "application/pdf");
+        }
+
         public async Task<ActionResult> PunchCompliance(string selectedDate = "Last Week")
         {
             PunchCompVM vm = new PunchCompVM();

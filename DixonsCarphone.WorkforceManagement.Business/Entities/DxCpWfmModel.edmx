@@ -162,6 +162,7 @@
           <Property Name="P10" Type="numeric" Precision="3" Scale="2" />
           <Property Name="P11" Type="numeric" Precision="3" Scale="2" />
           <Property Name="P12" Type="numeric" Precision="3" Scale="2" />
+          <Property Name="TotalHoliday" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -2358,6 +2359,7 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
           <Property Name="P10" Type="Decimal" Precision="3" Scale="2" />
           <Property Name="P11" Type="Decimal" Precision="3" Scale="2" />
           <Property Name="P12" Type="Decimal" Precision="3" Scale="2" />
+          <Property Name="TotalHoliday" Type="Int32" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -3509,6 +3511,7 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
           <EntitySetMapping Name="ContractBaseDetails">
             <EntityTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.ContractBaseDetail">
               <MappingFragment StoreEntitySet="ContractBaseDetail">
+                <ScalarProperty Name="TotalHoliday" ColumnName="TotalHoliday" />
                 <ScalarProperty Name="P12" ColumnName="P12" />
                 <ScalarProperty Name="P11" ColumnName="P11" />
                 <ScalarProperty Name="P10" ColumnName="P10" />

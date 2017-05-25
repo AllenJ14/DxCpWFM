@@ -563,6 +563,7 @@
     <Content Include="Views\Partials\_MyContractBase.cshtml" />
     <Content Include="Views\Partials\_MyHolidayPhasing.cshtml" />
     <Content Include="Views\STARHandbook\TimecardExceptions8.cshtml" />
+    <Content Include="Uploads\ContractBases.pdf" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DixonsCarphone.WorkforceManagement.Business\DixonsCarphone.WorkforceManagement.Business.csproj">

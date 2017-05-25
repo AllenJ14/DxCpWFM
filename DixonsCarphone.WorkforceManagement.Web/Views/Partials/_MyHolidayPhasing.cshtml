@@ -24,6 +24,7 @@
                         <th class="text-center col-md-1">P12</th>
                     </tr>
                 </thead>
+                <tbody>
                     <tr>
                         <td class="text-center">@string.Format("{0:0}%", Model.ContractBases.P1 * 100)</td>
                         <td class="text-center">@string.Format("{0:0}%", Model.ContractBases.P2 * 100)</td>
@@ -38,6 +39,21 @@
                         <td class="text-center">@string.Format("{0:0}%", Model.ContractBases.P11 * 100)</td>
                         <td class="text-center">@string.Format("{0:0}%", Model.ContractBases.P12 * 100)</td>
                     </tr>
+                    <tr>
+                        <td class="text-center">@string.Format("{0:0}", Model.ContractBases.P1 * Model.ContractBases.TotalHoliday)<span style="font-size:x-small">hrs</span></td>
+                        <td class="text-center">@string.Format("{0:0}", Model.ContractBases.P2 * Model.ContractBases.TotalHoliday)<span style="font-size:x-small">hrs</span></td>
+                        <td class="text-center">@string.Format("{0:0}", Model.ContractBases.P3 * Model.ContractBases.TotalHoliday)<span style="font-size:x-small">hrs</span></td>
+                        <td class="text-center">@string.Format("{0:0}", Model.ContractBases.P4 * Model.ContractBases.TotalHoliday)<span style="font-size:x-small">hrs</span></td>
+                        <td class="text-center">@string.Format("{0:0}", Model.ContractBases.P5 * Model.ContractBases.TotalHoliday)<span style="font-size:x-small">hrs</span></td>
+                        <td class="text-center">@string.Format("{0:0}", Model.ContractBases.P6 * Model.ContractBases.TotalHoliday)<span style="font-size:x-small">hrs</span></td>
+                        <td class="text-center">@string.Format("{0:0}", Model.ContractBases.P7 * Model.ContractBases.TotalHoliday)<span style="font-size:x-small">hrs</span></td>
+                        <td class="text-center">@string.Format("{0:0}", Model.ContractBases.P8 * Model.ContractBases.TotalHoliday)<span style="font-size:x-small">hrs</span></td>
+                        <td class="text-center">@string.Format("{0:0}", Model.ContractBases.P9 * Model.ContractBases.TotalHoliday)<span style="font-size:x-small">hrs</span></td>
+                        <td class="text-center">@string.Format("{0:0}", Model.ContractBases.P10 * Model.ContractBases.TotalHoliday)<span style="font-size:x-small">hrs</span></td>
+                        <td class="text-center">@string.Format("{0:0}", Model.ContractBases.P11 * Model.ContractBases.TotalHoliday)<span style="font-size:x-small">hrs</span></td>
+                        <td class="text-center">@string.Format("{0:0}", Model.ContractBases.P12 * Model.ContractBases.TotalHoliday)<span style="font-size:x-small">hrs</span></td>
+                    </tr>
+                </tbody>
             </table>
         </div>
     </div>

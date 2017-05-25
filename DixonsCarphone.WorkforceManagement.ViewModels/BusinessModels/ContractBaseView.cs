@@ -24,5 +24,6 @@ namespace DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
         public Nullable<decimal> P10 { get; set; }
         public Nullable<decimal> P11 { get; set; }
         public Nullable<decimal> P12 { get; set; }
+        public int TotalHoliday { get; set; }
     }
 }
