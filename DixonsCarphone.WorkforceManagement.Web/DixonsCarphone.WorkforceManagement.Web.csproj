@@ -220,6 +220,10 @@
     </Content>
     <Content Include="Content\New\bootstrap.min.js" />
     <Content Include="Content\New\Chart.min.js" />
+    <Content Include="Content\New\Gauge.js" />
+    <Content Include="Content\New\Gauge.min.js">
+      <DependentUpon>Gauge.js</DependentUpon>
+    </Content>
     <Content Include="Content\New\jquery.js" />
     <Content Include="Content\New\jquery.min.js" />
     <Content Include="Content\New\metisMenu.css" />
@@ -318,6 +322,7 @@
     <Content Include="Images\CMS_Uploads\ViewingATimecard3.png" />
     <Content Include="Images\CMS_Uploads\ViewingInterval1.png" />
     <Content Include="Images\CMS_Uploads\ViewingInterval2.png" />
+    <Content Include="Images\GaugeBG.png" />
     <Content Include="Images\Logo.png" />
     <Content Include="Images\LogoSmall.png" />
     <Content Include="Images\WFMHeaderTapp.png" />

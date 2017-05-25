@@ -21,10 +21,33 @@
                         <td>@item.ROLE</td>
                         <td class="text-center">@item.CONTRACT_HOURS</td>
                         <td class="text-center">@item.TODAYS_BALANCE</td>
-                        <td class="text-center">@Math.Round((double)item.TODAYS_BALANCE/9,2)</td>
+                        <td class="text-center">@Math.Round((double)item.TODAYS_BALANCE / 9, 2)</td>
                     </tr>
                 }
             </table>
+            @*<br />
+    <p>
+        <h4><strong><u>Average Contract Hours</u></strong></h4>
+        This is the average number of hours colleagues in your store have contracted.<br />
+        <i>It is calculated as: [Total Contracted Hours] / [Total Contracted Heads] = [Average Contracted Hours]</i>
+    </p>
+    <div id="container" class="text-center">
+        <img style="position:absolute;z-index:1" src="~/Images/GaugeBG.jpg" alt="" height="223" width="413"/>
+        <canvas id="contract-mix" height="223" width="413" style="z-index:0;position:absolute">Contract Mix</canvas>
+        <canvas id="contract-act" height="223" width="413" style="z-index:1;position:relative">Contract Mix</canvas>
+    </div>*@
         </div>
     </div>
 </div>
+
+<style>
+    #container{
+        width:413px; 
+        height:223px;
+        margin: 0 auto; 
+        border-radius: 10px; 
+        position:relative;
+        box-shadow: 0 5px 10px #333;
+    }
+
+</style>

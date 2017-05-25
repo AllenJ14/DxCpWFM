@@ -28,5 +28,11 @@
     "inputFiles": [
       "Content/New/bootstrap.css"
     ]
+  },
+  {
+    "outputFileName": "Content/New/Gauge.min.js",
+    "inputFiles": [
+      "Content/New/Gauge.js"
+    ]
   }
 ]

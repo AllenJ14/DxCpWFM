@@ -22,7 +22,7 @@
         <div class="alert alert-warning text-center"><strong>Coming soon!</strong></div>
     }
 
-    @*@if (Model.ContractBases != null)
+    @if (Model.ContractBases != null)
     {
         <div class="row">
             <div class="col-lg-12 col-md-12">
@@ -34,7 +34,7 @@
                         <p>
                             These contract bases provide guidance as to where the store's contracted cost needs to sit for the remainder of the year. Contract bases are used in order to:
                             <ul>
-                                <li>Keep payroll (SOH) controlled,</li>s
+                                <li>Keep payroll (SOH) controlled,</li>
                                 <li>Ensure we recruit into the right stores,</li>
                                 <li>Enable us to react to changes in trade.</li>
                             </ul>
@@ -60,7 +60,7 @@
                 </div>
             </div>
         </div>
-    }*@
+    }
 
     @if (Model.MyTeam != null && Model.MyTeam.Count() > 0)
     {
@@ -82,4 +82,70 @@
         </div>
     }
 
+    <canvas id="test"></canvas>
 </section>
+
+@*@section MyScripts{
+    <script src="~/Content/New/Gauge.js"></script>
+    <script>
+        var canvas = document.getElementById("contract-mix");
+        var value = @Model.MyTeam.Average(x => x.CONTRACT_HOURS);
+        
+        if (value > 33) {
+            value = 33
+        };
+        if(value < 15){
+            value = 15
+        };
+
+        var opts = {
+
+            angle: 0, // The length of each line
+            lineWidth: 0.5, // The line thickness
+            radiusScale: 0.66,
+            pointer: {
+                length: 0.6, // The radius of the inner circle
+                strokeWidth: 0.035, // The rotation offset
+                color: '#000000' // Fill color
+            },
+            strokeColor: '#E0E0E0',   // to see which ones work best for you
+            generateGradient: true,
+            staticZones: [
+                {strokeStyle: "#F03E3E", min: 15, max: 18}, // Red from 100 to 130
+                {strokeStyle: "#FFDD00", min: 18, max: 21}, // Yellow
+                {strokeStyle: "#30B32D", min: 21, max: 27}, // Green
+                {strokeStyle: "#FFDD00", min: 27, max: 30}, // Yellow
+                {strokeStyle: "#F03E3E", min: 30, max: 33}  // Red
+            ],
+            staticLabels:{
+                font: "16px sans-serif",  // Specifies font
+                labels: [18,24,30],  // Print labels at these values
+                color: "#000000",  // Optional: Label text color
+                fractionDigits: 0  // Optional: Numerical precision. 0=round off.
+            }
+        };
+        canvas = document.getElementById('contract-mix'); // your canvas element
+        var gauge = new Gauge(canvas);
+        gauge.setOptions(opts); 
+        gauge.setMinValue(15);
+        gauge.maxValue = 33; // set max gauge value
+        gauge.animationSpeed = 32; // set animation speed (32 is default value)
+        gauge.set(value); // set actual value
+
+    </script>
+    <script>
+        var cnv = document.getElementById("contract-act");
+        var ctx = cnv.getContext("2d");
+        var posx = cnv.width/2;
+        var posy = cnv.height - 25;
+
+        ctx.fillStyle = "#000000";
+        ctx.beginPath();
+        ctx.arc(posx, posy, 20, 0, 2* Math.PI);
+        ctx.fill();
+
+        ctx.fillStyle = "#FFFFFF";
+        ctx.font = "bold 16px sans-serif"
+        ctx.fillText(@string.Format("{0:0}", Model.MyTeam.Average(x => x.CONTRACT_HOURS)),posx - 10, posy + 5)
+    </script>
+}*@
