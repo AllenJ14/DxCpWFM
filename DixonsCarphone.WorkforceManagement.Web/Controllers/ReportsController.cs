@@ -535,7 +535,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             if (string.IsNullOrEmpty(scheduledWeek)) return dt;
             switch (scheduledWeek.ToLower())
             {
-                case "current week":
+                case "this week":
                     dt = DateTime.Now;
                     break;
                 case "last week":

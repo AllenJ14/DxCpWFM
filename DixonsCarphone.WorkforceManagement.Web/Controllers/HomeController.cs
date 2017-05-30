@@ -165,7 +165,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
 
             if (current.Count() > 0)
             {
-                dict.Add("Current Week", new List<ScoresAndUtilizationViewModel>
+                dict.Add("This Week", new List<ScoresAndUtilizationViewModel>
                 {
                     new ScoresAndUtilizationViewModel { Score = current[0]?.SOHUtilization.GetValueOrDefault(), Title = "Deployment", Total = 10, ScoreType = ScoreType.Deployment },
                     new ScoresAndUtilizationViewModel { Score = current[0]?.ComplianceScore.GetValueOrDefault(), Title = "Compliance", Total = 10, ScoreType = ScoreType.Compliance },
@@ -176,7 +176,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             }
             else
             {
-                dict.Add("Current Week", new List<ScoresAndUtilizationViewModel>
+                dict.Add("This Week", new List<ScoresAndUtilizationViewModel>
                 {
                     new ScoresAndUtilizationViewModel { Score = -1, Title = "Deployment", Total = 10, ScoreType = ScoreType.Deployment },
                     new ScoresAndUtilizationViewModel { Score = -1, Title = "Compliance", Total = 10, ScoreType = ScoreType.Compliance },
