@@ -31,6 +31,16 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             }
         }
 
+        public async Task<List<sp_RegionContractBase_Result>> GetRegionContractBase(string regionNumber)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                var data = await Task.Run(() => dbContext.sp_RegionContractBase(regionNumber));
+
+                return data.ToList();
+            }
+        }
+
         // Get UAC List
         public async Task<List<UserAccess>> GetUACList()
         {

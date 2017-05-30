@@ -13,6 +13,8 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
 
         Task<ContractBaseDetail> GetContractBase(int storeNum);
 
+        Task<List<sp_RegionContractBase_Result>> GetRegionContractBase(string regionNumber);
+
         Task<List<UserAccess>> GetUACList();
 
         Task<UserAccess> GetUACSingle(int ID);

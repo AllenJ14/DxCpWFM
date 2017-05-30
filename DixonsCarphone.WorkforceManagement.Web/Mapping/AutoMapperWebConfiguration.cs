@@ -136,6 +136,8 @@ namespace DixonsCarphone.WorkforceManagement.Web.Mapping
             CreateMap<HrFeed, HrFeedView>();
             CreateMap<ContractBaseDetail, ContractBaseView>();
             CreateMap<ContractBaseView, ContractBaseDetail>();
+            CreateMap<sp_RegionContractBase_Result, RegionContractBase>();
+            CreateMap<RegionContractBase, sp_RegionContractBase_Result>();
         }
     }
 

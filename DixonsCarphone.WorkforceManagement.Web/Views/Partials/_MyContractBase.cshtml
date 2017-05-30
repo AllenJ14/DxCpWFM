@@ -1,25 +1,67 @@
 ﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
 @model MyTeamViewModel
 
-<div class="row">
-    <div class="col-md-12">
-        <div class="panel-body">
-            <table class="table table-condensed table-bordered col-md-12">
-                <thead style="background-color:#002249; color:aliceblue">
+@if (Model.RegionContractBases != null && Model.RegionContractBases.Count() > 0)
+{
+    var subtotal = Model.RegionContractBases.Where(x => x.STORE_NUM == null).Single();
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel-body">
+                <table class="table table-condensed table-bordered col-md-12">
+                    <thead style="background-color:#002249; color:aliceblue">
+                        <tr>
+                            <th class="text-center">Branch</th>
+                            <th class="text-center col-md-2">Current Contract Hours</th>
+                            <th class="text-center col-md-2">Max Contract Base</th>
+                            <th class="text-center col-md-2">Forecasted Highest Week (Non Peak)</th>
+                            <th class="text-center col-md-2">Forecasted Lowest Week</th>
+                        </tr>
+                    </thead>
+                    @foreach (var item in Model.RegionContractBases.Where(x => x.STORE_NUM != null))
+                    {
+                        <tr>
+                            <td class="text-center">@item.STORE_NUM</td>
+                            <td class="text-center">@item.Contract_Hours</td>
+                            <td class="text-center">@item.Contract_Base</td>
+                            <td class="text-center">@item.Highest_Week</td>
+                            <td class="text-center">@item.Lowest_Week</td>
+                        </tr>
+                    }
                     <tr>
-                        <th class="text-center col-md-3">Current Contract Hours</th>
-                        <th class="text-center col-md-3">Max Contract Base</th>
-                        <th class="text-center col-md-3">Forecasted Highest Week (Non Peak)</th>
-                        <th class="text-center col-md-3">Forecasted Lowest Week</th>
+                        <td class="text-center"><strong>Region Total</strong></td>
+                        <td class="text-center">@subtotal.Contract_Hours</td>
+                        <td class="text-center">@subtotal.Contract_Base</td>
+                        <td class="text-center">@subtotal.Highest_Week</td>
+                        <td class="text-center">@subtotal.Lowest_Week</td>
                     </tr>
-                </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+}
+
+@if (Model.ContractBases != null)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel-body">
+                <table class="table table-condensed table-bordered col-md-12">
+                    <thead style="background-color:#002249; color:aliceblue">
+                        <tr>
+                            <th class="text-center col-md-3">Current Contract Hours</th>
+                            <th class="text-center col-md-3">Max Contract Base</th>
+                            <th class="text-center col-md-3">Forecasted Highest Week (Non Peak)</th>
+                            <th class="text-center col-md-3">Forecasted Lowest Week</th>
+                        </tr>
+                    </thead>
                     <tr>
                         <td class="text-center">@Model.MyTeam.Where(x => x.ROLE != "Specialist.Retail").Sum(x => x.CONTRACT_HOURS)</td>
                         <td class="text-center">@Model.ContractBases.Contract_Base</td>
                         <td class="text-center">@Model.ContractBases.Highest_Week</td>
                         <td class="text-center">@Model.ContractBases.Lowest_Week</td>
                     </tr>
-            </table>
+                </table>
+            </div>
         </div>
     </div>
-</div>
+}

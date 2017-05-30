@@ -217,8 +217,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             }
             else if (System.Web.HttpContext.Current.Session["_RegionNumber"] != null)
             {
-                vm.Message = "This page is not available in the currently selected view, please select a store from the top right menu or go back.";
-                vm.MessageType = MessageType.Error;
+                vm.RegionContractBases = mapper.Map<List<RegionContractBase>>(await _peopleManager.GetRegionContractBase(System.Web.HttpContext.Current.Session["_RegionNumber"].ToString()));
             }
             else
             {

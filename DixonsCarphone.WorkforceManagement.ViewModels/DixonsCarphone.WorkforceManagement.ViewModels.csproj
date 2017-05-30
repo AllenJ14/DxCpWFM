@@ -94,6 +94,7 @@
     <Compile Include="BusinessModels\PublishedBudgetsVM.cs" />
     <Compile Include="BusinessModels\PunchCompView.cs" />
     <Compile Include="BusinessModels\PunchCompVM.cs" />
+    <Compile Include="BusinessModels\RegionContractBase.cs" />
     <Compile Include="BusinessModels\RegionPunchComplianceItem.cs" />
     <Compile Include="BusinessModels\RoleReferenceView.cs" />
     <Compile Include="BusinessModels\ScheduledColleaguesViewModel.cs" />

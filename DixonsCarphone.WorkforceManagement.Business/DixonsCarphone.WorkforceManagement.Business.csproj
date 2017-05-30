@@ -220,6 +220,9 @@
     <Compile Include="Entities\sp_DivisionPunchCompliance_Result.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\sp_RegionContractBase_Result.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\sp_RegionDashboardData_Result.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>

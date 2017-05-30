@@ -325,5 +325,14 @@ namespace DixonsCarphone.WorkforceManagement.Business.Entities
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PublishedBudgetsBranch_Result>("PublishedBudgetsBranch", branchParameter);
         }
+    
+        public virtual ObjectResult<sp_RegionContractBase_Result> sp_RegionContractBase(string region)
+        {
+            var regionParameter = region != null ?
+                new ObjectParameter("Region", region) :
+                new ObjectParameter("Region", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_RegionContractBase_Result>("sp_RegionContractBase", regionParameter);
+        }
     }
 }

@@ -67,6 +67,43 @@
         </div>
     }
 
+    else if (Model.RegionContractBases != null && Model.RegionContractBases.Count() > 0)
+    {
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading text-center">
+                        <div class="row">
+                            <strong>Contract Bases</strong>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <p>
+                            These contract bases provide guidance as to where the store's contracted cost needs to sit for the remainder of the year. Contract bases are used in order to:
+                            <ul>
+                                <li>Keep payroll (SOH) controlled,</li>
+                                <li>Ensure we recruit into the right stores,</li>
+                                <li>Enable us to react to changes in trade.</li>
+                            </ul>
+                        </p>
+                        <p>
+                            Please remember these are <u>max</u> contract bases and not targets - you should only recruit to these numbers if you have robust plans in place to deliver your SOH, including good holiday management.
+                        </p>
+                        <p class="text-center">
+                            <i><u>Geek Squad hours are not included in the max contract base.</u></i>
+                        </p>
+                        <div class="row">
+                            @Html.Partial("~/Views/Partials/_MyContractBase.cshtml", Model)
+                        </div>
+                        <div class="text-center">
+                            <a href="@Url.Action("TeamTrainingDoc", "Reports")" class="btn btn-lg btn-success" role="button" target="_blank">Training Guide</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
     @if (Model.MyTeam != null && Model.MyTeam.Count() > 0)
     {
         <div class="row">

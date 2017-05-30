@@ -782,6 +782,9 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
           <Parameter Name="DivisionName" Type="nvarchar" Mode="In" />
           <Parameter Name="weekNumber" Type="int" Mode="In" />
         </Function>
+        <Function Name="sp_RegionContractBase" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Region" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="sp_RegionDashboardData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Region" Type="nvarchar" Mode="In" />
           <Parameter Name="BeginWeek" Type="int" Mode="In" />
@@ -1256,6 +1259,9 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
           </FunctionImport>
           <EntitySet Name="ROIIpRefs" EntityType="DixonsCarphone.WorkforceManagement.Business.ROIIpRef" />
           <EntitySet Name="ContractBaseDetails" EntityType="DixonsCarphone.WorkforceManagement.Business.ContractBaseDetail" />
+          <FunctionImport Name="sp_RegionContractBase" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_RegionContractBase_Result)">
+            <Parameter Name="Region" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="BestPracticeCategoryType">
           <Key>
@@ -2361,6 +2367,25 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
           <Property Name="P12" Type="Decimal" Precision="3" Scale="2" />
           <Property Name="TotalHoliday" Type="Int32" Nullable="false" />
         </EntityType>
+        <ComplexType Name="sp_RegionContractBase_Result">
+          <Property Type="Int32" Name="STORE_NUM" Nullable="true" />
+          <Property Type="Int32" Name="Contract_Base" Nullable="true" />
+          <Property Type="Double" Name="Contract_Hours" Nullable="true" />
+          <Property Type="Int32" Name="Highest_Week" Nullable="true" />
+          <Property Type="Int32" Name="Lowest_Week" Nullable="true" />
+          <Property Type="Decimal" Name="P1" Nullable="true" Precision="38" Scale="6" />
+          <Property Type="Decimal" Name="P2" Nullable="true" Precision="38" Scale="6" />
+          <Property Type="Decimal" Name="P3" Nullable="true" Precision="38" Scale="6" />
+          <Property Type="Decimal" Name="P4" Nullable="true" Precision="38" Scale="6" />
+          <Property Type="Decimal" Name="P5" Nullable="true" Precision="38" Scale="6" />
+          <Property Type="Decimal" Name="P6" Nullable="true" Precision="38" Scale="6" />
+          <Property Type="Decimal" Name="P7" Nullable="true" Precision="38" Scale="6" />
+          <Property Type="Decimal" Name="P8" Nullable="true" Precision="38" Scale="6" />
+          <Property Type="Decimal" Name="P9" Nullable="true" Precision="38" Scale="6" />
+          <Property Type="Decimal" Name="P10" Nullable="true" Precision="38" Scale="6" />
+          <Property Type="Decimal" Name="P11" Nullable="true" Precision="38" Scale="6" />
+          <Property Type="Decimal" Name="P12" Nullable="true" Precision="38" Scale="6" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3531,6 +3556,29 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_RegionContractBase" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_RegionContractBase">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.sp_RegionContractBase_Result">
+                <ScalarProperty Name="STORE_NUM" ColumnName="STORE_NUM" />
+                <ScalarProperty Name="Contract_Base" ColumnName="Contract Base" />
+                <ScalarProperty Name="Contract_Hours" ColumnName="Contract Hours" />
+                <ScalarProperty Name="Highest_Week" ColumnName="Highest Week" />
+                <ScalarProperty Name="Lowest_Week" ColumnName="Lowest Week" />
+                <ScalarProperty Name="P1" ColumnName="P1" />
+                <ScalarProperty Name="P2" ColumnName="P2" />
+                <ScalarProperty Name="P3" ColumnName="P3" />
+                <ScalarProperty Name="P4" ColumnName="P4" />
+                <ScalarProperty Name="P5" ColumnName="P5" />
+                <ScalarProperty Name="P6" ColumnName="P6" />
+                <ScalarProperty Name="P7" ColumnName="P7" />
+                <ScalarProperty Name="P8" ColumnName="P8" />
+                <ScalarProperty Name="P9" ColumnName="P9" />
+                <ScalarProperty Name="P10" ColumnName="P10" />
+                <ScalarProperty Name="P11" ColumnName="P11" />
+                <ScalarProperty Name="P12" ColumnName="P12" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

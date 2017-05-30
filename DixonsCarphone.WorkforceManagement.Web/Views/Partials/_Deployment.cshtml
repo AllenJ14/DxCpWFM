@@ -62,7 +62,7 @@
                         @foreach (var item in Model._dashboardViewCollection)
                     {
                             <tr>
-                                <td>@(item.BranchNumber + " - " + item.StoreName)</td>
+                                <td>@(item.BranchNumber + " - " + item.StoreName)</td> @*<span class="glyphicon glyphicon-new-window"></span>*@ 
                                 <td class="text-center">@string.Format("{0:0.0}", item.SOH)</td>
                                 <td class="text-center">@string.Format("{0:0}", item.FinalTarget)</td>
                                 <td class="text-center">@string.Format("{0:0.0}", (item.SOH - item.FinalTarget))</td>

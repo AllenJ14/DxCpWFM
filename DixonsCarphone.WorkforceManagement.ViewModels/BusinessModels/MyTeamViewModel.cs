@@ -18,6 +18,7 @@ namespace DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
 
         public List<HrFeedView> MyTeam { get; set; }
         public ContractBaseView ContractBases { get; set; }
+        public List<RegionContractBase> RegionContractBases { get; set; }
     }
 
     //public class MyTeamDetail
