@@ -233,7 +233,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             return RedirectToAction("Index", "Planning");
         }
 
-        public async Task<ActionResult> GetSchedule(string selectedDate = "Current Week")
+        public async Task<ActionResult> GetSchedule(string selectedDate = "This Week")
         {
             var weekOfYr = GetWeekNumber(selectedDate);
             ScheduleVm vm = new ScheduleVm();

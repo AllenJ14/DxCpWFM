@@ -35,6 +35,12 @@ else if (Model.ScheduleCollection.Count() != 0)
         <tbody>
             @for (int i = 0; i < colList.Count(); i++)
             {
+                if(Model.ScheduleCollection.Where(x => x.PersonNumber == colList[i]).First().JobCode == 7)
+                {
+                    <tr>
+                        <td colspan="9" class="text-center"><strong>Geek Squad</strong></td>
+                    </tr>
+                }
                 <tr>
                     <td><small>@string.Format("{0} ({1})", Model.ScheduleCollection.Where(x => x.PersonNumber == colList[i]).First().FullName, Model.ScheduleCollection.Where(x => x.PersonNumber == colList[i]).First().ContractHours)</small></td>
                     @for (int j = 1; j <= 7; j++)

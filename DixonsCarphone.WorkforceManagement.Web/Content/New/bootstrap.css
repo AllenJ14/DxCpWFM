@@ -247,6 +247,12 @@ th {
   img {
     max-width: 100% !important;
   }
+  
+  #page-wrapper{
+      margin: 0 0 0 0px !important;
+      border-left: 0px solid #e7e7e7 !important;
+  }
+
   p,
   h2,
   h3 {

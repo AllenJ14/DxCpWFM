@@ -215,7 +215,7 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
         {
             using (var dbContext = new DxCpWfmContext())
             {
-                var result = await dbContext.ScheduleDatas.Where(x => x.WeekNumber == weekNumber && (x.HomeBranch == storeNumber || x.TransferBranch == ("UK " + storeNumber.ToString()) || x.TransferBranch == ("IE " + storeNumber.ToString()))).OrderBy(x => x.FullName).ThenBy(x => x.DayNum).ToListAsync();
+                var result = await dbContext.ScheduleDatas.Where(x => x.WeekNumber == weekNumber && (x.HomeBranch == storeNumber || x.TransferBranch == ("UK " + storeNumber.ToString()) || x.TransferBranch == ("IE " + storeNumber.ToString()))).OrderBy(x => x.JobCode).ThenBy(x => x.FullName).ThenBy(x => x.DayNum).ToListAsync();
                 return result;
             }
         }
