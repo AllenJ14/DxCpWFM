@@ -85,6 +85,9 @@ else if (Model.ScheduleCollection.Count() != 0)
     <div class="row text-center">
         <p><strong>@string.Format("Last Updated : {0:g}", Model.ScheduleCollection[0].DateTimeUpdated)</strong></p>
     </div>
+    <div class="row text-center hidden-print">
+        <button class="btn btn-default btn-lg" onclick="window.print()">Print Schedule</button>
+    </div>
 }
 else
 {

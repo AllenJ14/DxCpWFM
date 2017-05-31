@@ -70,18 +70,9 @@ namespace DixonsCarphone.WorkforceManagement.Web
 
         public static void LogOut()
         {
-            if(HttpContext.Current.Session != null)
-            {
-                HttpContext.Current.Session.Abandon();
-            }
-            
+            HttpContext.Current?.Session?.Abandon();
             IAuthenticationManager authenticationManager = HttpContext.Current?.Request?.GetOwinContext()?.Authentication;
             authenticationManager?.SignOut(CpwWfmAuthentication.ApplicationCookie);
-
-            if (HttpContext.Current.Session != null)
-            {
-                HttpContext.Current.Session.Abandon();
-            }
         }
     }
 }

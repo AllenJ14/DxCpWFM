@@ -20,7 +20,7 @@
             <h4>@string.Format("{0} - Week Commencing : {1}", ViewBag.store, Model.SelectedDate)</h4>
         </div>
         @Html.Partial("~/Views/Partials/_Schedule.cshtml", Model)
-        <div class="row visible-print-block text-center">
+        <div class="row hidden-print text-center">
             &nbsp;
         </div>
     }

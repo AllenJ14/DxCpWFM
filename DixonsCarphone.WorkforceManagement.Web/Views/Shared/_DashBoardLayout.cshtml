@@ -208,11 +208,11 @@
             <div id="page-wrapper">
                 <!--[if IE]><![endif]-->
                 @RenderBody()
-                <hr />
+                <hr class="hidden-print" />
                 <!--footer >
                 </!--footer-->
             </div>
-            <footer class="container">
+            <footer class="container hidden-print">
                 <div class="row">
                     <div class="col-lg-6 col-lg-offset-5 col-md-6 col-md-offset-5 hidden-print">
                         @*@Html.Partial("~/Views/Shared/_footer.cshtml")*@
