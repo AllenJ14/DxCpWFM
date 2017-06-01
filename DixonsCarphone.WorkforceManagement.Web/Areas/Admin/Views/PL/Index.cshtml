@@ -22,9 +22,15 @@
             <tr>
                 <td class="text-center">@item.FileCat</td>
                 <td class="text-center">@item.FileName</td>
-                <td class="text-center">@item.LastUploaded</td>
-                <td class="text-center"><a class="btn btn-success" href=@Url.Action("UploadFile", "PL",new { fileName = item.FileName})>Upload</a></td>
-                <td class="text-danger">@((bool)item.UploadFailed? "Last Upload Failed" : "")</td>
+                <td class="text-center">@string.Format("{0:dd/mm/yy hh:mm}", item.LastUploaded)</td>
+                <td class="text-center"><a class="btn btn-xs btn-success" href=@Url.Action("UploadFile", "PL",new { fileName = item.FileName})>Upload</a></td>
+                <td class="text-danger text-center">
+                    @if ((bool)item.UploadFailed)
+                    {
+                        <strong>@((bool)item.UploadFailed ? "Last Upload Failed " : "")</strong>
+                    }
+                </td>
+
             </tr>
         }
     </tbody>
