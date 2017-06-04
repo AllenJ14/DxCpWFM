@@ -127,12 +127,14 @@
     <canvas id="test"></canvas>
 </section>
 
-@*@section MyScripts{
-    <script src="~/Content/New/Gauge.js"></script>
-    <script>
+@section MyScripts{
+    @if (Model.MyTeam != null && Model.MyTeam.Count() > 0)
+    {
+        <script src="~/Content/New/Gauge.js"></script>
+        <script>
         var canvas = document.getElementById("contract-mix");
         var value = @Model.MyTeam.Average(x => x.CONTRACT_HOURS);
-        
+
         if (value > 33) {
             value = 33
         };
@@ -168,26 +170,32 @@
         };
         canvas = document.getElementById('contract-mix'); // your canvas element
         var gauge = new Gauge(canvas);
-        gauge.setOptions(opts); 
+        gauge.setOptions(opts);
         gauge.setMinValue(15);
         gauge.maxValue = 33; // set max gauge value
         gauge.animationSpeed = 32; // set animation speed (32 is default value)
         gauge.set(value); // set actual value
 
-    </script>
-    <script>
+        </script>
+        <script>
         var cnv = document.getElementById("contract-act");
         var ctx = cnv.getContext("2d");
         var posx = cnv.width/2;
-        var posy = cnv.height - 25;
+        var posy = cnv.height * 0.8;
 
         ctx.fillStyle = "#000000";
         ctx.beginPath();
-        ctx.arc(posx, posy, 20, 0, 2* Math.PI);
+        ctx.arc(posx, posy, 17, 0, 2* Math.PI);
         ctx.fill();
-
-        ctx.fillStyle = "#FFFFFF";
+            
         ctx.font = "bold 16px sans-serif"
+        ctx.fillStyle = "#FFFFFF";
         ctx.fillText(@string.Format("{0:0}", Model.MyTeam.Average(x => x.CONTRACT_HOURS)),posx - 10, posy + 5)
-    </script>
-}*@
+
+        ctx.fillStyle = '#000000'
+        ctx.font = "bold 14px sans-serif"
+        ctx.textAlign = "center"
+        ctx.fillText("Current Average Contract Hours", posx, cnv.height * 0.95)
+        </script>
+    }    
+}

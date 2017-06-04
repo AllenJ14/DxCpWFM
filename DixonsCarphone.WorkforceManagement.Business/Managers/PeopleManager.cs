@@ -15,7 +15,7 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
         {
             using (var dbContext = new DxCpWfmContext())
             {
-                var result = await dbContext.HrFeeds.Where(x => x.STORE_NUM == storeNum && x.DOL == "").ToListAsync();
+                var result = await dbContext.HrFeeds.Where(x => x.STORE_NUM == storeNum && x.DOL == "").OrderByDescending(x => x.CONTRACT_HOURS).ThenBy(x => x.SURNAME).ToListAsync();
 
                 return result;
             }

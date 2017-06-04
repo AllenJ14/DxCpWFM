@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.DirectoryServices.AccountManagement;
+using System.DirectoryServices;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -58,6 +59,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Models
             try
             {
                 isAuthenticated = principalContext.ValidateCredentials(username, password, ContextOptions.Negotiate);
+                
                 if (isAuthenticated)
                 {
                     userPrincipal = UserPrincipal.FindByIdentity(principalContext, username);
@@ -112,6 +114,10 @@ namespace DixonsCarphone.WorkforceManagement.Web.Models
             StoreUserGroups(groups);
 
             var identity = CreateIdentity(userPrincipal);
+
+            //DirectoryEntry entry = new DirectoryEntry("LDAP://GBNVPWADC18/CN=VORAR01,OU=PCWorld,OU=Hemel,OU=Users,OU=MDS,OU=UK_Ireland,DC=DSG,DC=DSGROOT,DC=INT", username, password);
+
+            //string test1 = entry.Properties["workforceID"].Value.ToString();
 
             authenticationManager.SignOut(CpwWfmAuthentication.ApplicationCookie);
             authenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = false }, identity);

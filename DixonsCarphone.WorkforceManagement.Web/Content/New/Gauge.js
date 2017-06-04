@@ -128,7 +128,7 @@
                 var c, d;
                 this.canvas = a, b.__super__.constructor.call(this), this.percentColors = null, "undefined" != typeof G_vmlCanvasManager && (this.canvas = window.G_vmlCanvasManager.initElement(this.canvas)), this.ctx = this.canvas.getContext("2d"), c = this.canvas.clientHeight, d = this.canvas.clientWidth, this.canvas.height = c, this.canvas.width = d, this.gp = [new h(this)], this.setOptions(), this.render()
             }
-            return r(b, a), b.prototype.elem = null, b.prototype.value = [20], b.prototype.maxValue = 80, b.prototype.minValue = 0, b.prototype.displayedAngle = 0, b.prototype.displayedValue = 0, b.prototype.lineWidth = 40, b.prototype.paddingTop = .1, b.prototype.paddingBottom = .1, b.prototype.percentColors = null, b.prototype.options = {
+            return r(b, a), b.prototype.elem = null, b.prototype.value = [20], b.prototype.maxValue = 80, b.prototype.minValue = 0, b.prototype.displayedAngle = 0, b.prototype.displayedValue = 0, b.prototype.lineWidth = 40, b.prototype.paddingTop = .0, b.prototype.paddingBottom = .2, b.prototype.percentColors = null, b.prototype.options = {
                 colorStart: "#6fadcf",
                 colorStop: void 0,
                 gradientType: 0,
@@ -193,7 +193,8 @@
                 return c = (a - this.minValue) / (this.maxValue - this.minValue), this.getColorForPercentage(c, b)
             }, b.prototype.renderStaticLabels = function (a, b, c, d) {
                 var e, f, g, h, i, j, k, l, n, o;
-                for (this.ctx.save(), this.ctx.translate(b, c), e = a.font || "10px Times", j = /\d+\.?\d?/, i = e.match(j)[0], l = e.slice(i.length), f = parseFloat(i) * this.displayScale, this.ctx.font = f + l, this.ctx.fillStyle = a.color || "#000000", this.ctx.textBaseline = "bottom", this.ctx.textAlign = "center", k = a.labels, g = 0, h = k.length; g < h; g++) o = k[g], (!this.options.limitMin || o >= this.minValue) && (!this.options.limitMax || o <= this.maxValue) && (n = this.getAngle(o) - 3 * Math.PI / 2, this.ctx.rotate(n), this.ctx.fillText(m(o, a.fractionDigits), 0, -d - this.lineWidth / 2), this.ctx.rotate(-n));
+                for (this.ctx.save(), this.ctx.translate(b, c), e = a.font || "10px Times", j = /\d+\.?\d?/, i = e.match(j)[0], l = e.slice(i.length), f = parseFloat(i) * this.displayScale, this.ctx.font = "bold " + f + l, this.ctx.fillStyle = a.color || "#000000", this.ctx.textBaseline = "bottom", this.ctx.textAlign = "center", k = a.labels, g = 0, h = k.length; g < h; g++)
+                { o = k[g], (!this.options.limitMin || o >= this.minValue) && (!this.options.limitMax || o <= this.maxValue) && (n = this.getAngle(o) - 3 * Math.PI / 2, this.ctx.rotate(n), this.ctx.fillText(m(o, a.fractionDigits), 0, -d - this.lineWidth / 2)); switch (o) { case 18: this.ctx.fillText("Min", 0, -17 - d - this.lineWidth / 2); break; case 24: this.ctx.fillText("Ideal", 0, -17 - d - this.lineWidth / 2); break; case 30: this.ctx.fillText("Max", 0, -17 - d - this.lineWidth / 2); break; }; this.ctx.rotate(-n); }
                 return this.ctx.restore()
             }, b.prototype.render = function () {
                 var a, b, c, d, e, f, g, h, i, j, k, l, m, n, o;
