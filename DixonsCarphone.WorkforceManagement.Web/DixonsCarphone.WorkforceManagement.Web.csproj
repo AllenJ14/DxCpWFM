@@ -486,7 +486,6 @@
     <Content Include="Views\Reports\MyTargets.cshtml" />
     <Content Include="Views\Partials\_SohSpend.cshtml" />
     <Content Include="Views\Reports\SohSpend.cshtml" />
-    <Content Include="Views\Partials\_MyTeam.cshtml" />
     <Content Include="Views\Reports\MyTeam.cshtml" />
     <Content Include="Views\Partials\_DeploymentPercScore.cshtml" />
     <Content Include="Views\Partials\_ComplianceDetailModal.cshtml" />

@@ -20,7 +20,7 @@
                     @foreach (var item in Model.RegionContractBases.Where(x => x.STORE_NUM != null))
                     {
                         <tr>
-                            <td class="text-center">@item.STORE_NUM</td>
+                            <td>@(item.STORE_NUM + " - " + item.StoreName)</td>
                             <td class="text-center">@item.Contract_Hours</td>
                             <td class="text-center">@item.Contract_Base</td>
                             <td class="text-center">@item.Highest_Week</td>

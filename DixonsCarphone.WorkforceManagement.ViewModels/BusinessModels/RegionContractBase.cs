@@ -9,6 +9,7 @@ namespace DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
     public class RegionContractBase
     {
         public Nullable<int> STORE_NUM { get; set; }
+        public string StoreName { get; set; }
         public Nullable<int> Contract_Base { get; set; }
         public Nullable<double> Contract_Hours { get; set; }
         public Nullable<int> Highest_Week { get; set; }

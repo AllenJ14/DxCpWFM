@@ -2369,6 +2369,7 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
         </EntityType>
         <ComplexType Name="sp_RegionContractBase_Result">
           <Property Type="Int32" Name="STORE_NUM" Nullable="true" />
+          <Property Type="String" Name="StoreName" Nullable="true" MaxLength="500" />
           <Property Type="Int32" Name="Contract_Base" Nullable="true" />
           <Property Type="Double" Name="Contract_Hours" Nullable="true" />
           <Property Type="Int32" Name="Highest_Week" Nullable="true" />
@@ -3560,6 +3561,7 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
             <ResultMapping>
               <ComplexTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.sp_RegionContractBase_Result">
                 <ScalarProperty Name="STORE_NUM" ColumnName="STORE_NUM" />
+                <ScalarProperty Name="StoreName" ColumnName="StoreName" />
                 <ScalarProperty Name="Contract_Base" ColumnName="Contract Base" />
                 <ScalarProperty Name="Contract_Hours" ColumnName="Contract Hours" />
                 <ScalarProperty Name="Highest_Week" ColumnName="Highest Week" />

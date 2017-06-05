@@ -14,6 +14,7 @@ namespace DixonsCarphone.WorkforceManagement.Business.Entities
     public partial class sp_RegionContractBase_Result
     {
         public Nullable<int> STORE_NUM { get; set; }
+        public string StoreName { get; set; }
         public Nullable<int> Contract_Base { get; set; }
         public Nullable<double> Contract_Hours { get; set; }
         public Nullable<int> Highest_Week { get; set; }
