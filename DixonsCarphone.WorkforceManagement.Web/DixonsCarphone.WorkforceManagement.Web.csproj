@@ -169,6 +169,7 @@
     <Folder Include="Uploads\Faqs\" />
     <Folder Include="Uploads\Star Handbook\" />
     <Folder Include="Views\Admin\" />
+    <Folder Include="Views\APITest\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -191,6 +192,7 @@
     <Compile Include="Areas\Admin\Controllers\UIController.cs" />
     <Compile Include="Attributes\RoleFilterAttribute.cs" />
     <Compile Include="Attributes\UserFilterAttribute.cs" />
+    <Compile Include="Controllers\APITestController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -327,6 +329,7 @@
     <Content Include="Images\Logo.png" />
     <Content Include="Images\LogoSmall.png" />
     <Content Include="Images\WFMHeaderTapp.png" />
+    <Content Include="Images\WFMHeader_V6.gif" />
     <Content Include="oldfavicon.ico" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />

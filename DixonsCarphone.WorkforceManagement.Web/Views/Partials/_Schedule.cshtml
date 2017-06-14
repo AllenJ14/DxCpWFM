@@ -18,6 +18,7 @@ else if (Model.ScheduleCollection.Count() != 0)
 {
     var colList = Model.ScheduleCollection.GroupBy(x => x.PersonNumber).Select(x => x.Key.Value).ToList();
     var sohTotal = Model.ScheduleCollection.GroupBy(x => x.PersonNumber).Select(x => x.FirstOrDefault()).ToList();
+    bool firstGS = true;
     <table class="table table-bordered">
         <thead>
             <tr class="active">
@@ -35,11 +36,12 @@ else if (Model.ScheduleCollection.Count() != 0)
         <tbody>
             @for (int i = 0; i < colList.Count(); i++)
             {
-                if(Model.ScheduleCollection.Where(x => x.PersonNumber == colList[i]).First().JobCode == 7)
+                if(Model.ScheduleCollection.Where(x => x.PersonNumber == colList[i]).First().JobCode == 7 && firstGS)
                 {
                     <tr>
                         <td colspan="9" class="text-center"><strong>Geek Squad</strong></td>
                     </tr>
+                    firstGS = false;
                 }
                 <tr>
                     <td><small>@string.Format("{0} ({1})", Model.ScheduleCollection.Where(x => x.PersonNumber == colList[i]).First().FullName, Model.ScheduleCollection.Where(x => x.PersonNumber == colList[i]).First().ContractHours)</small></td>

@@ -17,13 +17,13 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
     {
         IPeopleManager _peopleManager;
         IDashBoardDataManager _dashBoardManager;
-        IKronosManager _kronosManager;
+        //IKronosManager _kronosManager;
 
         public ProfilesController()
         {
             _peopleManager = new PeopleManager();
             _dashBoardManager = new DashBoardDataManager();
-            _kronosManager = new KronosManager(isOffice);
+            //_kronosManager = new KronosManager(isOffice);
         }
         public ActionResult Index()
         {

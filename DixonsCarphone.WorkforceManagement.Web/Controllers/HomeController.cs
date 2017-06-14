@@ -16,7 +16,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
     {
         IActivityManager _activityManager;
         IDashBoardDataManager _dashBoardManager;
-        IKronosManager _kronosManager;
+        //IKronosManager _kronosManager;
         IPeopleManager _peopleManager;
 
         public HomeController()
@@ -24,7 +24,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             _activityManager = new ActivityManager(); //Methods for retrieving activities
             _dashBoardManager = new DashBoardDataManager(); //Methods for retrieving dashboard data
             _peopleManager = new PeopleManager(); //Method for retrieving HrFeed data
-            _kronosManager = new KronosManager(isOffice);
+            //_kronosManager = new KronosManager(isOffice);
         }
 
         // Index Action

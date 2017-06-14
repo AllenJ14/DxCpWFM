@@ -11,9 +11,12 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
     {
         public KronosManager(bool isOffice = false)
         {
-            KronosApi.isOffice = isOffice;
-            if (isOffice)
-                Logon();
+             Logon();
+        }
+
+        ~KronosManager()
+        {
+            LogOff();
         }
 
         public async Task<List<HyperFindResult>> GetKronosHyperFind(string kronosStoreName, string startDate, string endDate)
