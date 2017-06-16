@@ -106,5 +106,9 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
         Task<List<PublishedBudgetsBranch_Result>> GetBudgetsBranch(int storeNumber);
 
         Task<List<PublishedBudgetsRegion_Result>> GetBudgetsRegion(string regionNumber);
+
+        Task<List<HolidayPlanningStore>> GetStoreHoliday(string storeNumber);
+
+        Task<List<HolidayPlanningEmp>> GetEmpHoliday(string storeNumber);
     }
 }

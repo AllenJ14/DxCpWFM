@@ -384,6 +384,29 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
           <Property Name="LastUploaded" Type="datetime" />
           <Property Name="UploadFailed" Type="bit" />
         </EntityType>
+        <EntityType Name="HolidayPlanningEmp">
+          <Key>
+            <PropertyRef Name="EntryId" />
+          </Key>
+          <Property Name="EntryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BranchNumber" Type="int" Nullable="false" />
+          <Property Name="PersonNum" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="EmployeeName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Balance" Type="int" />
+          <Property Name="Taken" Type="int" />
+          <Property Name="Scheduled" Type="int" />
+        </EntityType>
+        <EntityType Name="HolidayPlanningStore">
+          <Key>
+            <PropertyRef Name="EntryId" />
+          </Key>
+          <Property Name="EntryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WeekNumber" Type="int" Nullable="false" />
+          <Property Name="BranchNumber" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Taken" Type="int" />
+          <Property Name="Scheduled" Type="int" />
+          <Property Name="Guideline" Type="int" />
+        </EntityType>
         <EntityType Name="HrFeed">
           <Key>
             <PropertyRef Name="HR_FEED_ID" />
@@ -844,6 +867,8 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
           <EntitySet Name="DashBoardData" EntityType="Self.DashBoardData" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmpComplianceDetail" EntityType="Self.EmpComplianceDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FileUploadRecord" EntityType="Self.FileUploadRecord" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HolidayPlanningEmp" EntityType="Self.HolidayPlanningEmp" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HolidayPlanningStore" EntityType="Self.HolidayPlanningStore" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HrFeed" EntityType="Self.HrFeed" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IncorrectBranchLog" EntityType="Self.IncorrectBranchLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IpRef" EntityType="Self.IpRef" Schema="dbo" store:Type="Tables" />
@@ -1260,8 +1285,10 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
           <EntitySet Name="ROIIpRefs" EntityType="DixonsCarphone.WorkforceManagement.Business.ROIIpRef" />
           <EntitySet Name="ContractBaseDetails" EntityType="DixonsCarphone.WorkforceManagement.Business.ContractBaseDetail" />
           <FunctionImport Name="sp_RegionContractBase" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_RegionContractBase_Result)">
-            <Parameter Name="Region" Mode="In" Type="String" />
+          <Parameter Name="Region" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="HolidayPlanningStores" EntityType="DixonsCarphone.WorkforceManagement.Business.HolidayPlanningStore" />
+          <EntitySet Name="HolidayPlanningEmps" EntityType="DixonsCarphone.WorkforceManagement.Business.HolidayPlanningEmp" />
         </EntityContainer>
         <EntityType Name="BestPracticeCategoryType">
           <Key>
@@ -2387,6 +2414,29 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
           <Property Type="Decimal" Name="P11" Nullable="true" Precision="38" Scale="6" />
           <Property Type="Decimal" Name="P12" Nullable="true" Precision="38" Scale="6" />
         </ComplexType>
+        <EntityType Name="HolidayPlanningStore">
+          <Key>
+            <PropertyRef Name="EntryId" />
+          </Key>
+          <Property Name="EntryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WeekNumber" Type="Int32" Nullable="false" />
+          <Property Name="BranchNumber" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Taken" Type="Int32" />
+          <Property Name="Scheduled" Type="Int32" />
+          <Property Name="Guideline" Type="Int32" />
+        </EntityType>
+        <EntityType Name="HolidayPlanningEmp">
+          <Key>
+            <PropertyRef Name="EntryId" />
+          </Key>
+          <Property Name="EntryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BranchNumber" Type="Int32" Nullable="false" />
+          <Property Name="PersonNum" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Balance" Type="Int32" />
+          <Property Name="Taken" Type="Int32" />
+          <Property Name="Scheduled" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3581,6 +3631,31 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="HolidayPlanningStores">
+            <EntityTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.HolidayPlanningStore">
+              <MappingFragment StoreEntitySet="HolidayPlanningStore">
+                <ScalarProperty Name="Guideline" ColumnName="Guideline" />
+                <ScalarProperty Name="Scheduled" ColumnName="Scheduled" />
+                <ScalarProperty Name="Taken" ColumnName="Taken" />
+                <ScalarProperty Name="BranchNumber" ColumnName="BranchNumber" />
+                <ScalarProperty Name="WeekNumber" ColumnName="WeekNumber" />
+                <ScalarProperty Name="EntryId" ColumnName="EntryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HolidayPlanningEmps">
+            <EntityTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.HolidayPlanningEmp">
+              <MappingFragment StoreEntitySet="HolidayPlanningEmp">
+                <ScalarProperty Name="Scheduled" ColumnName="Scheduled" />
+                <ScalarProperty Name="Taken" ColumnName="Taken" />
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+                <ScalarProperty Name="EmployeeName" ColumnName="EmployeeName" />
+                <ScalarProperty Name="PersonNum" ColumnName="PersonNum" />
+                <ScalarProperty Name="BranchNumber" ColumnName="BranchNumber" />
+                <ScalarProperty Name="EntryId" ColumnName="EntryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

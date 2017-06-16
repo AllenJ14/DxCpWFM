@@ -138,6 +138,10 @@ namespace DixonsCarphone.WorkforceManagement.Web.Mapping
             CreateMap<ContractBaseView, ContractBaseDetail>();
             CreateMap<sp_RegionContractBase_Result, RegionContractBase>();
             CreateMap<RegionContractBase, sp_RegionContractBase_Result>();
+            CreateMap<HolidayPlanningEmp, HolidayPlanningEmpBM>();
+            CreateMap<HolidayPlanningEmpBM, HolidayPlanningEmp>();
+            CreateMap<HolidayPlanningStore, HolidayPlanningStoreBM>();
+            CreateMap<HolidayPlanningStoreBM, HolidayPlanningStore>();
         }
     }
 

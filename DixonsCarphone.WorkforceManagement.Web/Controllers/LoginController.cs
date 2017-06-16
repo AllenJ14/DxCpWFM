@@ -92,6 +92,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
                 TempData["errorMessage"] = authenticationResult.ErrorMessage;
                 return RedirectToAction("Index", "OOS");
             }
+            ViewBag.errorMessage = authenticationResult.ErrorMessage;
             ModelState.AddModelError("", authenticationResult.ErrorMessage);
             return View(model);
         }

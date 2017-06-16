@@ -166,6 +166,12 @@
     <Compile Include="Entities\fn_UnmatchedStores_Result.cs">
       <DependentUpon>DxCpReportingModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\HolidayPlanningEmp.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\HolidayPlanningStore.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\HrFeed.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>

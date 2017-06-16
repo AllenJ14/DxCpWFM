@@ -4,6 +4,11 @@
 @model StorePandLDetailViewModel
 
 @{ 
+    bool abbr = false;
+    if (HttpContext.Current.Session["_DivisionName"] != null || HttpContext.Current.Session["_ChannelName"] != null)
+    {
+        abbr = true;
+    }
     var subCat = 0;
     var prevSubCat = string.Empty;
     PandLView detail = null;
@@ -83,55 +88,55 @@
     }
 
 @foreach (var entry in Model.PandLDetails)
+{
+    var breakDowns = Model.BreakDowns.Where(x => x.AccountEntryDetailId == entry.AccountEntryDetailId).ToList();
+    detail = entry;
+
+    var actual = abbr ? string.Format("{0:c1}k", entry.ActualAmount/1000) : string.Format("{0:c0}", entry.ActualAmount);
+    var budget = abbr ? string.Format("{0:c1}k", entry.BudgetAmount/1000) : string.Format("{0:c0}", entry.BudgetAmount);
+
+    var qtdActual = abbr ? string.Format("{0:c1}k", entry.QtdActualAmount / 1000) : string.Format("{0:c0}", entry.QtdActualAmount);
+    var qtdBudget = abbr ? string.Format("{0:c1}k", entry.QtdBudgetAmount / 1000) : string.Format("{0:c0}", entry.QtdBudgetAmount);
+
+    var ytdActual = abbr ? string.Format("{0:c1}k", entry.YtdActualAmount / 1000) : string.Format("{0:c0}", entry.YtdActualAmount);
+    var ytdBudget = abbr ? string.Format("{0:c1}k", entry.YtdBudgetAmount / 1000) : string.Format("{0:c0}", entry.YtdBudgetAmount);
+
+    if (subCat != entry.AccountEntrySubTypeId)
     {
-        var breakDowns = Model.BreakDowns.Where(x => x.AccountEntryDetailId == entry.AccountEntryDetailId).ToList();
-        detail = entry;
+        var prefix = "Total";
 
-        var actual = string.Format("{0:c0}", entry.ActualAmount);
-        var budget = string.Format("{0:c0}", entry.BudgetAmount);
-
-        var qtdActual = string.Format("{0:c0}", entry.QtdActualAmount);
-        var qtdBudget = string.Format("{0:c0}", entry.QtdBudgetAmount);
-
-        var ytdActual = string.Format("{0:c0}", entry.YtdActualAmount);
-        var ytdBudget = string.Format("{0:c0}", entry.YtdBudgetAmount);
-    
-        if (subCat != entry.AccountEntrySubTypeId)
+        prevSubCatStr = string.Format("{0} {1}", prefix, prevSubCat);
+        if (subCat != 0)
         {
-            var prefix = "Total";
-
-            prevSubCatStr = string.Format("{0} {1}", prefix, prevSubCat);
-            if (subCat != 0)
-            {
-                sectionTotal = Model.SubTypeSectionTotals.FirstOrDefault(x => x.AccountEntrySubTypeId == subCat);
+            sectionTotal = Model.SubTypeSectionTotals.FirstOrDefault(x => x.AccountEntrySubTypeId == subCat);
 
             <tr>
                 <td colspan="2"><b>Subtotal</b></td>
-                <td><b>@string.Format("{0:C0}", sectionTotal?.ActualTotal)</b></td>
-                <td><b>@string.Format("{0:C0}", sectionTotal?.BudgetTotal)</b></td>
+                <td><b>@(abbr ? string.Format("{0:C1}k", sectionTotal?.ActualTotal / 1000) : string.Format("{0:C0}", sectionTotal?.ActualTotal))</b></td>
+                <td><b>@(abbr ? string.Format("{0:C1}k", sectionTotal?.BudgetTotal / 1000) : string.Format("{0:C0}", sectionTotal?.BudgetTotal))</b></td>
                 <td><b>@string.Format("{0:0}%", sectionTotal?.PercToBudgetTotal)</b></td>
 
-                <td><b>@string.Format("{0:C0}", sectionTotal?.QtdActualTotal)</b></td>
-                <td><b>@string.Format("{0:C0}", sectionTotal?.QtdBudgetTotal)</b></td>
+                <td><b>@(abbr ? string.Format("{0:C1}k", sectionTotal?.QtdActualTotal / 1000) : string.Format("{0:C0}", sectionTotal?.QtdActualTotal))</b></td>
+                <td><b>@(abbr ? string.Format("{0:C1}k", sectionTotal?.QtdBudgetTotal / 1000) : string.Format("{0:C0}", sectionTotal?.QtdBudgetTotal))</b></td>
                 <td><b>@string.Format("{0:0}%", sectionTotal?.QtdPercToBudgetTotal)</b></td>
 
-                <td><b>@string.Format("{0:C0}", sectionTotal?.YtdActualTotal)</b></td>
-                <td><b>@string.Format("{0:C0}", sectionTotal?.YtdBudgetTotal)</b></td>
+                <td><b>@(abbr ? string.Format("{0:C1}k", sectionTotal?.YtdActualTotal / 1000) : string.Format("{0:C0}", sectionTotal?.YtdActualTotal))</b></td>
+                <td><b>@(abbr ? string.Format("{0:C1}k", sectionTotal?.YtdBudgetTotal / 1000) : string.Format("{0:C0}", sectionTotal?.YtdBudgetTotal))</b></td>
                 <td><b>@string.Format("{0:0}%", sectionTotal?.YtdPercToBudgetTotal)</b></td>
             </tr>
             <tr>
                 <td colspan="2"><b><small>Variance</small></b></td>
                 <td><b></b></td>
                 <td><b></b></td>
-                <td><b style="color:@(sectionTotal?.var<0 ? "#ff0000" : "#000000")"><small>@string.Format("{0:£#,##0 ;(£#,##0);-   }", sectionTotal?.var)</small></b></td>
+                <td><b style="color:@(sectionTotal?.var<0 ? "#ff0000" : "#000000")"><small>@(abbr ? string.Format("{0:£#,##0.#k ;(£#,##0.#k);-   }", sectionTotal?.var / 1000) : string.Format("{0:£#,##0 ;(£#,##0;-   }", sectionTotal?.var))</small></b></td>
 
                 <td><b></b></td>
                 <td><b></b></td>
-                <td><b style="color:@(sectionTotal?.Qtdvar<0 ? "#ff0000" : "#000000")"><small>@string.Format("{0:£#,##0 ;(£#,##0);-   }", sectionTotal?.Qtdvar)</small></b></td>
+                <td><b style="color:@(sectionTotal?.Qtdvar<0 ? "#ff0000" : "#000000")"><small>@(abbr ? string.Format("{0:£#,##0.#k ;(£#,##0.#k);-   }", sectionTotal?.Qtdvar / 1000) : string.Format("{0:£#,##0 ;(£#,##0;-   }", sectionTotal?.Qtdvar))</small></b></td>
 
                 <td><b></b></td>
                 <td><b></b></td>
-                <td><b style="color:@(sectionTotal?.YtdVar<0 ? "#ff0000" : "#000000")"><small>@string.Format("{0:£#,##0 ;(£#,##0);-   }", sectionTotal?.YtdVar)</small></b></td>
+                <td><b style="color:@(sectionTotal?.YtdVar<0 ? "#ff0000" : "#000000")"><small>@(abbr ? string.Format("{0:£#,##0.#k ;(£#,##0.#k);-   }", sectionTotal?.YtdVar / 1000) : string.Format("{0:£#,##0 ;(£#,##0;-   }", sectionTotal?.YtdVar))</small></b></td>
             </tr>
         }
 
@@ -148,8 +153,7 @@
                 {
                     var store = HttpContext.Current.GetSessionObject<Store>("_StoreDetails");
                     var storenum = store != null ? store.CST_CNTR_ID : 0;
-                    var PopUpTxt = storenum > 7000 ? "Margin values are calculated from gross sales bonus, assuming GSB is 2.5% of sales margin" : "Margin values are calculated from gross sales bonus, assuming GSB is 4% of sales margin";
-                    <span class="text-center"><a tabindex="0" role="button" class="glyphicon glyphicon-info-sign" data-toggle="popover" data-placement="right" data-content="@PopUpTxt" data-trigger="focus" style="color:black"></a></span>
+                    <span class="text-center"><a tabindex="0" role="button" class="glyphicon glyphicon-info-sign" data-toggle="popover" data-placement="right" data-content="Margin values are calculated from gross sales bonus units, assuming an average margin by category" data-trigger="focus" style="color:black"></a></span>
                 }                
             </td>
         </tr>
@@ -163,7 +167,7 @@
     }
 
     <tr class=@cssClass>
-        <td>
+        <td style="@(abbr ? "font-size:xx-small" : "")">
             @entry.DetailTitle
             @if (GetBlurb(entry.DetailTitle) != "")
             {
@@ -201,16 +205,16 @@
 
 <tr>
     <td colspan="2"><b>Subtotal</b></td>
-    <td><b>@string.Format("{0:C0}", sectionTotal?.ActualTotal)</b></td>
-    <td><b>@string.Format("{0:C0}", sectionTotal?.BudgetTotal)</b></td>
+    <td><b>@(abbr ? string.Format("{0:C1}k", sectionTotal?.ActualTotal / 1000) : string.Format("{0:C0}", sectionTotal?.ActualTotal))</b></td>
+    <td><b>@(abbr ? string.Format("{0:C1}k", sectionTotal?.BudgetTotal / 1000) : string.Format("{0:C0}", sectionTotal?.BudgetTotal))</b></td>
     <td><b>@string.Format("{0:0}%", sectionTotal?.PercToBudgetTotal)</b></td>
 
-    <td><b>@string.Format("{0:C0}", sectionTotal?.QtdActualTotal)</b></td>
-    <td><b>@string.Format("{0:C0}", sectionTotal?.QtdBudgetTotal)</b></td>
+    <td><b>@(abbr ? string.Format("{0:C1}k", sectionTotal?.QtdActualTotal / 1000) : string.Format("{0:C0}", sectionTotal?.QtdActualTotal))</b></td>
+    <td><b>@(abbr ? string.Format("{0:C1}k", sectionTotal?.QtdBudgetTotal / 1000) : string.Format("{0:C0}", sectionTotal?.QtdBudgetTotal))</b></td>
     <td><b>@string.Format("{0:0}%", sectionTotal?.QtdPercToBudgetTotal)</b></td>
 
-    <td><b>@string.Format("{0:C0}", sectionTotal?.YtdActualTotal)</b></td>
-    <td><b>@string.Format("{0:C0}", sectionTotal?.YtdBudgetTotal)</b></td>
+    <td><b>@(abbr ? string.Format("{0:C1}k", sectionTotal?.YtdActualTotal / 1000) : string.Format("{0:C0}", sectionTotal?.YtdActualTotal))</b></td>
+    <td><b>@(abbr ? string.Format("{0:C1}k", sectionTotal?.YtdBudgetTotal / 1000) : string.Format("{0:C0}", sectionTotal?.YtdBudgetTotal))</b></td>
     <td><b>@string.Format("{0:0}%", sectionTotal?.YtdPercToBudgetTotal)</b></td>
 </tr>
 
@@ -218,15 +222,15 @@
     <td colspan="2"><b><small>Variance</small></b></td>
     <td><b></b></td>
     <td><b></b></td>
-    <td><b style="color:@(sectionTotal?.var<0 ? "#ff0000" : "#000000")"><small>@string.Format("{0:£#,##0 ;(£#,##0);-   }", sectionTotal?.var)</small></b></td>
+    <td><b style="color:@(sectionTotal?.var<0 ? "#ff0000" : "#000000")"><small>@(abbr ? string.Format("{0:£#,##0.#k ;(£#,##0.#k);-   }", sectionTotal?.var / 1000) : string.Format("{0:£#,##0 ;(£#,##0;-   }", sectionTotal?.var))</small></b></td>
 
     <td><b></b></td>
     <td><b></b></td>
-    <td><b style="color:@(sectionTotal?.Qtdvar<0 ? "#ff0000" : "#000000")"><small>@string.Format("{0:£#,##0 ;(£#,##0);-   }", sectionTotal?.Qtdvar)</small></b></td>
+    <td><b style="color:@(sectionTotal?.Qtdvar<0 ? "#ff0000" : "#000000")"><small>@(abbr ? string.Format("{0:£#,##0.#k ;(£#,##0.#k);-   }", sectionTotal?.Qtdvar / 1000) : string.Format("{0:£#,##0 ;(£#,##0;-   }", sectionTotal?.Qtdvar))</small></b></td>
 
     <td><b></b></td>
     <td><b></b></td>
-    <td><b style="color:@(sectionTotal?.YtdVar<0 ? "#ff0000" : "#000000")"><small>@string.Format("{0:£#,##0 ;(£#,##0);-   }", sectionTotal?.YtdVar)</small></b></td>
+    <td><b style="color:@(sectionTotal?.YtdVar<0 ? "#ff0000" : "#000000")"><small>@(abbr ? string.Format("{0:£#,##0.#k ;(£#,##0.#k);-   }", sectionTotal?.YtdVar / 1000) : string.Format("{0:£#,##0 ;(£#,##0;-   }", sectionTotal?.YtdVar))</small></b></td>
 </tr>
 
 <tr>
@@ -235,18 +239,18 @@
 
 <tr>
     <td colspan="2"><b>@sectionTitle</b></td>
-    <td><b>@string.Format("{0:C0}", overAllSectionTotal?.ActualTotal)</b></td>
-    <td><b>@string.Format("{0:C0}", overAllSectionTotal?.BudgetTotal)</b></td>
+    <td><b>@(abbr ? string.Format("{0:C1}k", overAllSectionTotal?.ActualTotal / 1000) : string.Format("{0:C0}", overAllSectionTotal?.ActualTotal))</b></td>
+    <td><b>@(abbr ? string.Format("{0:C1}k", overAllSectionTotal?.BudgetTotal / 1000) : string.Format("{0:C0}", overAllSectionTotal?.BudgetTotal))</b></td>
     <td><b>@string.Format("{0:0}%", overAllSectionTotal?.PercToBudgetTotal)</b></td>
 
 
-    <td><b>@string.Format("{0:C0}", overAllSectionTotal?.QtdActualTotal)</b></td>
-    <td><b>@string.Format("{0:C0}", overAllSectionTotal?.QtdBudgetTotal)</b></td>
+    <td><b>@(abbr ? string.Format("{0:C1}k", overAllSectionTotal?.QtdActualTotal / 1000) : string.Format("{0:C0}", overAllSectionTotal?.QtdActualTotal))</b></td>
+    <td><b>@(abbr ? string.Format("{0:C1}k", overAllSectionTotal?.QtdBudgetTotal / 1000) : string.Format("{0:C0}", overAllSectionTotal?.QtdBudgetTotal))</b></td>
     <td><b>@string.Format("{0:0}%", overAllSectionTotal?.QtdPercToBudgetTotal)</b></td>
 
 
-    <td><b>@string.Format("{0:C0}", overAllSectionTotal?.YtdActualTotal)</b></td>
-    <td><b>@string.Format("{0:C0}", overAllSectionTotal?.YtdBudgetTotal)</b></td>
+    <td><b>@(abbr ? string.Format("{0:C1}k", overAllSectionTotal?.YtdActualTotal / 1000) : string.Format("{0:C0}", overAllSectionTotal?.YtdActualTotal))</b></td>
+    <td><b>@(abbr ? string.Format("{0:C1}k", overAllSectionTotal?.YtdBudgetTotal / 1000) : string.Format("{0:C0}", overAllSectionTotal?.YtdBudgetTotal))</b></td>
     <td><b>@string.Format("{0:0}%", overAllSectionTotal?.YtdPercToBudgetTotal)</b></td>
 
 </tr>

@@ -46,21 +46,6 @@ namespace DixonsCarphone.WorkforceManagement.Web.Attributes
                     }
                 }
             }
-            else if(accessLevels.Contains("BM"))
-            {
-                var groups = HttpContext.Current.GetSessionObject<List<GroupPrincipal>>("_UserGroups");
-                var branchManagerGrp = ConfigurationManager.AppSettings["BranchManagerGroup"];
-                var IEbranchManagerGrp = ConfigurationManager.AppSettings["IEBranchManagerGroup"];
-
-                if (groups != null && branchManagerGrp != null && groups.Any(x => x.Name != null && x.Name.Contains(branchManagerGrp)))
-                {
-                    isAuthorised = true;
-                }
-                else if (groups != null && IEbranchManagerGrp != null && groups.Any(x => x.Name != null && x.Name.Contains(IEbranchManagerGrp)))
-                {
-                    isAuthorised = true;
-                }
-            }
 
             if (!isAuthorised)
             {

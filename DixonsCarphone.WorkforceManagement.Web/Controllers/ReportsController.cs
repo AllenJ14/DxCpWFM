@@ -229,6 +229,37 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             return View(vm);
         }
 
+        [UserFilter(AccessLevel = "Admin,TPC")]
+        public async Task<ActionResult> HolidayPlanning(int year = 201800)
+        {
+            HolidayPlanningVM vm = new HolidayPlanningVM();
+
+            if (System.Web.HttpContext.Current.Session["_ChannelName"] != null)
+            {
+                vm.Message = "This page is not available in the currently selected view, please select a store from the top right menu or go back.";
+                vm.MessageType = MessageType.Error;
+            }
+            else if (System.Web.HttpContext.Current.Session["_DivisionName"] != null)
+            {
+                vm.Message = "This page is not available in the currently selected view, please select a store from the top right menu or go back.";
+                vm.MessageType = MessageType.Error;
+            }
+            else if (System.Web.HttpContext.Current.Session["_RegionNumber"] != null)
+            {
+                vm.Message = "This page is not available in the currently selected view, please select a store from the top right menu or go back.";
+                vm.MessageType = MessageType.Error;
+            }
+            else
+            {
+                var storeData = mapper.Map<List<HolidayPlanningStoreBM>>(await _storeManager.GetStoreHoliday(_store.CST_CNTR_ID.ToString()));
+                var empData = mapper.Map<List<HolidayPlanningEmpBM>>(await _storeManager.GetEmpHoliday(_store.CST_CNTR_ID.ToString()));
+
+                vm.populate(storeData, empData, 0, GetWeekNumber("Last Week"));                
+            }
+
+            return View(vm);
+        }
+
         //Get P&L data for selected period
         [UserFilter(AccessLevel = "Admin,TPC,RM,DD,RD,BM")]
         public async Task<ActionResult> StorePandL(string selectedYear = null, string selectedMonth = null)

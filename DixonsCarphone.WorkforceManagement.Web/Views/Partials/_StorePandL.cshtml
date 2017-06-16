@@ -3,6 +3,11 @@
 @model StorePandLViewModel
 
 @{
+    bool abbr = false;
+    if (HttpContext.Current.Session["_DivisionName"] != null || HttpContext.Current.Session["_ChannelName"] != null)
+    {
+        abbr = true;
+    }
     var prevSubCat = string.Empty;
 
     var marginCosts = Model.PandLDetails.Where(x => x.AccountEntryTypeId == 1).GroupBy(x => x.AccountEntryDetailId).Select(x => x.FirstOrDefault()).OrderBy(x => x.AccountEntrySubTypeId).ThenBy(x => x.AccountEntryDetailId).ThenBy(x => x.AccountEntrySubTypeText).ToList();
@@ -119,16 +124,16 @@
                                 </tr>
                                 <tr class="success">
                                     <td colspan="2"><b>Overall Contribution</b></td>
-                                    <td><b>@string.Format("{0:C0}", Model.OverallTotals?.ActualTotal)</b></td>
-                                    <td><b>@string.Format("{0:C0}", Model.OverallTotals?.BudgetTotal)</b></td>
+                                    <td><b>@(abbr ? string.Format("{0:C1}k", Model.OverallTotals?.ActualTotal / 1000) : string.Format("{0:C0}", Model.OverallTotals?.ActualTotal))</b></td>
+                                    <td><b>@(abbr ? string.Format("{0:C1}k", Model.OverallTotals?.BudgetTotal / 1000) : string.Format("{0:C0}", Model.OverallTotals?.BudgetTotal))</b></td>
                                     <td><b>@string.Format("{0:0}%", Model.OverallTotals?.PercToBudgetTotal)</b></td>
 
-                                    <td><b>@string.Format("{0:C0}", Model.OverallTotals?.QtdActualTotal)</b></td>
-                                    <td><b>@string.Format("{0:C0}", Model.OverallTotals?.QtdBudgetTotal)</b></td>
+                                    <td><b>@(abbr ? string.Format("{0:C1}k", Model.OverallTotals?.QtdActualTotal / 1000) : string.Format("{0:C0}", Model.OverallTotals?.QtdActualTotal))</b></td>
+                                    <td><b>@(abbr ? string.Format("{0:C1}k", Model.OverallTotals?.QtdBudgetTotal / 1000) : string.Format("{0:C0}", Model.OverallTotals?.QtdBudgetTotal))</b></td>
                                     <td><b>@string.Format("{0:0}%", Model.OverallTotals?.QtdPercToBudgetTotal)</b></td>
 
-                                    <td><b>@string.Format("{0:C0}", Model.OverallTotals?.YtdActualTotal)</b></td>
-                                    <td><b>@string.Format("{0:C0}", Model.OverallTotals?.YtdBudgetTotal)</b></td>
+                                    <td><b>@(abbr ? string.Format("{0:C1}k", Model.OverallTotals?.YtdActualTotal / 1000) : string.Format("{0:C0}", Model.OverallTotals?.YtdActualTotal))</b></td>
+                                    <td><b>@(abbr ? string.Format("{0:C1}k", Model.OverallTotals?.YtdBudgetTotal / 1000) : string.Format("{0:C0}", Model.OverallTotals?.YtdBudgetTotal))</b></td>
                                     <td><b>@string.Format("{0:0}%", Model.OverallTotals?.YtdPercToBudgetTotal)</b></td>
 
                                 </tr>

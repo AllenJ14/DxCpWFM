@@ -720,6 +720,23 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             }
         }
 
+        public async Task<List<HolidayPlanningStore>> GetStoreHoliday(string storeNumber)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                return await dbContext.HolidayPlanningStores.Where(x => x.BranchNumber == storeNumber).OrderBy(x => x.WeekNumber).ToListAsync();
+            }
+        }
+
+        public async Task<List<HolidayPlanningEmp>> GetEmpHoliday(string storeNumber)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                var branch = int.Parse(storeNumber);
+                return await dbContext.HolidayPlanningEmps.Where(x => x.BranchNumber == branch).OrderBy(x => x.EmployeeName).ToListAsync();
+            }
+        }
+
         private AccountEntryView MapToAccountEntryView(AccountEntryHeader data)
         {
             var toRtn = new AccountEntryView

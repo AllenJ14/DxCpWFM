@@ -109,9 +109,11 @@ namespace DixonsCarphone.WorkforceManagement.Web.Models
                 // revealing this information
                 return new AuthenticationResult("Your account is disabled");
             }
-
-            var groups = userPrincipal.GetAuthorizationGroups();
-            StoreUserGroups(groups);
+            
+            if(userPrincipal.IsMemberOf(principalContext, IdentityType.Name, ConfigurationManager.AppSettings["BranchManagerGroup"]) || userPrincipal.IsMemberOf(principalContext, IdentityType.Name, ConfigurationManager.AppSettings["IEBranchManagerGroup"]))
+            {
+                HttpContext.Current.Session["_AccessLevel"] = "BM";
+            }
 
             var identity = CreateIdentity(userPrincipal);
 
