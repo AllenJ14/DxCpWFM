@@ -110,5 +110,13 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
         Task<List<HolidayPlanningStore>> GetStoreHoliday(string storeNumber);
 
         Task<List<HolidayPlanningEmp>> GetEmpHoliday(string storeNumber);
+
+        Task<List<HolidayPlanningStore>> GetRegionHoliday(string regionNumber);
+
+        Task<List<HolidayPlanningEmp>> GetRegionHolidayAll(string regionNumber);
+
+        Task<List<HolidayPlanningStore>> GetDivisionHoliday(string division);
+
+        Task<List<HolidayPlanningEmp>> GetDivisionHolidayAll(string division);
     }
 }

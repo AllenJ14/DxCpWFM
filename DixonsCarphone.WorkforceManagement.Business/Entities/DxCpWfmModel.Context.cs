@@ -336,5 +336,77 @@ namespace DixonsCarphone.WorkforceManagement.Business.Entities
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_RegionContractBase_Result>("sp_RegionContractBase", regionParameter);
         }
+    
+        public virtual ObjectResult<HolidayPlanningStore> sp_RegionHolidayPlanning(string regionNo)
+        {
+            var regionNoParameter = regionNo != null ?
+                new ObjectParameter("RegionNo", regionNo) :
+                new ObjectParameter("RegionNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<HolidayPlanningStore>("sp_RegionHolidayPlanning", regionNoParameter);
+        }
+    
+        public virtual ObjectResult<HolidayPlanningStore> sp_RegionHolidayPlanning(string regionNo, MergeOption mergeOption)
+        {
+            var regionNoParameter = regionNo != null ?
+                new ObjectParameter("RegionNo", regionNo) :
+                new ObjectParameter("RegionNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<HolidayPlanningStore>("sp_RegionHolidayPlanning", mergeOption, regionNoParameter);
+        }
+    
+        public virtual ObjectResult<HolidayPlanningEmp> sp_RegionHolidayPlanningEmp(string regionNo)
+        {
+            var regionNoParameter = regionNo != null ?
+                new ObjectParameter("RegionNo", regionNo) :
+                new ObjectParameter("RegionNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<HolidayPlanningEmp>("sp_RegionHolidayPlanningEmp", regionNoParameter);
+        }
+    
+        public virtual ObjectResult<HolidayPlanningEmp> sp_RegionHolidayPlanningEmp(string regionNo, MergeOption mergeOption)
+        {
+            var regionNoParameter = regionNo != null ?
+                new ObjectParameter("RegionNo", regionNo) :
+                new ObjectParameter("RegionNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<HolidayPlanningEmp>("sp_RegionHolidayPlanningEmp", mergeOption, regionNoParameter);
+        }
+    
+        public virtual ObjectResult<HolidayPlanningStore> sp_DivisionHolidayPlanning(string division)
+        {
+            var divisionParameter = division != null ?
+                new ObjectParameter("Division", division) :
+                new ObjectParameter("Division", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<HolidayPlanningStore>("sp_DivisionHolidayPlanning", divisionParameter);
+        }
+    
+        public virtual ObjectResult<HolidayPlanningStore> sp_DivisionHolidayPlanning(string division, MergeOption mergeOption)
+        {
+            var divisionParameter = division != null ?
+                new ObjectParameter("Division", division) :
+                new ObjectParameter("Division", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<HolidayPlanningStore>("sp_DivisionHolidayPlanning", mergeOption, divisionParameter);
+        }
+    
+        public virtual ObjectResult<HolidayPlanningEmp> sp_DivisionHolidayPlanningEmp(string division)
+        {
+            var divisionParameter = division != null ?
+                new ObjectParameter("Division", division) :
+                new ObjectParameter("Division", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<HolidayPlanningEmp>("sp_DivisionHolidayPlanningEmp", divisionParameter);
+        }
+    
+        public virtual ObjectResult<HolidayPlanningEmp> sp_DivisionHolidayPlanningEmp(string division, MergeOption mergeOption)
+        {
+            var divisionParameter = division != null ?
+                new ObjectParameter("Division", division) :
+                new ObjectParameter("Division", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<HolidayPlanningEmp>("sp_DivisionHolidayPlanningEmp", mergeOption, divisionParameter);
+        }
     }
 }

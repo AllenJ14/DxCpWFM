@@ -31,12 +31,12 @@
                         {
                             label: 'Required %',
                             data: @Model.RequiredGraphArray.ToString(),
-                            backgroundColor: 'rgba(53, 83, 214,0.9)'
+                            backgroundColor: 'rgba(10, 23, 49,0.9)'
                         },
                         {
                             label: 'Deployed %',
                             data: @Model.DeployedGraphArray.ToString(),
-                            backgroundColor: 'rgba(39, 147, 153,0.9)'
+                            backgroundColor: 'rgba(0, 140, 168,0.9)'
                         }
                         ]
                     },
@@ -67,15 +67,15 @@
                         {
                             data: [@(Model._dashboardView.SOH > Model._dashboardView.FinalTarget ? Model._dashboardView.FinalTarget.ToString() : Model._dashboardView.SOH.ToString()), @Model._dashboardView.FinalTarget],
                             backgroundColor: [
-                                'rgba(92, 214, 92,0.9)',
-                                'rgba(53, 83, 214,0.9)'
+                                'rgba(0, 140, 168,0.9)',
+                                'rgba(10, 23, 49,0.9)'
                             ]
                         },
                         {
                             data:[@(Model._dashboardView.SOH > Model._dashboardView.FinalTarget ? Math.Round((double)Model._dashboardView.SOH - (double)Model._dashboardView.FinalTarget,2).ToString() : "0"),0],
                             backgroundColor: [
                                 'rgba(255, 77, 77,0.9)',
-                                'rgba(53, 83, 214,0.9)'
+                                'rgba(10, 23, 49,0.9)'
                                 ]
                         }
                         ]

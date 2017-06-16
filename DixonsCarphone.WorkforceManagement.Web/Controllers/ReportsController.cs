@@ -229,7 +229,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             return View(vm);
         }
 
-        [UserFilter(AccessLevel = "Admin,TPC")]
+        [UserFilter(AccessLevel = "Admin,TPC,DD")]
         public async Task<ActionResult> HolidayPlanning(int year = 201800)
         {
             HolidayPlanningVM vm = new HolidayPlanningVM();
@@ -241,13 +241,17 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             }
             else if (System.Web.HttpContext.Current.Session["_DivisionName"] != null)
             {
-                vm.Message = "This page is not available in the currently selected view, please select a store from the top right menu or go back.";
-                vm.MessageType = MessageType.Error;
+                var storeData = mapper.Map<List<HolidayPlanningStoreBM>>(await _storeManager.GetDivisionHoliday(System.Web.HttpContext.Current.Session["_DivisionName"].ToString()));
+                var empData = mapper.Map<List<HolidayPlanningEmpBM>>(await _storeManager.GetDivisionHolidayAll(System.Web.HttpContext.Current.Session["_DivisionName"].ToString()));
+
+                vm.populate(storeData, empData, 2, GetWeekNumber("Last Week"));
             }
             else if (System.Web.HttpContext.Current.Session["_RegionNumber"] != null)
             {
-                vm.Message = "This page is not available in the currently selected view, please select a store from the top right menu or go back.";
-                vm.MessageType = MessageType.Error;
+                var storeData = mapper.Map<List<HolidayPlanningStoreBM>>(await _storeManager.GetRegionHoliday(System.Web.HttpContext.Current.Session["_RegionNumber"].ToString()));
+                var empData = mapper.Map<List<HolidayPlanningEmpBM>>(await _storeManager.GetRegionHolidayAll(System.Web.HttpContext.Current.Session["_RegionNumber"].ToString()));
+
+                vm.populate(storeData, empData, 1, GetWeekNumber("Last Week"));
             }
             else
             {

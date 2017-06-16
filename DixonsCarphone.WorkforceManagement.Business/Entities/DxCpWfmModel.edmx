@@ -801,6 +801,12 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
           <Parameter Name="BeginWeek" Type="int" Mode="In" />
           <Parameter Name="EndWeek" Type="int" Mode="In" />
         </Function>
+        <Function Name="sp_DivisionHolidayPlanning" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Division" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_DivisionHolidayPlanningEmp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Division" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="sp_DivisionPunchCompliance" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="DivisionName" Type="nvarchar" Mode="In" />
           <Parameter Name="weekNumber" Type="int" Mode="In" />
@@ -812,6 +818,12 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
           <Parameter Name="Region" Type="nvarchar" Mode="In" />
           <Parameter Name="BeginWeek" Type="int" Mode="In" />
           <Parameter Name="EndWeek" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_RegionHolidayPlanning" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="RegionNo" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_RegionHolidayPlanningEmp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="RegionNo" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="sp_RegionPunchCompliance" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="regionNumber" Type="nvarchar" Mode="In" />
@@ -1289,6 +1301,18 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
           </FunctionImport>
           <EntitySet Name="HolidayPlanningStores" EntityType="DixonsCarphone.WorkforceManagement.Business.HolidayPlanningStore" />
           <EntitySet Name="HolidayPlanningEmps" EntityType="DixonsCarphone.WorkforceManagement.Business.HolidayPlanningEmp" />
+          <FunctionImport Name="sp_RegionHolidayPlanning" EntitySet="HolidayPlanningStores" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.HolidayPlanningStore)">
+          <Parameter Name="RegionNo" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_RegionHolidayPlanningEmp" EntitySet="HolidayPlanningEmps" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.HolidayPlanningEmp)">
+          <Parameter Name="RegionNo" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_DivisionHolidayPlanning" EntitySet="HolidayPlanningStores" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.HolidayPlanningStore)">
+            <Parameter Name="Division" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_DivisionHolidayPlanningEmp" EntitySet="HolidayPlanningEmps" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.HolidayPlanningEmp)">
+            <Parameter Name="Division" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="BestPracticeCategoryType">
           <Key>
@@ -2437,6 +2461,40 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
           <Property Name="Taken" Type="Int32" />
           <Property Name="Scheduled" Type="Int32" />
         </EntityType>
+        <ComplexType Name="sp_RegionHolidayPlanning_Result">
+          <Property Type="Int64" Name="EntryId" Nullable="true" />
+          <Property Type="Int32" Name="WeekNumber" Nullable="false" />
+          <Property Type="String" Name="BranchNumber" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="Taken" Nullable="true" />
+          <Property Type="Int32" Name="Scheduled" Nullable="true" />
+          <Property Type="Int32" Name="Guideline" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_RegionHolidayPlanningEmp_Result">
+          <Property Type="Int64" Name="EntryId" Nullable="true" />
+          <Property Type="Int32" Name="BranchNumber" Nullable="false" />
+          <Property Type="String" Name="PersonNumber" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="EmployeeName" Nullable="true" MaxLength="533" />
+          <Property Type="Int32" Name="Balance" Nullable="true" />
+          <Property Type="Int32" Name="Taken" Nullable="true" />
+          <Property Type="Int32" Name="Scheduled" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_DivisionHolidayPlanning_Result">
+          <Property Type="Int32" Name="EntryId" Nullable="true" />
+          <Property Type="Int32" Name="WeekNumber" Nullable="false" />
+          <Property Type="String" Name="BranchNumber" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="Taken" Nullable="true" />
+          <Property Type="Int32" Name="Scheduled" Nullable="true" />
+          <Property Type="Int32" Name="Guideline" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_DivisionHolidayPlanningEmp_Result">
+          <Property Type="Int32" Name="EntryId" Nullable="true" />
+          <Property Type="Int32" Name="Column1" Nullable="false" />
+          <Property Type="String" Name="PersonNum" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="EmployeeName" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="Balance" Nullable="true" />
+          <Property Type="Int32" Name="Taken" Nullable="true" />
+          <Property Type="Int32" Name="Scheduled" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3656,6 +3714,14 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_RegionHolidayPlanning" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_RegionHolidayPlanning">
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_RegionHolidayPlanningEmp" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_RegionHolidayPlanningEmp">
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_DivisionHolidayPlanning" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_DivisionHolidayPlanning">
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_DivisionHolidayPlanningEmp" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_DivisionHolidayPlanningEmp">
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

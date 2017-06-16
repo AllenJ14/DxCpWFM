@@ -737,6 +737,46 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             }
         }
 
+        public async Task<List<HolidayPlanningStore>> GetRegionHoliday(string regionNumber)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                var data = await Task.Run(() => dbContext.sp_RegionHolidayPlanning(regionNumber));
+
+                return data.ToList();
+            }
+        }
+
+        public async Task<List<HolidayPlanningEmp>> GetRegionHolidayAll(string regionNumber)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                var data = await Task.Run(() => dbContext.sp_RegionHolidayPlanningEmp(regionNumber));
+
+                return data.ToList();
+            }
+        }
+
+        public async Task<List<HolidayPlanningStore>> GetDivisionHoliday(string division)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                var data = await Task.Run(() => dbContext.sp_DivisionHolidayPlanning(division));
+
+                return data.ToList();
+            }
+        }
+
+        public async Task<List<HolidayPlanningEmp>> GetDivisionHolidayAll(string division)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                var data = await Task.Run(() => dbContext.sp_DivisionHolidayPlanningEmp(division));
+
+                return data.ToList();
+            }
+        }
+
         private AccountEntryView MapToAccountEntryView(AccountEntryHeader data)
         {
             var toRtn = new AccountEntryView
