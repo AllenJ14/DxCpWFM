@@ -42,10 +42,10 @@
                     </div>
                     @if (Model.PercTaken < 1)
                     {
-                        <span class="col-md-12 text-center" style="font-size:x-small"><strong>You are underspent on holiday YTD, this may cause issues with availability later in the year.</strong></span>
+                        <span class="col-md-12 alert alert-warning text-center" style="font-size:small"><strong>Watch Out! </strong>You are underspent on holiday YTD, this may cause issues with deployment later in the year.</span>
                     }
                     <div class="box-body col-md-12">
-                        <div class="chart">
+                        <div class="chart" id="graph-container">
                             <canvas id="holiday-chart" style="height:250px"></canvas>
                         </div>
                     </div>
@@ -64,11 +64,12 @@
                 </div>
             </div>
             <div class="panel-body">
-                <p class="text-center">
-                    RAG status is calculated based on how close holiday spend is to the overall guideline shown above.</br>
-                    <strong style="color:green">Green: </strong>less than 20% off</br>
-                    <strong style="color:orange">Amber: </strong>more than 20% off</br>
-                    <strong style="color:red">Red: </strong>more than 40% off</br>
+                <p class="text-center">The RAG status reflects your team's holiday usage against how much they should have taken by this point in the year.<br>
+                    <span style="font-size:small">
+                        <strong style="color:green">Green: </strong>Looking good<br>
+                        <strong style="color:orange">Amber: </strong>Could be better, discuss with the colleague their plans to ensure alignment<br>
+                        <strong style="color:red">Red: </strong>This is a problem, the colleague may find it difficult to use their full allowance without impacting store deployment<br>
+                    </span>
                 </p>
                 <table class="table table-bordered-blue table-condensed">
                     <thead>
