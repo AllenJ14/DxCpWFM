@@ -68,5 +68,6 @@ namespace DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
         public double? Awol { get; set; }
         public double? Suspension { get; set; }
         public double? Sickness { get; set; }
+        public Nullable<double> IgniteCredits { get; set; }
     }
 }

@@ -62,7 +62,7 @@
                         @foreach (var item in Model._dashboardViewCollection)
                     {
                             <tr>
-                                <td>@(item.BranchNumber + " - " + item.StoreName)</td> @*<span class="glyphicon glyphicon-new-window"></span>*@ 
+                                <td>@(item.BranchNumber + " - " + item.StoreName)</td> @*<span class="glyphicon glyphicon-new-window"></span>*@
                                 <td class="text-center">@string.Format("{0:0.0}", item.SOH)</td>
                                 <td class="text-center">@string.Format("{0:0}", item.FinalTarget)</td>
                                 <td class="text-center">@string.Format("{0:0.0}", (item.SOH - item.FinalTarget))</td>
@@ -115,7 +115,7 @@ else if (HttpContext.Current.Session["_DivisionName"] != null)
                                 <td class="text-center @GetColor((int)item.SOHUtilization)">@item.SOHUtilization</td>
                             </tr>
                         }
-                        
+
                         <tr>
                             <td><strong>Division Total</strong></td>
                             <td class="text-center"><strong>@string.Format("{0:0.0}", subtotal.SOH)</strong></td>
@@ -206,6 +206,19 @@ else if (Model._dashboardView != null)
                     <strong>Deployment - Sales Fit</strong>
                 </div>
                 <div class="panel-body">
+                    @if (Model._dashboardView.IgniteCredits != 0 && Model._dashboardView.TotalHeadCount == null)
+                    {
+                        <div class="alert alert-success">
+                            This week you will be credited <strong>@(Model._dashboardView.IgniteCredits)</strong> hours for Ignite training.
+                        </div>
+                    }
+                    else if (Model._dashboardView.IgniteCredits != 0)
+                    {
+                        <div class="alert alert-success">
+                            This week you were credited <strong>@(Model._dashboardView.IgniteCredits) hours</strong> for Ignite training.
+                        </div>
+                    }
+
                     <table class="table table-bordered-blue table-condensed col-md-6">
                         <thead>
                             <tr>
@@ -224,6 +237,7 @@ else if (Model._dashboardView != null)
                             </tr>
                         </tbody>
                     </table>
+                    
                     <div class="col-md-12">
                         <div class="box-body">
                             <div class="chart">
@@ -305,7 +319,7 @@ else if (Model.DailyDetails.Count != 0)
                             <tr>
                                 <td>This is what you need to do</td>
                                 @foreach (var item in Model.DailyDetailAdvisory)
-    {
+                                {
                                     <td><small>@item</small></td>
                                 }
                             </tr>
@@ -323,8 +337,8 @@ else if (Model.DailyDetails.Count != 0)
         </div>
     </div>
 }
-@*else if (Model._dashboardViewCollection == null)
-{
-    <div class="alert alert-danger text-center"><strong>No daily deployment data found for the selected period!</strong></div>
-}*@
+    @*else if (Model._dashboardViewCollection == null)
+        {
+            <div class="alert alert-danger text-center"><strong>No daily deployment data found for the selected period!</strong></div>
+        }*@
 

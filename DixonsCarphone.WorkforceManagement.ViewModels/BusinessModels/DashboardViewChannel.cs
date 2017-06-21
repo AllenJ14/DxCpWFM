@@ -75,5 +75,7 @@ namespace DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
         public Nullable<double> SATHoliday { get; set; }
         public Nullable<double> L1Holiday { get; set; }
         public Nullable<double> L2Holiday { get; set; }
+        public Nullable<double> IgniteCredits { get; set; }
+
     }
 }

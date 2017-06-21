@@ -358,6 +358,7 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
           <Property Name="SATHoliday" Type="float" />
           <Property Name="L1Holiday" Type="float" />
           <Property Name="L2Holiday" Type="float" />
+          <Property Name="IgniteCredits" Type="float" />
         </EntityType>
         <EntityType Name="EmpComplianceDetail">
           <Key>
@@ -1308,10 +1309,10 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
           <Parameter Name="RegionNo" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_DivisionHolidayPlanning" EntitySet="HolidayPlanningStores" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.HolidayPlanningStore)">
-            <Parameter Name="Division" Mode="In" Type="String" />
+          <Parameter Name="Division" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_DivisionHolidayPlanningEmp" EntitySet="HolidayPlanningEmps" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.HolidayPlanningEmp)">
-            <Parameter Name="Division" Mode="In" Type="String" />
+          <Parameter Name="Division" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="BestPracticeCategoryType">
@@ -2083,6 +2084,7 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
           <Property Name="SATHoliday" Type="Double" />
           <Property Name="L1Holiday" Type="Double" />
           <Property Name="L2Holiday" Type="Double" />
+          <Property Name="IgniteCredits" Type="Double" />
         </EntityType>
         <EntityType Name="IncorrectBranchLog">
           <Key>
@@ -3233,6 +3235,7 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
           <EntitySetMapping Name="DashBoardDatas">
             <EntityTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.DashBoardData">
               <MappingFragment StoreEntitySet="DashBoardData">
+                <ScalarProperty Name="IgniteCredits" ColumnName="IgniteCredits" />
                 <ScalarProperty Name="L2Holiday" ColumnName="L2Holiday" />
                 <ScalarProperty Name="L1Holiday" ColumnName="L1Holiday" />
                 <ScalarProperty Name="SATHoliday" ColumnName="SATHoliday" />
