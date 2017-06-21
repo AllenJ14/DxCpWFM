@@ -91,7 +91,9 @@ namespace DixonsCarphone.WorkforceManagement.Web.Mapping
         {
             CreateMap<DashBoardData, sp_RegionDashboardData_Result>();
             CreateMap<sp_RegionDashboardData_Result, DashBoardData>();
+            CreateMap<sp_RegionDashboardData_Result, DashBoardView>();
             CreateMap<sp_DivisionDashboardData_Result, DashBoardData>();
+            CreateMap<sp_DivisionDashboardData_Result, DashBoardView>();
             CreateMap<DashBoardData, sp_DivisionDashboardData_Result>();
             CreateMap<sp_ChannelDashboardData_Result, DashBoardData>();
             CreateMap<DashBoardData, sp_ChannelDashboardData_Result>();

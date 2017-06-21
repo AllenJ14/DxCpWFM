@@ -35,12 +35,12 @@
                     <div class="panel-body">
                         <p>
                             These contract bases provide guidance as to where the store's contracted cost needs to sit for the remainder of the year. Contract bases are used in order to:
-                            </p><ul>
+                            <ul>
                                 <li>Keep payroll (SOH) controlled,</li>
                                 <li>Ensure we recruit into the right stores,</li>
                                 <li>Enable us to react to changes in trade.</li>
                             </ul>
-                        <p></p>
+                        </p>
                         <p>
                             Please remember these are <u>max</u> contract bases and not targets - you should only recruit to these numbers if you have robust plans in place to deliver your SOH, including good holiday management.
                         </p>
@@ -48,105 +48,24 @@
                             <i><u>Geek Squad hours are not included in the max contract base.</u></i>
                         </p>
                         <div class="text-center">
-                            <a href="/Reports/TeamTrainingDoc" class="btn btn-success" role="button" target="_blank">Training Guide</a>
+                            <a href="@Url.Action("TeamTrainingDoc", "Reports")" class="btn btn-success" role="button" target="_blank">Training Guide</a>
                         </div>
                         <div class="row">
-                            
-    <div class="row">
-        <div class="col-md-12">
-            <div class="panel-body">
-                <table class="table table-condensed table-bordered col-md-12">
-                    <thead style="background-color:#002249; color:aliceblue">
-                        <tr>
-                            <th class="text-center col-md-3">Current Contract Hours</th>
-                            <th class="text-center col-md-3">Max Contract Base</th>
-                            <th class="text-center col-md-3">Forecasted Highest Week (Non Peak)</th>
-                            <th class="text-center col-md-3">Forecasted Lowest Week</th>
-                        </tr>
-                    </thead>
-                    <tbody><tr>
-                        <td class="text-center">127</td>
-                        <td class="text-center">139</td>
-                        <td class="text-center">166</td>
-                        <td class="text-center">148</td>
-                    </tr>
-                </tbody></table>
-            </div>
-        </div>
-    </div>
-
+                            @Html.Partial("~/Views/Partials/_MyContractBase.cshtml", Model)
                         </div>
                         <p>
-                            Great holiday management will enable you to contract to the max contract base and deliver your SOH budget each week.<br>
-                            Holiday needs to be used inline with the needs of the business so at some points we'll encourage more holiday e.g. at quiet times of the year. At other points, e.g. peak periods, holiday may be controlled to ensure we can deploy enough hours to capitalise on business opportunities.<br>
+                            Great holiday management will enable you to contract to the max contract base and deliver your SOH budget each week.<br />
+                            Holiday needs to be used inline with the needs of the business so at some points we'll encourage more holiday e.g. at quiet times of the year. At other points, e.g. peak periods, holiday may be controlled to ensure we can deploy enough hours to capatalise on business opportunities.<br />
                             The below is store specific guidance on how much of your store's holiday entitlement should be taken throughout the year, with the goal being 100% taken at the end of the year.
                         </p>
                         <div class="row">
-                            <div class="row">
-    <div class="col-md-12">
-        <div class="panel-body">
-            <table class="table table-condensed table-bordered col-md-12">
-                <thead style="background-color:#002249; color:aliceblue">
-                    <tr>
-                        <th class="text-center" colspan="12">Holiday Phasing 17/18</th>
-                    </tr>
-                    <tr>
-                        <th class="text-center col-md-1">P1</th>
-                        <th class="text-center col-md-1">P2</th>
-                        <th class="text-center col-md-1">P3</th>
-                        <th class="text-center col-md-1">P4</th>
-                        <th class="text-center col-md-1">P5</th>
-                        <th class="text-center col-md-1">P6</th>
-                        <th class="text-center col-md-1">P7</th>
-                        <th class="text-center col-md-1">P8</th>
-                        <th class="text-center col-md-1">P9</th>
-                        <th class="text-center col-md-1">P10</th>
-                        <th class="text-center col-md-1">P11</th>
-                        <th class="text-center col-md-1">P12</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="text-center">9%</td>
-                        <td class="text-center">9%</td>
-                        <td class="text-center">11%</td>
-                        <td class="text-center">9%</td>
-                        <td class="text-center">5%</td>
-                        <td class="text-center">4%</td>
-                        <td class="text-center">6%</td>
-                        <td class="text-center">10%</td>
-                        <td class="text-center">9%</td>
-                        <td class="text-center">9%</td>
-                        <td class="text-center">9%</td>
-                        <td class="text-center">11%</td>
-                    </tr>
-                    <tr>
-                        <td class="text-center">81<span style="font-size:x-small">hrs</span></td>
-                        <td class="text-center">81<span style="font-size:x-small">hrs</span></td>
-                        <td class="text-center">100<span style="font-size:x-small">hrs</span></td>
-                        <td class="text-center">81<span style="font-size:x-small">hrs</span></td>
-                        <td class="text-center">45<span style="font-size:x-small">hrs</span></td>
-                        <td class="text-center">36<span style="font-size:x-small">hrs</span></td>
-                        <td class="text-center">54<span style="font-size:x-small">hrs</span></td>
-                        <td class="text-center">91<span style="font-size:x-small">hrs</span></td>
-                        <td class="text-center">81<span style="font-size:x-small">hrs</span></td>
-                        <td class="text-center">81<span style="font-size:x-small">hrs</span></td>
-                        <td class="text-center">81<span style="font-size:x-small">hrs</span></td>
-                        <td class="text-center">100<span style="font-size:x-small">hrs</span></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-
+                            @Html.Partial("~/Views/Partials/_MyHolidayPhasing.cshtml", Model)
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     }
-
     else if (Model.RegionContractBases != null && Model.RegionContractBases.Count() > 0)
     {
         <div class="row">
@@ -267,7 +186,7 @@
         ctx.beginPath();
         ctx.arc(posx, posy, 17, 0, 2* Math.PI);
         ctx.fill();
-            
+
         ctx.font = "bold 16px sans-serif"
         ctx.fillStyle = "#FFFFFF";
         ctx.fillText(@string.Format("{0:0}", Model.MyTeam.Average(x => x.CONTRACT_HOURS)),posx - 10, posy + 5)
@@ -277,5 +196,5 @@
         ctx.textAlign = "center"
         ctx.fillText("Current Average Contract Hours", posx, cnv.height * 0.95)
         </script>
-    }    
+    }
 }

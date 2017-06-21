@@ -12,6 +12,7 @@ namespace DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
         public string TakenArray { get; set; }
         public string SchedArray { get; set; }
         public string GuideArray { get; set; }
+        public string DeplArray { get; set; }
 
         public List<HolidayDetail> DetailCollection { get; set; }
 
@@ -31,7 +32,7 @@ namespace DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
             }
         }
 
-        public void populate(List<HolidayPlanningStoreBM> storeDetail, List<HolidayPlanningEmpBM> empDetail, int l, int weekNumber)
+        public void populate(List<HolidayPlanningStoreBM> storeDetail, List<HolidayPlanningEmpBM> empDetail, int l, int weekNumber, List<DashBoardView> deplyDetail)
         {
             Level = 1;
 
@@ -44,6 +45,7 @@ namespace DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
             TakenArray = ToGraphArray(storeDetail.Select(x => x.Taken).ToArray());
             SchedArray = ToGraphArray(storeDetail.Select(x => x.Scheduled).ToArray());
             GuideArray = ToGraphArray(storeDetail.Select(x => x.Guideline).ToArray());
+            DeplArray = ToGraphArray(deplyDetail.Select(x => x.SOH / x.FinalTarget).ToArray());
 
             DetailCollection = new List<HolidayDetail>();
             foreach (var item in empDetail)
@@ -71,6 +73,23 @@ namespace DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
             foreach (var item in a)
             {
                 result = result + item.ToString() + ",";
+            }
+            result = result.TrimEnd(',') + "]";
+
+            return result;
+        }
+
+        private string ToGraphArray(double?[] a)
+        {
+            string result = "[";
+
+            if (a == null)
+            {
+                return "";
+            }
+            foreach (var item in a)
+            {
+                result = result + Math.Round((double)item *100,0).ToString() + ",";
             }
             result = result.TrimEnd(',') + "]";
 

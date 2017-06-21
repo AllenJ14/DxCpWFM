@@ -243,22 +243,25 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             {
                 var storeData = mapper.Map<List<HolidayPlanningStoreBM>>(await _storeManager.GetDivisionHoliday(System.Web.HttpContext.Current.Session["_DivisionName"].ToString()));
                 var empData = mapper.Map<List<HolidayPlanningEmpBM>>(await _storeManager.GetDivisionHolidayAll(System.Web.HttpContext.Current.Session["_DivisionName"].ToString()));
+                var depData = mapper.Map<List<DashBoardView>>(await _dashBoardManager.GetDivisionDashboardData(System.Web.HttpContext.Current.Session["_DivisionName"].ToString(), year + 1, year + 52));
 
-                vm.populate(storeData, empData, 2, GetWeekNumber("Last Week"));
+                vm.populate(storeData, empData, 2, GetWeekNumber("Last Week"), depData);
             }
             else if (System.Web.HttpContext.Current.Session["_RegionNumber"] != null)
             {
                 var storeData = mapper.Map<List<HolidayPlanningStoreBM>>(await _storeManager.GetRegionHoliday(System.Web.HttpContext.Current.Session["_RegionNumber"].ToString()));
                 var empData = mapper.Map<List<HolidayPlanningEmpBM>>(await _storeManager.GetRegionHolidayAll(System.Web.HttpContext.Current.Session["_RegionNumber"].ToString()));
+                var depData = mapper.Map<List<DashBoardView>>(await _dashBoardManager.GetRegionDashboardData(System.Web.HttpContext.Current.Session["_RegionNumber"].ToString(), year + 1, year + 52));
 
-                vm.populate(storeData, empData, 1, GetWeekNumber("Last Week"));
+                vm.populate(storeData, empData, 1, GetWeekNumber("Last Week"), depData);
             }
             else
             {
                 var storeData = mapper.Map<List<HolidayPlanningStoreBM>>(await _storeManager.GetStoreHoliday(_store.CST_CNTR_ID.ToString()));
                 var empData = mapper.Map<List<HolidayPlanningEmpBM>>(await _storeManager.GetEmpHoliday(_store.CST_CNTR_ID.ToString()));
+                var depData = mapper.Map<List<DashBoardView>>(await _dashBoardManager.GetStoreDashBoardData(_store.CST_CNTR_ID, year + 1, year + 52));
 
-                vm.populate(storeData, empData, 0, GetWeekNumber("Last Week"));                
+                vm.populate(storeData, empData, 0, GetWeekNumber("Last Week"), depData);                
             }
 
             return View(vm);

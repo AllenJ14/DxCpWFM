@@ -165,6 +165,7 @@
   <ItemGroup>
     <Folder Include="App_Data\CMS_Uploads\" />
     <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Content\PageSpecific\" />
     <Folder Include="Uploads\Best Practice\" />
     <Folder Include="Uploads\Faqs\" />
     <Folder Include="Uploads\Star Handbook\" />
