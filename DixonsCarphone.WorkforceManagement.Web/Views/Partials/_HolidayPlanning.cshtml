@@ -16,7 +16,6 @@
         return result;
     };
 }
-
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-default">
@@ -26,8 +25,8 @@
                         <table class="table table-bordered-blue table-condensed">
                             <thead>
                                 <tr>
-                                    <th class="text-center col-md-2 col-sm-2">Taken</th>
-                                    <th class="text-center col-md-2 col-sm-2">Goal</th>
+                                    <th class="text-center col-md-2 col-sm-2">YTD Taken</th>
+                                    <th class="text-center col-md-2 col-sm-2">YTD Ideal</th>
                                     <th class="text-center col-md-2 col-sm-2">%</th>
                                 </tr>
                             </thead>
@@ -51,6 +50,9 @@
                     </div>
                 </div>
             </div>
+            <div class="panel-footer text-center">
+                <small><strong><u>Note:</u></strong> Scheduled hours are only displayed 7 weeks in advance.</small>
+            </div>
         </div>
     </div>
 </div>
@@ -67,8 +69,8 @@
                 <p class="text-center">The RAG status reflects your team's holiday usage against how much they should have taken by this point in the year.<br>
                     <span style="font-size:small">
                         <strong style="color:green">Green: </strong>Looking good<br>
-                        <strong style="color:orange">Amber: </strong>Could be better, discuss with the colleague their plans to ensure alignment<br>
-                        <strong style="color:red">Red: </strong>This is a problem, the colleague may find it difficult to use their full allowance without impacting store deployment<br>
+                        <strong style="color:orange">Amber: </strong>Could be better, discuss with the colleague their plans for holiday<br>
+                        <strong style="color:red">Red: </strong>This is a problem, discuss the colleague's holiday plan to ensure they are fully utilising their holiday at non-peak times of the year<br>
                     </span>
                 </p>
                 <table class="table table-bordered-blue table-condensed">
@@ -78,6 +80,7 @@
                             <th class="text-center col-md-2 col-sm-2">Holiday Balance</th>
                             <th class="text-center col-md-2 col-sm-2">Holiday Taken</th>
                             <th class="text-center col-md-2 col-sm-2">RAG</th>
+                            <th class="text-center col-md-2 col-sm-2">Ideal <small>(approx.)</small></th>
                             <th class="text-center col-md-2 col-sm-2">Planned</th>
                         </tr>
                     </thead>
@@ -90,6 +93,7 @@
                                 <td class="text-center">@item.BalanceRemaining</td>
                                 <td class="text-center">@item.HolidayTaken</td>
                                 <td class="text-center @(ragFormat(_rag))")>@_rag</td>
+                                <td class="text-center">@string.Format("{0:0}", (item.BalanceRemaining + item.HolidayTaken) * Model.PercToTake)</td>
                                 <td class="text-center">@item.Planned</td>
                             </tr>
                         }

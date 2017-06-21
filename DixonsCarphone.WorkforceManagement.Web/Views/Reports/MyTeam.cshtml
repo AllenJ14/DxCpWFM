@@ -54,13 +54,9 @@
                             @Html.Partial("~/Views/Partials/_MyContractBase.cshtml", Model)
                         </div>
                         <p>
-                            Great holiday management will enable you to contract to the max contract base and deliver your SOH budget each week.<br />
-                            Holiday needs to be used inline with the needs of the business so at some points we'll encourage more holiday e.g. at quiet times of the year. At other points, e.g. peak periods, holiday may be controlled to ensure we can deploy enough hours to capatalise on business opportunities.<br />
-                            The below is store specific guidance on how much of your store's holiday entitlement should be taken throughout the year, with the goal being 100% taken at the end of the year.
+                            Great holiday management will enable you to contract to the max contract base and deliver your SOH budget each week, click through to the holiday planning page to see your current usage.<br />
                         </p>
-                        <div class="row">
-                            @Html.Partial("~/Views/Partials/_MyHolidayPhasing.cshtml", Model)
-                        </div>
+                        <div class="text-center"><a class="btn btn-success" href="@Url.Action("HolidayPlanning", "Reports")" role="button">Holiday Planning</a></div>
                     </div>
                 </div>
             </div>

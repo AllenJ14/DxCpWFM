@@ -11,14 +11,14 @@ namespace DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
 
         public char RAG(float percToTake)
         {
-            float takenPerc = (BalanceRemaining + HolidayTaken) / (float)HolidayTaken;
+            float takenPerc = (float)HolidayTaken/(BalanceRemaining + HolidayTaken);
             float RAGdelta = Math.Abs(takenPerc - percToTake);
             
-            if(RAGdelta >= 0.4)
+            if(RAGdelta >= 0.2)
             {
                 return 'R';
             }
-            else if(RAGdelta >= 0.2)
+            else if(RAGdelta >= 0.1)
             {
                 return 'A';
             }

@@ -26,7 +26,7 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             using (var dbContext = new DxCpWfmContext())
             {
                 var result = await dbContext.DashBoardDatas.Where(x => x.BranchNumber == storeNumber &&
-                (x.WeekNumber >= weekNumberStart && x.WeekNumber <= weekNumberEnd)).ToListAsync();
+                (x.WeekNumber >= weekNumberStart && x.WeekNumber <= weekNumberEnd)).OrderBy(x => x.WeekNumber).ToListAsync();
                 return result;
             }
         }
@@ -37,7 +37,7 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             using (var dbContext = new DxCpWfmContext())
             {
                 var result = await Task.Run(() => dbContext.sp_RegionDashboardData(region, weekNumberStart, weekNumberEnd));
-                return result.ToList();
+                return result.OrderBy(x => x.WeekNumber).ToList();
             }
         }
 
@@ -47,7 +47,7 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             using (var dbContext = new DxCpWfmContext())
             {
                 var result = await dbContext.DashBoardDatas.Where(x => x.Region == region &&
-                (x.WeekNumber >= weekNumberStart && x.WeekNumber <= weekNumberEnd)).OrderBy(x=> x.BranchNumber).ToListAsync();
+                (x.WeekNumber >= weekNumberStart && x.WeekNumber <= weekNumberEnd)).OrderBy(x=> x.BranchNumber).ThenBy(x => x.WeekNumber).ToListAsync();
                 return result;
             }
         }
@@ -58,7 +58,7 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             using (var dbContext = new DxCpWfmContext())
             {
                 var result = await Task.Run(() => dbContext.sp_DivisionDashboardData(division, weekNumberStart, weekNumberEnd));
-                return result.ToList();
+                return result.OrderBy(x => x.WeekNumber).ToList();
             }
         }
 
@@ -78,7 +78,7 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             using (var dbContext = new DxCpWfmContext())
             {
                 var result = await Task.Run(() => dbContext.sp_ChannelDashboardData(channel, weekNumberStart, weekNumberEnd));
-                return result.ToList();
+                return result.OrderBy(x => x.WeekNumber).ToList();
             }
         }
         
@@ -88,7 +88,7 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             using (var dbContext = new DxCpWfmContext())
             {
                 var result = await Task.Run(() => dbContext.sp_AllChannelDashboardData(channel, weekNumberStart));
-                return result.ToList();
+                return result.OrderBy(x => x.WeekNumber).ToList();
             }
         }
 

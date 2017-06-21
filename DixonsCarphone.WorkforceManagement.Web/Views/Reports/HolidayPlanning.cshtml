@@ -36,11 +36,7 @@
                             Holiday needs to be used inline with the needs of the business so at some points we'll encourage more holiday e.g. at quiet times of the year. At other points, e.g. peak periods, holiday may be controlled to ensure we can deploy enough hours to capatalise on business opportunities.<br />
                         </p>
                         <p>
-                            We've introduced simple guidance to help you understand:
-                            <ul>
-                                <li>Ideal amount of holiday hours for your  specific store to use each month / week of the year</li>
-                                <li>A easy access portal to view your team's holiday entitlements and holiday balances</li>
-                            </ul>
+                            We've introduced simple guidance to help you understand the ideal amount of holiday hours for your specific store to use each week of the year through this easy access portal.
                         </p>
                     </div>
                 </div>
@@ -57,7 +53,7 @@
             labels: ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31','32','33','34','35','36','37','38','39','40','41','42','43','44','45','46','47','48','49','50','51','52'],
             datasets:
                     [{
-                        label: "Guideline",
+                        label: "Ideal",
                         borderColor: 'rgba(118, 0, 69, 0.7)',
                         data: @Model.GuideArray,
                         fill: false,
@@ -144,8 +140,9 @@
         $('#advView').click(function(){
             var ctx = document.getElementById("holiday-chart")
             myChart.destroy();
-            if(myData.datasets.length === 4){
+            if(myData.datasets.length === 5){
                 myData.datasets.shift();
+                myData.datasets.pop();
                 myOptions.scales.yAxes.pop();
                 myOptions.scales.yAxes[0].scaleLabel = {
                     display: false,
@@ -154,7 +151,7 @@
             } else{
                 myData.datasets.unshift({
                     label: "Deployment",
-                    borderColor: 'rgba(0, 255, 0, 0.9)',
+                    borderColor: 'rgba(250, 43, 10, 0.9)',
                     data: depString,
                     fill: false,
                     pointRadius: 0,
@@ -164,13 +161,25 @@
                     tension: 0,
                     yAxisID: 'right-y-axis'
                 });
+                myData.datasets.push({
+                    label: "100% Deployment",
+                    borderColor: 'rgba(250, 43, 10, 0.4)',
+                    data: ['100','100','100','100','100','100','100','100','100','100','100','100','100','100','100','100','100','100','100','100','100','100','100','100','100','100','100','100','100','100','100','100','100','100','100','100','100','100','100','100','100','100','100','100','100','100','100','100','100','100','100','100'],
+                    type: 'line',
+                    fill: false,
+                    pointRadius: 0,
+                    hitRadius: 0,
+                    hoverBorderWidth: 0,
+                    yAxisID: 'right-y-axis',
+                    borderDash: [5,5]
+                });
                 myOptions.scales.yAxes[0].scaleLabel = {
                     display: true,
                     labelString: 'Holiday Hrs'
                 };
                 myOptions.scales.yAxes.push({
                     id: 'right-y-axis',
-                    stacked: true,
+                    stacked: false,
                     position: 'right',
                     ticks: {
                         beginAtZero: true,
