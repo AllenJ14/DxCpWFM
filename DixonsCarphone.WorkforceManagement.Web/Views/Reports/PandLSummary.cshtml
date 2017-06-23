@@ -1,0 +1,125 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
+@model PandLSummaryvm
+
+@{
+    var max = Model.DetailCollection.Max(x => x.Heirarchy);
+    ViewBag.Title = "Store P & L";
+}
+
+<section class="content">
+    <div class="row">
+        &nbsp;
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="panel-heading hidden-print">
+                @using (Html.BeginForm("PandLSummary", "Reports", new { year = Model.SelectedYear, month = Model.SelectedMonth }, FormMethod.Get, new { @class = "form-horizontal" }))
+                {
+                    <div class="row">
+                        <div class="col-sm-2"> @Html.DropDownListFor(m => m.SelectedYear, Model.PandLYears, new { @class = "form-control" })</div>
+                        <div class="col-sm-2 col-md-4">@Html.DropDownListFor(m => m.SelectedMonth, Model.PandLMonths, new { onchange = "this.form.submit();", @class = "form-control" })</div>
+                        <a href="@Url.Action("TrainingDoc", "Reports")" class="btn btn-success pull-right col-md-2" style="margin-right:10px" role="button" target="_blank">Training Guide</a>
+                    </div>
+                }
+
+            </div>
+        </div>
+        <div class="panel-body">
+            <p class="text-center" style="font-size:large">
+                The figures shown below are the overall contribution for the selected period, to view the full statements please click through on the relevant name.
+            </p>
+            <div class="table-responsive">
+                <table class="table table-bordered-blue table-condensed-smtxt">
+                    <thead>
+                        <tr>
+                            <th colspan="1">&nbsp;</th>
+                            <th colspan="3" class="text-center">Month</th>
+                            <th colspan="3" class="text-center">QTD</th>
+                            <th colspan="3" class="text-center">YTD</th>
+                        </tr>
+                        <tr class="text-center">
+                            <th class="text-center col-md-3">Name</th>
+                            <th class="text-center col-md-1">Actual</th>
+                            <th class="text-center col-md-1">Target</th>
+                            <th class="text-center col-md-1">% To Target</th>
+                            <th class="text-center col-md-1">Actual</th>
+                            <th class="text-center col-md-1">Target</th>
+                            <th class="text-center col-md-1">% To Target</th>
+                            <th class="text-center col-md-1">Actual</th>
+                            <th class="text-center col-md-1">Target</th>
+                            <th class="text-center col-md-1">% To Target</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.DetailCollection.Where(x => x.Heirarchy == max).OrderByDescending(x => x.PercToBudgetTotal))
+                        {
+                            <tr id="row_@item.DetailName">
+                                <td id="@item.DetailName">@item.DetailName</td>
+                                <td class="text-center">@string.Format("{0:c0}", item.PeriodActual)</td>
+                                <td class="text-center">@string.Format("{0:c0}", item.PeriodBudget)</td>
+                                <td class="text-center">@string.Format("{0:0}%", item.PercToBudgetTotal)</td>
+                                <td class="text-center">@string.Format("{0:c0}", item.QuarterActual)</td>
+                                <td class="text-center">@string.Format("{0:c0}", item.QuarterBudget)</td>
+                                <td class="text-center">@string.Format("{0:0}%", item.QTDPercToBudgetTotal)</td>
+                                <td class="text-center">@string.Format("{0:c0}", item.AnnualActual)</td>
+                                <td class="text-center">@string.Format("{0:c0}", item.AnnualBudget)</td>
+                                <td class="text-center">@string.Format("{0:0}%", item.YTDPercToBudgetTotal)</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered-blue table-condensed-smtxt">
+                    <thead>
+                        <tr>
+                            <th colspan="1">&nbsp;</th>
+                            <th colspan="3" class="text-center">Month</th>
+                            <th colspan="3" class="text-center">QTD</th>
+                            <th colspan="3" class="text-center">YTD</th>
+                        </tr>
+                        <tr class="text-center">
+                            <th class="text-center col-md-3">Name</th>
+                            <th class="text-center col-md-1">Actual</th>
+                            <th class="text-center col-md-1">Target</th>
+                            <th class="text-center col-md-1">% To Target</th>
+                            <th class="text-center col-md-1">Actual</th>
+                            <th class="text-center col-md-1">Target</th>
+                            <th class="text-center col-md-1">% To Target</th>
+                            <th class="text-center col-md-1">Actual</th>
+                            <th class="text-center col-md-1">Target</th>
+                            <th class="text-center col-md-1">% To Target</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.DetailCollection.Where(x => x.Heirarchy == max - 1).OrderByDescending(x => x.PercToBudgetTotal))
+                        {
+                            <tr>
+                                <td><a href="@Url.Action("StorePandLSelection", "Reports", new { selectedYear = Model.SelectedYear, selectedMonth = Model.SelectedMonth, selection = item.DetailName, heirarchy = item.Heirarchy})">@item.DetailName</a></td>
+                                <td class="text-center">@string.Format("{0:c0}", item.PeriodActual)</td>
+                                <td class="text-center">@string.Format("{0:c0}", item.PeriodBudget)</td>
+                                <td class="text-center">@string.Format("{0:0}%", item.PercToBudgetTotal)</td>
+                                <td class="text-center">@string.Format("{0:c0}", item.QuarterActual)</td>
+                                <td class="text-center">@string.Format("{0:c0}", item.QuarterBudget)</td>
+                                <td class="text-center">@string.Format("{0:0}%", item.QTDPercToBudgetTotal)</td>
+                                <td class="text-center">@string.Format("{0:c0}", item.AnnualActual)</td>
+                                <td class="text-center">@string.Format("{0:c0}", item.AnnualBudget)</td>
+                                <td class="text-center">@string.Format("{0:0}%", item.YTDPercToBudgetTotal)</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section myScripts{
+    <script>
+        $(document).ready(function () {
+            $('#@ViewBag.current').remove();
+            $('#row_@ViewBag.current').prepend('<td id=\"@ViewBag.current\"><a href=\"/Reports/StorePandLSelection?selectedYear=@Model.SelectedYear&selectedMonth=@Model.SelectedMonth&selection=@ViewBag.current&heirarchy=@max\">@ViewBag.current</a></td>');
+        });
+    </script>
+}

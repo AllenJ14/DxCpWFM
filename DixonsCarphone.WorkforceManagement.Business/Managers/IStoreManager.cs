@@ -118,5 +118,13 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
         Task<List<HolidayPlanningStore>> GetDivisionHoliday(string division);
 
         Task<List<HolidayPlanningEmp>> GetDivisionHolidayAll(string division);
+
+        Task<List<udsp_GetPandLDivisionSummary_Result>> GetDivisionPLSummary(string divisionName, string year, int? month);
+
+        Task<List<udsp_GetPandLDivisionSummary_Result>> GetDivisionPLSummary(string divisionName);
+
+        Task<List<udsp_GetPandLRegionSummary_Result>> GetRegionPLSummary(string region, string year, int? month);
+
+        Task<List<udsp_GetPandLRegionSummary_Result>> GetRegionPLSummary(string region);
     }
 }

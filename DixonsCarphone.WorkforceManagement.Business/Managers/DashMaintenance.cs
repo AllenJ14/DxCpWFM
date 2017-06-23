@@ -81,6 +81,21 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             }
         }
 
+        //Get matching store reference record by branch number
+        public async Task<StoreReference> StoreReferenceSearch(string keyword)
+        {
+            using (var dbContext = new DxCpReportingModel())
+            {
+                var criteria = 0;
+                var numberSearch = int.TryParse(keyword, out criteria);
+                if (numberSearch)
+                {
+                    return await dbContext.StoreReferences.Where(x => x.Br_ == criteria).SingleAsync();
+                }
+                return new StoreReference();
+            }
+        }
+
         //Submit new store reference record
         public async Task SubmitNewStoreReference(StoreReference model)
         {

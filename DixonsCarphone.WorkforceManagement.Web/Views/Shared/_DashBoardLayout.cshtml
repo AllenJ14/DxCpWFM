@@ -166,6 +166,7 @@
                                     @if (!(bool)HttpContext.Current.Session["_ROIFlag"])
                                     {
                                         <li class="active"><a href="@Url.Action("MyTeam", "Reports")">My Team</a></li>
+                                        <li class="active"><a href="@Url.Action("HolidayPlanning", "Reports")">Holiday Planning</a></li>
                                     }
                                     <li class="active"><a href="@Url.Action("GetSchedule", "Planning")">Schedules</a></li>
                                     @*<li class="active"><a href="@Url.Action("PayrollCalender", "Planning")"> Payroll Calender</a></li>
@@ -227,11 +228,11 @@
             <script src="~/Content/New/bootstrap.min.js"></script>
             <!-- Metis Menu Plugin JavaScript -->
             <script src="~/Content/New/metisMenu.min.js"></script>
-            <!-- Morris Charts JavaScript -->
+            @*<!-- Morris Charts JavaScript -->
             <script src="~/Content/New/raphael.min.js"></script>
             <script src="~/Content/New/morris.min.js"></script>
             <!-- Morris.js charts -->
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>*@
 
             <!-- Chart.js JavaScript -->
             <script src="~/Content/New/Chart.min.js"></script>

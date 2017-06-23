@@ -214,10 +214,16 @@
     <Compile Include="Entities\sp_BranchPunchCompliance_Result.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\sp_ChannelComplianceDetail_Result.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\sp_ChannelDashboardData_Result.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\sp_ChannelPunchCompliance_Result.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\sp_DivisionComplianceDetail_Result.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\sp_DivisionDashboardData_Result.cs">
@@ -230,6 +236,9 @@
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\sp_DivisionPunchCompliance_Result.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\sp_RegionComplianceDetail_Result.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\sp_RegionContractBase_Result.cs">
@@ -265,7 +274,13 @@
     <Compile Include="Entities\udsp_GetPandLChannel_Result.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\udsp_GetPandLDivisionSummary_Result.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\udsp_GetPandLDivision_Result.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\udsp_GetPandLRegionSummary_Result.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\udsp_GetPandLRegion_Result.cs">

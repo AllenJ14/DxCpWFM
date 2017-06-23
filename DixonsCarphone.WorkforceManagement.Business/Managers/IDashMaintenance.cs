@@ -43,5 +43,7 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
         bool ImportPLSheet(string type);
 
         Task<List<Entities.FileUploadRecord>> GetFileRecords(string type);
+
+        Task<StoreReference> StoreReferenceSearch(string keyword);
     }
 }

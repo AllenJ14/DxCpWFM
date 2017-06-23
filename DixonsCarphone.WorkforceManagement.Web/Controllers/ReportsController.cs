@@ -269,8 +269,13 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
 
         //Get P&L data for selected period
         [UserFilter(AccessLevel = "Admin,TPC,RM,DD,RD,BM")]
-        public async Task<ActionResult> StorePandL(string selectedYear = null, string selectedMonth = null)
+        public async Task<ActionResult> StorePandL(string selectedYear = null, string selectedMonth = null, bool a = false)
         {
+            if (!a && (System.Web.HttpContext.Current.Session["_ChannelName"] != null || System.Web.HttpContext.Current.Session["_DivisionName"] != null || System.Web.HttpContext.Current.Session["_RegionNumber"] != null))
+            {
+                return RedirectToAction("PandLSummary", new { selectedYear = selectedYear, selectedMonth = selectedMonth, a = true });
+            }
+
             StorePandLViewModel vm = new StorePandLViewModel();
             
             //Retrieve most recent published sheet
@@ -319,6 +324,141 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             vm.SelectedMonth = selectedMonth == null && vm.PandLDetails.Count() >0  ? vm.PandLDetails[0].PeriodMonth.ToString() : selectedMonth;
             vm.SelectedYear = selectedYear == null && vm.PandLDetails.Count() >0 ? vm.PandLDetails[0].PeriodYear : selectedYear;
             
+            return View("StorePandL", vm);
+        }
+
+        //Get P&L data summary for selected period
+        [UserFilter(AccessLevel = "Admin,TPC,RM,DD,RD")]
+        public async Task<ActionResult> PandLSummary(string selectedYear = null, string selectedMonth = null, bool a = false)
+        {
+            if (!a)
+            {
+                return RedirectToAction("StorePandL", new { selectedYear = selectedYear, selectedMonth = selectedMonth });
+            }
+            PandLSummaryvm vm = new PandLSummaryvm();
+            //Retrieve most recent published sheet
+            if (selectedMonth == null)
+            {
+                if (System.Web.HttpContext.Current.Session["_ChannelName"] != null)
+                {
+                    vm.DetailCollection = new List<PandLSummaryDetail>();
+                    vm.MessageType = MessageType.Error;
+                    vm.Message = "This view is currently unavailable";
+                }
+                else if (System.Web.HttpContext.Current.Session["_DivisionName"] != null)
+                {
+                    vm.DetailCollection = mapper.Map<List<PandLSummaryDetail>>(await _storeManager.GetDivisionPLSummary(System.Web.HttpContext.Current.Session["_DivisionName"].ToString()));
+                    ViewBag.current = System.Web.HttpContext.Current.Session["_DivisionName"].ToString();
+                }
+                else if (System.Web.HttpContext.Current.Session["_RegionNumber"] != null)
+                {
+                    vm.DetailCollection = mapper.Map<List<PandLSummaryDetail>>(await _storeManager.GetRegionPLSummary(System.Web.HttpContext.Current.Session["_RegionNumber"].ToString()));
+                    ViewBag.current = System.Web.HttpContext.Current.Session["_RegionNumber"].ToString();
+                }
+            }
+            //Retrieve selected sheet
+            else
+            {
+                int month = int.Parse(selectedMonth);
+                if (System.Web.HttpContext.Current.Session["_ChannelName"] != null)
+                {
+                    vm.DetailCollection = new List<PandLSummaryDetail>();
+                    vm.MessageType = MessageType.Error;
+                    vm.Message = "This view is currently unavailable";
+                }
+                else if (System.Web.HttpContext.Current.Session["_DivisionName"] != null)
+                {
+                    vm.DetailCollection = mapper.Map<List<PandLSummaryDetail>>(await _storeManager.GetDivisionPLSummary(System.Web.HttpContext.Current.Session["_DivisionName"].ToString(), selectedYear, month));
+                    ViewBag.current = System.Web.HttpContext.Current.Session["_DivisionName"].ToString();
+                }
+                else if (System.Web.HttpContext.Current.Session["_RegionNumber"] != null)
+                {
+                    vm.DetailCollection = mapper.Map<List<PandLSummaryDetail>>(await _storeManager.GetRegionPLSummary(System.Web.HttpContext.Current.Session["_RegionNumber"].ToString(), selectedYear, month));
+                    ViewBag.current = System.Web.HttpContext.Current.Session["_RegionNumber"].ToString();
+                }
+            }
+
+            vm.SelectedMonth = selectedMonth == null && vm.DetailCollection.Count() > 0 ? vm.DetailCollection[0].Month.ToString() : selectedMonth;
+            vm.SelectedYear = selectedYear == null && vm.DetailCollection.Count() > 0 ? vm.DetailCollection[0].Year : selectedYear;
+            return View("PandLSummary", vm);
+        }
+
+        //Get P&L data for selected period
+        [UserFilter(AccessLevel = "Admin,TPC,RM,DD,RD,BM")]
+        public async Task<ActionResult> StorePandLselection(int heirarchy, string selection, string selectedYear = null, string selectedMonth = null)
+        {
+            if(selection == null)
+            {
+                return RedirectToAction("PandLSummary", new { selectedYear = selectedYear, selectedMonth = selectedMonth, a = true });
+            }
+            StorePandLViewModel vm = new StorePandLViewModel();
+
+            //Retrieve most recent published sheet
+            if (selectedMonth == null)
+            {
+                switch (heirarchy)
+                {
+                    case 1:
+                        var brStr = selection.Substring(0, selection.IndexOf(' ', 0) - 1);
+                        vm.PandLDetails = mapper.Map<List<PandLView>>(await _storeManager.GetStorePandL(int.Parse(brStr)));
+                        break;
+                    case 2:
+                        vm.PandLDetails = mapper.Map<List<PandLView>>(await _storeManager.GetRegionPandL(selection));
+                        break;
+                    case 3:
+                        vm.PandLDetails = mapper.Map<List<PandLView>>(await _storeManager.GetDivisionPandL(selection));
+                        break;
+                    default:
+                        vm.PandLDetails = new List<PandLView>();
+                        break;
+                }
+            }
+            //Retrieve selected sheet
+            else
+            {
+                int month = int.Parse(selectedMonth);
+                switch (heirarchy)
+                {
+                    case 1:
+                        var brStr = selection.Substring(0, selection.IndexOf(' ', 0));
+                        vm.PandLDetails = mapper.Map<List<PandLView>>(await _storeManager.GetStorePandL(int.Parse(brStr), selectedYear, month));
+                        break;
+                    case 2:
+                        vm.PandLDetails = mapper.Map<List<PandLView>>(await _storeManager.GetRegionPandL(selection, selectedYear, month));
+                        break;
+                    case 3:
+                        vm.PandLDetails = mapper.Map<List<PandLView>>(await _storeManager.GetDivisionPandL(selection, selectedYear, month));
+                        break;
+                    default:
+                        vm.PandLDetails = new List<PandLView>();
+                        break;
+                }
+            } 
+
+            vm.PageBlurb = ConfigurationManager.AppSettings["StorePandLBlurb"];
+            vm.SelectedMonth = selectedMonth == null && vm.PandLDetails.Count() > 0 ? vm.PandLDetails[0].PeriodMonth.ToString() : selectedMonth;
+            vm.SelectedYear = selectedYear == null && vm.PandLDetails.Count() > 0 ? vm.PandLDetails[0].PeriodYear : selectedYear;
+            
+            if(heirarchy >= 3)
+            {
+                ViewBag.abbr = 1;
+            }
+
+            ViewBag.back = 1;
+
+            switch (heirarchy)
+            {
+                case 1:
+                    ViewBag.header = selection;
+                    break;
+                case 2:
+                    ViewBag.header = "Region " + selection;
+                    break;
+                case 3:
+                    ViewBag.header = "Division " + selection;
+                    break;
+            }
+
             return View("StorePandL", vm);
         }
 

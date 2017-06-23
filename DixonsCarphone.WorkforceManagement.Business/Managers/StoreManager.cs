@@ -348,6 +348,70 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             }
         }
 
+        //Get P&L Summary division
+        public async Task<List<udsp_GetPandLDivisionSummary_Result>> GetDivisionPLSummary(string divisionName, string year, int? month)
+        {
+            decimal mth = (decimal)month;
+            var qtdStart = (int)Math.Ceiling(mth / 3) * 3 - 2;
+
+            using (var dbContext = new DxCpWfmContext())
+            {
+                var data = await Task.Run(() => dbContext.udsp_GetPandLDivisionSummary(divisionName, year, (short?)month, (short?)qtdStart, 1));
+
+                return data.OrderBy(x => x.Heirarchy).ThenBy(x => x.DetailName).ToList();
+            }
+        }
+
+        //Get most recent P&L Summary division
+        public async Task<List<udsp_GetPandLDivisionSummary_Result>> GetDivisionPLSummary(string divisionName)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                var recentDetail = await dbContext.fn_LatestPLRecord().SingleAsync();
+                if (recentDetail.MaxMonth != null)
+                {
+                    decimal mth = (decimal)recentDetail.MaxMonth;
+                    var qtdStart = (int)Math.Ceiling(mth / 3) * 3 - 2;
+
+                    var data = await Task.Run(() => dbContext.udsp_GetPandLDivisionSummary(divisionName, recentDetail.MaxYear, recentDetail.MaxMonth, (short?)qtdStart, 1));
+                    return data.OrderBy(x => x.Heirarchy).ThenBy(x => x.DetailName).ToList();
+                }
+                return new List<udsp_GetPandLDivisionSummary_Result>();
+            }
+        }
+
+        //Get P&L Summary channel
+        public async Task<List<udsp_GetPandLRegionSummary_Result>> GetRegionPLSummary(string region, string year, int? month)
+        {
+            decimal mth = (decimal)month;
+            var qtdStart = (int)Math.Ceiling(mth / 3) * 3 - 2;
+
+            using (var dbContext = new DxCpWfmContext())
+            {
+                var data = await Task.Run(() => dbContext.udsp_GetPandLRegionSummary(region, year, (short?)month, (short?)qtdStart, 1));
+
+                return data.OrderBy(x => x.Heirarchy).ThenBy(x => x.DetailName).ToList();
+            }
+        }
+
+        //Get most recent P&L Summary channel
+        public async Task<List<udsp_GetPandLRegionSummary_Result>> GetRegionPLSummary(string region)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                var recentDetail = await dbContext.fn_LatestPLRecord().SingleAsync();
+                if (recentDetail.MaxMonth != null)
+                {
+                    decimal mth = (decimal)recentDetail.MaxMonth;
+                    var qtdStart = (int)Math.Ceiling(mth / 3) * 3 - 2;
+
+                    var data = await Task.Run(() => dbContext.udsp_GetPandLRegionSummary(region, recentDetail.MaxYear, recentDetail.MaxMonth, (short?)qtdStart, 1));
+                    return data.OrderBy(x => x.Heirarchy).ThenBy(x => x.DetailName).ToList();
+                }
+                return new List<udsp_GetPandLRegionSummary_Result>();
+            }
+        }
+
         // Queries Stores table for cost centre matching the given IP address
         public async Task<Store> GetStoreDetails(string ip)
         {

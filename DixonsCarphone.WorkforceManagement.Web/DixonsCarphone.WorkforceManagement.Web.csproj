@@ -393,6 +393,8 @@
     <Content Include="Areas\Admin\Views\StoreReferencesIE\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\StoreReferencesIE\Index.cshtml" />
     <Content Include="Areas\Admin\Views\PL\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\Test.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\_SearchBranch.cshtml" />
     <None Include="bundleconfig.json" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
@@ -570,6 +572,7 @@
     <Content Include="Uploads\ContractBases.pdf" />
     <Content Include="Views\Reports\HolidayPlanning.cshtml" />
     <Content Include="Views\Partials\_HolidayPlanning.cshtml" />
+    <Content Include="Views\Reports\PandLSummary.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DixonsCarphone.WorkforceManagement.Business\DixonsCarphone.WorkforceManagement.Business.csproj">

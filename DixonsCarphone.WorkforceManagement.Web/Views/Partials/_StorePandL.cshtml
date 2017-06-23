@@ -4,7 +4,7 @@
 
 @{
     bool abbr = false;
-    if (HttpContext.Current.Session["_DivisionName"] != null || HttpContext.Current.Session["_ChannelName"] != null)
+    if (HttpContext.Current.Session["_DivisionName"] != null || HttpContext.Current.Session["_ChannelName"] != null || ViewBag.abbr != null)
     {
         abbr = true;
     }
@@ -23,6 +23,10 @@
                 @using (Html.BeginForm("StorePandL", "Reports", new { year = Model.SelectedYear, month = Model.SelectedMonth }, FormMethod.Get, new { @class = "form-horizontal" }))
                 {
                     <div class="row">
+                        @if (ViewBag.back != null)
+                        {
+                            <a href="@Url.Action("PandLSummary", "Reports",new { a = true, selectedYear = Model.SelectedYear, selectedMonth = Model.SelectedMonth})" class="btn btn-default pull-left col-md-1 col-sm-1 text-center" role="button"style="margin-left:10px;"><span class="glyphicon glyphicon-triangle-left"></span>Back</a>
+                        }                        
                         <div class="col-sm-2"> @Html.DropDownListFor(m => m.SelectedYear, Model.PandLYears, new { @class = "form-control" })</div>
                         <div class="col-sm-2 col-md-4">@Html.DropDownListFor(m => m.SelectedMonth, Model.PandLMonths, new { onchange = "this.form.submit();", @class = "form-control" })</div>
                         <a href="@Url.Action("TrainingDoc", "Reports")" class="btn btn-success pull-right col-md-2" style="margin-right:10px" role="button" target="_blank">Training Guide</a>
@@ -34,6 +38,10 @@
             <div class="panel-body">
                 @if (Model?.PandLDetails?.Count > 0)
                 {
+                    if (ViewBag.header != null)
+                    {
+                        <h3 class="text-center" style="margin-top:0px">@ViewBag.header</h3>
+                    }
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered table-hover table-condensed-smtxt persist-area" id="dataTables-storePL">
                             <thead class="persist-header">
@@ -71,74 +79,76 @@
                             </tbody>
                         </table>
                     </div>
-                        <div class="visible-print page-break"></div>
-                        <div class="table-responsive"><table class="table table-striped table-bordered table-hover table-condensed-smtxt persist-area">
-                            <thead>
-                                <tr>
-                                    <th colspan="2">&nbsp;</th>
-                                    <th colspan="3" class="text-center">Month</th>
-                                    <th colspan="3" class="text-center">QTD</th>
-                                    <th colspan="3" class="text-center">YTD</th>
-                                </tr>
-                                <tr class="text-center">
-                                    <th class="text-center col-md-2">Item</th>
-                                    <th class="text-center col-md-1">Detail</th>
-                                    <th class="text-center col-md-1">Actual</th>
-                                    <th class="text-center col-md-1">Budget</th>
-                                    <th class="text-center col-md-1">% To Budget</th>
-                                    <th class="text-center col-md-1">Actual</th>
-                                    <th class="text-center col-md-1">Budget</th>
-                                    <th class="text-center col-md-1">% To Budget</th>
-                                    <th class="text-center col-md-1">Actual</th>
-                                    <th class="text-center col-md-1">Budget</th>
-                                    <th class="text-center col-md-1">% To Budget</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if (controllableCosts.Count() != 0)
-                                {
-                                    @Html.Partial("~/Views/Partials/_StorePandLDetail.cshtml", new StorePandLDetailViewModel
-                           {
-                               BreakDowns = Model.BreakDowns,
-                               PandLDetails = controllableCosts,
-                               OverallSectionTotals = Model.ControllableCostSectionTotals,
-                               SubTypeSectionTotals = Model.SubTypeSectionTotals
-                           })
-                                }
+                    <div class="visible-print page-break"></div>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-hover table-condensed-smtxt persist-area">
+                                <thead>
+                                    <tr>
+                                        <th colspan="2">&nbsp;</th>
+                                        <th colspan="3" class="text-center">Month</th>
+                                        <th colspan="3" class="text-center">QTD</th>
+                                        <th colspan="3" class="text-center">YTD</th>
+                                    </tr>
+                                    <tr class="text-center">
+                                        <th class="text-center col-md-2">Item</th>
+                                        <th class="text-center col-md-1">Detail</th>
+                                        <th class="text-center col-md-1">Actual</th>
+                                        <th class="text-center col-md-1">Budget</th>
+                                        <th class="text-center col-md-1">% To Budget</th>
+                                        <th class="text-center col-md-1">Actual</th>
+                                        <th class="text-center col-md-1">Budget</th>
+                                        <th class="text-center col-md-1">% To Budget</th>
+                                        <th class="text-center col-md-1">Actual</th>
+                                        <th class="text-center col-md-1">Budget</th>
+                                        <th class="text-center col-md-1">% To Budget</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (controllableCosts.Count() != 0)
+                                    {
+                                        @Html.Partial("~/Views/Partials/_StorePandLDetail.cshtml", new StorePandLDetailViewModel
+                               {
+                                   BreakDowns = Model.BreakDowns,
+                                   PandLDetails = controllableCosts,
+                                   OverallSectionTotals = Model.ControllableCostSectionTotals,
+                                   SubTypeSectionTotals = Model.SubTypeSectionTotals
+                               })
+                                    }
 
-                                @if (nonControllableCosts.Count() != 0)
-                                {
-                                    @Html.Partial("~/Views/Partials/_StorePandLDetail.cshtml", new StorePandLDetailViewModel
-                           {
-                               BreakDowns = Model.BreakDowns,
-                               PandLDetails = nonControllableCosts,
-                               OverallSectionTotals = Model.NonControllableCostSectionTotals,
-                               SubTypeSectionTotals = Model.SubTypeSectionTotals
-                           })
-                                }
+                                    @if (nonControllableCosts.Count() != 0)
+                                    {
+                                        @Html.Partial("~/Views/Partials/_StorePandLDetail.cshtml", new StorePandLDetailViewModel
+                               {
+                                   BreakDowns = Model.BreakDowns,
+                                   PandLDetails = nonControllableCosts,
+                                   OverallSectionTotals = Model.NonControllableCostSectionTotals,
+                                   SubTypeSectionTotals = Model.SubTypeSectionTotals
+                               })
+                                    }
 
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <td colspan="11" class="text-center" style="padding:0px">&nbsp;</td>
-                                </tr>
-                                <tr class="success">
-                                    <td colspan="2"><b>Overall Contribution</b></td>
-                                    <td><b>@(abbr ? string.Format("{0:C1}k", Model.OverallTotals?.ActualTotal / 1000) : string.Format("{0:C0}", Model.OverallTotals?.ActualTotal))</b></td>
-                                    <td><b>@(abbr ? string.Format("{0:C1}k", Model.OverallTotals?.BudgetTotal / 1000) : string.Format("{0:C0}", Model.OverallTotals?.BudgetTotal))</b></td>
-                                    <td><b>@string.Format("{0:0}%", Model.OverallTotals?.PercToBudgetTotal)</b></td>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="11" class="text-center" style="padding:0px">&nbsp;</td>
+                                    </tr>
+                                    <tr class="success">
+                                        <td colspan="2"><b>Overall Contribution</b></td>
+                                        <td><b>@(abbr ? string.Format("{0:C1}k", Model.OverallTotals?.ActualTotal / 1000) : string.Format("{0:C0}", Model.OverallTotals?.ActualTotal))</b></td>
+                                        <td><b>@(abbr ? string.Format("{0:C1}k", Model.OverallTotals?.BudgetTotal / 1000) : string.Format("{0:C0}", Model.OverallTotals?.BudgetTotal))</b></td>
+                                        <td><b>@string.Format("{0:0}%", Model.OverallTotals?.PercToBudgetTotal)</b></td>
 
-                                    <td><b>@(abbr ? string.Format("{0:C1}k", Model.OverallTotals?.QtdActualTotal / 1000) : string.Format("{0:C0}", Model.OverallTotals?.QtdActualTotal))</b></td>
-                                    <td><b>@(abbr ? string.Format("{0:C1}k", Model.OverallTotals?.QtdBudgetTotal / 1000) : string.Format("{0:C0}", Model.OverallTotals?.QtdBudgetTotal))</b></td>
-                                    <td><b>@string.Format("{0:0}%", Model.OverallTotals?.QtdPercToBudgetTotal)</b></td>
+                                        <td><b>@(abbr ? string.Format("{0:C1}k", Model.OverallTotals?.QtdActualTotal / 1000) : string.Format("{0:C0}", Model.OverallTotals?.QtdActualTotal))</b></td>
+                                        <td><b>@(abbr ? string.Format("{0:C1}k", Model.OverallTotals?.QtdBudgetTotal / 1000) : string.Format("{0:C0}", Model.OverallTotals?.QtdBudgetTotal))</b></td>
+                                        <td><b>@string.Format("{0:0}%", Model.OverallTotals?.QtdPercToBudgetTotal)</b></td>
 
-                                    <td><b>@(abbr ? string.Format("{0:C1}k", Model.OverallTotals?.YtdActualTotal / 1000) : string.Format("{0:C0}", Model.OverallTotals?.YtdActualTotal))</b></td>
-                                    <td><b>@(abbr ? string.Format("{0:C1}k", Model.OverallTotals?.YtdBudgetTotal / 1000) : string.Format("{0:C0}", Model.OverallTotals?.YtdBudgetTotal))</b></td>
-                                    <td><b>@string.Format("{0:0}%", Model.OverallTotals?.YtdPercToBudgetTotal)</b></td>
+                                        <td><b>@(abbr ? string.Format("{0:C1}k", Model.OverallTotals?.YtdActualTotal / 1000) : string.Format("{0:C0}", Model.OverallTotals?.YtdActualTotal))</b></td>
+                                        <td><b>@(abbr ? string.Format("{0:C1}k", Model.OverallTotals?.YtdBudgetTotal / 1000) : string.Format("{0:C0}", Model.OverallTotals?.YtdBudgetTotal))</b></td>
+                                        <td><b>@string.Format("{0:0}%", Model.OverallTotals?.YtdPercToBudgetTotal)</b></td>
 
-                                </tr>
-                            </tfoot>
-                        </table></div>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
             <!-- /.table-responsive -->
                 }
                 else
