@@ -113,16 +113,16 @@
 
                         <ul id="side-menu" class="nav">
                             @*<li class="sidebar-search">
-                                    <div class="input-group custom-search-form">
-                                        <input type="text" class="form-control" placeholder="Search...">
-                                        <span class="input-group-btn">
-                                            <button class="btn btn-default" type="button">
-                                                <i class="fa fa-search"></i>
-                                            </button>
-                                        </span>
-                                    </div>
-                                     /input-group
-                                </li>*@
+                <div class="input-group custom-search-form">
+                    <input type="text" class="form-control" placeholder="Search...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
+                </div>
+                 /input-group
+            </li>*@
                             @if (HttpContext.Current.Session["_AccessLevel"].ToString() == "Admin" || HttpContext.Current.Session["_AccessLevel"].ToString() == "OHAdmin")
                             {
                                 <li>@Html.ActionLink("Admin", "Index", "Admin", new { area = "Admin" }, null)</li>
@@ -146,8 +146,8 @@
                                     }
                                     <li class="active"><a href="@Url.Action("PunchCompliance", "Reports")">Punch Compliance</a></li>
                                     @*<li class="active"><a href="@Url.Action("MyTargets", "Reports")">My Targets</a></li>
-                                        <li class="active"><a href="@Url.Action("SohSpend", "Reports")">SOH Spend</a></li>
-                                        <li class="active"><a href="@Url.Action("Schedules", "Reports")">My Schedule</a></li>*@
+                    <li class="active"><a href="@Url.Action("SohSpend", "Reports")">SOH Spend</a></li>
+                    <li class="active"><a href="@Url.Action("Schedules", "Reports")">My Schedule</a></li>*@
                                 </ul>
                             </li>
                             <li>
@@ -170,21 +170,21 @@
                                     }
                                     <li class="active"><a href="@Url.Action("GetSchedule", "Planning")">Schedules</a></li>
                                     @*<li class="active"><a href="@Url.Action("PayrollCalender", "Planning")"> Payroll Calender</a></li>
-                                        <li class="active"><a href="@Url.Action("Budgets", "Planning")">Budgets</a></li>
-                                        <li class="active"><a href="@Url.Action("Calendar", "Planning")"> Calendar</a></li>*@
+                    <li class="active"><a href="@Url.Action("Budgets", "Planning")">Budgets</a></li>
+                    <li class="active"><a href="@Url.Action("Calendar", "Planning")"> Calendar</a></li>*@
                                 </ul>
                             </li>
                             @*<li>
-                                    <a href="@Url.Action("People", "Profiles")">
-                                        <i class="fa fa-th"></i> <span>Holiday Planning</span>
-                                    </a>
-                                    @*<ul class="nav nav-second-level">
-                                        <li class="active"><a href="@Url.Action("Index", "Profiles")"> Store</a></li>
+                <a href="@Url.Action("People", "Profiles")">
+                    <i class="fa fa-th"></i> <span>Holiday Planning</span>
+                </a>
+                @*<ul class="nav nav-second-level">
+                    <li class="active"><a href="@Url.Action("Index", "Profiles")"> Store</a></li>
 
-                                        <li class="active"><a href="@Url.Action("People", "Profiles")"> Staff</a></li>
+                    <li class="active"><a href="@Url.Action("People", "Profiles")"> Staff</a></li>
 
-                                    </ul>
-                                </li>*@
+                </ul>
+            </li>*@
                             <li>
                                 <a href="#">
                                     <i class="glyphicon glyphicon-th"></i> <span>Help & Support</span>
@@ -198,6 +198,28 @@
                                 </ul>
                                 @*@Html.Partial("_BestPracticeMenu", bestPractices)*@
                             </li>
+                            @if (HttpContext.Current.Session["_AccessLevel"].ToString() == "Admin")
+                            {
+                                <li>
+                                    <a href="#">
+                                        <span>Branch Search</span>
+                                        <span class="pull-right-container">
+                                            <i class="glyphicon glyphicon-menu-left pull-right"></i>
+                                        </span>
+                                    </a>
+                                    <ul class="nav nav-second-level">
+                                        <li>
+                                            <div class="form-inline">
+                                                <div class="form-group">
+                                                    <input id="keyword" name="keyword" type="text" value="">
+                                                    <button id="search">Search</button>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li id="searchResult"></li>
+                                    </ul>
+                                </li>
+                            }
                         </ul>
 
                     </div>
@@ -238,6 +260,21 @@
             <script src="~/Content/New/Chart.min.js"></script>
             <!-- Custom Theme JavaScript -->
             <script src="~/Content/New/sb-admin-2.js"></script>
+
+            @if (HttpContext.Current.Session["_AccessLevel"].ToString() == "Admin")
+            {
+                <script>
+                    $(document).ready(function () {
+                        $('#search').click(function () {
+                            var criteria = $('#keyword').val();
+                            var action = '/APITest/_searchBranch?keyword=' + criteria;
+                            $.post(action, function (result) {
+                                $('#searchResult').html(result);
+                            });
+                        })
+                    })
+                </script>
+            }
 
             <!-- INCLUDE ONLY IN RELEASE-->
             @*<script>

@@ -26,16 +26,5 @@ namespace DixonsCarphone.WorkforceManagement.Web.Areas.Admin.Controllers
             return View();
         }
 
-        [UserFilter(AccessLevel = "Admin, OHAdmin, PLAdmin")]
-        public ActionResult Test()
-        {
-            return View();
-        }
-
-        public PartialViewResult _SearchBranch(string keyword)
-        {
-            var data = _dashManager.StoreReferenceSearch(keyword).Result;
-            return PartialView(mapper.Map<StoreReferenceView>(data));
-        }
     }
 }

@@ -170,7 +170,6 @@
     <Folder Include="Uploads\Faqs\" />
     <Folder Include="Uploads\Star Handbook\" />
     <Folder Include="Views\Admin\" />
-    <Folder Include="Views\APITest\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -393,8 +392,7 @@
     <Content Include="Areas\Admin\Views\StoreReferencesIE\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\StoreReferencesIE\Index.cshtml" />
     <Content Include="Areas\Admin\Views\PL\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Admin\Test.cshtml" />
-    <Content Include="Areas\Admin\Views\Admin\_SearchBranch.cshtml" />
+    <Content Include="Views\APITest\_SearchBranch.cshtml" />
     <None Include="bundleconfig.json" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />

@@ -6906,3 +6906,9 @@ input:checked + .slider:before {
     margin-right: 3px;
     padding-top: 2px;
 }
+
+#keyword {
+    width: 60%;
+    margin: 0px 10px;
+    text-align: center;
+}

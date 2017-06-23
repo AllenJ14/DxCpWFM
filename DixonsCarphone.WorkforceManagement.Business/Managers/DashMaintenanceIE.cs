@@ -82,7 +82,7 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
         }
 
         //Get matching store reference record by branch number
-        public async Task<StoreReference> StoreReferenceSearch(string keyword)
+        public StoreReference StoreReferenceSearch(string keyword)
         {
             using (var dbContext = new DxCpIEReportingModel())
             {
@@ -90,7 +90,7 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
                 var numberSearch = int.TryParse(keyword, out criteria);
                 if (numberSearch)
                 {
-                    return await dbContext.StoreReferences.Where(x => x.Br_ == criteria).SingleAsync();
+                    return dbContext.StoreReferences.Where(x => x.Br_ == criteria).Single();
                 }
                 return new StoreReference();
             }

@@ -1,0 +1,19 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
+
+@model StoreReferenceView
+
+@if (Model == null)
+{
+    <ul>
+        <li>
+            No result found
+        </li>
+    </ul>
+}
+else
+{
+    <ul>
+        <li>@string.Format("{0} - {1}", Model.Br_, Model.Store_Name)</li>
+        <li>@string.Format("Region {0}", Model.Region)</li>
+    </ul>
+}

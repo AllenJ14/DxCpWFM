@@ -44,6 +44,6 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
 
         Task<List<Entities.FileUploadRecord>> GetFileRecords(string type);
 
-        Task<StoreReference> StoreReferenceSearch(string keyword);
+        StoreReference StoreReferenceSearch(string keyword);
     }
 }
