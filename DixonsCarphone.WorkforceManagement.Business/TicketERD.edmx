@@ -1,0 +1,255 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Namespace="TicketERD.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005">
+        <EntityContainer Name="TicketERDTargetContainer" >
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="TicketERD" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="TicketERDContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="TicketStubs" EntityType="TicketERD.TicketStub" />
+          <EntitySet Name="TicketTypes" EntityType="TicketERD.TicketType" />
+          <AssociationSet Name="TicketTypeTicketStub" Association="TicketERD.TicketTypeTicketStub">
+            <End Role="TicketType" EntitySet="TicketTypes" />
+            <End Role="TicketStub" EntitySet="TicketStubs" />
+          </AssociationSet>
+          <EntitySet Name="TicketTemplates" EntityType="TicketERD.TicketTemplate" />
+          <AssociationSet Name="TicketTemplateTicketType" Association="TicketERD.TicketTemplateTicketType">
+            <End Role="TicketTemplate" EntitySet="TicketTemplates" />
+            <End Role="TicketType" EntitySet="TicketTypes" />
+          </AssociationSet>
+          <EntitySet Name="TicketEscalations" EntityType="TicketERD.TicketEscalations" />
+          <EntitySet Name="TicketAudits" EntityType="TicketERD.TicketAudit" />
+          <AssociationSet Name="TicketAuditTicketStub" Association="TicketERD.TicketAuditTicketStub">
+            <End Role="TicketAudit" EntitySet="TicketAudits" />
+            <End Role="TicketStub" EntitySet="TicketStubs" />
+          </AssociationSet>
+          <EntitySet Name="TicketAnswers" EntityType="TicketERD.TicketAnswers" />
+          <AssociationSet Name="TicketAnswersTicketStub" Association="TicketERD.TicketAnswersTicketStub">
+            <End Role="TicketAnswers" EntitySet="TicketAnswers" />
+            <End Role="TicketStub" EntitySet="TicketStubs" />
+          </AssociationSet>
+          <AssociationSet Name="TicketAnswersTicketTemplate" Association="TicketERD.TicketAnswersTicketTemplate">
+            <End Role="TicketAnswers" EntitySet="TicketAnswers" />
+            <End Role="TicketTemplate" EntitySet="TicketTemplates" />
+          </AssociationSet>
+          <EntitySet Name="TicketComments" EntityType="TicketERD.TicketComments" />
+          <AssociationSet Name="TicketCommentsTicketStub" Association="TicketERD.TicketCommentsTicketStub">
+            <End Role="TicketComments" EntitySet="TicketComments" />
+            <End Role="TicketStub" EntitySet="TicketStubs" />
+          </AssociationSet>
+          <EntitySet Name="UserGroups" EntityType="TicketERD.UserGroups" />
+          <EntitySet Name="TPCAreas" EntityType="TicketERD.TPCAreas" />
+          <AssociationSet Name="TicketTypeTicketEscalations" Association="TicketERD.TicketTypeTicketEscalations">
+            <End Role="TicketType" EntitySet="TicketTypes" />
+            <End Role="TicketEscalations" EntitySet="TicketEscalations" />
+          </AssociationSet>
+          <AssociationSet Name="TicketEscalationsUserGroups" Association="TicketERD.TicketEscalationsUserGroups">
+            <End Role="TicketEscalations" EntitySet="TicketEscalations" />
+            <End Role="UserGroups" EntitySet="UserGroups" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="TicketStub">
+          <Key>
+            <PropertyRef Name="TicketId" />
+          </Key>
+          <Property Name="TicketId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DateTimeCreated" Type="String" Nullable="false" />
+          <Property Name="Status" Type="String" Nullable="false" />
+          <Property Name="TicketTypeID" Type="String" Nullable="false" />
+          <Property Name="LastUpdate" Type="String" Nullable="false" />
+          <Property Name="RaisedBy" Type="String" Nullable="false" />
+          <Property Name="EscalationLevel" Type="String" Nullable="false" />
+          <Property Name="BranchNumber" Type="String" Nullable="false" />
+          <NavigationProperty Name="TicketType" Relationship="TicketERD.TicketTypeTicketStub" FromRole="TicketStub" ToRole="TicketType" />
+          <NavigationProperty Name="TicketAudit" Relationship="TicketERD.TicketAuditTicketStub" FromRole="TicketStub" ToRole="TicketAudit" />
+          <NavigationProperty Name="TicketAnswer" Relationship="TicketERD.TicketAnswersTicketStub" FromRole="TicketStub" ToRole="TicketAnswers" />
+          <NavigationProperty Name="TicketComment" Relationship="TicketERD.TicketCommentsTicketStub" FromRole="TicketStub" ToRole="TicketComments" />
+        </EntityType>
+        <EntityType Name="TicketType">
+          <Key>
+            <PropertyRef Name="TicketTypeID" />
+          </Key>
+          <Property Name="TicketTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" />
+          <Property Name="SLAPeriod" Type="String" Nullable="false" />
+          <NavigationProperty Name="TicketStubs" Relationship="TicketERD.TicketTypeTicketStub" FromRole="TicketType" ToRole="TicketStub" />
+          <NavigationProperty Name="TicketTemplate" Relationship="TicketERD.TicketTemplateTicketType" FromRole="TicketType" ToRole="TicketTemplate" />
+          <Property Name="EscalationId" Type="String" Nullable="false" />
+          <NavigationProperty Name="TicketEscalations" Relationship="TicketERD.TicketTypeTicketEscalations" FromRole="TicketType" ToRole="TicketEscalations" />
+        </EntityType>
+        <Association Name="TicketTypeTicketStub">
+          <End Type="TicketERD.TicketType" Role="TicketType" Multiplicity="1" />
+          <End Type="TicketERD.TicketStub" Role="TicketStub" Multiplicity="1" />
+        </Association>
+        <EntityType Name="TicketTemplate">
+          <Key>
+            <PropertyRef Name="QuestionID" />
+          </Key>
+          <Property Name="QuestionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TicketTypeID" Type="String" Nullable="false" />
+          <Property Name="Question" Type="String" Nullable="false" />
+          <NavigationProperty Name="TicketTypes" Relationship="TicketERD.TicketTemplateTicketType" FromRole="TicketTemplate" ToRole="TicketType" />
+          <NavigationProperty Name="TicketAnswer" Relationship="TicketERD.TicketAnswersTicketTemplate" FromRole="TicketTemplate" ToRole="TicketAnswers" />
+          <Property Name="ReturnType" Type="String" Nullable="false" />
+        </EntityType>
+        <Association Name="TicketTemplateTicketType">
+          <End Type="TicketERD.TicketTemplate" Role="TicketTemplate" Multiplicity="*" />
+          <End Type="TicketERD.TicketType" Role="TicketType" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="TicketType">
+              <PropertyRef Name="TicketTypeID" />
+            </Principal>
+            <Dependent Role="TicketTemplate">
+              <PropertyRef Name="TicketTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TicketEscalations">
+          <Key>
+            <PropertyRef Name="EscalationId" />
+          </Key>
+          <Property Name="EscalationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Level" Type="String" Nullable="false" />
+          <Property Name="GroupId" Type="String" Nullable="false" />
+          <NavigationProperty Name="TicketType" Relationship="TicketERD.TicketTypeTicketEscalations" FromRole="TicketEscalations" ToRole="TicketType" />
+          <NavigationProperty Name="UserGroups" Relationship="TicketERD.TicketEscalationsUserGroups" FromRole="TicketEscalations" ToRole="UserGroups" />
+        </EntityType>
+        <EntityType Name="TicketAudit">
+          <Key>
+            <PropertyRef Name="EntryId" />
+          </Key>
+          <Property Name="EntryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TicketId" Type="String" Nullable="false" />
+          <Property Name="Action" Type="String" Nullable="false" />
+          <Property Name="Timestamp" Type="String" Nullable="false" />
+          <Property Name="User" Type="String" Nullable="false" />
+          <NavigationProperty Name="TicketStubs" Relationship="TicketERD.TicketAuditTicketStub" FromRole="TicketAudit" ToRole="TicketStub" />
+        </EntityType>
+        <Association Name="TicketAuditTicketStub">
+          <End Type="TicketERD.TicketAudit" Role="TicketAudit" Multiplicity="1" />
+          <End Type="TicketERD.TicketStub" Role="TicketStub" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="TicketStub">
+              <PropertyRef Name="TicketId" />
+            </Principal>
+            <Dependent Role="TicketAudit">
+              <PropertyRef Name="TicketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TicketAnswers">
+          <Key>
+            <PropertyRef Name="EntryId" />
+          </Key>
+          <Property Name="EntryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TicketId" Type="String" Nullable="false" />
+          <Property Name="QuestionId" Type="String" Nullable="false" />
+          <Property Name="Answer" Type="String" Nullable="false" />
+          <NavigationProperty Name="TicketStubs" Relationship="TicketERD.TicketAnswersTicketStub" FromRole="TicketAnswers" ToRole="TicketStub" />
+          <NavigationProperty Name="TicketTemplates" Relationship="TicketERD.TicketAnswersTicketTemplate" FromRole="TicketAnswers" ToRole="TicketTemplate" />
+        </EntityType>
+        <Association Name="TicketAnswersTicketStub">
+          <End Type="TicketERD.TicketAnswers" Role="TicketAnswers" Multiplicity="*" />
+          <End Type="TicketERD.TicketStub" Role="TicketStub" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="TicketStub">
+              <PropertyRef Name="TicketId" />
+            </Principal>
+            <Dependent Role="TicketAnswers">
+              <PropertyRef Name="TicketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TicketAnswersTicketTemplate">
+          <End Type="TicketERD.TicketAnswers" Role="TicketAnswers" Multiplicity="1" />
+          <End Type="TicketERD.TicketTemplate" Role="TicketTemplate" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="TicketTemplate">
+              <PropertyRef Name="QuestionID" />
+            </Principal>
+            <Dependent Role="TicketAnswers">
+              <PropertyRef Name="QuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TicketComments">
+          <Key>
+            <PropertyRef Name="CommentId" />
+          </Key>
+          <Property Name="CommentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TicketId" Type="String" Nullable="false" />
+          <Property Name="User" Type="String" Nullable="false" />
+          <Property Name="Timestamp" Type="String" Nullable="false" />
+          <Property Name="Comment" Type="String" Nullable="false" />
+          <NavigationProperty Name="TicketStubs" Relationship="TicketERD.TicketCommentsTicketStub" FromRole="TicketComments" ToRole="TicketStub" />
+        </EntityType>
+        <Association Name="TicketCommentsTicketStub">
+          <End Type="TicketERD.TicketComments" Role="TicketComments" Multiplicity="*" />
+          <End Type="TicketERD.TicketStub" Role="TicketStub" Multiplicity="1" />
+        </Association>
+        <EntityType Name="UserGroups">
+          <Key>
+            <PropertyRef Name="EntryId" />
+          </Key>
+          <Property Name="EntryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GroupId" Type="String" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" />
+          <Property Name="Username" Type="String" Nullable="false" />
+          <NavigationProperty Name="TicketEscalation" Relationship="TicketERD.TicketEscalationsUserGroups" FromRole="UserGroups" ToRole="TicketEscalations" />
+        </EntityType>
+        <EntityType Name="TPCAreas">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TPCName" Type="String" Nullable="false" />
+          <Property Name="Region" Type="String" Nullable="false" />
+          <Property Name="User" Type="String" Nullable="false" />
+        </EntityType>
+        <Association Name="TicketTypeTicketEscalations">
+          <End Type="TicketERD.TicketType" Role="TicketType" Multiplicity="1" />
+          <End Type="TicketERD.TicketEscalations" Role="TicketEscalations" Multiplicity="*" />
+        </Association>
+        <Association Name="TicketEscalationsUserGroups">
+          <End Type="TicketERD.TicketEscalations" Role="TicketEscalations" Multiplicity="1" />
+          <End Type="TicketERD.UserGroups" Role="UserGroups" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs" Space="C-S">
+        <Alias Key="Model" Value="TicketERD" />
+        <Alias Key="Target" Value="TicketERD.Store" />
+        <EntityContainerMapping CdmEntityContainer="TicketERDContainer" StorageEntityContainer="TicketERDTargetContainer">
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

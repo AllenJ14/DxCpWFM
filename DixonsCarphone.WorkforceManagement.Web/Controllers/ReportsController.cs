@@ -229,7 +229,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             return View(vm);
         }
 
-        [UserFilter(AccessLevel = "Admin,TPC,DD")]
+        [UserFilter(AccessLevel = "Admin,TPC,DD,RM,BM")]
         public async Task<ActionResult> HolidayPlanning(int year = 201800)
         {
             HolidayPlanningVM vm = new HolidayPlanningVM();

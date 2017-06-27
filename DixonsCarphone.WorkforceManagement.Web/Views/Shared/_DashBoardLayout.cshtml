@@ -202,6 +202,7 @@
                             {
                                 <li>
                                     <a href="#">
+                                        <i class="glyphicon glyphicon-search"></i>
                                         <span>Branch Search</span>
                                         <span class="pull-right-container">
                                             <i class="glyphicon glyphicon-menu-left pull-right"></i>
@@ -211,7 +212,7 @@
                                         <li>
                                             <div class="form-inline">
                                                 <div class="form-group">
-                                                    <input id="keyword" name="keyword" type="text" value="">
+                                                    <input id="keyword" name="keyword" type="text" value="" autocomplete="off">
                                                     <button id="search">Search</button>
                                                 </div>
                                             </div>
@@ -271,6 +272,16 @@
                             $.post(action, function (result) {
                                 $('#searchResult').html(result);
                             });
+                        })
+
+                        $('#keyword').keyup(function (event) {
+                            if (event.keyCode == 13) {
+                                var criteria = $('#keyword').val();
+                                var action = '/APITest/_searchBranch?keyword=' + criteria;
+                                $.post(action, function (result) {
+                                    $('#searchResult').html(result);
+                                });
+                            };
                         })
                     })
                 </script>

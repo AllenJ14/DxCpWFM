@@ -319,6 +319,11 @@
     <Compile Include="Managers\PeopleManager.cs" />
     <Compile Include="Managers\StoreManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TicketERD.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TicketERD.edmx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -344,6 +349,13 @@
       <DependentUpon>DxCpWfmModel.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
+    <EntityDeploy Include="TicketERD.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>TicketERD.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="TicketERD.edmx.diagram">
+      <DependentUpon>TicketERD.edmx</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
