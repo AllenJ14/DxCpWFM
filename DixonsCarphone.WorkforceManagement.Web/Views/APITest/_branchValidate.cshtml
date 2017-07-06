@@ -1,0 +1,12 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
+
+@model StoreReferenceView
+
+@if (Model == null || Model.Br_ == 0)
+{
+    <div class="text-danger" id="_branchValidate" style="padding-left:13px" data-valid="0"><strong>No such branch found...</strong></div>
+}
+else
+{
+    <div class="text-muted" id="_branchValidate" style="padding-left:13px" data-valid="1"><strong>@string.Format("{0} - {1}", Model.Br_, Model.Store_Name)</strong></div>
+}

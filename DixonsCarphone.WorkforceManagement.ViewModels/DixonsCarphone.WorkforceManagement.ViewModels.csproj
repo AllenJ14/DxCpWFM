@@ -38,6 +38,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
       <Private>True</Private>
@@ -93,6 +94,7 @@
     <Compile Include="BusinessModels\HolidayPlanningVM.cs" />
     <Compile Include="BusinessModels\MyTeamViewModel.cs" />
     <Compile Include="BusinessModels\MyTargetsViewModel.cs" />
+    <Compile Include="BusinessModels\Ticket.cs" />
     <Compile Include="BusinessModels\PandLSummaryDetail.cs" />
     <Compile Include="BusinessModels\PandLSummaryvm.cs" />
     <Compile Include="BusinessModels\PandLView.cs" />
@@ -140,6 +142,11 @@
     <Compile Include="BusinessModels\StoreReferenceViewModel.cs" />
     <Compile Include="BusinessModels\StoresMenuViewModel.cs" />
     <Compile Include="BusinessModels\StoreViewModel.cs" />
+    <Compile Include="BusinessModels\TicketQ_A.cs" />
+    <Compile Include="BusinessModels\TicketFormTemplate.cs" />
+    <Compile Include="BusinessModels\TicketSummaryView.cs" />
+    <Compile Include="BusinessModels\TicketSummaryVM.cs" />
+    <Compile Include="BusinessModels\TicketTemplateView.cs" />
     <Compile Include="BusinessModels\UserAccessDetail.cs" />
     <Compile Include="BusinessModels\UserAccessSummary.cs" />
     <Compile Include="BusinessModels\WeeklyFootfallView.cs" />

@@ -40,6 +40,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Mapping
                 cfg.AddProfile(new RegionDashboardProfile());
                 cfg.AddProfile(new MaintenanceProfile());
                 cfg.AddProfile(new ScheduleProfile());
+                cfg.AddProfile(new WorkflowProfile());
             });
         }
     }
@@ -58,6 +59,21 @@ namespace DixonsCarphone.WorkforceManagement.Web.Mapping
             CreateMap<StoreViewModel, Store>();
             CreateMap<Business.Entities.FileUploadRecord, ViewModels.BusinessModels.FileUploadRecord>();
             CreateMap<ViewModels.BusinessModels.FileUploadRecord, Business.Entities.FileUploadRecord>();
+        }
+    }
+
+    public class WorkflowProfile : Profile
+    {
+        public WorkflowProfile()
+        {
+            CreateMap<TicketTemplate, TicketTemplateView>();
+            CreateMap<TicketQ_A, TicketAnswer>();
+            CreateMap<sp_GetOpenFormsByUser_Result, TicketSummaryView>();
+            CreateMap<sp_GetOpenFormsByTPC_Result, TicketSummaryView>();
+            CreateMap<sp_GetOpenFormsByGroup_Result, TicketSummaryView>();
+            CreateMap<sp_GetClosedFormsByUser_Result, TicketSummaryView>();
+            CreateMap<sp_GetClosedFormsByTPC_Result, TicketSummaryView>();
+            CreateMap<sp_GetClosedFormsByGroup_Result, TicketSummaryView>();
         }
     }
 

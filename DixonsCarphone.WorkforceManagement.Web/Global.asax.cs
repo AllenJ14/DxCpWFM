@@ -44,6 +44,9 @@ namespace DixonsCarphone.WorkforceManagement.Web
             HttpContext.Current.Session.Add("_ROIFlag", store.Channel == "ROI");
             HttpContext.Current.Session.Add("_AccessLevel", "");
             HttpContext.Current.Session.Add("_AccessArea", "");
+
+            if (Session.IsNewSession)
+                Response.Redirect("/");
         }
 
         void Session_End(object sender, EventArgs E)

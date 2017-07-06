@@ -165,7 +165,8 @@
   <ItemGroup>
     <Folder Include="App_Data\CMS_Uploads\" />
     <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Content\PageSpecific\" />
+    <Folder Include="Areas\Workflow\Models\" />
+    <Folder Include="Areas\Workflow\Views\Shared\" />
     <Folder Include="Uploads\Best Practice\" />
     <Folder Include="Uploads\Faqs\" />
     <Folder Include="Uploads\Star Handbook\" />
@@ -190,6 +191,9 @@
     <Compile Include="Areas\Admin\Controllers\StoreReferencesController.cs" />
     <Compile Include="Areas\Admin\Controllers\UACController.cs" />
     <Compile Include="Areas\Admin\Controllers\UIController.cs" />
+    <Compile Include="Areas\Workflow\Controllers\FormController.cs" />
+    <Compile Include="Areas\Workflow\Controllers\WorkflowController.cs" />
+    <Compile Include="Areas\Workflow\WorkflowAreaRegistration.cs" />
     <Compile Include="Attributes\RoleFilterAttribute.cs" />
     <Compile Include="Attributes\UserFilterAttribute.cs" />
     <Compile Include="Controllers\APITestController.cs" />
@@ -214,6 +218,14 @@
     <Compile Include="Utils.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Workflow\Views\Form\NewSubmission.cshtml" />
+    <Content Include="Areas\Workflow\Views\Partials\_Comments.cshtml" />
+    <Content Include="Areas\Workflow\Views\Partials\_EscOptions.cshtml" />
+    <Content Include="Areas\Workflow\Views\Partials\_NewComment.cshtml" />
+    <Content Include="Areas\Workflow\Views\web.config" />
+    <Content Include="Areas\Workflow\Views\Workflow\Index.cshtml" />
+    <Content Include="Areas\Workflow\Views\Workflow\ViewTicket.cshtml" />
+    <Content Include="Areas\Workflow\Views\_ViewStart.cshtml" />
     <Content Include="CacheDependencyFiles\TextFile1.txt" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\New\bootstrap.css" />
@@ -244,6 +256,26 @@
     <Content Include="Content\New\sb-admin-2.js" />
     <Content Include="Content\New\sb-admin-2.min.css" />
     <Content Include="Content\New\sb-admin-2.min.js" />
+    <Content Include="Content\Workflow\WorkflowCrossRegion.js" />
+    <Content Include="Content\Workflow\WorkflowCrossRegion.min.js">
+      <DependentUpon>WorkflowCrossRegion.js</DependentUpon>
+    </Content>
+    <Content Include="Content\Workflow\WorkflowMaster.js" />
+    <Content Include="Content\Workflow\WorkflowMaster.min.js">
+      <DependentUpon>WorkflowMaster.js</DependentUpon>
+    </Content>
+    <Content Include="Content\Workflow\WorkflowSummary.js" />
+    <Content Include="Content\Workflow\WorkflowSummary.min.js">
+      <DependentUpon>WorkflowSummary.js</DependentUpon>
+    </Content>
+    <Content Include="Content\Workflow\WorkflowViewTicket.js" />
+    <Content Include="Content\Workflow\WorkflowViewTicket.min.js">
+      <DependentUpon>WorkflowViewTicket.js</DependentUpon>
+    </Content>
+    <Content Include="Content\Workflow\WorkflowViewTicketCR.js" />
+    <Content Include="Content\Workflow\WorkflowViewTicketCR.min.js">
+      <DependentUpon>WorkflowViewTicketCR.js</DependentUpon>
+    </Content>
     <Content Include="Error\404.html" />
     <Content Include="Error\Default.html" />
     <Content Include="Error\503.html" />
@@ -393,6 +425,8 @@
     <Content Include="Areas\Admin\Views\StoreReferencesIE\Index.cshtml" />
     <Content Include="Areas\Admin\Views\PL\Index.cshtml" />
     <Content Include="Views\APITest\_SearchBranch.cshtml" />
+    <Content Include="Areas\Workflow\Views\Partials\_SummaryList.cshtml" />
+    <Content Include="Areas\Workflow\Views\Form\Index.cshtml" />
     <None Include="bundleconfig.json" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
@@ -571,6 +605,9 @@
     <Content Include="Views\Reports\HolidayPlanning.cshtml" />
     <Content Include="Views\Partials\_HolidayPlanning.cshtml" />
     <Content Include="Views\Reports\PandLSummary.cshtml" />
+    <Content Include="Views\APITest\_empList.cshtml" />
+    <Content Include="Views\APITest\_timeList.cshtml" />
+    <Content Include="Views\APITest\_branchValidate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DixonsCarphone.WorkforceManagement.Business\DixonsCarphone.WorkforceManagement.Business.csproj">

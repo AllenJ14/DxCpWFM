@@ -1,0 +1,40 @@
+﻿@model List<DixonsCarphone.WorkforceManagement.Business.Entities.TicketType>
+
+@{
+    ViewBag.Title = "Workflow";
+}
+
+@if (ViewBag.errorMessage != null)
+{
+    <div class="row">&emsp;</div>
+    <div class="alert alert-warning text-center">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        @ViewBag.errorMessage
+    </div>
+}
+else
+{
+    <h2 class="col-sm-12">Raise a ticket</h2>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th class="text-center">Name</th>
+                <th class="text-center">Description</th>
+                <th class="text-center">Raise</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="text-center"><strong>@item.Title</strong></td>
+                    <td class="text-center">@item.Description</td>
+                    <td class="text-center">
+                        <a class="btn btn-info" href="@Url.Action("NewSubmission","Form", new { FormTypeId = item.TicketTypeId })">Go</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

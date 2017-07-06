@@ -51,6 +51,23 @@
         <EntityTypeShape EntityType="DixonsCarphone.WorkforceManagement.Business.ContractBaseDetail" Width="1.5" PointX="17.375" PointY="4.75" />
         <EntityTypeShape EntityType="DixonsCarphone.WorkforceManagement.Business.HolidayPlanningStore" Width="1.5" PointX="7.375" PointY="18.75" />
         <EntityTypeShape EntityType="DixonsCarphone.WorkforceManagement.Business.HolidayPlanningEmp" Width="1.5" PointX="14.375" PointY="18.75" />
+        <EntityTypeShape EntityType="DixonsCarphone.WorkforceManagement.Business.TicketAnswer" Width="1.5" PointX="25.875" PointY="21.25" />
+        <EntityTypeShape EntityType="DixonsCarphone.WorkforceManagement.Business.TicketAudit" Width="1.5" PointX="22.875" PointY="17.875" />
+        <EntityTypeShape EntityType="DixonsCarphone.WorkforceManagement.Business.TicketComment" Width="1.5" PointX="22.875" PointY="23.625" />
+        <EntityTypeShape EntityType="DixonsCarphone.WorkforceManagement.Business.TicketStub" Width="1.5" PointX="20.625" PointY="18.75" />
+        <EntityTypeShape EntityType="DixonsCarphone.WorkforceManagement.Business.TicketTemplate" Width="1.5" PointX="20.625" PointY="23.625" />
+        <AssociationConnector Association="DixonsCarphone.WorkforceManagement.Business.FK_TicketAnswers_TicketStub" />
+        <AssociationConnector Association="DixonsCarphone.WorkforceManagement.Business.FK_TicketAnswers_TicketTemplate" />
+        <AssociationConnector Association="DixonsCarphone.WorkforceManagement.Business.FK_TicketAudit_TicketStub" />
+        <AssociationConnector Association="DixonsCarphone.WorkforceManagement.Business.FK_TicketComment_TicketStub" />
+        <EntityTypeShape EntityType="DixonsCarphone.WorkforceManagement.Business.Group" Width="1.5" PointX="19.375" PointY="6.375" />
+        <EntityTypeShape EntityType="DixonsCarphone.WorkforceManagement.Business.UserGroup" Width="1.5" PointX="21.625" PointY="5" />
+        <EntityTypeShape EntityType="DixonsCarphone.WorkforceManagement.Business.TicketEscalation" Width="1.5" PointX="21.625" PointY="7.75" />
+        <AssociationConnector Association="DixonsCarphone.WorkforceManagement.Business.FK_TicketEscalations_Groups" />
+        <AssociationConnector Association="DixonsCarphone.WorkforceManagement.Business.FK_UserGroups_Groups" />
+        <EntityTypeShape EntityType="DixonsCarphone.WorkforceManagement.Business.TicketType" Width="1.5" PointX="18.375" PointY="21.25" />
+        <AssociationConnector Association="DixonsCarphone.WorkforceManagement.Business.FK_TicketStub_TicketType" />
+        <AssociationConnector Association="DixonsCarphone.WorkforceManagement.Business.FK_TicketTemplate_TicketType" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

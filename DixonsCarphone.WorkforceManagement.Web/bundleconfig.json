@@ -34,5 +34,35 @@
     "inputFiles": [
       "Content/New/Gauge.js"
     ]
+  },
+  {
+    "outputFileName": "Content/Workflow/WorkflowCrossRegion.min.js",
+    "inputFiles": [
+      "Content/Workflow/WorkflowCrossRegion.js"
+    ]
+  },
+  {
+    "outputFileName": "Content/Workflow/WorkflowMaster.min.js",
+    "inputFiles": [
+      "Content/Workflow/WorkflowMaster.js"
+    ]
+  },
+  {
+    "outputFileName": "Content/Workflow/WorkflowSummary.min.js",
+    "inputFiles": [
+      "Content/Workflow/WorkflowSummary.js"
+    ]
+  },
+  {
+    "outputFileName": "Content/Workflow/WorkflowViewTicket.min.js",
+    "inputFiles": [
+      "Content/Workflow/WorkflowViewTicket.js"
+    ]
+  },
+  {
+    "outputFileName": "Content/Workflow/WorkflowViewTicketCR.min.js",
+    "inputFiles": [
+      "Content/Workflow/WorkflowViewTicketCR.js"
+    ]
   }
 ]

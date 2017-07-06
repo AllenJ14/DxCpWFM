@@ -24,5 +24,7 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
         Task SubmitUACChange(UserAccess model);
 
         Task DeleteUACRecord(int id);
+
+        List<HrFeed> GetStoreStaffWait(int storeNum);
     }
 }

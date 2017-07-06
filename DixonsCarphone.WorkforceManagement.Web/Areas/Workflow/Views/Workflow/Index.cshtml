@@ -1,0 +1,84 @@
+﻿@model DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels.TicketSummaryVM
+
+@{
+    ViewBag.Title = "Workflow";
+}
+
+<h2 class="col-sm-12">All Workflow Tickets</h2>
+
+<div class="row">
+    <div class="col-lg-12">
+        @Html.Partial("~/Views/Shared/_Messages.cshtml", Model)
+    </div>
+</div>
+
+@if (ViewBag.ticketID != null)
+{
+    <div id="ticketRef" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" data-show="true">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button> <h4 class="modal-title" id="mySmallModalLabel">Reference Number</h4>
+                </div>
+                <div class="text-center modal-body">
+                    <strong>#@(ViewBag.ticketID)</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="row" style="min-height:50px;background-color:aliceblue;border: 1px #ddd solid;border-radius:5px;margin-bottom:25px;padding:5px;">
+    <span class="glyphicon glyphicon-filter pull-left" style="font-size:x-large;margin:auto 5px; line-height:50px;"></span>
+    <span style="font-size:large;margin:auto 5px; line-height:50px;">Filter View:</span>
+    <span class="form-inline">
+        <span class="form-group" style="margin-left:10px;">
+            <label>Open/Closed:</label>
+            <select class="form-control" id="statusFilter">
+                <option value="1" selected="selected">Open</option>
+                <option value="0">Archived</option>
+            </select>
+        </span>
+        <span class="form-group hidden">
+            <label>Ticket Category:</label>
+            @Html.DropDownList("typeFilter", Model._TypeMenu, new { id = "typeFilter", @class = "form-control" })
+        </span>
+        @if (Model._TPCMenu != null)
+        {
+            <span class="pull-right" style="display:inline">
+                <span class="form-group">
+                    <label>TPC View:</label>
+                    @Html.DropDownList("TPCFilter", Model._TPCMenu, new { id = "TPCFilter", @class = "form-control" })
+                </span>
+            </span>
+        }
+    </span>
+</div>
+
+<div style="overflow: auto;">
+    <table id="summaryTable" class="table table-hover table-condensed">
+        <thead>
+            <tr>
+                <th class="text-center">View</th>
+                <th class="text-center">Reference</th>
+                <th class="text-center">Type</th>
+                <th class="text-center">Created</th>
+                <th class="text-center">Created By</th>
+                <th class="text-center">Branch Number</th>
+                <th class="text-center">Stage</th>
+                <th class="text-center">Last Updated</th>
+            </tr>
+        </thead>
+        <tbody id="summaryBody">
+            @Html.Partial("~/Areas/Workflow/Views/Partials/_SummaryList.cshtml", Model._TicketCollection)
+        </tbody>
+    </table>
+</div>
+
+@section myStyles{
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.15/css/jquery.dataTables.css">
+}
+@section myScripts{
+    <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.js"></script>
+    <script id="wf1" src="~/Content/Workflow/WorkflowSummary.min.js"></script>
+}

@@ -618,6 +618,101 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
           <Property Name="DateCreated" Type="datetime" />
           <Property Name="DateModified" Type="datetime" />
         </EntityType>
+        <EntityType Name="Groups">
+          <Key>
+            <PropertyRef Name="GroupId" />
+          </Key>
+          <Property Name="GroupId" Type="int" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="TicketAnswers">
+          <Key>
+            <PropertyRef Name="EntryId" />
+          </Key>
+          <Property Name="EntryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TicketId" Type="int" Nullable="false" />
+          <Property Name="QuestionId" Type="int" Nullable="false" />
+          <Property Name="Answer" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TicketAudit">
+          <Key>
+            <PropertyRef Name="EntryId" />
+          </Key>
+          <Property Name="EntryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TicketId" Type="int" Nullable="false" />
+          <Property Name="Action" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Timestamp" Type="datetime" Nullable="false" />
+          <Property Name="User" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TicketComment">
+          <Key>
+            <PropertyRef Name="CommentId" />
+          </Key>
+          <Property Name="CommentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TicketId" Type="int" Nullable="false" />
+          <Property Name="User" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Timestamp" Type="datetime" Nullable="false" />
+          <Property Name="Comment" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'CarphoneWfm.tck.TicketEscalations' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TicketEscalations">
+          <Key>
+            <PropertyRef Name="EscalationId" />
+            <PropertyRef Name="Level" />
+            <PropertyRef Name="GroupId" />
+          </Key>
+          <Property Name="EscalationId" Type="smallint" Nullable="false" />
+          <Property Name="Level" Type="tinyint" Nullable="false" />
+          <Property Name="GroupId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TicketStub">
+          <Key>
+            <PropertyRef Name="TicketId" />
+          </Key>
+          <Property Name="TicketId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DateTimeCreated" Type="datetime" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="TicketTypeId" Type="int" Nullable="false" />
+          <Property Name="LastUpdate" Type="datetime" Nullable="false" />
+          <Property Name="RaisedBy" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="EscalationLevel" Type="tinyint" Nullable="false" />
+          <Property Name="BranchNumber" Type="smallint" />
+          <Property Name="LastUpdatedBy" Type="nvarchar" MaxLength="20" />
+          <Property Name="Exception" Type="int" />
+        </EntityType>
+        <EntityType Name="TicketTemplate">
+          <Key>
+            <PropertyRef Name="QuestionId" />
+          </Key>
+          <Property Name="QuestionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TicketTypeId" Type="int" Nullable="false" />
+          <Property Name="Question" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="ReturnType" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="GrpLimit" Type="tinyint" />
+          <Property Name="apiIdent" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TicketType">
+          <Key>
+            <PropertyRef Name="TicketTypeId" />
+          </Key>
+          <Property Name="TicketTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="SLAPeriod" Type="tinyint" Nullable="false" />
+          <Property Name="EscalationId" Type="smallint" Nullable="false" />
+          <Property Name="Live" Type="bit" />
+        </EntityType>
+        <EntityType Name="UserGroups">
+          <Key>
+            <PropertyRef Name="EntryId" />
+          </Key>
+          <Property Name="EntryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GroupId" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FriendlyName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
         <Association Name="FK_AccountEntryDetail_AccountEntryHeader">
           <End Role="AccountEntryHeader" Type="Self.AccountEntryHeader" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -760,6 +855,105 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TicketAnswers_TicketStub">
+          <End Role="TicketStub" Type="Self.TicketStub" Multiplicity="1" />
+          <End Role="TicketAnswers" Type="Self.TicketAnswers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TicketStub">
+              <PropertyRef Name="TicketId" />
+            </Principal>
+            <Dependent Role="TicketAnswers">
+              <PropertyRef Name="TicketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TicketAnswers_TicketTemplate">
+          <End Role="TicketTemplate" Type="Self.TicketTemplate" Multiplicity="1" />
+          <End Role="TicketAnswers" Type="Self.TicketAnswers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TicketTemplate">
+              <PropertyRef Name="QuestionId" />
+            </Principal>
+            <Dependent Role="TicketAnswers">
+              <PropertyRef Name="QuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TicketAudit_TicketStub">
+          <End Role="TicketStub" Type="Self.TicketStub" Multiplicity="1" />
+          <End Role="TicketAudit" Type="Self.TicketAudit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TicketStub">
+              <PropertyRef Name="TicketId" />
+            </Principal>
+            <Dependent Role="TicketAudit">
+              <PropertyRef Name="TicketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TicketComment_TicketStub">
+          <End Role="TicketStub" Type="Self.TicketStub" Multiplicity="1" />
+          <End Role="TicketComment" Type="Self.TicketComment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TicketStub">
+              <PropertyRef Name="TicketId" />
+            </Principal>
+            <Dependent Role="TicketComment">
+              <PropertyRef Name="TicketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TicketEscalations_Groups">
+          <End Role="Groups" Type="Self.Groups" Multiplicity="1" />
+          <End Role="TicketEscalations" Type="Self.TicketEscalations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groups">
+              <PropertyRef Name="GroupId" />
+            </Principal>
+            <Dependent Role="TicketEscalations">
+              <PropertyRef Name="GroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <!--Errors Found During Generation:
+warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="FK_TicketEscalations_TicketType" />-->
+        <Association Name="FK_TicketStub_TicketType">
+          <End Role="TicketType" Type="Self.TicketType" Multiplicity="1" />
+          <End Role="TicketStub" Type="Self.TicketStub" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TicketType">
+              <PropertyRef Name="TicketTypeId" />
+            </Principal>
+            <Dependent Role="TicketStub">
+              <PropertyRef Name="TicketTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TicketTemplate_TicketType">
+          <End Role="TicketType" Type="Self.TicketType" Multiplicity="1" />
+          <End Role="TicketTemplate" Type="Self.TicketTemplate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TicketType">
+              <PropertyRef Name="TicketTypeId" />
+            </Principal>
+            <Dependent Role="TicketTemplate">
+              <PropertyRef Name="TicketTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserGroups_Groups">
+          <End Role="Groups" Type="Self.Groups" Multiplicity="1" />
+          <End Role="UserGroups" Type="Self.UserGroups" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groups">
+              <PropertyRef Name="GroupId" />
+            </Principal>
+            <Dependent Role="UserGroups">
+              <PropertyRef Name="GroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Function Name="fn_LatestPLRecord" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <ReturnType>
             <CollectionType>
@@ -888,6 +1082,43 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
           <Parameter Name="StartDate" Type="date" Mode="In" />
           <Parameter Name="EndDate" Type="date" Mode="In" />
         </Function>
+        <Function Name="sp_CheckAccessRight" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="tck">
+          <Parameter Name="GroupId" Type="int" Mode="In" />
+          <Parameter Name="TicketId" Type="int" Mode="In" />
+          <Parameter Name="Username" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_ChkInteractLvl" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="tck">
+          <Parameter Name="level" Type="int" Mode="In" />
+          <Parameter Name="TicketTypeId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_EscalationOptions" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="tck">
+          <Parameter Name="TicketType" Type="int" Mode="In" />
+          <Parameter Name="Level" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_GetClosedFormsByGroup" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="tck">
+          <Parameter Name="GroupId" Type="int" Mode="In" />
+          <Parameter Name="Type" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_GetClosedFormsByTPC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="tck">
+          <Parameter Name="User" Type="nvarchar" Mode="In" />
+          <Parameter Name="Type" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_GetClosedFormsByUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="tck">
+          <Parameter Name="User" Type="nvarchar" Mode="In" />
+          <Parameter Name="Type" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_GetOpenFormsByGroup" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="tck">
+          <Parameter Name="GroupId" Type="int" Mode="In" />
+          <Parameter Name="Type" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_GetOpenFormsByTPC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="tck">
+          <Parameter Name="User" Type="nvarchar" Mode="In" />
+          <Parameter Name="Type" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_GetOpenFormsByUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="tck">
+          <Parameter Name="User" Type="nvarchar" Mode="In" />
+          <Parameter Name="Type" Type="nvarchar" Mode="In" />
+        </Function>
         <EntityContainer Name="DixonsCarphoneWorkforceManagementBusinessStoreContainer">
           <EntitySet Name="AccountEntryDetail" EntityType="Self.AccountEntryDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AccountEntryDetailBreakdown" EntityType="Self.AccountEntryDetailBreakdown" Schema="dbo" store:Type="Tables" />
@@ -922,6 +1153,14 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
           <EntitySet Name="StoreRegion" EntityType="Self.StoreRegion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserAccess" EntityType="Self.UserAccess" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WeeklyFootfall" EntityType="Self.WeeklyFootfall" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Groups" EntityType="Self.Groups" Schema="tck" store:Type="Tables" />
+          <EntitySet Name="TicketAnswers" EntityType="Self.TicketAnswers" Schema="tck" store:Type="Tables" />
+          <EntitySet Name="TicketAudit" EntityType="Self.TicketAudit" Schema="tck" store:Type="Tables" />
+          <EntitySet Name="TicketComment" EntityType="Self.TicketComment" Schema="tck" store:Type="Tables" />
+          <EntitySet Name="TicketStub" EntityType="Self.TicketStub" Schema="tck" store:Type="Tables" />
+          <EntitySet Name="TicketTemplate" EntityType="Self.TicketTemplate" Schema="tck" store:Type="Tables" />
+          <EntitySet Name="TicketType" EntityType="Self.TicketType" Schema="tck" store:Type="Tables" />
+          <EntitySet Name="UserGroups" EntityType="Self.UserGroups" Schema="tck" store:Type="Tables" />
           <EntitySet Name="CPW_Clocking_Data" EntityType="Self.CPW_Clocking_Data" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [CPW_Clocking_Data].[CST_CNTR_int] AS [CST_CNTR_int], 
@@ -972,6 +1211,13 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
     [CPW_Clocking_Data].[Overide_PUNCHTIME_OUT] AS [Overide_PUNCHTIME_OUT]
     FROM [dbo].[CPW_Clocking_Data] AS [CPW_Clocking_Data]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="TicketEscalations" EntityType="Self.TicketEscalations" store:Type="Tables" store:Schema="tck">
+            <DefiningQuery>SELECT 
+    [TicketEscalations].[EscalationId] AS [EscalationId], 
+    [TicketEscalations].[Level] AS [Level], 
+    [TicketEscalations].[GroupId] AS [GroupId]
+    FROM [tck].[TicketEscalations] AS [TicketEscalations]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_AccountEntryDetail_AccountEntryHeader" Association="Self.FK_AccountEntryDetail_AccountEntryHeader">
             <End Role="AccountEntryHeader" EntitySet="AccountEntryHeader" />
             <End Role="AccountEntryDetail" EntitySet="AccountEntryDetail" />
@@ -1015,6 +1261,38 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
           <AssociationSet Name="FK_StoreOpeningTimes_Store" Association="Self.FK_StoreOpeningTimes_Store">
             <End Role="Store" EntitySet="Store" />
             <End Role="StoreOpeningTimes" EntitySet="StoreOpeningTimes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TicketAnswers_TicketStub" Association="Self.FK_TicketAnswers_TicketStub">
+            <End Role="TicketStub" EntitySet="TicketStub" />
+            <End Role="TicketAnswers" EntitySet="TicketAnswers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TicketAnswers_TicketTemplate" Association="Self.FK_TicketAnswers_TicketTemplate">
+            <End Role="TicketTemplate" EntitySet="TicketTemplate" />
+            <End Role="TicketAnswers" EntitySet="TicketAnswers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TicketAudit_TicketStub" Association="Self.FK_TicketAudit_TicketStub">
+            <End Role="TicketStub" EntitySet="TicketStub" />
+            <End Role="TicketAudit" EntitySet="TicketAudit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TicketComment_TicketStub" Association="Self.FK_TicketComment_TicketStub">
+            <End Role="TicketStub" EntitySet="TicketStub" />
+            <End Role="TicketComment" EntitySet="TicketComment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TicketEscalations_Groups" Association="Self.FK_TicketEscalations_Groups">
+            <End Role="Groups" EntitySet="Groups" />
+            <End Role="TicketEscalations" EntitySet="TicketEscalations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TicketStub_TicketType" Association="Self.FK_TicketStub_TicketType">
+            <End Role="TicketType" EntitySet="TicketType" />
+            <End Role="TicketStub" EntitySet="TicketStub" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TicketTemplate_TicketType" Association="Self.FK_TicketTemplate_TicketType">
+            <End Role="TicketType" EntitySet="TicketType" />
+            <End Role="TicketTemplate" EntitySet="TicketTemplate" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserGroups_Groups" Association="Self.FK_UserGroups_Groups">
+            <End Role="Groups" EntitySet="Groups" />
+            <End Role="UserGroups" EntitySet="UserGroups" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -1365,6 +1643,88 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
             <Parameter Name="PeriodMonth" Mode="In" Type="Int16" />
             <Parameter Name="QtdStartMonth" Mode="In" Type="Int16" />
             <Parameter Name="YtdStartMonth" Mode="In" Type="Int16" />
+          </FunctionImport>
+          <EntitySet Name="TicketAnswers" EntityType="DixonsCarphone.WorkforceManagement.Business.TicketAnswer" />
+          <EntitySet Name="TicketAudits" EntityType="DixonsCarphone.WorkforceManagement.Business.TicketAudit" />
+          <EntitySet Name="TicketComments" EntityType="DixonsCarphone.WorkforceManagement.Business.TicketComment" />
+          <EntitySet Name="TicketStubs" EntityType="DixonsCarphone.WorkforceManagement.Business.TicketStub" />
+          <EntitySet Name="TicketTemplates" EntityType="DixonsCarphone.WorkforceManagement.Business.TicketTemplate" />
+          <AssociationSet Name="FK_TicketAnswers_TicketStub" Association="DixonsCarphone.WorkforceManagement.Business.FK_TicketAnswers_TicketStub">
+            <End Role="TicketStub" EntitySet="TicketStubs" />
+            <End Role="TicketAnswer" EntitySet="TicketAnswers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TicketAnswers_TicketTemplate" Association="DixonsCarphone.WorkforceManagement.Business.FK_TicketAnswers_TicketTemplate">
+            <End Role="TicketTemplate" EntitySet="TicketTemplates" />
+            <End Role="TicketAnswer" EntitySet="TicketAnswers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TicketAudit_TicketStub" Association="DixonsCarphone.WorkforceManagement.Business.FK_TicketAudit_TicketStub">
+            <End Role="TicketStub" EntitySet="TicketStubs" />
+            <End Role="TicketAudit" EntitySet="TicketAudits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TicketComment_TicketStub" Association="DixonsCarphone.WorkforceManagement.Business.FK_TicketComment_TicketStub">
+            <End Role="TicketStub" EntitySet="TicketStubs" />
+            <End Role="TicketComment" EntitySet="TicketComments" />
+          </AssociationSet>
+          <EntitySet Name="Groups" EntityType="DixonsCarphone.WorkforceManagement.Business.Group" />
+          <EntitySet Name="UserGroups" EntityType="DixonsCarphone.WorkforceManagement.Business.UserGroup" />
+          <EntitySet Name="TicketEscalations" EntityType="DixonsCarphone.WorkforceManagement.Business.TicketEscalation" />
+          <AssociationSet Name="FK_TicketEscalations_Groups" Association="DixonsCarphone.WorkforceManagement.Business.FK_TicketEscalations_Groups">
+            <End Role="Group" EntitySet="Groups" />
+            <End Role="TicketEscalation" EntitySet="TicketEscalations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserGroups_Groups" Association="DixonsCarphone.WorkforceManagement.Business.FK_UserGroups_Groups">
+            <End Role="Group" EntitySet="Groups" />
+            <End Role="UserGroup" EntitySet="UserGroups" />
+          </AssociationSet>
+          <EntitySet Name="TicketTypes" EntityType="DixonsCarphone.WorkforceManagement.Business.TicketType" />
+          <AssociationSet Name="FK_TicketStub_TicketType" Association="DixonsCarphone.WorkforceManagement.Business.FK_TicketStub_TicketType">
+            <End Role="TicketType" EntitySet="TicketTypes" />
+            <End Role="TicketStub" EntitySet="TicketStubs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TicketTemplate_TicketType" Association="DixonsCarphone.WorkforceManagement.Business.FK_TicketTemplate_TicketType">
+            <End Role="TicketType" EntitySet="TicketTypes" />
+            <End Role="TicketTemplate" EntitySet="TicketTemplates" />
+          </AssociationSet>
+          <FunctionImport Name="sp_GetClosedFormsByGroup" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_GetClosedFormsByGroup_Result)">
+            <Parameter Name="GroupId" Mode="In" Type="Int32" />
+            <Parameter Name="Type" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_GetClosedFormsByTPC" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_GetClosedFormsByTPC_Result)">
+            <Parameter Name="User" Mode="In" Type="String" />
+            <Parameter Name="Type" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_GetClosedFormsByUser" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_GetClosedFormsByUser_Result)">
+            <Parameter Name="User" Mode="In" Type="String" />
+            <Parameter Name="Type" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_GetOpenFormsByGroup" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_GetOpenFormsByGroup_Result)">
+            <Parameter Name="GroupId" Mode="In" Type="Int32" />
+            <Parameter Name="Type" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_GetOpenFormsByTPC" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_GetOpenFormsByTPC_Result)">
+            <Parameter Name="User" Mode="In" Type="String" />
+            <Parameter Name="Type" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_GetOpenFormsByUser" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_GetOpenFormsByUser_Result)">
+            <Parameter Name="User" Mode="In" Type="String" />
+            <Parameter Name="Type" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_CheckAccessRight" ReturnType="Collection(Int32)">
+            <Parameter Name="GroupId" Mode="In" Type="Int32" />
+            <Parameter Name="TicketId" Mode="In" Type="Int32" />
+            <Parameter Name="Username" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ChkInteractLvl" ReturnType="Collection(Int32)">
+            <Parameter Name="level" Mode="In" Type="Int32" />
+            <Parameter Name="TicketTypeId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ChkInteractLvl" ReturnType="Collection(Int32)">
+            <Parameter Name="level" Mode="In" Type="Int32" />
+            <Parameter Name="TicketTypeId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_EscalationOptions" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_EscalationOptions_Result)">
+            <Parameter Name="TicketType" Mode="In" Type="Int32" />
+            <Parameter Name="Level" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="BestPracticeCategoryType">
@@ -2607,6 +2967,281 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
           <Property Type="Decimal" Name="QuarterBudget" Nullable="true" Precision="38" Scale="3" />
           <Property Type="Decimal" Name="AnnualActual" Nullable="true" Precision="38" Scale="3" />
           <Property Type="Decimal" Name="AnnualBudget" Nullable="true" Precision="38" Scale="3" />
+        </ComplexType>
+        <EntityType Name="TicketAnswer">
+          <Key>
+            <PropertyRef Name="EntryId" />
+          </Key>
+          <Property Name="EntryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TicketId" Type="Int32" Nullable="false" />
+          <Property Name="QuestionId" Type="Int32" Nullable="false" />
+          <Property Name="Answer" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TicketStub" Relationship="DixonsCarphone.WorkforceManagement.Business.FK_TicketAnswers_TicketStub" FromRole="TicketAnswer" ToRole="TicketStub" />
+          <NavigationProperty Name="TicketTemplate" Relationship="DixonsCarphone.WorkforceManagement.Business.FK_TicketAnswers_TicketTemplate" FromRole="TicketAnswer" ToRole="TicketTemplate" />
+        </EntityType>
+        <EntityType Name="TicketAudit">
+          <Key>
+            <PropertyRef Name="EntryId" />
+          </Key>
+          <Property Name="EntryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TicketId" Type="Int32" Nullable="false" />
+          <Property Name="Action" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Timestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="User" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TicketStub" Relationship="DixonsCarphone.WorkforceManagement.Business.FK_TicketAudit_TicketStub" FromRole="TicketAudit" ToRole="TicketStub" />
+        </EntityType>
+        <EntityType Name="TicketComment">
+          <Key>
+            <PropertyRef Name="CommentId" />
+          </Key>
+          <Property Name="CommentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TicketId" Type="Int32" Nullable="false" />
+          <Property Name="User" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Timestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Comment" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TicketStub" Relationship="DixonsCarphone.WorkforceManagement.Business.FK_TicketComment_TicketStub" FromRole="TicketComment" ToRole="TicketStub" />
+        </EntityType>
+        <EntityType Name="TicketStub">
+          <Key>
+            <PropertyRef Name="TicketId" />
+          </Key>
+          <Property Name="TicketId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DateTimeCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Status" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="TicketTypeId" Type="Int32" Nullable="false" />
+          <Property Name="LastUpdate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RaisedBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="EscalationLevel" Type="Byte" Nullable="false" />
+          <Property Name="BranchNumber" Type="Int16" />
+          <NavigationProperty Name="TicketAnswers" Relationship="DixonsCarphone.WorkforceManagement.Business.FK_TicketAnswers_TicketStub" FromRole="TicketStub" ToRole="TicketAnswer" />
+          <NavigationProperty Name="TicketAudits" Relationship="DixonsCarphone.WorkforceManagement.Business.FK_TicketAudit_TicketStub" FromRole="TicketStub" ToRole="TicketAudit" />
+          <NavigationProperty Name="TicketComments" Relationship="DixonsCarphone.WorkforceManagement.Business.FK_TicketComment_TicketStub" FromRole="TicketStub" ToRole="TicketComment" />
+          <NavigationProperty Name="TicketType" Relationship="DixonsCarphone.WorkforceManagement.Business.FK_TicketStub_TicketType" FromRole="TicketStub" ToRole="TicketType" />
+          <Property Name="LastUpdatedBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Exception" Type="Int32" />
+        </EntityType>
+        <EntityType Name="TicketTemplate">
+          <Key>
+            <PropertyRef Name="QuestionId" />
+          </Key>
+          <Property Name="QuestionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TicketTypeId" Type="Int32" Nullable="false" />
+          <Property Name="Question" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ReturnType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TicketAnswers" Relationship="DixonsCarphone.WorkforceManagement.Business.FK_TicketAnswers_TicketTemplate" FromRole="TicketTemplate" ToRole="TicketAnswer" />
+          <Property Name="GrpLimit" Type="Byte" />
+          <Property Name="apiIdent" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TicketType" Relationship="DixonsCarphone.WorkforceManagement.Business.FK_TicketTemplate_TicketType" FromRole="TicketTemplate" ToRole="TicketType" />
+        </EntityType>
+        <Association Name="FK_TicketAnswers_TicketStub">
+          <End Type="DixonsCarphone.WorkforceManagement.Business.TicketStub" Role="TicketStub" Multiplicity="1" />
+          <End Type="DixonsCarphone.WorkforceManagement.Business.TicketAnswer" Role="TicketAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TicketStub">
+              <PropertyRef Name="TicketId" />
+            </Principal>
+            <Dependent Role="TicketAnswer">
+              <PropertyRef Name="TicketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TicketAnswers_TicketTemplate">
+          <End Type="DixonsCarphone.WorkforceManagement.Business.TicketTemplate" Role="TicketTemplate" Multiplicity="1" />
+          <End Type="DixonsCarphone.WorkforceManagement.Business.TicketAnswer" Role="TicketAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TicketTemplate">
+              <PropertyRef Name="QuestionId" />
+            </Principal>
+            <Dependent Role="TicketAnswer">
+              <PropertyRef Name="QuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TicketAudit_TicketStub">
+          <End Type="DixonsCarphone.WorkforceManagement.Business.TicketStub" Role="TicketStub" Multiplicity="1" />
+          <End Type="DixonsCarphone.WorkforceManagement.Business.TicketAudit" Role="TicketAudit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TicketStub">
+              <PropertyRef Name="TicketId" />
+            </Principal>
+            <Dependent Role="TicketAudit">
+              <PropertyRef Name="TicketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TicketComment_TicketStub">
+          <End Type="DixonsCarphone.WorkforceManagement.Business.TicketStub" Role="TicketStub" Multiplicity="1" />
+          <End Type="DixonsCarphone.WorkforceManagement.Business.TicketComment" Role="TicketComment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TicketStub">
+              <PropertyRef Name="TicketId" />
+            </Principal>
+            <Dependent Role="TicketComment">
+              <PropertyRef Name="TicketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Group">
+          <Key>
+            <PropertyRef Name="GroupId" />
+          </Key>
+          <Property Name="GroupId" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TicketEscalations" Relationship="DixonsCarphone.WorkforceManagement.Business.FK_TicketEscalations_Groups" FromRole="Group" ToRole="TicketEscalation" />
+          <NavigationProperty Name="UserGroups" Relationship="DixonsCarphone.WorkforceManagement.Business.FK_UserGroups_Groups" FromRole="Group" ToRole="UserGroup" />
+        </EntityType>
+        <EntityType Name="UserGroup">
+          <Key>
+            <PropertyRef Name="EntryId" />
+          </Key>
+          <Property Name="EntryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GroupId" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Group" Relationship="DixonsCarphone.WorkforceManagement.Business.FK_UserGroups_Groups" FromRole="UserGroup" ToRole="Group" />
+          <Property Name="FriendlyName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TicketEscalation">
+          <Key>
+            <PropertyRef Name="EscalationId" />
+            <PropertyRef Name="Level" />
+            <PropertyRef Name="GroupId" />
+          </Key>
+          <Property Name="EscalationId" Type="Int16" Nullable="false" />
+          <Property Name="Level" Type="Byte" Nullable="false" />
+          <Property Name="GroupId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Group" Relationship="DixonsCarphone.WorkforceManagement.Business.FK_TicketEscalations_Groups" FromRole="TicketEscalation" ToRole="Group" />
+        </EntityType>
+        <Association Name="FK_TicketEscalations_Groups">
+          <End Type="DixonsCarphone.WorkforceManagement.Business.Group" Role="Group" Multiplicity="1" />
+          <End Type="DixonsCarphone.WorkforceManagement.Business.TicketEscalation" Role="TicketEscalation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group">
+              <PropertyRef Name="GroupId" />
+            </Principal>
+            <Dependent Role="TicketEscalation">
+              <PropertyRef Name="GroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserGroups_Groups">
+          <End Type="DixonsCarphone.WorkforceManagement.Business.Group" Role="Group" Multiplicity="1" />
+          <End Type="DixonsCarphone.WorkforceManagement.Business.UserGroup" Role="UserGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group">
+              <PropertyRef Name="GroupId" />
+            </Principal>
+            <Dependent Role="UserGroup">
+              <PropertyRef Name="GroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TicketType">
+          <Key>
+            <PropertyRef Name="TicketTypeId" />
+          </Key>
+          <Property Name="TicketTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="SLAPeriod" Type="Byte" Nullable="false" />
+          <Property Name="EscalationId" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="TicketStubs" Relationship="DixonsCarphone.WorkforceManagement.Business.FK_TicketStub_TicketType" FromRole="TicketType" ToRole="TicketStub" />
+          <NavigationProperty Name="TicketTemplates" Relationship="DixonsCarphone.WorkforceManagement.Business.FK_TicketTemplate_TicketType" FromRole="TicketType" ToRole="TicketTemplate" />
+          <Property Name="Live" Type="Boolean" />
+        </EntityType>
+        <Association Name="FK_TicketStub_TicketType">
+          <End Type="DixonsCarphone.WorkforceManagement.Business.TicketType" Role="TicketType" Multiplicity="1" />
+          <End Type="DixonsCarphone.WorkforceManagement.Business.TicketStub" Role="TicketStub" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TicketType">
+              <PropertyRef Name="TicketTypeId" />
+            </Principal>
+            <Dependent Role="TicketStub">
+              <PropertyRef Name="TicketTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TicketTemplate_TicketType">
+          <End Type="DixonsCarphone.WorkforceManagement.Business.TicketType" Role="TicketType" Multiplicity="1" />
+          <End Type="DixonsCarphone.WorkforceManagement.Business.TicketTemplate" Role="TicketTemplate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TicketType">
+              <PropertyRef Name="TicketTypeId" />
+            </Principal>
+            <Dependent Role="TicketTemplate">
+              <PropertyRef Name="TicketTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="sp_GetClosedFormsByGroup_Result">
+          <Property Type="Int32" Name="TicketId" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="100" />
+          <Property Type="DateTime" Name="DateTimeCreated" Nullable="false" Precision="23" />
+          <Property Type="String" Name="Status" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="250" />
+          <Property Type="DateTime" Name="LastUpdate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="RaisedBy" Nullable="false" MaxLength="20" />
+          <Property Type="Byte" Name="EscalationLevel" Nullable="false" />
+          <Property Type="Int16" Name="BranchNumber" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_GetClosedFormsByTPC_Result">
+          <Property Type="Int32" Name="TicketId" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="100" />
+          <Property Type="DateTime" Name="DateTimeCreated" Nullable="false" Precision="23" />
+          <Property Type="String" Name="Status" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="250" />
+          <Property Type="DateTime" Name="LastUpdate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="RaisedBy" Nullable="false" MaxLength="20" />
+          <Property Type="Byte" Name="EscalationLevel" Nullable="false" />
+          <Property Type="Int16" Name="BranchNumber" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_GetClosedFormsByUser_Result">
+          <Property Type="Int32" Name="TicketId" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="100" />
+          <Property Type="DateTime" Name="DateTimeCreated" Nullable="false" Precision="23" />
+          <Property Type="String" Name="Status" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="250" />
+          <Property Type="DateTime" Name="LastUpdate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="RaisedBy" Nullable="false" MaxLength="20" />
+          <Property Type="Byte" Name="EscalationLevel" Nullable="false" />
+          <Property Type="Int16" Name="BranchNumber" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_GetOpenFormsByGroup_Result">
+          <Property Type="Int32" Name="TicketId" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="100" />
+          <Property Type="DateTime" Name="DateTimeCreated" Nullable="false" Precision="23" />
+          <Property Type="String" Name="Status" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="250" />
+          <Property Type="DateTime" Name="LastUpdate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="RaisedBy" Nullable="false" MaxLength="20" />
+          <Property Type="Byte" Name="EscalationLevel" Nullable="false" />
+          <Property Type="Int16" Name="BranchNumber" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_GetOpenFormsByTPC_Result">
+          <Property Type="Int32" Name="TicketId" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="100" />
+          <Property Type="DateTime" Name="DateTimeCreated" Nullable="false" Precision="23" />
+          <Property Type="String" Name="Status" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="250" />
+          <Property Type="DateTime" Name="LastUpdate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="RaisedBy" Nullable="false" MaxLength="20" />
+          <Property Type="Byte" Name="EscalationLevel" Nullable="false" />
+          <Property Type="Int16" Name="BranchNumber" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_GetOpenFormsByUser_Result">
+          <Property Type="Int32" Name="TicketId" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="100" />
+          <Property Type="DateTime" Name="DateTimeCreated" Nullable="false" Precision="23" />
+          <Property Type="String" Name="Status" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="250" />
+          <Property Type="DateTime" Name="LastUpdate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="RaisedBy" Nullable="false" MaxLength="20" />
+          <Property Type="Byte" Name="EscalationLevel" Nullable="false" />
+          <Property Type="Int16" Name="BranchNumber" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_EscalationOptions_Result">
+          <Property Type="Int32" Name="Level" Nullable="false" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="250" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -3912,6 +4547,206 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
                 <ScalarProperty Name="QuarterBudget" ColumnName="QuarterBudget" />
                 <ScalarProperty Name="AnnualActual" ColumnName="AnnualActual" />
                 <ScalarProperty Name="AnnualBudget" ColumnName="AnnualBudget" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="TicketAnswers">
+            <EntityTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.TicketAnswer">
+              <MappingFragment StoreEntitySet="TicketAnswers">
+                <ScalarProperty Name="Answer" ColumnName="Answer" />
+                <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
+                <ScalarProperty Name="TicketId" ColumnName="TicketId" />
+                <ScalarProperty Name="EntryId" ColumnName="EntryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TicketAudits">
+            <EntityTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.TicketAudit">
+              <MappingFragment StoreEntitySet="TicketAudit">
+                <ScalarProperty Name="User" ColumnName="User" />
+                <ScalarProperty Name="Timestamp" ColumnName="Timestamp" />
+                <ScalarProperty Name="Action" ColumnName="Action" />
+                <ScalarProperty Name="TicketId" ColumnName="TicketId" />
+                <ScalarProperty Name="EntryId" ColumnName="EntryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TicketComments">
+            <EntityTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.TicketComment">
+              <MappingFragment StoreEntitySet="TicketComment">
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="Timestamp" ColumnName="Timestamp" />
+                <ScalarProperty Name="User" ColumnName="User" />
+                <ScalarProperty Name="TicketId" ColumnName="TicketId" />
+                <ScalarProperty Name="CommentId" ColumnName="CommentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TicketStubs">
+            <EntityTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.TicketStub">
+              <MappingFragment StoreEntitySet="TicketStub">
+                <ScalarProperty Name="Exception" ColumnName="Exception" />
+                <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+                <ScalarProperty Name="BranchNumber" ColumnName="BranchNumber" />
+                <ScalarProperty Name="EscalationLevel" ColumnName="EscalationLevel" />
+                <ScalarProperty Name="RaisedBy" ColumnName="RaisedBy" />
+                <ScalarProperty Name="LastUpdate" ColumnName="LastUpdate" />
+                <ScalarProperty Name="TicketTypeId" ColumnName="TicketTypeId" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="DateTimeCreated" ColumnName="DateTimeCreated" />
+                <ScalarProperty Name="TicketId" ColumnName="TicketId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TicketTemplates">
+            <EntityTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.TicketTemplate">
+              <MappingFragment StoreEntitySet="TicketTemplate">
+                <ScalarProperty Name="apiIdent" ColumnName="apiIdent" />
+                <ScalarProperty Name="GrpLimit" ColumnName="GrpLimit" />
+                <ScalarProperty Name="ReturnType" ColumnName="ReturnType" />
+                <ScalarProperty Name="Question" ColumnName="Question" />
+                <ScalarProperty Name="TicketTypeId" ColumnName="TicketTypeId" />
+                <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Groups">
+            <EntityTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.Group">
+              <MappingFragment StoreEntitySet="Groups">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserGroups">
+            <EntityTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.UserGroup">
+              <MappingFragment StoreEntitySet="UserGroups">
+                <ScalarProperty Name="FriendlyName" ColumnName="FriendlyName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+                <ScalarProperty Name="EntryId" ColumnName="EntryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TicketEscalations">
+            <EntityTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.TicketEscalation">
+              <MappingFragment StoreEntitySet="TicketEscalations">
+                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+                <ScalarProperty Name="Level" ColumnName="Level" />
+                <ScalarProperty Name="EscalationId" ColumnName="EscalationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TicketTypes">
+            <EntityTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.TicketType">
+              <MappingFragment StoreEntitySet="TicketType">
+                <ScalarProperty Name="Live" ColumnName="Live" />
+                <ScalarProperty Name="EscalationId" ColumnName="EscalationId" />
+                <ScalarProperty Name="SLAPeriod" ColumnName="SLAPeriod" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="TicketTypeId" ColumnName="TicketTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetClosedFormsByGroup" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_GetClosedFormsByGroup">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.sp_GetClosedFormsByGroup_Result">
+                <ScalarProperty Name="TicketId" ColumnName="TicketId" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="DateTimeCreated" ColumnName="DateTimeCreated" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="LastUpdate" ColumnName="LastUpdate" />
+                <ScalarProperty Name="RaisedBy" ColumnName="RaisedBy" />
+                <ScalarProperty Name="EscalationLevel" ColumnName="EscalationLevel" />
+                <ScalarProperty Name="BranchNumber" ColumnName="BranchNumber" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetClosedFormsByTPC" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_GetClosedFormsByTPC">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.sp_GetClosedFormsByTPC_Result">
+                <ScalarProperty Name="TicketId" ColumnName="TicketId" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="DateTimeCreated" ColumnName="DateTimeCreated" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="LastUpdate" ColumnName="LastUpdate" />
+                <ScalarProperty Name="RaisedBy" ColumnName="RaisedBy" />
+                <ScalarProperty Name="EscalationLevel" ColumnName="EscalationLevel" />
+                <ScalarProperty Name="BranchNumber" ColumnName="BranchNumber" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetClosedFormsByUser" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_GetClosedFormsByUser">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.sp_GetClosedFormsByUser_Result">
+                <ScalarProperty Name="TicketId" ColumnName="TicketId" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="DateTimeCreated" ColumnName="DateTimeCreated" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="LastUpdate" ColumnName="LastUpdate" />
+                <ScalarProperty Name="RaisedBy" ColumnName="RaisedBy" />
+                <ScalarProperty Name="EscalationLevel" ColumnName="EscalationLevel" />
+                <ScalarProperty Name="BranchNumber" ColumnName="BranchNumber" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetOpenFormsByGroup" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_GetOpenFormsByGroup">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.sp_GetOpenFormsByGroup_Result">
+                <ScalarProperty Name="TicketId" ColumnName="TicketId" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="DateTimeCreated" ColumnName="DateTimeCreated" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="LastUpdate" ColumnName="LastUpdate" />
+                <ScalarProperty Name="RaisedBy" ColumnName="RaisedBy" />
+                <ScalarProperty Name="EscalationLevel" ColumnName="EscalationLevel" />
+                <ScalarProperty Name="BranchNumber" ColumnName="BranchNumber" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetOpenFormsByTPC" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_GetOpenFormsByTPC">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.sp_GetOpenFormsByTPC_Result">
+                <ScalarProperty Name="TicketId" ColumnName="TicketId" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="DateTimeCreated" ColumnName="DateTimeCreated" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="LastUpdate" ColumnName="LastUpdate" />
+                <ScalarProperty Name="RaisedBy" ColumnName="RaisedBy" />
+                <ScalarProperty Name="EscalationLevel" ColumnName="EscalationLevel" />
+                <ScalarProperty Name="BranchNumber" ColumnName="BranchNumber" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetOpenFormsByUser" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_GetOpenFormsByUser">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.sp_GetOpenFormsByUser_Result">
+                <ScalarProperty Name="TicketId" ColumnName="TicketId" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="DateTimeCreated" ColumnName="DateTimeCreated" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="LastUpdate" ColumnName="LastUpdate" />
+                <ScalarProperty Name="RaisedBy" ColumnName="RaisedBy" />
+                <ScalarProperty Name="EscalationLevel" ColumnName="EscalationLevel" />
+                <ScalarProperty Name="BranchNumber" ColumnName="BranchNumber" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_CheckAccessRight" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_CheckAccessRight" />
+          <FunctionImportMapping FunctionImportName="sp_ChkInteractLvl" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_ChkInteractLvl" />
+          <FunctionImportMapping FunctionImportName="sp_EscalationOptions" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_EscalationOptions">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.sp_EscalationOptions_Result">
+                <ScalarProperty Name="Level" ColumnName="Level" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

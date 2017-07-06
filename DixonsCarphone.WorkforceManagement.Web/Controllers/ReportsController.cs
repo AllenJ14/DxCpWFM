@@ -30,10 +30,10 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             //_kronosManager = new KronosManager(isOffice);
         }
 
-        public ActionResult Index()
-        {
-            return View("Wfm");
-        }
+        //public ActionResult Index()
+        //{
+        //    return View("Wfm");
+        //}
 
         //public async Task<ActionResult> Wfm(string report, string scheduledWeek)
         //{
@@ -228,8 +228,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             vm.PageBlurb = ConfigurationManager.AppSettings["MyTeamBlurb"];
             return View(vm);
         }
-
-        [UserFilter(AccessLevel = "Admin,TPC,DD,RM,BM")]
+        
         public async Task<ActionResult> HolidayPlanning(int year = 201800)
         {
             HolidayPlanningVM vm = new HolidayPlanningVM();

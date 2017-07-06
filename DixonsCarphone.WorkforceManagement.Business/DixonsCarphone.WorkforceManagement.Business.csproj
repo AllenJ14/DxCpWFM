@@ -166,6 +166,9 @@
     <Compile Include="Entities\fn_UnmatchedStores_Result.cs">
       <DependentUpon>DxCpReportingModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\Group.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\HolidayPlanningEmp.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
@@ -238,6 +241,27 @@
     <Compile Include="Entities\sp_DivisionPunchCompliance_Result.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\sp_EscalationOptions_Result.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\sp_GetClosedFormsByGroup_Result.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\sp_GetClosedFormsByTPC_Result.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\sp_GetClosedFormsByUser_Result.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\sp_GetOpenFormsByGroup_Result.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\sp_GetOpenFormsByTPC_Result.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\sp_GetOpenFormsByUser_Result.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\sp_RegionComplianceDetail_Result.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
@@ -271,6 +295,27 @@
     <Compile Include="Entities\StoreRegion.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\TicketAnswer.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\TicketAudit.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\TicketComment.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\TicketEscalation.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\TicketStub.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\TicketTemplate.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\TicketType.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\udsp_GetPandLChannel_Result.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
@@ -290,6 +335,9 @@
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\UserAccess.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\UserGroup.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\WeeklyFootfall.cs">
@@ -315,15 +363,12 @@
     <Compile Include="Managers\IKronosManager.cs" />
     <Compile Include="Managers\IPeopleManager.cs" />
     <Compile Include="Managers\IStoreManager.cs" />
+    <Compile Include="Managers\ITicketManager.cs" />
     <Compile Include="Managers\KronosManager.cs" />
     <Compile Include="Managers\PeopleManager.cs" />
     <Compile Include="Managers\StoreManager.cs" />
+    <Compile Include="Managers\TicketManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TicketERD.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>TicketERD.edmx</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -349,13 +394,6 @@
       <DependentUpon>DxCpWfmModel.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
-    <EntityDeploy Include="TicketERD.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>TicketERD.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="TicketERD.edmx.diagram">
-      <DependentUpon>TicketERD.edmx</DependentUpon>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

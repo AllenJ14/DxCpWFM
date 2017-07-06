@@ -51,7 +51,7 @@
     <link href="~/Content/New/sb-admin-2.css" rel="stylesheet">
     <!-- Morris Charts CSS -->
     <link href="~/Content/New/morris.css" rel="stylesheet">
-
+    @RenderSection("myStyles", false)
     <style media="screen" type="text/css">
         .vcenter {
             display: inline-block;
@@ -92,7 +92,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a style="padding:0px; padding-left: 8px;" href="@Url.Action("Index", "Home")" title="CPW WFM" class="navbar-brand">
+                    <a style="padding:0px; padding-left: 8px;" href="@Url.Action("Index", "Home", new { area = "" })" title="CPW WFM" class="navbar-brand">
                         <img alt="CPW WFM" src="@Url.Content("~/Images/WFMHeader_V6.gif")" style="height:40px; margin-top:5px;">
                     </a>
                 </div>
@@ -100,7 +100,7 @@
                 <ul class="nav navbar-top-links navbar-right">
                     @Html.Partial("_StoresMenu", storesMenu)
                     @if (storesMenu.Stores == null && Request.IsAuthenticated)
-                {
+                    {
                         <span>&nbsp;&nbsp;</span>
                     }
                     @Html.Partial("_LoginPartial")
@@ -112,17 +112,7 @@
                     <div class="sidebar-nav navbar-collapse">
 
                         <ul id="side-menu" class="nav">
-                            @*<li class="sidebar-search">
-                <div class="input-group custom-search-form">
-                    <input type="text" class="form-control" placeholder="Search...">
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" type="button">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </span>
-                </div>
-                 /input-group
-            </li>*@
+
                             @if (HttpContext.Current.Session["_AccessLevel"].ToString() == "Admin" || HttpContext.Current.Session["_AccessLevel"].ToString() == "OHAdmin")
                             {
                                 <li>@Html.ActionLink("Admin", "Index", "Admin", new { area = "Admin" }, null)</li>
@@ -138,16 +128,16 @@
                                 <ul class="nav nav-second-level">
 
                                     <li>
-                                    <li class="active"><a href="@Url.Action("GetCompliance", "Reports")">WFM Compliance</a></li>
-                                    <li class="active"><a href="@Url.Action("GetDeployment", "Reports")">WFM Deployment</a></li>
+                                    <li class="active"><a href="@Url.Action("GetCompliance", "Reports", new { area = "" })">WFM Compliance</a></li>
+                                    <li class="active"><a href="@Url.Action("GetDeployment", "Reports", new { area = "" })">WFM Deployment</a></li>
                                     @if (!(bool)HttpContext.Current.Session["_ROIFlag"])
                                     {
-                                        <li class="active"><a href="@Url.Action("StorePandL", "Reports")">Profit &amp; Loss</a></li>
+                                        <li class="active"><a href="@Url.Action("StorePandL", "Reports", new { area = "" })">Profit &amp; Loss</a></li>
                                     }
-                                    <li class="active"><a href="@Url.Action("PunchCompliance", "Reports")">Punch Compliance</a></li>
+                                    <li class="active"><a href="@Url.Action("PunchCompliance", "Reports", new { area = "" })">Punch Compliance</a></li>
                                     @*<li class="active"><a href="@Url.Action("MyTargets", "Reports")">My Targets</a></li>
-                    <li class="active"><a href="@Url.Action("SohSpend", "Reports")">SOH Spend</a></li>
-                    <li class="active"><a href="@Url.Action("Schedules", "Reports")">My Schedule</a></li>*@
+                                        <li class="active"><a href="@Url.Action("SohSpend", "Reports")">SOH Spend</a></li>
+                                        <li class="active"><a href="@Url.Action("Schedules", "Reports")">My Schedule</a></li>*@
                                 </ul>
                             </li>
                             <li>
@@ -160,41 +150,53 @@
                                 <ul class="nav nav-second-level">
                                     @if (!(bool)HttpContext.Current.Session["_ROIFlag"])
                                     {
-                                        <li class="active"><a href="@Url.Action("MyBudgets", "Planning")">My Budgets</a></li>
+                                        <li class="active"><a href="@Url.Action("MyBudgets", "Planning", new { area = "" })">My Budgets</a></li>
                                     }
-                                    <li class="active"><a href="@Url.Action("Index", "Planning")"> Opening Times</a></li>
+                                    <li class="active"><a href="@Url.Action("Index", "Planning", new { area = "" })"> Opening Times</a></li>
                                     @if (!(bool)HttpContext.Current.Session["_ROIFlag"])
                                     {
-                                        <li class="active"><a href="@Url.Action("MyTeam", "Reports")">My Team</a></li>
-                                        <li class="active"><a href="@Url.Action("HolidayPlanning", "Reports")">Holiday Planning</a></li>
+                                        <li class="active"><a href="@Url.Action("MyTeam", "Reports", new { area = "" })">My Team</a></li>
+                                        <li class="active"><a href="@Url.Action("HolidayPlanning", "Reports", new { area = "" })">Holiday Planning</a></li>
                                     }
-                                    <li class="active"><a href="@Url.Action("GetSchedule", "Planning")">Schedules</a></li>
+                                    <li class="active"><a href="@Url.Action("GetSchedule", "Planning", new { area = "" })">Schedules</a></li>
                                     @*<li class="active"><a href="@Url.Action("PayrollCalender", "Planning")"> Payroll Calender</a></li>
-                    <li class="active"><a href="@Url.Action("Budgets", "Planning")">Budgets</a></li>
-                    <li class="active"><a href="@Url.Action("Calendar", "Planning")"> Calendar</a></li>*@
+                                        <li class="active"><a href="@Url.Action("Budgets", "Planning")">Budgets</a></li>
+                                        <li class="active"><a href="@Url.Action("Calendar", "Planning")"> Calendar</a></li>*@
                                 </ul>
                             </li>
                             @*<li>
-                <a href="@Url.Action("People", "Profiles")">
-                    <i class="fa fa-th"></i> <span>Holiday Planning</span>
-                </a>
-                @*<ul class="nav nav-second-level">
-                    <li class="active"><a href="@Url.Action("Index", "Profiles")"> Store</a></li>
+                                    <a href="@Url.Action("People", "Profiles")">
+                                        <i class="fa fa-th"></i> <span>Holiday Planning</span>
+                                    </a>
+                                    @*<ul class="nav nav-second-level">
+                                        <li class="active"><a href="@Url.Action("Index", "Profiles")"> Store</a></li>
 
-                    <li class="active"><a href="@Url.Action("People", "Profiles")"> Staff</a></li>
+                                        <li class="active"><a href="@Url.Action("People", "Profiles")"> Staff</a></li>
 
-                </ul>
-            </li>*@
+                                    </ul>
+                                </li>*@
                             <li>
                                 <a href="#">
-                                    <i class="glyphicon glyphicon-th"></i> <span>Help & Support</span>
+                                    <i class="glyphicon glyphicon-list-alt"></i> <span>Workflow <span id="wfBadge" class="badge-wf-red"></span></span>
+                                    <span class="pull-right-container">
+                                        <i class="glyphicon glyphicon-menu-left pull-right"></i>                                        
+                                    </span>
+                                </a>
+                                <ul class="nav nav-second-level">
+                                    <li class="active"><a href="@Url.Action("Index","Workflow", new { area = "Workflow" })">My Tickets</a></li>
+                                    <li class="active"><a href="@Url.Action("Index","Form", new { area = "Workflow" })">Raise a ticket</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="glyphicon glyphicon-question-sign"></i> <span>Help & Support</span>
                                     <span class="pull-right-container">
                                         <i class="glyphicon glyphicon-menu-left pull-right"></i>
                                     </span>
                                 </a>
                                 <ul class="nav nav-second-level">
-                                    <li class="active"><a href="@Url.Action("Index","STARHandbook")">STAR Handbook</a></li>
-                                    <li class="active"><a href="@Url.Action("LinkToMedics","Profiles")">Medic Feedback</a></li>
+                                    <li class="active"><a href="@Url.Action("Index","STARHandbook", new { area = "" })">STAR Handbook</a></li>
+                                    <li class="active"><a href="@Url.Action("LinkToMedics","Profiles", new { area = "" })">Medic Feedback</a></li>
                                 </ul>
                                 @*@Html.Partial("_BestPracticeMenu", bestPractices)*@
                             </li>
@@ -252,15 +254,28 @@
             <!-- Metis Menu Plugin JavaScript -->
             <script src="~/Content/New/metisMenu.min.js"></script>
             @*<!-- Morris Charts JavaScript -->
-            <script src="~/Content/New/raphael.min.js"></script>
-            <script src="~/Content/New/morris.min.js"></script>
-            <!-- Morris.js charts -->
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>*@
+                <script src="~/Content/New/raphael.min.js"></script>
+                <script src="~/Content/New/morris.min.js"></script>
+                <!-- Morris.js charts -->
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>*@
 
             <!-- Chart.js JavaScript -->
             <script src="~/Content/New/Chart.min.js"></script>
             <!-- Custom Theme JavaScript -->
             <script src="~/Content/New/sb-admin-2.js"></script>
+
+            @if (Request.IsAuthenticated)
+            {
+            <script>
+                $(function () {
+                    $.get('/Workflow/Workflow/_getTicketCount', function (result) {
+                        if (result != 0) {
+                            $('#wfBadge').html(result);
+                        }                        
+                    });
+                });
+            </script>
+            }
 
             @if (HttpContext.Current.Session["_AccessLevel"].ToString() == "Admin")
             {

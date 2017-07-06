@@ -21,6 +21,16 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             }
         }
 
+        public List<HrFeed> GetStoreStaffWait(int storeNum)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                var result = dbContext.HrFeeds.Where(x => x.STORE_NUM == storeNum && x.DOL == "").OrderByDescending(x => x.SURNAME).ThenBy(x => x.FORENAME).ToList();
+
+                return result;
+            }
+        }
+
         public async Task<ContractBaseDetail> GetContractBase(int storeNum)
         {
             using (var dbContext = new DxCpWfmContext())

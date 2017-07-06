@@ -1,4 +1,5 @@
 ﻿using DixonsCarphone.WorkforceManagement.Business.Managers;
+using DixonsCarphone.WorkforceManagement.ViewModels;
 using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels;
 using DixonsCarphone.WorkforceManagement.Web.Attributes;
 using System;
@@ -14,11 +15,13 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
     {
         //IKronosManager _KronosManager;
         IDashMaintenance _DashMaintenance;
+        IPeopleManager _PeopleManager;
 
         public APITestController()
         {
             //_KronosManager = new KronosManager();
             _DashMaintenance = new DashMaintenance();
+            _PeopleManager = new PeopleManager();
         }
 
         // GET: APITest
@@ -33,6 +36,36 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
         {
             var data = _DashMaintenance.StoreReferenceSearch(keyword);
             return PartialView(mapper.Map<StoreReferenceView>(data));
+        }
+
+        [HttpGet]
+        [Authorize]
+        public PartialViewResult _empList()
+        {
+            var data = _PeopleManager.GetStoreStaffWait(StoreNumber);
+            return PartialView(mapper.Map<List<HrFeedView>>(data));
+        }
+
+        [HttpGet]
+        public PartialViewResult _timeList()
+        {
+            IEnumerable<SelectListItem> Times = Helpers.GetTimes();
+            
+            return PartialView(Times.Where(x => x.Text != "Closed"));
+        }
+
+        [HttpGet]
+        public PartialViewResult _branchValidate(string branchNum)
+        { 
+            var data = _DashMaintenance.StoreReferenceSearch(branchNum);
+
+            return PartialView(mapper.Map<StoreReferenceView>(data));
+        }
+
+        [HttpGet]
+        public string _ticketsPending()
+        {
+            return "";
         }
     }
 }

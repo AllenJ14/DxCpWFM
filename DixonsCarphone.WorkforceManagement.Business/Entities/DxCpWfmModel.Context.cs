@@ -61,6 +61,15 @@ namespace DixonsCarphone.WorkforceManagement.Business.Entities
         public virtual DbSet<ContractBaseDetail> ContractBaseDetails { get; set; }
         public virtual DbSet<HolidayPlanningStore> HolidayPlanningStores { get; set; }
         public virtual DbSet<HolidayPlanningEmp> HolidayPlanningEmps { get; set; }
+        public virtual DbSet<TicketAnswer> TicketAnswers { get; set; }
+        public virtual DbSet<TicketAudit> TicketAudits { get; set; }
+        public virtual DbSet<TicketComment> TicketComments { get; set; }
+        public virtual DbSet<TicketStub> TicketStubs { get; set; }
+        public virtual DbSet<TicketTemplate> TicketTemplates { get; set; }
+        public virtual DbSet<Group> Groups { get; set; }
+        public virtual DbSet<UserGroup> UserGroups { get; set; }
+        public virtual DbSet<TicketEscalation> TicketEscalations { get; set; }
+        public virtual DbSet<TicketType> TicketTypes { get; set; }
     
         public virtual ObjectResult<udsp_GetPandL_Result> udsp_GetPandL(Nullable<int> storeNumber, string periodYear, Nullable<short> periodMonth, Nullable<short> qtdStartMonth, Nullable<short> ytdStartMonth)
         {
@@ -496,6 +505,140 @@ namespace DixonsCarphone.WorkforceManagement.Business.Entities
                 new ObjectParameter("YtdStartMonth", typeof(short));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<udsp_GetPandLDivisionSummary_Result>("udsp_GetPandLDivisionSummary", divisionNameParameter, periodYearParameter, periodMonthParameter, qtdStartMonthParameter, ytdStartMonthParameter);
+        }
+    
+        public virtual ObjectResult<sp_GetClosedFormsByGroup_Result> sp_GetClosedFormsByGroup(Nullable<int> groupId, string type)
+        {
+            var groupIdParameter = groupId.HasValue ?
+                new ObjectParameter("GroupId", groupId) :
+                new ObjectParameter("GroupId", typeof(int));
+    
+            var typeParameter = type != null ?
+                new ObjectParameter("Type", type) :
+                new ObjectParameter("Type", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetClosedFormsByGroup_Result>("sp_GetClosedFormsByGroup", groupIdParameter, typeParameter);
+        }
+    
+        public virtual ObjectResult<sp_GetClosedFormsByTPC_Result> sp_GetClosedFormsByTPC(string user, string type)
+        {
+            var userParameter = user != null ?
+                new ObjectParameter("User", user) :
+                new ObjectParameter("User", typeof(string));
+    
+            var typeParameter = type != null ?
+                new ObjectParameter("Type", type) :
+                new ObjectParameter("Type", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetClosedFormsByTPC_Result>("sp_GetClosedFormsByTPC", userParameter, typeParameter);
+        }
+    
+        public virtual ObjectResult<sp_GetClosedFormsByUser_Result> sp_GetClosedFormsByUser(string user, string type)
+        {
+            var userParameter = user != null ?
+                new ObjectParameter("User", user) :
+                new ObjectParameter("User", typeof(string));
+    
+            var typeParameter = type != null ?
+                new ObjectParameter("Type", type) :
+                new ObjectParameter("Type", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetClosedFormsByUser_Result>("sp_GetClosedFormsByUser", userParameter, typeParameter);
+        }
+    
+        public virtual ObjectResult<sp_GetOpenFormsByGroup_Result> sp_GetOpenFormsByGroup(Nullable<int> groupId, string type)
+        {
+            var groupIdParameter = groupId.HasValue ?
+                new ObjectParameter("GroupId", groupId) :
+                new ObjectParameter("GroupId", typeof(int));
+    
+            var typeParameter = type != null ?
+                new ObjectParameter("Type", type) :
+                new ObjectParameter("Type", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetOpenFormsByGroup_Result>("sp_GetOpenFormsByGroup", groupIdParameter, typeParameter);
+        }
+    
+        public virtual ObjectResult<sp_GetOpenFormsByTPC_Result> sp_GetOpenFormsByTPC(string user, string type)
+        {
+            var userParameter = user != null ?
+                new ObjectParameter("User", user) :
+                new ObjectParameter("User", typeof(string));
+    
+            var typeParameter = type != null ?
+                new ObjectParameter("Type", type) :
+                new ObjectParameter("Type", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetOpenFormsByTPC_Result>("sp_GetOpenFormsByTPC", userParameter, typeParameter);
+        }
+    
+        public virtual ObjectResult<sp_GetOpenFormsByUser_Result> sp_GetOpenFormsByUser(string user, string type)
+        {
+            var userParameter = user != null ?
+                new ObjectParameter("User", user) :
+                new ObjectParameter("User", typeof(string));
+    
+            var typeParameter = type != null ?
+                new ObjectParameter("Type", type) :
+                new ObjectParameter("Type", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetOpenFormsByUser_Result>("sp_GetOpenFormsByUser", userParameter, typeParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> sp_CheckAccessRight(Nullable<int> groupId, Nullable<int> ticketId, string username)
+        {
+            var groupIdParameter = groupId.HasValue ?
+                new ObjectParameter("GroupId", groupId) :
+                new ObjectParameter("GroupId", typeof(int));
+    
+            var ticketIdParameter = ticketId.HasValue ?
+                new ObjectParameter("TicketId", ticketId) :
+                new ObjectParameter("TicketId", typeof(int));
+    
+            var usernameParameter = username != null ?
+                new ObjectParameter("Username", username) :
+                new ObjectParameter("Username", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("sp_CheckAccessRight", groupIdParameter, ticketIdParameter, usernameParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> ChkInteractLvl(Nullable<int> level, Nullable<int> ticketTypeId)
+        {
+            var levelParameter = level.HasValue ?
+                new ObjectParameter("level", level) :
+                new ObjectParameter("level", typeof(int));
+    
+            var ticketTypeIdParameter = ticketTypeId.HasValue ?
+                new ObjectParameter("TicketTypeId", ticketTypeId) :
+                new ObjectParameter("TicketTypeId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("ChkInteractLvl", levelParameter, ticketTypeIdParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> sp_ChkInteractLvl(Nullable<int> level, Nullable<int> ticketTypeId)
+        {
+            var levelParameter = level.HasValue ?
+                new ObjectParameter("level", level) :
+                new ObjectParameter("level", typeof(int));
+    
+            var ticketTypeIdParameter = ticketTypeId.HasValue ?
+                new ObjectParameter("TicketTypeId", ticketTypeId) :
+                new ObjectParameter("TicketTypeId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("sp_ChkInteractLvl", levelParameter, ticketTypeIdParameter);
+        }
+    
+        public virtual ObjectResult<sp_EscalationOptions_Result> sp_EscalationOptions(Nullable<int> ticketType, Nullable<int> level)
+        {
+            var ticketTypeParameter = ticketType.HasValue ?
+                new ObjectParameter("TicketType", ticketType) :
+                new ObjectParameter("TicketType", typeof(int));
+    
+            var levelParameter = level.HasValue ?
+                new ObjectParameter("Level", level) :
+                new ObjectParameter("Level", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_EscalationOptions_Result>("sp_EscalationOptions", ticketTypeParameter, levelParameter);
         }
     }
 }

@@ -861,7 +861,7 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
         {
             accountEntryDetails = accountEntryDetails ?? new List<AccountEntryDetail>();
             var toRtn = new List<AccountEntryDetailView>();
-            
+
             foreach (var detail in accountEntryDetails)
             {
                 toRtn.Add(new AccountEntryDetailView

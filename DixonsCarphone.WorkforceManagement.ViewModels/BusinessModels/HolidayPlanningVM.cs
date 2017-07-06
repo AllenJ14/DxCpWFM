@@ -45,7 +45,7 @@ namespace DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
             TakenArray = ToGraphArray(storeDetail.Select(x => x.Taken).ToArray());
             SchedArray = ToGraphArray(storeDetail.Select(x => x.Scheduled).ToArray());
             GuideArray = ToGraphArray(storeDetail.Select(x => x.Guideline).ToArray());
-            DeplArray = ToGraphArray(deplyDetail.Select(x => x.SOH / x.FinalTarget).ToArray());
+            DeplArray = ToGraphArray(deplyDetail.Where(x => x.FinalTarget != null).Select(x => x.SOH / x.FinalTarget).ToArray());
 
             DetailCollection = new List<HolidayDetail>();
             foreach (var item in empDetail)
@@ -83,7 +83,7 @@ namespace DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
         {
             string result = "[";
 
-            if (a == null)
+            if (a.Length == 0)
             {
                 return "";
             }

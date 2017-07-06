@@ -1,0 +1,9 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
+
+@model List<HrFeedView>
+
+<option value="" disabled selected hidden>Select colleague...</option>
+@foreach(var item in Model)
+{
+    <option value="@string.Format("{0}.{1}.{2}",item.EMP_NUM,item.SURNAME,item.FORENAME)">@string.Format("{0}, {1}", item.SURNAME, item.FORENAME)</option>
+}

@@ -12,11 +12,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using DixonsCarphone.WorkforceManagement.Business.Managers;
 
 namespace DixonsCarphone.WorkforceManagement.Web.Controllers
 {
     public class LoginController : BaseController
     {
+        private readonly ITicketManager _ticketManager;
+
+        public LoginController()
+        {
+            _ticketManager = new TicketManager();
+        }
+
         [AllowAnonymous]
         public virtual ActionResult Index(bool o = false)
         {
@@ -72,6 +80,11 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
                             System.Web.HttpContext.Current.Session["_SecAccessArea"] = _accessLevel[1].Area;
                         }
                     }
+                }
+
+                if (System.Web.HttpContext.Current.Session["_wfUserGroup"] == null)
+                {
+                    System.Web.HttpContext.Current.Session["_wfUserGroup"] = _ticketManager.GetUserGroup(System.Web.HttpContext.Current.Session["_UserName"].ToString());
                 }
 
                 await GetStores();

@@ -29,7 +29,7 @@
                     firstRegionforRegion = 0;
                 }
             <li>
-                <a href="@Url.Action("SetNewRegion", "Profiles", new { selectedRegionNumber = region.Value })">@region.Text</a>
+                <a href="@Url.Action("SetNewRegion", "Profiles", new { selectedRegionNumber = region.Value, area = ""})">@region.Text</a>
             </li>
             }
         </ul>
@@ -63,7 +63,7 @@
                     }
                     
                     <li>
-                        <a href="@Url.Action("SetNewStore", "Profiles", new { selectedStoreNumber = store.Value })">@store.Text</a>
+                        <a href="@Url.Action("SetNewStore", "Profiles", new { selectedStoreNumber = store.Value, area = "" })">@store.Text</a>
                     </li>
                 }
             </ul>

@@ -1,0 +1,91 @@
+﻿@model DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels.TicketFormTemplate
+
+@{
+    ViewBag.Title = "New Submission";
+    int qCounter = 0;
+    bool firstGroup = true;
+    var grpCount = Model.QuestionList.Where(x => x.GrpLimit != null).Count();
+    var width = grpCount > 0 && grpCount <= 3 ? (12 / grpCount) : 12;
+    var ticketType = Model.QuestionList.First().TicketTypeId;
+}
+
+
+<div class="col-sm-12"><h2>@Model.FormName</h2></div>
+<form action="/Workflow/Form/NewSubmission" method="post" id="formContainer">
+    @Html.AntiForgeryToken()
+    <input type="hidden" id="TicketTypeId" name="TicketTypeId" value="@ticketType" />
+    <input type="hidden" id="exception" name="exception" value="0" />
+    @foreach (var q in Model.QuestionList)
+    {
+        var grp = q.GrpLimit != null ? "grp" : "";
+        var grpWidth = q.GrpLimit != null ? "col-sm-" + width : "";
+        if (grp != "" && firstGroup)
+        {
+            firstGroup = !firstGroup;
+        }
+
+        if (q.ReturnType == "api")
+        {
+            <div class="form-group @grp @grpWidth">
+                <label for="@q.QuestionId">@q.Question</label>
+                <input type="hidden" name="q.Index" value="@qCounter" />
+                <input type="hidden" name="@string.Format("q[{0}].QuestionID", qCounter)" value="@q.QuestionId" required />
+                <select name="@string.Format("q[{0}].Answer", qCounter)" class="form-control @q.apiIdent" required>
+                    <option>Loading...</option>
+                </select>                
+            </div>
+        }
+        else
+        {
+            <div class="form-group @grp @grpWidth">
+                <label for="@q.QuestionId">@q.Question</label>
+                <input type="hidden" name="q.Index" value="@qCounter" />
+                <input type="hidden" name="@string.Format("q[{0}].QuestionID", qCounter)" value="@q.QuestionId" required />
+                <input type="@q.ReturnType" class="form-control @q.apiIdent" placeholder="" name="@string.Format("q[{0}].Answer", qCounter)" required />
+                @if (q.apiIdent == "branchValidate")
+                {
+                    <div id="_branchValidate">&emsp;</div>
+                }
+            </div>
+        }
+        qCounter++;
+    }
+    <div id="addGrpContainer" class="text-center">
+        <span id="addGrp" class="glyphicon glyphicon-plus-sign text-success pull-left" style="cursor:pointer; margin-left:15px;"></span>
+        <button type="submit" class="btn btn-default" style="margin-top:15px">Submit</button>
+    </div>
+
+
+</form>
+
+@if (ticketType == 1)
+{
+    <div class="modal fade" id="crException" tabindex="-1" role="dialog" data-backdrop="static">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h3 class="modal-title">Confirmation</h3>
+                </div>
+                <div class="modal-body">
+                    <h4>Due to the time this is being submitted your TPC will be signing off the colleagues timecard.</h4>
+                    <h4>You must ensure all exceptions are cleared in STAR so that the TPC can complete this.</h4>
+                    <h4>Please confirm this will be actioned</h4>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" id="cancException">Cancel</button>
+                    <a class="btn btn-success" id="confException" href="#">Confirm</a>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section myScripts{ 
+<script id="wfMaster" src="~/Content/Workflow/WorkflowMaster.min.js" data-grpLimit="@Model.QuestionList.Where(x => x.GrpLimit != null).FirstOrDefault().GrpLimit" data-qCount="@Model.QuestionList.Count()" today="@DateTime.Now.ToString("yyyy-MM-dd")" min="@DateTime.Now.AddDays(-14).ToString("yyyy-MM-dd")"></script>
+@if (ticketType == 1)
+{
+    <script id="wf1" src="~/Content/Workflow/WorkflowCrossRegion.min.js"></script>
+}
+}
+
