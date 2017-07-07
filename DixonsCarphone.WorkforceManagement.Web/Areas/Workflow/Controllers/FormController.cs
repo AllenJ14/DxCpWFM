@@ -28,6 +28,10 @@ namespace DixonsCarphone.WorkforceManagement.Web.Areas.Workflow.Controllers
             {
                 ViewBag.ticketID = TempData["ticketID"];
             }
+            if(TempData["invalidSelect"] != null)
+            {
+                ViewBag.invalid = TempData["invalidSelect"];
+            }
 
             if (System.Web.HttpContext.Current.Session["_ChannelName"] != null || System.Web.HttpContext.Current.Session["_DivisionName"] != null || System.Web.HttpContext.Current.Session["_RegionNumber"] != null)
             {
@@ -48,8 +52,14 @@ namespace DixonsCarphone.WorkforceManagement.Web.Areas.Workflow.Controllers
                 return RedirectToAction("Index");
             }
             var data = await _ticketManager.GetFormTemplate(FormTypeId);
-            var name = _ticketManager.GetFormName(FormTypeId);
+            if(data.Count() == 0)
+            {
+                TempData["invalidSelect"] = "The selected form does not exist.";
+                return RedirectToAction("Index");
+            }
 
+            var name = _ticketManager.GetFormName(FormTypeId);
+            
             return View(new TicketFormTemplate
             {
                 QuestionList = mapper.Map<List<TicketTemplateView>>(data),

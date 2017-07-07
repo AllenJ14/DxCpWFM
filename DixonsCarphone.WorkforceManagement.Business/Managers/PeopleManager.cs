@@ -25,7 +25,7 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
         {
             using (var dbContext = new DxCpWfmContext())
             {
-                var result = dbContext.HrFeeds.Where(x => x.STORE_NUM == storeNum && x.DOL == "").OrderByDescending(x => x.SURNAME).ThenBy(x => x.FORENAME).ToList();
+                var result = dbContext.HrFeeds.Where(x => x.STORE_NUM == storeNum && x.DOL == "").OrderBy(x => x.SURNAME).ThenBy(x => x.FORENAME).ToList();
 
                 return result;
             }

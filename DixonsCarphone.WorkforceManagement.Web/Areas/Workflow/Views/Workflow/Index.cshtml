@@ -12,22 +12,6 @@
     </div>
 </div>
 
-@if (ViewBag.ticketID != null)
-{
-    <div id="ticketRef" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" data-show="true">
-        <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button> <h4 class="modal-title" id="mySmallModalLabel">Reference Number</h4>
-                </div>
-                <div class="text-center modal-body">
-                    <strong>#@(ViewBag.ticketID)</strong>
-                </div>
-            </div>
-        </div>
-    </div>
-}
-
 <div class="row" style="min-height:50px;background-color:aliceblue;border: 1px #ddd solid;border-radius:5px;margin-bottom:25px;padding:5px;">
     <span class="glyphicon glyphicon-filter pull-left" style="font-size:x-large;margin:auto 5px; line-height:50px;"></span>
     <span style="font-size:large;margin:auto 5px; line-height:50px;">Filter View:</span>

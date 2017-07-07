@@ -55,9 +55,10 @@
         
         if (!valid || (exception && !confirmed)) {
             event.preventDefault();
-            if (exception && !confirmed) {
-                $('#crException').modal('toggle');
-            };
+        };
+        if (valid && exception && !confirmed) {
+            event.preventDefault();
+            $('#crException').modal('toggle');
         };
         
     });

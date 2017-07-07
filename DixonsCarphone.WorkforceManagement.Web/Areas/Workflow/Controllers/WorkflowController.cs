@@ -19,7 +19,8 @@ namespace DixonsCarphone.WorkforceManagement.Web.Areas.Workflow.Controllers
         public WorkflowController()
         {
             _ticketManager = new TicketManager();
-            if(System.Web.HttpContext.Current.Session["_wfUserGroup"] == null)
+            
+            if(System.Web.HttpContext.Current.Session["_wfUserGroup"] == null && System.Web.HttpContext.Current.Session["_UserName"] != null)
             {
                 System.Web.HttpContext.Current.Session["_wfUserGroup"] = _ticketManager.GetUserGroup(System.Web.HttpContext.Current.Session["_UserName"].ToString());
             }            
@@ -178,10 +179,19 @@ namespace DixonsCarphone.WorkforceManagement.Web.Areas.Workflow.Controllers
         }
 
         [HttpGet]
-        [OutputCache(Duration=300, VaryByParam = "none", Location =System.Web.UI.OutputCacheLocation.Client, NoStore =true)]
+        [OutputCache(Duration = 30, VaryByParam = "none", Location = System.Web.UI.OutputCacheLocation.Client, NoStore = true)]
         public int _getTicketCount()
         {
-            return _getOpenSummaryList().Count();
+            var toReturn = _getOpenSummaryList();
+
+            if((int)System.Web.HttpContext.Current.Session["_wfUserGroup"] == 0)
+            {
+                return toReturn.Where(x => x.Description == "Branch").Count();
+            }
+            else
+            {
+                return toReturn.Count();
+            }
         }
 
         private List<TicketSummaryView> _getOpenSummaryList(string filter = "0")

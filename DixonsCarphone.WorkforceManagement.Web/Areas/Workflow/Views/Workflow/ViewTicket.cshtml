@@ -188,7 +188,7 @@
 
 @section myScripts{
     <script id="wf1" data-TickType="@Model.TicketTypeId" data-level="@Model.EscalationLevel" src="~/Content/Workflow/WorkflowViewTicket.min.js"></script>
-    @if(Model.TicketTypeId == 1 && Model.Exception == 1)
+    @if(Model.TicketTypeId == 1 && Model.Exception == 1 && Model.RaisedBy != User.Identity.Name)
     {
         <script id="wfCR" src="~/Content/Workflow/WorkflowViewTicketCR.min.js"></script>
     }
