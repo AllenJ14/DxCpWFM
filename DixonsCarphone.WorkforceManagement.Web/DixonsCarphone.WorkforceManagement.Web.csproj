@@ -608,6 +608,7 @@
     <Content Include="Views\APITest\_empList.cshtml" />
     <Content Include="Views\APITest\_timeList.cshtml" />
     <Content Include="Views\APITest\_branchValidate.cshtml" />
+    <Content Include="Views\STARHandbook\TrainingPacks.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DixonsCarphone.WorkforceManagement.Business\DixonsCarphone.WorkforceManagement.Business.csproj">

@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewBag.Title = "Help & Support";
+}
+
+<div class="col-xs-12">
+    <h2>Training Guides</h2>
+</div>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th class="text-center">Title</th>
+            <th class="text-center">Description</th>
+            <th class="text-center">View</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="text-center"><strong>Profit & Loss Statements</strong></td>
+            <td class="text-center">A Profit and Loss statement is a standard business tool. It presents all of a businesses revenue and margin first, then it shows all of the costs incurred and leaves the difference: Profit.</td>
+            <td class="text-center"><a class="btn btn-info" href="@Url.Action("TrainingDoc","Reports")" target="_blank">View</a></td>
+        </tr>
+        <tr>
+            <td class="text-center"><strong>Contract Bases / Holiday Planning</strong></td>
+            <td class="text-center">
+                Contract bases provide guidance as to where the store's contracted cost needs to sit for the remainder of the year. Contract bases are used in order to help keep payroll controlled, ensure we recruit in the right stores and enable us to react to changes in trade.
+            </td>
+            <td class="text-center"><a class="btn btn-info" href="@Url.Action("TeamTrainingDoc","Reports")" target="_blank">View</a></td>
+        </tr>
+    </tbody>
+</table>
+

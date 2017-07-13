@@ -10,8 +10,7 @@
                         <th class="text-center">Employee Name</th>
                         <th class="text-center">Job Role</th>
                         <th class="text-center col-md-2">Contract Hours</th>
-                        <th class="text-center col-md-2">Holiday Balance (Hrs)</th>
-                        <th class="text-center col-md-2">Holiday Balance (Days)</th>
+                        <th class="text-center col-md-2">Holiday Remaining (Hrs)</th>
                     </tr>
                 </thead>
                 <tbody style="font-size:small">
@@ -22,7 +21,6 @@
                             <td>@item.ROLE.Replace(".Retail","")</td>
                             <td class="text-center">@item.CONTRACT_HOURS</td>
                             <td class="text-center">@item.TODAYS_BALANCE</td>
-                            <td class="text-center">@Math.Round((double)item.TODAYS_BALANCE / 9, 2)</td>
                         </tr>
                     }
                 </tbody>

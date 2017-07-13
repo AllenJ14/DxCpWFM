@@ -104,5 +104,10 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             }
 
         }
+
+        public ActionResult TrainingPacks()
+        {
+            return View();
+        }
     }
 }

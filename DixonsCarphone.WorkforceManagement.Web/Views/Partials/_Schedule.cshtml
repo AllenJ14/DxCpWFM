@@ -58,10 +58,10 @@ else if (Model.ScheduleCollection.Count() != 0)
                             {
                                 <td class="text-center"><small>@string.Format("{0:hh\\:mm} - {1:hh\\:mm}", selected.StartTime, selected.EndTime)</small></td>
                             }
-                            else
-                            {
-                                <td class="text-center"><small>@selected.ShiftType.ToString()</small></td>
-                            }
+                        }
+                        else if (selected != null && selected.ShiftType != "Regular")
+                        {
+                            <td class="text-center">@selected.ShiftType.ToString()</td>
                         }
                         else
                         {
