@@ -253,18 +253,26 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
                 var data = await _storeManager.GetRegionBMSchedule(System.Web.HttpContext.Current.Session["_RegionNumber"].ToString(), weekOfYr);
                 vm.ScheduleBMCollection = mapper.Map<List<ScheduleBMView>>(data);
                 ViewBag.store = string.Format("Region {0}", _store.RegionNo);
+                if(vm.ScheduleBMCollection.Min(x => x.StartDate) < DateTime.Now.GetFirstDayOfWeek())
+                {
+                    ViewBag.historic = true;
+                }
             }
             else
             {
                 var data = await _storeManager.GetBranchSchedule(StoreNumber, weekOfYr);
                 vm.ScheduleCollection = mapper.Map<List<ScheduleDetail>>(data);
                 ViewBag.store = string.Format("{0} {1}", _store.CST_CNTR_ID, _store.StoreName);
+                if (vm.ScheduleCollection.Min(x => x.StartDate) < DateTime.Now.GetFirstDayOfWeek())
+                {
+                    ViewBag.historic = true;
+                }
             }
 
-            var weekNumbers = await _storeManager.GetWeekNumbers(DateTime.Now.GetFirstDayOfWeek(), DateTime.Now.GetFirstDayOfWeek().AddDays(28));
+            var weekNumbers = await _storeManager.GetWeekNumbers(DateTime.Now.AddDays(-28).GetFirstDayOfWeek(), DateTime.Now.GetFirstDayOfWeek().AddDays(28));
             vm.GetWeeksOfYear(DateTime.Now.GetFirstDayOfWeek().AddDays(28), weekNumbers);
             vm.WeeksOfYear.ForEach(x => x.Selected = x.Value == weekOfYr.ToString());
-            vm.SelectedDate = vm.WeeksOfYear.Where(x => x.Selected == true).Single().Text.ToString().Substring(11, 10); ;
+            vm.SelectedDate = vm.WeeksOfYear.Where(x => x.Selected == true).Single().Text.ToString().Substring(11, 10);
             
             return View("Schedule", vm);
         }

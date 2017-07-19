@@ -40,5 +40,33 @@
                 $('#complianceDateForm').submit();
             }
         }
+
+        $(function () {
+            var br = true;
+            var $brBtn = $('#br');
+            var $bmBtn = $('#bm');
+            var $brView = $('#branchSummary');
+            var $bmView = $('#bmSummary');
+
+            $brBtn.click(function () {
+                if (!br) {
+                    $(this).toggleClass('active');
+                    $bmBtn.toggleClass('active');
+                    $brView.slideToggle(400);
+                    $bmView.slideToggle(400);
+                    br = !br;
+                };
+            });
+
+            $bmBtn.click(function () {
+                if (br) {
+                    $(this).toggleClass('active');
+                    $brBtn.toggleClass('active');
+                    $bmView.slideToggle(400);
+                    $brView.slideToggle(400);
+                    br = !br;
+                };
+            });
+        });
     </script>
 }

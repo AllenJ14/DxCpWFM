@@ -489,7 +489,9 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             else if (System.Web.HttpContext.Current.Session["_RegionNumber"] != null)
             {
                 var data = await _storeManager.GetRegionPunch(System.Web.HttpContext.Current.Session["_RegionNumber"].ToString(), weekOfYr);
+                var bmdata = await _storeManager.GetRegionBMPunch(System.Web.HttpContext.Current.Session["_RegionNumber"].ToString(), weekOfYr);
                 vm.RegionDetail = mapper.Map<List<RegionPunchComplianceItem>>(data);
+                vm.PunchDetail = mapper.Map<List<PunchCompView>>(bmdata);
             }
             else
             {

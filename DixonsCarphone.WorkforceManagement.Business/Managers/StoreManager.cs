@@ -101,6 +101,16 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             }
         }
 
+        //Get punch detail for region BMs
+        public async Task<List<CPW_Clocking_Data>> GetRegionBMPunch(string regionNo, int weekNum)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                var result = await dbContext.CPW_Clocking_Data.AsNoTracking().Where(x => x.REGION_CD == regionNo && x.ROLE == "1" && x.FNCL_WK_NUM == weekNum).ToListAsync();
+                return result;
+            }
+        }
+
         //Get punch detail for Division
         public async Task<List<sp_DivisionPunchCompliance_Result>> GetDivisionPunch(string Division, int weekNum)
         {
