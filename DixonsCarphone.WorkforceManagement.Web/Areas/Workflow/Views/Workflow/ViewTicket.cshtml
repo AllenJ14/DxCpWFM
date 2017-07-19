@@ -80,45 +80,11 @@
 </div>
 
 @Html.AntiForgeryToken()
-<div class="row">
-    <h2 class="col-sm-6">Ticket Ref: #@Model.TicketId</h2>
-    <div class="col-sm-6">
-        <div class="text-center">
-            <div class="btn-group">
-                @if (Model.Status == "Open")
-                {
-                    <button class="btn btn-lg btn-info" id="addComment">Add Comment</button>
-                    if (ViewBag.action != null)
-                    {
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-lg btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Send to...
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" id="escOptions">
-                                <li>Loading...</li>
-                            </ul>
-                        </div>
-                        if (Model.EscalationLevel > 0)
-                        {
-                            <button class="btn btn-lg btn-success" id="compTck" data-toggle="modal" data-target="#compConfirm">Mark Complete</button>
-                        }
-                    }
-                    if (Model.RaisedBy == User.Identity.Name)
-                    {
-                        <button class="btn btn-lg btn-danger" id="compTck" data-toggle="modal" data-target="#cancelConfirm">Cancel Ticket</button>
-                    }
-                }
-                else
-                {
-                    <button class="btn btn-lg btn-info">This ticket is closed.</button>
-                }
-            </div>
-        </div>
-    </div>
+<div class="row" id="tckHeader">
+    <h2 class="col-sm-12">Ticket Ref: #@Model.TicketId</h2>
 </div>
 <div class="row">
-    <div id="detailContainer" class="col-sm-6">
+    <div id="detailContainer" class="col-sm-6 col-xs-12">
         <table class="table">
             <tr>
                 <td>Type</td>
@@ -179,8 +145,41 @@
             }
         </table>
     </div>
-
-    <div class="col-sm-6 wf-comment-container">
+    <div class="col-sm-6 col-xs-12" style="margin-bottom:10px;">
+        <div class="text-center">
+            <div class="btn-group">
+                @if (Model.Status == "Open")
+                {
+                    <button class="btn btn-info" id="addComment">Add Comment</button>
+                    if (ViewBag.action != null)
+                    {
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Send to...
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" id="escOptions">
+                                <li>Loading...</li>
+                            </ul>
+                        </div>
+                        if (Model.EscalationLevel > 0)
+                        {
+                            <button class="btn btn-success" id="compTck" data-toggle="modal" data-target="#compConfirm">Mark Complete</button>
+                        }
+                    }
+                    if (Model.RaisedBy == User.Identity.Name)
+                    {
+                        <button class="btn btn-danger" id="compTck" data-toggle="modal" data-target="#cancelConfirm">Cancel Ticket</button>
+                    }
+                }
+                else
+                {
+                    <button class="btn btn-info">This ticket is closed.</button>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xs-12 wf-comment-container">
         <div class="text-center"><strong class="wf-btn"><u>Comments</u></strong></div>
         @Html.Partial("~/Areas/Workflow/Views/Partials/_Comments.cshtml", Model.TicketComments.ToList())
     </div>

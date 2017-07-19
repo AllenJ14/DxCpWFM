@@ -126,5 +126,7 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
         Task<List<udsp_GetPandLRegionSummary_Result>> GetRegionPLSummary(string region, string year, int? month);
 
         Task<List<udsp_GetPandLRegionSummary_Result>> GetRegionPLSummary(string region);
+
+        Task<List<sp_GetRegionBMSchedule_Result>> GetRegionBMSchedule(string regionNumber, int weekNumber);
     }
 }

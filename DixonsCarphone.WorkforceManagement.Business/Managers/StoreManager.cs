@@ -220,6 +220,16 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             }
         }
 
+        //Get BM schedule detail for week and region
+        public async Task<List<sp_GetRegionBMSchedule_Result>> GetRegionBMSchedule(string regionNumber, int weekNumber)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                var result = await Task.Run(() => dbContext.sp_GetRegionBMSchedule(regionNumber, weekNumber).OrderBy(x => x.HomeBranch).ThenBy(x => x.FullName).ThenBy(x => x.DayNum).ToList());
+                return result;
+            }
+        }
+
         //Get most recent P&L recordset for store
         public async Task<List<udsp_GetPandL_Result>> GetStorePandL(int storeNumber)
         {

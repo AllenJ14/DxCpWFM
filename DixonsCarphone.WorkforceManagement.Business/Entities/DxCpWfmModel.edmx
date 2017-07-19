@@ -598,6 +598,7 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
           <Property Name="User" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="AccessLevel" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="Area" Type="nvarchar" MaxLength="50" />
+          <Property Name="AccLvl" Type="tinyint" />
         </EntityType>
         <EntityType Name="WeeklyFootfall">
           <Key>
@@ -1012,6 +1013,10 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
         </Function>
         <Function Name="sp_DivisionPunchCompliance" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="DivisionName" Type="nvarchar" Mode="In" />
+          <Parameter Name="weekNumber" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_GetRegionBMSchedule" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="region" Type="varchar" Mode="In" />
           <Parameter Name="weekNumber" Type="int" Mode="In" />
         </Function>
         <Function Name="sp_RegionComplianceDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -1726,6 +1731,10 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
             <Parameter Name="TicketType" Mode="In" Type="Int32" />
             <Parameter Name="Level" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="sp_GetRegionBMSchedule" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_GetRegionBMSchedule_Result)">
+            <Parameter Name="region" Mode="In" Type="String" />
+            <Parameter Name="weekNumber" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="BestPracticeCategoryType">
           <Key>
@@ -2167,6 +2176,7 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Property Name="User" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="AccessLevel" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="Area" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AccLvl" Type="Byte" />
         </EntityType>
         <ComplexType Name="udsp_GetPandLChannel_Result">
           <Property Type="Int32" Name="AccountEntryHeaderId" Nullable="false" />
@@ -3243,6 +3253,25 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Property Type="Int32" Name="Level" Nullable="false" />
           <Property Type="String" Name="Description" Nullable="true" MaxLength="250" />
         </ComplexType>
+        <ComplexType Name="sp_GetRegionBMSchedule_Result">
+          <Property Type="Int32" Name="EntryId" Nullable="false" />
+          <Property Type="String" Name="FullBranch" Nullable="true" MaxLength="531" />
+          <Property Type="Int16" Name="HomeBranch" Nullable="true" />
+          <Property Type="Int32" Name="PersonNumber" Nullable="true" />
+          <Property Type="Decimal" Name="ContractHours" Nullable="true" Precision="3" Scale="1" />
+          <Property Type="String" Name="FullName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="ShiftType" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="TransferBranch" Nullable="true" MaxLength="10" />
+          <Property Type="Int32" Name="WeekNumber" Nullable="true" />
+          <Property Type="DateTime" Name="StartDate" Nullable="true" />
+          <Property Type="Time" Name="StartTime" Nullable="true" />
+          <Property Type="Time" Name="EndTime" Nullable="true" />
+          <Property Type="Byte" Name="DayNum" Nullable="true" />
+          <Property Type="Decimal" Name="PersonWeekTotal" Nullable="true" Precision="5" Scale="2" />
+          <Property Type="Decimal" Name="DayWeekTotal" Nullable="true" Precision="5" Scale="2" />
+          <Property Type="DateTime" Name="DateTimeUpdated" Nullable="true" Precision="23" />
+          <Property Type="Int16" Name="JobCode" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3694,6 +3723,7 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <EntitySetMapping Name="UserAccesses">
             <EntityTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.UserAccess">
               <MappingFragment StoreEntitySet="UserAccess">
+                <ScalarProperty Name="AccLvl" ColumnName="AccLvl" />
                 <ScalarProperty Name="Area" ColumnName="Area" />
                 <ScalarProperty Name="AccessLevel" ColumnName="AccessLevel" />
                 <ScalarProperty Name="User" ColumnName="User" />
@@ -4747,6 +4777,29 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
               <ComplexTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.sp_EscalationOptions_Result">
                 <ScalarProperty Name="Level" ColumnName="Level" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetRegionBMSchedule" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_GetRegionBMSchedule">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.sp_GetRegionBMSchedule_Result">
+                <ScalarProperty Name="EntryId" ColumnName="EntryId" />
+                <ScalarProperty Name="FullBranch" ColumnName="FullBranch" />
+                <ScalarProperty Name="HomeBranch" ColumnName="HomeBranch" />
+                <ScalarProperty Name="PersonNumber" ColumnName="PersonNumber" />
+                <ScalarProperty Name="ContractHours" ColumnName="ContractHours" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="ShiftType" ColumnName="ShiftType" />
+                <ScalarProperty Name="TransferBranch" ColumnName="TransferBranch" />
+                <ScalarProperty Name="WeekNumber" ColumnName="WeekNumber" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="DayNum" ColumnName="DayNum" />
+                <ScalarProperty Name="PersonWeekTotal" ColumnName="PersonWeekTotal" />
+                <ScalarProperty Name="DayWeekTotal" ColumnName="DayWeekTotal" />
+                <ScalarProperty Name="DateTimeUpdated" ColumnName="DateTimeUpdated" />
+                <ScalarProperty Name="JobCode" ColumnName="JobCode" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

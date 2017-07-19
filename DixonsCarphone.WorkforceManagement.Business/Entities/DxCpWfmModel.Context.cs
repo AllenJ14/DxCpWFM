@@ -640,5 +640,18 @@ namespace DixonsCarphone.WorkforceManagement.Business.Entities
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_EscalationOptions_Result>("sp_EscalationOptions", ticketTypeParameter, levelParameter);
         }
+    
+        public virtual ObjectResult<sp_GetRegionBMSchedule_Result> sp_GetRegionBMSchedule(string region, Nullable<int> weekNumber)
+        {
+            var regionParameter = region != null ?
+                new ObjectParameter("region", region) :
+                new ObjectParameter("region", typeof(string));
+    
+            var weekNumberParameter = weekNumber.HasValue ?
+                new ObjectParameter("weekNumber", weekNumber) :
+                new ObjectParameter("weekNumber", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetRegionBMSchedule_Result>("sp_GetRegionBMSchedule", regionParameter, weekNumberParameter);
+        }
     }
 }

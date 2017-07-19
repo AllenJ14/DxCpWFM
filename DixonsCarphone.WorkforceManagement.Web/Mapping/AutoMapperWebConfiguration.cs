@@ -182,6 +182,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Mapping
         {
             CreateMap<ScheduleData, ScheduleDetail>();
             CreateMap<ScheduleDetail, ScheduleData>();
+            CreateMap<sp_GetRegionBMSchedule_Result, ScheduleBMView>();
         }
     }
 

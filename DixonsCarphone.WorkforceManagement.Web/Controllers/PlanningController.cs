@@ -250,21 +250,22 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             }
             else if (System.Web.HttpContext.Current.Session["_RegionNumber"] != null)
             {
-                vm.Message = "This page is not available in the currently selected view, please select a store from the top right menu or go back.";
-                vm.MessageType = MessageType.Error;
+                var data = await _storeManager.GetRegionBMSchedule(System.Web.HttpContext.Current.Session["_RegionNumber"].ToString(), weekOfYr);
+                vm.ScheduleBMCollection = mapper.Map<List<ScheduleBMView>>(data);
+                ViewBag.store = string.Format("Region {0}", _store.RegionNo);
             }
             else
             {
                 var data = await _storeManager.GetBranchSchedule(StoreNumber, weekOfYr);
                 vm.ScheduleCollection = mapper.Map<List<ScheduleDetail>>(data);
+                ViewBag.store = string.Format("{0} {1}", _store.CST_CNTR_ID, _store.StoreName);
             }
 
             var weekNumbers = await _storeManager.GetWeekNumbers(DateTime.Now.GetFirstDayOfWeek(), DateTime.Now.GetFirstDayOfWeek().AddDays(28));
             vm.GetWeeksOfYear(DateTime.Now.GetFirstDayOfWeek().AddDays(28), weekNumbers);
             vm.WeeksOfYear.ForEach(x => x.Selected = x.Value == weekOfYr.ToString());
             vm.SelectedDate = vm.WeeksOfYear.Where(x => x.Selected == true).Single().Text.ToString().Substring(11, 10); ;
-
-            ViewBag.store = string.Format("{0} {1}",_store.CST_CNTR_ID, _store.StoreName);
+            
             return View("Schedule", vm);
         }
 

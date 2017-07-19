@@ -18,5 +18,6 @@ namespace DixonsCarphone.WorkforceManagement.Business.Entities
         public string User { get; set; }
         public string AccessLevel { get; set; }
         public string Area { get; set; }
+        public Nullable<byte> AccLvl { get; set; }
     }
 }

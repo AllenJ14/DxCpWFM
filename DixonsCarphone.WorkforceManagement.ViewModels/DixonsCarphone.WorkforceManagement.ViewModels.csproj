@@ -94,6 +94,7 @@
     <Compile Include="BusinessModels\HolidayPlanningVM.cs" />
     <Compile Include="BusinessModels\MyTeamViewModel.cs" />
     <Compile Include="BusinessModels\MyTargetsViewModel.cs" />
+    <Compile Include="BusinessModels\ScheduleBMView.cs" />
     <Compile Include="BusinessModels\Ticket.cs" />
     <Compile Include="BusinessModels\PandLSummaryDetail.cs" />
     <Compile Include="BusinessModels\PandLSummaryvm.cs" />
