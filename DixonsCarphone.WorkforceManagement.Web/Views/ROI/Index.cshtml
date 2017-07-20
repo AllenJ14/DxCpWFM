@@ -32,18 +32,19 @@
                     To make sure you are shown the right information when visiting the WFM site we need to capture the store you are visiting from.
                 </p>
                 <p>
-                    Please select your branch from the list shown below.
+                    Please enter your <u>branch number</u> below.
                 </p>
                 <span class="text-danger"><strong>Your selection will be remembered on this device so ensure you choose the correct branch</strong></span>
                 <form class="form-horizontal" role="form" method="post">
                     @Html.AntiForgeryToken()
                     <div class="col-md-12" style="padding:15px">
-                        <select class="form-group control col-md-12" id="storeSelection" name="storeSelection">
+                        <input type="number" id="storeSelection" class="form-control col-md-12" name="storeSelection" />
+                        @*<select class="form-group control col-md-12" id="storeSelection" name="storeSelection">
                             @foreach (var item in Model.storeList)
                             {
                                 <option value="@item.CST_CNTR_ID">@string.Format("{0} - {1}", item.CST_CNTR_ID, item.StoreName)</option>
                             }
-                        </select>
+                        </select>*@
                     </div>
                     <div class="form-group">
                         <button type="submit" value="submit" class="btn btn-lg btn-primary col-md-offset-5">Submit</button>
