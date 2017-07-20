@@ -70,6 +70,7 @@ namespace DixonsCarphone.WorkforceManagement.Business.Entities
         public virtual DbSet<UserGroup> UserGroups { get; set; }
         public virtual DbSet<TicketEscalation> TicketEscalations { get; set; }
         public virtual DbSet<TicketType> TicketTypes { get; set; }
+        public virtual DbSet<BmWeWorking> BmWeWorkings { get; set; }
     
         public virtual ObjectResult<udsp_GetPandL_Result> udsp_GetPandL(Nullable<int> storeNumber, string periodYear, Nullable<short> periodMonth, Nullable<short> qtdStartMonth, Nullable<short> ytdStartMonth)
         {
@@ -652,6 +653,42 @@ namespace DixonsCarphone.WorkforceManagement.Business.Entities
                 new ObjectParameter("weekNumber", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetRegionBMSchedule_Result>("sp_GetRegionBMSchedule", regionParameter, weekNumberParameter);
+        }
+    
+        public virtual ObjectResult<BmWeWorking> sp_ChannelBMWorking(string channel)
+        {
+            var channelParameter = channel != null ?
+                new ObjectParameter("Channel", channel) :
+                new ObjectParameter("Channel", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<BmWeWorking>("sp_ChannelBMWorking", channelParameter);
+        }
+    
+        public virtual ObjectResult<BmWeWorking> sp_ChannelBMWorking(string channel, MergeOption mergeOption)
+        {
+            var channelParameter = channel != null ?
+                new ObjectParameter("Channel", channel) :
+                new ObjectParameter("Channel", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<BmWeWorking>("sp_ChannelBMWorking", mergeOption, channelParameter);
+        }
+    
+        public virtual ObjectResult<BmWeWorking> sp_DivisionBMWorking(string division)
+        {
+            var divisionParameter = division != null ?
+                new ObjectParameter("Division", division) :
+                new ObjectParameter("Division", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<BmWeWorking>("sp_DivisionBMWorking", divisionParameter);
+        }
+    
+        public virtual ObjectResult<BmWeWorking> sp_DivisionBMWorking(string division, MergeOption mergeOption)
+        {
+            var divisionParameter = division != null ?
+                new ObjectParameter("Division", division) :
+                new ObjectParameter("Division", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<BmWeWorking>("sp_DivisionBMWorking", mergeOption, divisionParameter);
         }
     }
 }

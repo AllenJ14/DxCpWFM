@@ -152,6 +152,8 @@
     <Compile Include="BusinessModels\UserAccessSummary.cs" />
     <Compile Include="BusinessModels\WeeklyFootfallView.cs" />
     <Compile Include="BusinessModels\WeekPickerViewModel.cs" />
+    <Compile Include="BusinessModels\WeWorkingVm.cs" />
+    <Compile Include="BusinessModels\WeWorkingView.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="BusinessModels\EmpComplianceDetailView.cs" />

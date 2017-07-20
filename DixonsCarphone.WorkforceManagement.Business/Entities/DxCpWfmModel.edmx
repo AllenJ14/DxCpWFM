@@ -119,6 +119,18 @@
           <Property Name="DateCreated" Type="datetime" />
           <Property Name="DateModified" Type="datetime" />
         </EntityType>
+        <EntityType Name="BmWeWorking">
+          <Key>
+            <PropertyRef Name="EntryId" />
+          </Key>
+          <Property Name="EntryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="Day" Type="tinyint" Nullable="false" />
+          <Property Name="BranchNum" Type="smallint" Nullable="false" />
+          <Property Name="BranchName" Type="nvarchar" MaxLength="500" />
+          <Property Name="RegionNum" Type="smallint" />
+          <Property Name="Worked" Type="tinyint" Nullable="false" />
+        </EntityType>
         <EntityType Name="ContentDetail">
           <Key>
             <PropertyRef Name="ContentDetailId" />
@@ -983,6 +995,9 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Parameter Name="storeNumber" Type="int" Mode="In" />
           <Parameter Name="weekNumber" Type="int" Mode="In" />
         </Function>
+        <Function Name="sp_ChannelBMWorking" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Channel" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="sp_ChannelComplianceDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ChannelName" Type="nvarchar" Mode="In" />
           <Parameter Name="weeknumber" Type="int" Mode="In" />
@@ -995,6 +1010,9 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
         <Function Name="sp_ChannelPunchCompliance" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ChannelName" Type="nvarchar" Mode="In" />
           <Parameter Name="weekNumber" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_DivisionBMWorking" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Division" Type="varchar" Mode="In" />
         </Function>
         <Function Name="sp_DivisionComplianceDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="DivisionName" Type="nvarchar" Mode="In" />
@@ -1134,6 +1152,7 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <EntitySet Name="ActivityType" EntityType="Self.ActivityType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BestPracticeCategoryTypes" EntityType="Self.BestPracticeCategoryTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BestPracticeContent" EntityType="Self.BestPracticeContent" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BmWeWorking" EntityType="Self.BmWeWorking" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ContentDetail" EntityType="Self.ContentDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ContentHeader" EntityType="Self.ContentHeader" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ContractBaseDetail" EntityType="Self.ContractBaseDetail" Schema="dbo" store:Type="Tables" />
@@ -1734,6 +1753,13 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <FunctionImport Name="sp_GetRegionBMSchedule" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_GetRegionBMSchedule_Result)">
             <Parameter Name="region" Mode="In" Type="String" />
             <Parameter Name="weekNumber" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="BmWeWorkings" EntityType="DixonsCarphone.WorkforceManagement.Business.BmWeWorking" />
+          <FunctionImport Name="sp_ChannelBMWorking" EntitySet="BmWeWorkings" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.BmWeWorking)">
+            <Parameter Name="Channel" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_DivisionBMWorking" EntitySet="BmWeWorkings" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.BmWeWorking)">
+            <Parameter Name="Division" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="BestPracticeCategoryType">
@@ -3272,6 +3298,36 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Property Type="DateTime" Name="DateTimeUpdated" Nullable="true" Precision="23" />
           <Property Type="Int16" Name="JobCode" Nullable="true" />
         </ComplexType>
+        <EntityType Name="BmWeWorking">
+          <Key>
+            <PropertyRef Name="EntryId" />
+          </Key>
+          <Property Name="EntryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Day" Type="Byte" Nullable="false" />
+          <Property Name="BranchNum" Type="Int16" Nullable="false" />
+          <Property Name="BranchName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="RegionNum" Type="Int16" />
+          <Property Name="Worked" Type="Byte" Nullable="false" />
+        </EntityType>
+        <ComplexType Name="sp_ChannelBMWorking_Result">
+          <Property Type="Int32" Name="EntryId" Nullable="true" />
+          <Property Type="DateTime" Name="Date" Nullable="false" />
+          <Property Type="Byte" Name="Day" Nullable="false" />
+          <Property Type="Int16" Name="BranchNum" Nullable="true" />
+          <Property Type="String" Name="BranchName" Nullable="true" MaxLength="50" />
+          <Property Type="Int16" Name="RegionNum" Nullable="true" />
+          <Property Type="Byte" Name="worked" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_DivisionBMWorking_Result">
+          <Property Type="Int32" Name="EntryId" Nullable="true" />
+          <Property Type="DateTime" Name="Date" Nullable="false" />
+          <Property Type="Byte" Name="Day" Nullable="false" />
+          <Property Type="Int16" Name="BranchNum" Nullable="true" />
+          <Property Type="String" Name="BranchName" Nullable="true" MaxLength="50" />
+          <Property Type="Int16" Name="RegionNum" Nullable="true" />
+          <Property Type="Byte" Name="worked" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4802,6 +4858,23 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
                 <ScalarProperty Name="JobCode" ColumnName="JobCode" />
               </ComplexTypeMapping>
             </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="BmWeWorkings">
+            <EntityTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.BmWeWorking">
+              <MappingFragment StoreEntitySet="BmWeWorking">
+                <ScalarProperty Name="Worked" ColumnName="Worked" />
+                <ScalarProperty Name="RegionNum" ColumnName="RegionNum" />
+                <ScalarProperty Name="BranchName" ColumnName="BranchName" />
+                <ScalarProperty Name="BranchNum" ColumnName="BranchNum" />
+                <ScalarProperty Name="Day" ColumnName="Day" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="EntryId" ColumnName="EntryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_ChannelBMWorking" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_ChannelBMWorking">
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_DivisionBMWorking" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_DivisionBMWorking">
           </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>

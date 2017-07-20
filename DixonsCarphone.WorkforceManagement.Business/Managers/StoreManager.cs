@@ -861,6 +861,35 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             }
         }
 
+        public async Task<List<BmWeWorking>> GetBmWeWorking(string regionNumber)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                var limit = DateTime.Today.AddDays(-28);
+                var crit = short.Parse(regionNumber);
+                var data = await dbContext.BmWeWorkings.Where(x => x.RegionNum == crit && x.Date >= limit).OrderBy(x => x.BranchNum).ThenBy(x => x.Date).ToListAsync();
+                return data;
+            }
+        }
+
+        public async Task<List<BmWeWorking>> GetDivisionBmWeWorking(string divisionName)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                var data = await Task.Run(() => dbContext.sp_DivisionBMWorking(divisionName).ToList());
+                return data;
+            }
+        }
+
+        public async Task<List<BmWeWorking>> GetChannelBmWeWorking(string channel)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                var data = await Task.Run(() => dbContext.sp_ChannelBMWorking(channel).ToList());
+                return data;
+            }
+        }
+
         private AccountEntryView MapToAccountEntryView(AccountEntryHeader data)
         {
             var toRtn = new AccountEntryView

@@ -507,177 +507,36 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             return View("PunchCompliance", vm);
         }
 
-        //public async Task<ActionResult> MyTargets(string selectedMonth = null)
-        //{
-        //    var selectedYear =  DateTime.Now.Year.ToString();
-        //    selectedMonth = !string.IsNullOrEmpty(selectedMonth) ? selectedMonth : DateTime.Now.Month.ToString();
+        [UserFilter(AccessLevel = "Admin,TPC,RM,DD,RD")]
+        public async Task<ActionResult> WeekendWorking()
+        {
+            WeWorkingVm vm = new WeWorkingVm();
 
-        //    int month = int.Parse(selectedMonth);
+            if (System.Web.HttpContext.Current.Session["_ChannelName"] != null)
+            {
+                vm.Message = "This page is not available in the currently selected view, please select a store from the top right menu or go back.";
+                vm.MessageType = MessageType.Error;
+            }
+            else if (System.Web.HttpContext.Current.Session["_DivisionName"] != null)
+            {
+                vm.PopulateHeader(mapper.Map<List<WeWorkingView>>(await _storeManager.GetDivisionBmWeWorking(System.Web.HttpContext.Current.Session["_DivisionName"].ToString())));
+                vm.PopulateSecHeader(mapper.Map<List<WeWorkingView>>(await _storeManager.GetChannelBmWeWorking(_store.Channel)));
+                vm.DisplayType = 3;
+            }
+            else if(System.Web.HttpContext.Current.Session["_RegionNumber"] != null)
+            {
+                vm.PopulateHeader(mapper.Map<List<WeWorkingView>>(await _storeManager.GetBmWeWorking(System.Web.HttpContext.Current.Session["_RegionNumber"].ToString())));
+                vm.DisplayType = 2;
+            }
+            else
+            {
+                vm.Message = "This page is not available in the currently selected view, please select a region from the top right menu or go back.";
+                vm.MessageType = MessageType.Error;
+                vm.DisplayType = 1;
+            }
 
-        //    var result = await _storeManager.GetStorePandL(StoreNumber, selectedYear, month);
-        //    var vm = new MyTargetsViewModel { PageBlurb = ConfigurationManager.AppSettings["MyTargetsBlurb"], SelectedMonth = selectedMonth, PandLBudgetTargets = new Dictionary<string, decimal>(), SohBudgets = new Dictionary<int, double?>() };
-
-        //    var startWeek = vm.WeeksInMonth.OrderBy(x => x).FirstOrDefault().GetWeekOfYear(ConfigurationManager.AppSettings["FinancialYearStart"]);
-        //    var endWeek = vm.WeeksInMonth.OrderByDescending(x => x).FirstOrDefault().GetWeekOfYear(ConfigurationManager.AppSettings["FinancialYearStart"]);
-
-        //    var dashData = await _dashBoardManager.GetStoreDashBoardData(StoreNumber, startWeek, endWeek);
-
-        //    for (var i = 0; i < vm.WeeksInMonth.Count; i++)
-        //    {
-        //        vm.SohBudgets.Add(i, dashData.FirstOrDefault(x => x.WeekNumber == startWeek + i)?.FinalTarget.GetValueOrDefault());
-        //    }
-
-        //    if (result != null)
-        //    {
-        //        foreach (var pAndl in result?.GroupBy(x => x.AccountEntrySubTypeId).Select(x => x.FirstOrDefault()))
-        //        {
-        //            var total = result.Where(x => x.AccountEntrySubTypeId == pAndl.AccountEntrySubTypeId).Sum(x => x.BudgetAmount).GetValueOrDefault();
-        //            vm.PandLBudgetTargets.Add(pAndl.AccountEntrySubTypeText, total);
-        //        }
-        //    }
-
-        //    return View("MyTargets", vm);
-        //}
-
-        //public async Task<ActionResult> SohSpend()
-        //{
-        //    var wk = DateTime.Now.GetWeekOfYear(ConfigurationManager.AppSettings["FinancialYearStart"]);
-        //    var startWk = wk - 8;
-        //    var endWk = wk + 5;
-        //    var data = await _dashBoardManager.GetStoreDashBoardData(StoreNumber, startWk, endWk);
-        //    var hr = await _peopleManager.GetStoreStaff(StoreNumber);
-
-        //    var hrManagement = hr.Where(x => x.ROLE.ToLower().Contains("manager")).ToList();
-        //    var hrSales = hr.Where(x => x.ROLE.ToLower().Contains("customer consultant") || x.ROLE.ToLower().Contains("greeter")).ToList();
-        //    var hrGeekSquad = hr.Where(x => x.ROLE.ToLower().Contains("specialist")).ToList();
-        //    var hrEngineer = hr.Where(x => x.ROLE.ToLower().Contains("engineer")).ToList();
-        //    var hrSat = hr.Where(x => x.ROLE.ToLower().Contains("trainer")).ToList();
-
-        //    var vm = new SohSpendViewModel { PageBlurb = ConfigurationManager.AppSettings["SohSpendBlurb"] };
-        //    var currWk = wk.ToString().Substring(4);
-
-        //    var currentWkStart = DateTime.Now.GetFirstDayOfWeek();
-        //    var kronos = await GetKronosData(currentWkStart, currentWkStart.AddDays(28));
-
-        //    double lvSoh;
-        //    double lv2Soh;
-        //    double satSoh;
-
-        //    for (var i = 0; i < 13; i++)
-        //    {
-
-        //        double? spend = null;
-        //        double? geekSquad = null;
-        //        double? l1 = null;
-        //        double? l2 = null;
-        //        double? sales = null;
-        //        double? salesFt = null;
-        //        double? salesPt = null;
-        //        double? management = null;
-        //        double? sat = null;
-
-        //        var wkNum = startWk + i;
-        //        var dashBoard = data.FirstOrDefault(x => x.WeekNumber.GetValueOrDefault() == wkNum);
-
-        //        vm.SohBudgets.Add(wkNum, dashBoard == null ? null :  (double?)dashBoard.SOH.GetValueOrDefault());
-
-        //        if (wkNum < wk)
-        //        {
-        //            spend = dashBoard == null ? null : (double?)dashBoard.SOHUtilization.GetValueOrDefault();
-        //            geekSquad = dashBoard == null ? null : (double?)dashBoard.GSSOHSpend.GetValueOrDefault();
-        //            l1 = dashBoard == null ? null : (double?)dashBoard.ServiceLV1SOH.GetValueOrDefault();
-        //            l2 = dashBoard == null ? null : (double?)dashBoard.ServiceLV2SOH.GetValueOrDefault();
-        //            sales = dashBoard == null ? null : (double?)dashBoard.SOH.GetValueOrDefault();
-        //            salesFt = dashBoard == null ? null : (double?)dashBoard.SOH.GetValueOrDefault();
-        //            salesPt = dashBoard == null ? null : (double?)dashBoard.SOH.GetValueOrDefault();
-        //            management = dashBoard == null ? null : (double?)dashBoard.SOH.GetValueOrDefault();
-        //            sat = dashBoard == null ? null : (double?)dashBoard.SATSOH.GetValueOrDefault();
-        //        }
-        //        else // kronos
-        //        {
-        //            var salesList = kronos.Where(k => hrSales.Select(x => string.Format("UK{0}", x.EMP_NUM.GetValueOrDefault().ToString().PadLeft(6, '0'))).Contains(k.PersonNumber)).ToList();
-
-        //            geekSquad = kronos.Where(k => hrGeekSquad.Select(x => string.Format("UK{0}", x.EMP_NUM.GetValueOrDefault().ToString().PadLeft(6, '0'))).Contains(k.PersonNumber)).Sum((x => Utils.CalculateHours(x.EndTime, x.StartTime)));
-        //            l1 = kronos.Where(k => hrEngineer.Select(x => string.Format("UK{0}", x.EMP_NUM.GetValueOrDefault().ToString().PadLeft(6, '0'))).Contains(k.PersonNumber)).Sum((x => Utils.CalculateHours(x.EndTime, x.StartTime)));
-        //            management = kronos.Where(k => hrManagement.Select(x => string.Format("UK{0}", x.EMP_NUM.GetValueOrDefault().ToString().PadLeft(6, '0'))).Contains(k.PersonNumber)).Sum((x => Utils.CalculateHours(x.EndTime, x.StartTime)));
-        //            sat = kronos.Where(k => hrSat.Select(x => string.Format("UK{0}", x.EMP_NUM.GetValueOrDefault().ToString().PadLeft(6, '0'))).Contains(k.PersonNumber)).Sum((x => Utils.CalculateHours(x.EndTime, x.StartTime)));
-
-        //            sales = salesList.Sum((x => Utils.CalculateHours(x.EndTime, x.StartTime)));
-
-        //            salesFt = kronos.Where(k => hrSales.Where(x => x.CONTRACT_HOURS >= 45).Select(x => string.Format("UK{0}", x.EMP_NUM.GetValueOrDefault().ToString().PadLeft(6, '0'))).Contains(k.PersonNumber)).Sum(x => Utils.CalculateHours(x.EndTime, x.StartTime));
-        //            salesPt = kronos.Where(k => hrSales.Where(x => x.CONTRACT_HOURS < 45).Select(x => string.Format("UK{0}", x.EMP_NUM.GetValueOrDefault().ToString().PadLeft(6, '0'))).Contains(k.PersonNumber)).Sum(x => Utils.CalculateHours(x.EndTime, x.StartTime));
-        //            l2 = l1;
-
-        //            var tot = kronos.Where(x => x.ScheduledDate.GetWeekOfYear(ConfigurationManager.AppSettings["FinancialYearStart"]) == wkNum)
-        //                .Sum(x => Utils.CalculateHours(x.EndTime, x.StartTime));
-
-        //            spend = (double?)tot;
-        //        }
-
-        //        vm.SohSpends.Add(wkNum, spend);
-        //        vm.GeekSquad.Add(wkNum, geekSquad);
-        //        vm.L1Engineer.Add(wkNum, l1);
-        //        vm.L2Engineer.Add(wkNum, l2);
-        //        vm.Sales.Add(wkNum, sales);
-        //        vm.SalesFt.Add(wkNum, salesFt);
-        //        vm.SalesPt.Add(wkNum, salesPt);
-        //        vm.Management.Add(wkNum, dashBoard == null ? null : (double?)dashBoard.SOH.GetValueOrDefault());
-        //        vm.SmartAcademy.Add(wkNum, sat);
-        //    }
-
-        //    return View("SohSpend", vm);
-        //}
-
-        //public ActionResult Footfall()
-        //{
-        //    return View("Footfall");
-        //}
-
-
-        //public async Task<ActionResult> DashboardData()
-        //{
-        //    var weekOfYear = DateTime.Now.GetWeekOfYear(ConfigurationManager.AppSettings["FinancialYearStart"]);
-        //    var dashData = await GetDashData(weekOfYear);
-        //    var data = dashData.FirstOrDefault(); //todo
-        //    var model = data != null ? new List<KpiViewModel>
-        //    {
-        //        new KpiViewModel { Kpi = "Contract Hours", Current = data.FinalTarget, Target = data.OriginalTarget, WeekNumber = (int)data.WeekNumber, Year = data.Year },
-        //        new KpiViewModel { Kpi = "Weekly Spend", Current = 45, Target = 100, WeekNumber = (int)data.WeekNumber, Year = data.Year },
-        //        new KpiViewModel { Kpi = "Compliance Score", Current = data.ComplianceScore, Target = data.SOHUtilization, WeekNumber = (int)data.WeekNumber, Year = data.Year },
-        //        new KpiViewModel { Kpi = "Deployment Score", Current = 55, Target = 100, WeekNumber = (int)data.WeekNumber, Year = data.Year }
-
-        //    } : new List<KpiViewModel>();
-
-        //    return View("DashBoardData", model);
-        //}
-
-        //public async Task<ActionResult> GetNonScheduled()
-        //{
-        //    var dt = DateTime.Now.GetFirstDayOfWeek();
-        //    var staff = await _peopleManager.GetStoreStaff(StoreNumber);
-
-        //    var kronos = await GetKronosData(dt, dt.AddDays(13));
-
-        //    var nonScheduled = GetNonScheduledCollegues(kronos, staff);
-
-        //    var vm = nonScheduled;
-        //    //vm.SelectedDate = selectedDate;
-        //    vm.PageBlurb = ConfigurationManager.AppSettings["NonScheduledBlurb"];
-
-        //    return View("NonScheduledColleagues", vm);
-
-        //}
-
-        //public ActionResult KeyPerformace()
-        //{
-        //    return View("Kpis");
-        //}
-
-        //[RoleFilter(AccessLevel = "BranchManagerGroup, RegionalManagerGroup")]
-        //public ActionResult Cgm()
-        //{
-        //    return View("Cgm");
-        //}
+            return View(vm);
+        }
 
         private int GetWeekNumber(string selectedDate)
         {
@@ -690,23 +549,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
 
             return weekOfYr;
         }
-
-        //private List<DeploymentDetail> CreateWeeklyDetails(WeeklyDeployment weeklyData)
-        //{
-        //    var ls = new List<DeploymentDetail>();
-        //    if (weeklyData == null) return ls;
-
-        //    ls.Add(new DeploymentDetail { Spend = weeklyData.SundaySpend.GetValueOrDefault() * 100, Target = weeklyData.SundayReq.GetValueOrDefault() * 100, WeekNumber = "Sunday" });
-        //    ls.Add(new DeploymentDetail { Spend = weeklyData.MondaySpend.GetValueOrDefault() * 100, Target = weeklyData.MondayReq.GetValueOrDefault() * 100, WeekNumber = "Monday" });
-        //    ls.Add(new DeploymentDetail { Spend = weeklyData.TuesdaySpend.GetValueOrDefault() * 100, Target = weeklyData.TuesdayReq.GetValueOrDefault() * 100, WeekNumber = "Tuesday" });
-        //    ls.Add(new DeploymentDetail { Spend = weeklyData.WednesdaySpend.GetValueOrDefault() * 100, Target = weeklyData.WednesdayReq.GetValueOrDefault() * 100, WeekNumber = "Wednesday" });
-        //    ls.Add(new DeploymentDetail { Spend = weeklyData.ThursdaySpend.GetValueOrDefault() * 100, Target = weeklyData.ThursdayReq.GetValueOrDefault() * 100, WeekNumber = "Thursday" });
-        //    ls.Add(new DeploymentDetail { Spend = weeklyData.FridaySpend.GetValueOrDefault() * 100, Target = weeklyData.FridayReq.GetValueOrDefault() * 100, WeekNumber = "Friday" });
-        //    ls.Add(new DeploymentDetail { Spend = weeklyData.SaturdaySpend.GetValueOrDefault() * 100, Target = weeklyData.SaturdayReq.GetValueOrDefault() * 100, WeekNumber = "Saturday" });
-
-        //    return ls;
-        //}
-
+        
         private static DateTime GetScheduledWeekDate(string scheduledWeek)
         {
             DateTime dt = DateTime.Now;
@@ -732,70 +575,5 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
 
             return dt;
         }
-
-        //private NonScheduledColleguesViewModel GetNonScheduledCollegues(List<ScheduledCollegues> kronosData, List<HrFeed> staff)
-        //{
-        //    return Utils.GetNonScheduledCollegues(kronosData, staff);
-        //}
-
-        //private StandardReportViewModel GetReportData(string report, DashBoardData data)
-        //{
-        //    var model = new StandardReportViewModel { ReportName = report };
-
-        //    switch (report.ToLower())
-        //    {
-        //        case "deployment":
-        //            model.Scores = GetDeploymentScores(data);
-        //            model.PageBlurb = ConfigurationManager.AppSettings["DeploymentBlurb"];
-        //            break;
-        //        case "compliance":
-        //            model.Scores = GetComplianceData(data);
-        //            model.PageBlurb = ConfigurationManager.AppSettings["ComplianceBlurb"];
-        //            break;
-        //        default:
-        //            model.Scores = new Dictionary<string, int>();
-        //            break;
-        //    }
-
-        //    return model;
-        //}
-
-
-        //private async Task<List<ScheduledCollegues>> GetKronosData(DateTime startDate, DateTime endDate)
-        //{
-        //    var data =  await Utils.GetKronosData(startDate, endDate, _store.KronosStoreName, isOffice);
-
-        //    return data;
-        //}
-
-        //private Dictionary<string, int> GetDeploymentScores(DashBoardData data)
-        //{
-        //    var dict = new Dictionary<string, int>()
-        //    {
-        //        {"Current Contract Hours", (int)data?.ContractHours.GetValueOrDefault() },
-        //        {"Contract Base", (int)data?.ContractBaseTarget.GetValueOrDefault() },
-        //        {"SOH Target", (int)data?.SOH.GetValueOrDefault() },
-        //        {"SOH Spend", (int)data?.FinalTarget.GetValueOrDefault() },
-        //        {"Deployment Score", (int)data?.SOHUtilization.GetValueOrDefault() },
-        //    };
-
-        //    return dict;
-        //}
-
-        //private Dictionary<string, int> GetComplianceData(DashBoardData data)
-        //{
-        //    var dict = new Dictionary<string, int>()
-        //    {
-        //        {"SOH Spend Over Target", (int)(data?.SOH.GetValueOrDefault() - data.FinalTarget.GetValueOrDefault())  },
-        //        {"Current Contract Over Base", (int)(data?.ContractHours.GetValueOrDefault() - data.ContractBaseTarget.GetValueOrDefault()) },
-        //        {"Paid for Hrs Not Worked", (int)data?.LeakageCount.GetValueOrDefault() },
-        //        {"Pay Corrections", (int)data?.SOH.GetValueOrDefault() },
-        //        {"Deployment Score", (int)data?.PayrollCorrections.GetValueOrDefault() },
-        //        {"Missing & Zero Hour Time Cards", 5 }, // (int)(data.ZeroHour.GetValueOrDefault() - data.ContractBaseTarget.GetValueOrDefault()) },// to do
-        //        {"Overall Compliance", (int)data?.ComplianceScore.GetValueOrDefault() },
-        //    };
-
-        //    return dict;
-        //}
     }
 }

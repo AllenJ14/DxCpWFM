@@ -130,5 +130,11 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
         Task<List<sp_GetRegionBMSchedule_Result>> GetRegionBMSchedule(string regionNumber, int weekNumber);
 
         Task<List<CPW_Clocking_Data>> GetRegionBMPunch(string regionNo, int weekNum);
+
+        Task<List<BmWeWorking>> GetBmWeWorking(string regionNumber);
+
+        Task<List<BmWeWorking>> GetDivisionBmWeWorking(string divisionName);
+
+        Task<List<BmWeWorking>> GetChannelBmWeWorking(string channel);
     }
 }
