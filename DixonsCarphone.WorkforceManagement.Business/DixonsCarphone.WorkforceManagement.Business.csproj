@@ -307,6 +307,9 @@
     <Compile Include="Entities\StoreRegion.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\tempRegionLookup.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\TicketAnswer.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>

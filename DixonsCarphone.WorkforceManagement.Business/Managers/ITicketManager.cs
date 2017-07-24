@@ -46,5 +46,7 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
         List<sp_GetClosedFormsByTPC_Result> GetClosedFormsWithTPC(string _userName, string _type);
 
         Task<List<TicketType>> GetTypeMenu();
+
+        Task<string> GetRegion(int branchNumber);
     }
 }

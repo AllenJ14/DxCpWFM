@@ -69,6 +69,7 @@
         <AssociationConnector Association="DixonsCarphone.WorkforceManagement.Business.FK_TicketStub_TicketType" />
         <AssociationConnector Association="DixonsCarphone.WorkforceManagement.Business.FK_TicketTemplate_TicketType" />
         <EntityTypeShape EntityType="DixonsCarphone.WorkforceManagement.Business.BmWeWorking" Width="1.5" PointX="0.75" PointY="19.75" />
+        <EntityTypeShape EntityType="DixonsCarphone.WorkforceManagement.Business.tempRegionLookup" Width="1.5" PointX="18.375" PointY="15.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

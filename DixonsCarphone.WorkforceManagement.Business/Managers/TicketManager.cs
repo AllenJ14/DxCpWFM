@@ -233,5 +233,14 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
                 return await dbContext.TicketTypes.Where(x => (bool)x.Live).ToListAsync();
             }
         }
+
+        public async Task<string> GetRegion(int branchNumber)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                var result = await dbContext.tempRegionLookups.Where(x => x.Store == branchNumber).FirstOrDefaultAsync();
+                return result.Area.ToString();
+            }
+        }
     }
 }

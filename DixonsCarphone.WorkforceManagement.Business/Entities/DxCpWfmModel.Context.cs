@@ -71,6 +71,7 @@ namespace DixonsCarphone.WorkforceManagement.Business.Entities
         public virtual DbSet<TicketEscalation> TicketEscalations { get; set; }
         public virtual DbSet<TicketType> TicketTypes { get; set; }
         public virtual DbSet<BmWeWorking> BmWeWorkings { get; set; }
+        public virtual DbSet<tempRegionLookup> tempRegionLookups { get; set; }
     
         public virtual ObjectResult<udsp_GetPandL_Result> udsp_GetPandL(Nullable<int> storeNumber, string periodYear, Nullable<short> periodMonth, Nullable<short> qtdStartMonth, Nullable<short> ytdStartMonth)
         {

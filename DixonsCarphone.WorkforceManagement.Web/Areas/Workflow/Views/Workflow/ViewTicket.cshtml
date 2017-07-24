@@ -116,13 +116,13 @@
                 <tr>
                     <td>@item.TicketTemplate.Question</td>
                     @if (item.TicketTemplate.apiIdent == "empList")
-                {
+                    {
                     string[] values = item.Answer.Split('.');
-                        <td>@string.Format("{0} - {1}, {2}", values[0], values[1], values[2])</td>
+                        <td id="@("q_" + item.QuestionId)">@string.Format("{0} - {1}, {2}", values[0], values[1], values[2])</td>
                     }
                     else
                     {
-                        <td>@item.Answer</td>
+                        <td id="@("q_" + item.QuestionId)">@item.Answer</td>
                     }
                 </tr>
             }
@@ -187,8 +187,8 @@
 
 @section myScripts{
     <script id="wf1" data-TickType="@Model.TicketTypeId" data-level="@Model.EscalationLevel" src="~/Content/Workflow/WorkflowViewTicket.min.js"></script>
-    @if(Model.TicketTypeId == 1 && Model.Exception == 1 && Model.RaisedBy != User.Identity.Name)
+    @if(Model.TicketTypeId == 1 && Model.RaisedBy != User.Identity.Name)
     {
-        <script id="wfCR" src="~/Content/Workflow/WorkflowViewTicketCR.min.js"></script>
+        <script id="wfCR" src="~/Content/Workflow/WorkflowViewTicketCR.min.js" data-branch="@Model.TicketAnswers.Where(x => x.QuestionId == 2).First().Answer" data-exception="@Model.Exception"></script>
     }
 }

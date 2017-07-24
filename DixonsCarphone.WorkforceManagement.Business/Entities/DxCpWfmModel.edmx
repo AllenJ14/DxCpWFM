@@ -638,6 +638,14 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
           <Property Name="GroupId" Type="int" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="250" />
         </EntityType>
+        <EntityType Name="tempRegionLookup">
+          <Key>
+            <PropertyRef Name="EntryId" />
+          </Key>
+          <Property Name="EntryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Area" Type="smallint" />
+          <Property Name="Store" Type="smallint" />
+        </EntityType>
         <EntityType Name="TicketAnswers">
           <Key>
             <PropertyRef Name="EntryId" />
@@ -1178,6 +1186,7 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <EntitySet Name="UserAccess" EntityType="Self.UserAccess" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WeeklyFootfall" EntityType="Self.WeeklyFootfall" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Groups" EntityType="Self.Groups" Schema="tck" store:Type="Tables" />
+          <EntitySet Name="tempRegionLookup" EntityType="Self.tempRegionLookup" Schema="tck" store:Type="Tables" />
           <EntitySet Name="TicketAnswers" EntityType="Self.TicketAnswers" Schema="tck" store:Type="Tables" />
           <EntitySet Name="TicketAudit" EntityType="Self.TicketAudit" Schema="tck" store:Type="Tables" />
           <EntitySet Name="TicketComment" EntityType="Self.TicketComment" Schema="tck" store:Type="Tables" />
@@ -1756,11 +1765,12 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           </FunctionImport>
           <EntitySet Name="BmWeWorkings" EntityType="DixonsCarphone.WorkforceManagement.Business.BmWeWorking" />
           <FunctionImport Name="sp_ChannelBMWorking" EntitySet="BmWeWorkings" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.BmWeWorking)">
-            <Parameter Name="Channel" Mode="In" Type="String" />
+          <Parameter Name="Channel" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_DivisionBMWorking" EntitySet="BmWeWorkings" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.BmWeWorking)">
-            <Parameter Name="Division" Mode="In" Type="String" />
+          <Parameter Name="Division" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="tempRegionLookups" EntityType="DixonsCarphone.WorkforceManagement.Business.tempRegionLookup" />
         </EntityContainer>
         <EntityType Name="BestPracticeCategoryType">
           <Key>
@@ -3328,6 +3338,14 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Property Type="Int16" Name="RegionNum" Nullable="true" />
           <Property Type="Byte" Name="worked" Nullable="true" />
         </ComplexType>
+        <EntityType Name="tempRegionLookup">
+          <Key>
+            <PropertyRef Name="EntryId" />
+          </Key>
+          <Property Name="EntryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Area" Type="Int16" />
+          <Property Name="Store" Type="Int16" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4876,6 +4894,15 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_DivisionBMWorking" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_DivisionBMWorking">
           </FunctionImportMapping>
+          <EntitySetMapping Name="tempRegionLookups">
+            <EntityTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.tempRegionLookup">
+              <MappingFragment StoreEntitySet="tempRegionLookup">
+                <ScalarProperty Name="Store" ColumnName="Store" />
+                <ScalarProperty Name="Area" ColumnName="Area" />
+                <ScalarProperty Name="EntryId" ColumnName="EntryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

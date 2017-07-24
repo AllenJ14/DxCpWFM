@@ -179,6 +179,12 @@ namespace DixonsCarphone.WorkforceManagement.Web.Areas.Workflow.Controllers
         }
 
         [HttpGet]
+        public async Task<string> _getRegion(int branchNum)
+        {
+            return await _ticketManager.GetRegion(branchNum);
+        }
+
+        [HttpGet]
         [OutputCache(Duration = 30, VaryByParam = "none", Location = System.Web.UI.OutputCacheLocation.Client, NoStore = true)]
         public int _getTicketCount()
         {

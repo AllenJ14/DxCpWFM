@@ -60,6 +60,23 @@
 
 @if (ticketType == 1)
 {
+    <div class="modal fade" id="crReminder" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h3 class="modal-title">Reminder</h3>
+                </div>
+                <div class="modal-body">
+                    <h4>Ensure all shifts you are requesting have already been scheduled in STAR at the colleague's home branch.</h4>
+                    <h4>Please confirm this has been actioned</h4>
+                </div>
+                <div class="modal-footer text-center">
+                    <button class="btn btn-success" id="crDismiss" data-dismiss="modal">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="modal fade" id="crException" tabindex="-1" role="dialog" data-backdrop="static">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
