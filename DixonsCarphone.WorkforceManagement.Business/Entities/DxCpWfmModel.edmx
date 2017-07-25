@@ -1081,6 +1081,13 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Parameter Name="QtdStartMonth" Type="smallint" Mode="In" />
           <Parameter Name="YtdStartMonth" Type="smallint" Mode="In" />
         </Function>
+        <Function Name="udsp_GetPandLChannelSummary" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ChannelName" Type="nvarchar" Mode="In" />
+          <Parameter Name="PeriodYear" Type="nvarchar" Mode="In" />
+          <Parameter Name="PeriodMonth" Type="smallint" Mode="In" />
+          <Parameter Name="QtdStartMonth" Type="smallint" Mode="In" />
+          <Parameter Name="YtdStartMonth" Type="smallint" Mode="In" />
+        </Function>
         <Function Name="udsp_GetPandLDivision" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="DivisionName" Type="nvarchar" Mode="In" />
           <Parameter Name="PeriodYear" Type="nvarchar" Mode="In" />
@@ -1771,6 +1778,13 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Parameter Name="Division" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="tempRegionLookups" EntityType="DixonsCarphone.WorkforceManagement.Business.tempRegionLookup" />
+          <FunctionImport Name="udsp_GetPandLChannelSummary" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.udsp_GetPandLChannelSummary_Result)">
+            <Parameter Name="ChannelName" Mode="In" Type="String" />
+            <Parameter Name="PeriodYear" Mode="In" Type="String" />
+            <Parameter Name="PeriodMonth" Mode="In" Type="Int16" />
+            <Parameter Name="QtdStartMonth" Mode="In" Type="Int16" />
+            <Parameter Name="YtdStartMonth" Mode="In" Type="Int16" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="BestPracticeCategoryType">
           <Key>
@@ -3346,6 +3360,18 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Property Name="Area" Type="Int16" />
           <Property Name="Store" Type="Int16" />
         </EntityType>
+        <ComplexType Name="udsp_GetPandLChannelSummary_Result">
+          <Property Type="Int32" Name="Heirarchy" Nullable="false" />
+          <Property Type="String" Name="Year" Nullable="true" MaxLength="50" />
+          <Property Type="Int16" Name="Month" Nullable="true" />
+          <Property Type="String" Name="DetailName" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="PeriodActual" Nullable="true" Precision="38" Scale="3" />
+          <Property Type="Decimal" Name="PeriodBudget" Nullable="true" Precision="38" Scale="3" />
+          <Property Type="Decimal" Name="QuarterActual" Nullable="true" Precision="38" Scale="3" />
+          <Property Type="Decimal" Name="QuarterBudget" Nullable="true" Precision="38" Scale="3" />
+          <Property Type="Decimal" Name="AnnualActual" Nullable="true" Precision="38" Scale="3" />
+          <Property Type="Decimal" Name="AnnualBudget" Nullable="true" Precision="38" Scale="3" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4903,6 +4929,22 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="udsp_GetPandLChannelSummary" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.udsp_GetPandLChannelSummary">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.udsp_GetPandLChannelSummary_Result">
+                <ScalarProperty Name="Heirarchy" ColumnName="Heirarchy" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Month" ColumnName="Month" />
+                <ScalarProperty Name="DetailName" ColumnName="DetailName" />
+                <ScalarProperty Name="PeriodActual" ColumnName="PeriodActual" />
+                <ScalarProperty Name="PeriodBudget" ColumnName="PeriodBudget" />
+                <ScalarProperty Name="QuarterActual" ColumnName="QuarterActual" />
+                <ScalarProperty Name="QuarterBudget" ColumnName="QuarterBudget" />
+                <ScalarProperty Name="AnnualActual" ColumnName="AnnualActual" />
+                <ScalarProperty Name="AnnualBudget" ColumnName="AnnualBudget" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

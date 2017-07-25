@@ -691,5 +691,30 @@ namespace DixonsCarphone.WorkforceManagement.Business.Entities
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<BmWeWorking>("sp_DivisionBMWorking", mergeOption, divisionParameter);
         }
+    
+        public virtual ObjectResult<udsp_GetPandLChannelSummary_Result> udsp_GetPandLChannelSummary(string channelName, string periodYear, Nullable<short> periodMonth, Nullable<short> qtdStartMonth, Nullable<short> ytdStartMonth)
+        {
+            var channelNameParameter = channelName != null ?
+                new ObjectParameter("ChannelName", channelName) :
+                new ObjectParameter("ChannelName", typeof(string));
+    
+            var periodYearParameter = periodYear != null ?
+                new ObjectParameter("PeriodYear", periodYear) :
+                new ObjectParameter("PeriodYear", typeof(string));
+    
+            var periodMonthParameter = periodMonth.HasValue ?
+                new ObjectParameter("PeriodMonth", periodMonth) :
+                new ObjectParameter("PeriodMonth", typeof(short));
+    
+            var qtdStartMonthParameter = qtdStartMonth.HasValue ?
+                new ObjectParameter("QtdStartMonth", qtdStartMonth) :
+                new ObjectParameter("QtdStartMonth", typeof(short));
+    
+            var ytdStartMonthParameter = ytdStartMonth.HasValue ?
+                new ObjectParameter("YtdStartMonth", ytdStartMonth) :
+                new ObjectParameter("YtdStartMonth", typeof(short));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<udsp_GetPandLChannelSummary_Result>("udsp_GetPandLChannelSummary", channelNameParameter, periodYearParameter, periodMonthParameter, qtdStartMonthParameter, ytdStartMonthParameter);
+        }
     }
 }

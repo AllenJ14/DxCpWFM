@@ -163,6 +163,38 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
                 return Redirect("/");
         }
 
+        // Action when changing channel in drop down list
+        [UserFilter(AccessLevel = "Admin")]
+        public async Task<ActionResult> SetNewChannel(string selectedChannel)
+        {
+            if (System.Web.HttpContext.Current.Session["_RegionNumber"] != null)
+            {
+                System.Web.HttpContext.Current.Session.Remove("_RegionNumber");
+            }
+            if (System.Web.HttpContext.Current.Session["_DivisionName"] != null)
+            {
+                System.Web.HttpContext.Current.Session.Remove("_DivisionName");
+            }
+            if (System.Web.HttpContext.Current.Session["_ChannelName"] != null)
+            {
+                System.Web.HttpContext.Current.Session.Remove("_ChannelName");
+            }
+
+            if(selectedChannel != "reset")
+            {
+                System.Web.HttpContext.Current.Session["_AccessArea"] = selectedChannel;
+                System.Web.HttpContext.Current.Session["_ChannelName"] = selectedChannel;
+            }            
+
+            var returnUri = Request.UrlReferrer; // HttpContext.Request.Url;
+            if (returnUri != null && Url.IsLocalUrl(returnUri?.AbsolutePath))
+            {
+                return Redirect(returnUri?.AbsolutePath);
+            }
+            else
+                return Redirect("/");
+        }
+
         public ActionResult UnknownStore()
         {
             if(TempData["storeFindError"] != null)

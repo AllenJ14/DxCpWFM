@@ -10,6 +10,27 @@
     
 }
 
+@if(HttpContext.Current.Session["_AccessLevel"] != null && HttpContext.Current.Session["_AccessLevel"].ToString() == "Admin")
+{
+    <li>@(Model.CurrentDivision ?? "Chain View")</li>
+    <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+            <i class="glyphicon glyphicon-th-large"></i>
+        </a>
+        <ul class="dropdown-menu dropdown-user">
+            <li>
+                <a href="@Url.Action("SetNewChannel", "Profiles", new { selectedChannel = "SAS", area = "" })">SAS</a>
+            </li>
+            <li>
+                <a href="@Url.Action("SetNewChannel", "Profiles", new { selectedChannel = "SIS", area = "" })">SIS</a>
+            </li>
+            <li role="separator" class="divider"></li>
+            <li>
+                <a href="@Url.Action("SetNewChannel", "Profiles", new { selectedChannel = "reset", area = "" })">Reset</a>
+            </li>
+        </ul>
+    </li>
+}
 
 @if (Model.Regions != null && Model.Regions.Count > 0)
 {
@@ -35,7 +56,6 @@
         </ul>
     </li>
 }
-
 
 <li>@Model.CurrentStoreName</li>
 

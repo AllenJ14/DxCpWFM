@@ -340,9 +340,8 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             {
                 if (System.Web.HttpContext.Current.Session["_ChannelName"] != null)
                 {
-                    vm.DetailCollection = new List<PandLSummaryDetail>();
-                    vm.MessageType = MessageType.Error;
-                    vm.Message = "This view is currently unavailable";
+                    vm.DetailCollection = mapper.Map<List<PandLSummaryDetail>>(await _storeManager.GetChannelPLSummary(System.Web.HttpContext.Current.Session["_ChannelName"].ToString()));
+                    ViewBag.current = "All";
                 }
                 else if (System.Web.HttpContext.Current.Session["_DivisionName"] != null)
                 {
@@ -361,9 +360,8 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
                 int month = int.Parse(selectedMonth);
                 if (System.Web.HttpContext.Current.Session["_ChannelName"] != null)
                 {
-                    vm.DetailCollection = new List<PandLSummaryDetail>();
-                    vm.MessageType = MessageType.Error;
-                    vm.Message = "This view is currently unavailable";
+                    vm.DetailCollection = mapper.Map<List<PandLSummaryDetail>>(await _storeManager.GetChannelPLSummary(System.Web.HttpContext.Current.Session["_ChannelName"].ToString(), selectedYear, month));
+                    ViewBag.current = "All";
                 }
                 else if (System.Web.HttpContext.Current.Session["_DivisionName"] != null)
                 {
@@ -407,6 +405,9 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
                     case 3:
                         vm.PandLDetails = mapper.Map<List<PandLView>>(await _storeManager.GetDivisionPandL(selection));
                         break;
+                    case 4:
+                        vm.PandLDetails = mapper.Map<List<PandLView>>(await _storeManager.GetChannelPandL(selection));
+                        break;
                     default:
                         vm.PandLDetails = new List<PandLView>();
                         break;
@@ -427,6 +428,9 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
                         break;
                     case 3:
                         vm.PandLDetails = mapper.Map<List<PandLView>>(await _storeManager.GetDivisionPandL(selection, selectedYear, month));
+                        break;
+                    case 4:
+                        vm.PandLDetails = mapper.Map<List<PandLView>>(await _storeManager.GetChannelPandL(selection, selectedYear, month));
                         break;
                     default:
                         vm.PandLDetails = new List<PandLView>();

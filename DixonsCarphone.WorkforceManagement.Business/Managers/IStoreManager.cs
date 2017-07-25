@@ -136,5 +136,9 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
         Task<List<BmWeWorking>> GetDivisionBmWeWorking(string divisionName);
 
         Task<List<BmWeWorking>> GetChannelBmWeWorking(string channel);
+
+        Task<List<udsp_GetPandLChannelSummary_Result>> GetChannelPLSummary(string channelName, string year, int? month);
+
+        Task<List<udsp_GetPandLChannelSummary_Result>> GetChannelPLSummary(string channelName);
     }
 }

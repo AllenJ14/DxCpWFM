@@ -4,7 +4,7 @@
 @{ 
     var modalId = string.Format("myModal{0}", Model.FirstOrDefault()?.AccountEntryDetailId);
     var modalLabel = string.Format("myModalLabel{0}", Model.FirstOrDefault()?.AccountEntryDetailId);
-
+    bool budget = Model.Sum(x => x.BreakdownBudgetAmount) > 0;
 }
 
 <div class="panel-default">
@@ -26,6 +26,10 @@
                             <th>Title</th>
                             <th>Description</th>
                             <th>Actual</th>
+                            @if (budget)
+                            {
+                                <th>Budget</th>
+                            }                            
                         </tr>
                         @foreach (var breakDown in Model)
                         {
@@ -33,6 +37,10 @@
                                 <td>@breakDown.BreakdownTitle</td>
                                 <td>@string.Format("{0:c}", breakDown.BreakdownText)</td>
                                 <td>@string.Format("{0:c}", breakDown.BreakdownActualAmount)</td>
+                                @if (budget)
+                                {
+                                    <td>@string.Format("{0:c}", breakDown.BreakdownBudgetAmount)</td>
+                                }
                             </tr>
                         }
                     </table>

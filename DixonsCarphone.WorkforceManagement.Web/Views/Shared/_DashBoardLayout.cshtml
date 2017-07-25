@@ -10,7 +10,7 @@
 
     if(HttpContext.Current.Session["_ChannelName"] != null)
     {
-        storesMenu.CurrentStoreName = HttpContext.Current.Session["_ChannelName"].ToString();
+        storesMenu.CurrentDivision = HttpContext.Current.Session["_ChannelName"].ToString();
     }
     else if(HttpContext.Current.Session["_DivisionName"] != null)
     {
@@ -25,6 +25,7 @@
     {
         storesMenu.CurrentStoreName = store.CST_CNTR_ID +  " - " + storeName;
         storesMenu.CurrentRegionNumber = store.RegionNo;
+        storesMenu.CurrentDivision = null;
     }
 
     var bestPractices = MvcHelper.GetBestPracticeCache();

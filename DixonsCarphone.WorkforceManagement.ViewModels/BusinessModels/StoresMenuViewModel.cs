@@ -14,6 +14,10 @@ namespace DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
 
         public List<SelectListItem> Regions { get; set; }
 
+        public List<SelectListItem> Divisions { get; set; }
+
+        public string CurrentDivision { get; set; }
+
         public string CurrentRegionNumber { get; set; }
 
         public string CurrentStoreName { get; set; }

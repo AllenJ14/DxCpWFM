@@ -100,6 +100,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Mapping
             CreateMap<udsp_GetPandLChannel_Result, PandLView>();
             CreateMap<udsp_GetPandLDivisionSummary_Result, PandLSummaryDetail>();
             CreateMap<udsp_GetPandLRegionSummary_Result, PandLSummaryDetail>();
+            CreateMap<udsp_GetPandLChannelSummary_Result, PandLSummaryDetail>();
         }
     }
 

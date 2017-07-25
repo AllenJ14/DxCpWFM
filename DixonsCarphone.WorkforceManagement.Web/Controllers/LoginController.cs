@@ -172,7 +172,10 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             else if(AccessLevel == "RD")
             {
                 var stores = await _storeManager.GetDivisionsForChannel(AccessArea);
-                var storesVm = new StoresMenuViewModel { Stores = new List<SelectListItem>() };
+                var storesVm = new StoresMenuViewModel {
+                    Stores = stores.Select(x => new SelectListItem { Value = x.Division, Text = x.Division}).ToList(),
+                    Regions = stores.Select(x => new SelectListItem { Value = x.Division, Text = x.Division }).ToList()
+                };
                 
                 foreach(var item in stores)
                 {
@@ -193,14 +196,18 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
                     Regions = regions.Select(x => new SelectListItem { Value = x.RegionNo, Text = x.RegionNo}).ToList()
                 };
                 storesVm.Stores.Add(new SelectListItem { Value = "Region " + stores[0].RegionNo.ToString(), Text = "Region " + stores[0].RegionNo.ToString() });
-                System.Web.HttpContext.Current.Session.Add("_StoresMenu", storesVm);
 
-                var newSelectedStore = await _storeManager.GetStoreDetails(stores.Select(x => x.CST_CNTR_ID).First());
-                if (newSelectedStore != null)
+                if (AccessLevel == "Admin")
                 {
-                    System.Web.HttpContext.Current.Session.Add("_ROIFlag", newSelectedStore.Channel == "ROI");
-                    System.Web.HttpContext.Current.Session.Add("_StoreDetails", newSelectedStore);
+                    var divisions = regions.GroupBy(x => x.Division).Select(x => new { Division = x.Key }).ToList();
+                    storesVm.Divisions = divisions.Select(x => new SelectListItem { Value = x.Division, Text = x.Division }).ToList();
+                    storesVm.Divisions.Add(new SelectListItem { Value = stores.First().Channel, Text = stores.First().Channel });
                 }
+
+                System.Web.HttpContext.Current.Session.Add("_StoresMenu", storesVm);
+                
+                System.Web.HttpContext.Current.Session.Add("_ROIFlag", stores.First().Channel == "ROI");
+                System.Web.HttpContext.Current.Session.Add("_StoreDetails", stores.First());
             }
         }
 
