@@ -158,47 +158,68 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             return View("Deployment", vm);
         }
 
-        //public async Task<ActionResult> WfmForWeek(StandardReportViewModel vm)
-        //{
-        //    DateTime dt;
-        //    if (DateTime.TryParse(vm.SelectedDate, out dt))
-        //    {
-        //        var weekOfYear = dt.GetWeekOfYear(ConfigurationManager.AppSettings["FinancialYearStart"]);
+        public async Task<ActionResult> Footfall(string selectedYear = null, string selectedWeek = null)
+        {
+            FootfallVm vm = new FootfallVm();
 
-        //        var data = await GetDashData(weekOfYear);
-        //        var dashData = data.FirstOrDefault(x => x.WeekNumber == weekOfYear) ?? new DashBoardData(); //todo
+            if(selectedWeek == null)
+            {
+                var weekDetail =  _storeManager.GetSingleWeek(DateTime.Now.AddDays(-7));
+                selectedYear = weekDetail.ToString().Substring(2, 2);
+                selectedYear =  (int.Parse(selectedYear) - 1).ToString() + "/" + selectedYear;
+                selectedWeek = weekDetail.ToString().Substring(4, 2);
+            }
 
-        //        var model = GetReportData(vm.ReportName, dashData);
-        //        return View("Wfm", model);
-        //    }
-        //    else
-        //        return View("Wfm", new StandardReportViewModel { ReportName = vm.ReportName });
-        //}
+            if (System.Web.HttpContext.Current.Session["_ChannelName"] != null)
+            {
+                vm.Message = "This page is not available in the currently selected view, please select a store from the top right menu or go back.";
+                vm.MessageType = MessageType.Error;
+            }
+            else if (System.Web.HttpContext.Current.Session["_DivisionName"] != null)
+            {
+                var data = mapper.Map<List<FootfallView>>(await _storeManager.GetDivisionFootfall(System.Web.HttpContext.Current.Session["_DivisionName"].ToString(), selectedYear, int.Parse(selectedWeek)));
+                if (data.Count() > 0)
+                {
+                    vm.Populate(data);
+                    vm.test = data.GroupBy(x => x.Invoice_Day_Name).Select(x => new { x.Key, Footfall = x.Sum(y => y.Footfall_Volume) }).Select(x => x.Footfall).ToArray();
+                }
+                else
+                {
+                    vm.Message = "No data found for the selected period";
+                    vm.MessageType = MessageType.Warning;
+                }
+            }
+            else if (System.Web.HttpContext.Current.Session["_RegionNumber"] != null)
+            {
+                var data = mapper.Map<List<FootfallView>>(await _storeManager.GetRegionFootfall(System.Web.HttpContext.Current.Session["_RegionNumber"].ToString(), selectedYear, int.Parse(selectedWeek)));
+                if (data.Count() > 0)
+                {
+                    vm.Populate(data);
+                    vm.test = data.GroupBy(x => x.Invoice_Day_Name).Select(x => new { x.Key, Footfall = x.Sum(y => y.Footfall_Volume) }).Select(x => x.Footfall).ToArray();
+                }
+                else
+                {
+                    vm.Message = "No data found for the selected period";
+                    vm.MessageType = MessageType.Warning;
+                }
+            }
+            else
+            {
+                var data = mapper.Map<List<FootfallView>>(await _storeManager.GetBranchFootfall(StoreNumber, selectedYear, int.Parse(selectedWeek)));
+                if (data.Count() > 0)
+                {
+                    vm.Populate(data);
+                    vm.test = data.GroupBy(x => x.Invoice_Day_Name).Select(x => new { x.Key, Footfall = x.Sum(y => y.Footfall_Volume) }).Select(x => x.Footfall).ToArray();
+                }
+                else
+                {
+                    vm.Message = "No data found for the selected period";
+                    vm.MessageType = MessageType.Warning;
+                }                
+            }
 
-        //public async Task<ActionResult> Schedules(string selectedDate)
-        //{
-        //    var ls = new List<ScheduledCollegues>();
-        //    DateTime dt = DateTime.MinValue;
-
-        //    if (string.IsNullOrEmpty(selectedDate))
-        //        dt = DateTime.Now.GetFirstDayOfWeek();
-        //    else
-        //    {
-        //        var dtString = Helpers.GetFinancialWeeks().FirstOrDefault(x => x.Value == selectedDate)?.Text;
-        //        if (!string.IsNullOrEmpty(dtString))
-        //        {
-        //            dtString = dtString.Split(' ').LastOrDefault()?.Replace(")", "")?.Trim(); // dtString.Substring(dtString.IndexOf("wc") + 1, dtString.Length - 1)?.Trim();
-        //            DateTime.TryParse(dtString, out dt);
-        //        }
-
-        //    }
-
-        //    var firstDate = dt.GetFirstDayOfWeek();
-        //    ls = await GetKronosData(firstDate, firstDate.AddDays(6));
-        //    var vm = new ScheduledColleaguesViewModel { ScheduledStaff = ls, PageBlurb = ConfigurationManager.AppSettings["MyScheduledBlurb"] };
-
-        //    return View(vm);
-        //}
+            return View(vm);
+        }
 
         [UserFilter(AccessLevel = "Admin,TPC,RM,DD,RD,BM")]
         public async Task<ActionResult> MyTeam()

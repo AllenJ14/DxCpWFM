@@ -88,6 +88,8 @@
     <Compile Include="BusinessModels\DashboardViewChannel.cs" />
     <Compile Include="BusinessModels\FileUploadRecord.cs" />
     <Compile Include="BusinessModels\FileUploadView.cs" />
+    <Compile Include="BusinessModels\FootfallView.cs" />
+    <Compile Include="BusinessModels\FootfallVm.cs" />
     <Compile Include="BusinessModels\HolidayDetail.cs" />
     <Compile Include="BusinessModels\HolidayPlanningEmpBM.cs" />
     <Compile Include="BusinessModels\HolidayPlanningStoreBM.cs" />

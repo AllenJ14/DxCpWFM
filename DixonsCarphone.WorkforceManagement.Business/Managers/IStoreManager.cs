@@ -140,5 +140,11 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
         Task<List<udsp_GetPandLChannelSummary_Result>> GetChannelPLSummary(string channelName, string year, int? month);
 
         Task<List<udsp_GetPandLChannelSummary_Result>> GetChannelPLSummary(string channelName);
+
+        Task<List<footfall_raw>> GetBranchFootfall(int branchNumber, string year, int weeknumber);
+
+        Task<List<sp_GetRegionFootfall_Result>> GetRegionFootfall(string regionNumber, string year, int weeknumber);
+
+        Task<List<sp_GetDivisionFootfall_Result>> GetDivisionFootfall(string divisionName, string year, int weeknumber);
     }
 }

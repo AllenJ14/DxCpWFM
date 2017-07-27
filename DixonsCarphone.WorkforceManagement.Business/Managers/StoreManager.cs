@@ -464,6 +464,33 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             }
         }
 
+        //Get footfall for branch, week, year
+        public async Task<List<footfall_raw>> GetBranchFootfall(int branchNumber, string year, int weeknumber)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                return await dbContext.footfall_raw.Where(x => x.Branch_Number == branchNumber && x.Invoice_Group_Week_Number == weeknumber && x.Invoice_Group_Year_Name == year).ToListAsync();
+            }
+        }
+
+        //Get footfall for region, week, year
+        public async Task<List<sp_GetRegionFootfall_Result>> GetRegionFootfall(string regionNumber, string year, int weeknumber)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                return await Task.Run(() => dbContext.sp_GetRegionFootfall(regionNumber, (short?)weeknumber, year).ToList());
+            }
+        }
+
+        //Get footfall for division, week, year
+        public async Task<List<sp_GetDivisionFootfall_Result>> GetDivisionFootfall(string divisionName, string year, int weeknumber)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                return await Task.Run(() => dbContext.sp_GetDivisionFootfall(divisionName, (short?)weeknumber, year).ToList());
+            }
+        }
+
         // Queries Stores table for cost centre matching the given IP address
         public async Task<Store> GetStoreDetails(string ip)
         {

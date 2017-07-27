@@ -137,6 +137,9 @@ namespace DixonsCarphone.WorkforceManagement.Web.Mapping
         {
             CreateMap<DailyFootfallView, DailyFootfall>();
             CreateMap<DailyFootfall, DailyFootfallView>();
+            CreateMap<footfall_raw, FootfallView>();
+            CreateMap<sp_GetRegionFootfall_Result, FootfallView>();
+            CreateMap<sp_GetDivisionFootfall_Result, FootfallView>();
         }
     }
 

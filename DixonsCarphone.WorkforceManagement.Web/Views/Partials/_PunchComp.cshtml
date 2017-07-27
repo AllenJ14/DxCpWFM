@@ -8,19 +8,20 @@
     &nbsp;
 </div>
 
-<div class="row text-center">
-    <div class="btn-group">
-        <button type="button" class="btn btn-default active" id="br">Branch Summary</button>
-        <button type="button" class="btn btn-default" id="bm">BM Summary</button>
-    </div>
-</div>
 
-<div class="row">
-    &nbsp;
-</div>
 
 @if (HttpContext.Current.Session["_RegionNumber"] != null && Model.RegionDetail.Count() > 0)
 {
+    <div class="row text-center">
+        <div class="btn-group">
+            <button type="button" class="btn btn-default active" id="br">Branch Summary</button>
+            <button type="button" class="btn btn-default" id="bm">BM Summary</button>
+        </div>
+    </div>
+
+    <div class="row">
+        &nbsp;
+    </div>
     var subtotal = Model.RegionDetail.Where(x => x.Name == null).Single();
     var subtotalComp = 100 - ((decimal)subtotal.MissedIn + subtotal.MissedOut) / subtotal.ShiftCount * 100 / 2;
     <div id="branchSummary" class="row">

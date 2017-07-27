@@ -72,6 +72,7 @@ namespace DixonsCarphone.WorkforceManagement.Business.Entities
         public virtual DbSet<TicketType> TicketTypes { get; set; }
         public virtual DbSet<BmWeWorking> BmWeWorkings { get; set; }
         public virtual DbSet<tempRegionLookup> tempRegionLookups { get; set; }
+        public virtual DbSet<footfall_raw> footfall_raw { get; set; }
     
         public virtual ObjectResult<udsp_GetPandL_Result> udsp_GetPandL(Nullable<int> storeNumber, string periodYear, Nullable<short> periodMonth, Nullable<short> qtdStartMonth, Nullable<short> ytdStartMonth)
         {
@@ -715,6 +716,40 @@ namespace DixonsCarphone.WorkforceManagement.Business.Entities
                 new ObjectParameter("YtdStartMonth", typeof(short));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<udsp_GetPandLChannelSummary_Result>("udsp_GetPandLChannelSummary", channelNameParameter, periodYearParameter, periodMonthParameter, qtdStartMonthParameter, ytdStartMonthParameter);
+        }
+    
+        public virtual ObjectResult<sp_GetDivisionFootfall_Result> sp_GetDivisionFootfall(string divisionName, Nullable<short> weekNumber, string year)
+        {
+            var divisionNameParameter = divisionName != null ?
+                new ObjectParameter("DivisionName", divisionName) :
+                new ObjectParameter("DivisionName", typeof(string));
+    
+            var weekNumberParameter = weekNumber.HasValue ?
+                new ObjectParameter("WeekNumber", weekNumber) :
+                new ObjectParameter("WeekNumber", typeof(short));
+    
+            var yearParameter = year != null ?
+                new ObjectParameter("Year", year) :
+                new ObjectParameter("Year", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetDivisionFootfall_Result>("sp_GetDivisionFootfall", divisionNameParameter, weekNumberParameter, yearParameter);
+        }
+    
+        public virtual ObjectResult<sp_GetRegionFootfall_Result> sp_GetRegionFootfall(string regionNumber, Nullable<short> weekNumber, string year)
+        {
+            var regionNumberParameter = regionNumber != null ?
+                new ObjectParameter("RegionNumber", regionNumber) :
+                new ObjectParameter("RegionNumber", typeof(string));
+    
+            var weekNumberParameter = weekNumber.HasValue ?
+                new ObjectParameter("WeekNumber", weekNumber) :
+                new ObjectParameter("WeekNumber", typeof(short));
+    
+            var yearParameter = year != null ?
+                new ObjectParameter("Year", year) :
+                new ObjectParameter("Year", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetRegionFootfall_Result>("sp_GetRegionFootfall", regionNumberParameter, weekNumberParameter, yearParameter);
         }
     }
 }

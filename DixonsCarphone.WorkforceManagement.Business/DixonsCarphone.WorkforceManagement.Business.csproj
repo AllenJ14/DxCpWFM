@@ -169,6 +169,9 @@
     <Compile Include="Entities\fn_UnmatchedStores_Result.cs">
       <DependentUpon>DxCpReportingModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\footfall_raw.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\Group.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
@@ -262,6 +265,9 @@
     <Compile Include="Entities\sp_GetClosedFormsByUser_Result.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\sp_GetDivisionFootfall_Result.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\sp_GetOpenFormsByGroup_Result.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
@@ -272,6 +278,9 @@
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\sp_GetRegionBMSchedule_Result.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\sp_GetRegionFootfall_Result.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\sp_RegionComplianceDetail_Result.cs">

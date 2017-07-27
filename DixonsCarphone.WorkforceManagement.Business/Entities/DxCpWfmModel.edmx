@@ -734,6 +734,20 @@ warning 6002: The table/view 'CarphoneWfm.tck.TicketEscalations' does not have a
           <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="FriendlyName" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'CarphoneWfm.dbo.footfall_raw' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="footfall_raw">
+          <Key>
+            <PropertyRef Name="Key" />
+          </Key>
+          <Property Name="Key" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Invoice Group Year Name" Type="varchar" MaxLength="5" />
+          <Property Name="Invoice Group Week Number" Type="smallint" />
+          <Property Name="Invoice Day Name" Type="varchar" MaxLength="10" />
+          <Property Name="Branch Number" Type="smallint" />
+          <Property Name="Hour In Day 24" Type="smallint" />
+          <Property Name="Footfall Volume" Type="smallint" />
+        </EntityType>
         <Association Name="FK_AccountEntryDetail_AccountEntryHeader">
           <End Role="AccountEntryHeader" Type="Self.AccountEntryHeader" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -1041,9 +1055,19 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Parameter Name="DivisionName" Type="nvarchar" Mode="In" />
           <Parameter Name="weekNumber" Type="int" Mode="In" />
         </Function>
+        <Function Name="sp_GetDivisionFootfall" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DivisionName" Type="nvarchar" Mode="In" />
+          <Parameter Name="WeekNumber" Type="smallint" Mode="In" />
+          <Parameter Name="Year" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="sp_GetRegionBMSchedule" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="region" Type="varchar" Mode="In" />
           <Parameter Name="weekNumber" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_GetRegionFootfall" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="RegionNumber" Type="nvarchar" Mode="In" />
+          <Parameter Name="WeekNumber" Type="smallint" Mode="In" />
+          <Parameter Name="Year" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="sp_RegionComplianceDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="regionNumber" Type="int" Mode="In" />
@@ -1257,6 +1281,17 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
     [TicketEscalations].[Level] AS [Level], 
     [TicketEscalations].[GroupId] AS [GroupId]
     FROM [tck].[TicketEscalations] AS [TicketEscalations]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="footfall_raw" EntityType="Self.footfall_raw" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [footfall_raw].[Key] AS [Key], 
+    [footfall_raw].[Invoice Group Year Name] AS [Invoice Group Year Name], 
+    [footfall_raw].[Invoice Group Week Number] AS [Invoice Group Week Number], 
+    [footfall_raw].[Invoice Day Name] AS [Invoice Day Name], 
+    [footfall_raw].[Branch Number] AS [Branch Number], 
+    [footfall_raw].[Hour In Day 24] AS [Hour In Day 24], 
+    [footfall_raw].[Footfall Volume] AS [Footfall Volume]
+    FROM [dbo].[footfall_raw] AS [footfall_raw]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_AccountEntryDetail_AccountEntryHeader" Association="Self.FK_AccountEntryDetail_AccountEntryHeader">
             <End Role="AccountEntryHeader" EntitySet="AccountEntryHeader" />
@@ -1784,6 +1819,17 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
             <Parameter Name="PeriodMonth" Mode="In" Type="Int16" />
             <Parameter Name="QtdStartMonth" Mode="In" Type="Int16" />
             <Parameter Name="YtdStartMonth" Mode="In" Type="Int16" />
+          </FunctionImport>
+          <EntitySet Name="footfall_raw" EntityType="DixonsCarphone.WorkforceManagement.Business.footfall_raw" />
+          <FunctionImport Name="sp_GetDivisionFootfall" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_GetDivisionFootfall_Result)">
+            <Parameter Name="DivisionName" Mode="In" Type="String" />
+            <Parameter Name="WeekNumber" Mode="In" Type="Int16" />
+            <Parameter Name="Year" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_GetRegionFootfall" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_GetRegionFootfall_Result)">
+            <Parameter Name="RegionNumber" Mode="In" Type="String" />
+            <Parameter Name="WeekNumber" Mode="In" Type="Int16" />
+            <Parameter Name="Year" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="BestPracticeCategoryType">
@@ -3372,6 +3418,36 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Property Type="Decimal" Name="AnnualActual" Nullable="true" Precision="38" Scale="3" />
           <Property Type="Decimal" Name="AnnualBudget" Nullable="true" Precision="38" Scale="3" />
         </ComplexType>
+        <EntityType Name="footfall_raw">
+          <Key>
+            <PropertyRef Name="Key" />
+          </Key>
+          <Property Name="Key" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Invoice_Group_Year_Name" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="Invoice_Group_Week_Number" Type="Int16" />
+          <Property Name="Invoice_Day_Name" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Branch_Number" Type="Int16" />
+          <Property Name="Hour_In_Day_24" Type="Int16" />
+          <Property Name="Footfall_Volume" Type="Int16" />
+        </EntityType>
+        <ComplexType Name="sp_GetDivisionFootfall_Result">
+          <Property Type="String" Name="Key" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Invoice_Group_Year_Name" Nullable="true" MaxLength="5" />
+          <Property Type="Int16" Name="Invoice_Group_Week_Number" Nullable="true" />
+          <Property Type="String" Name="Invoice_Day_Name" Nullable="true" MaxLength="10" />
+          <Property Type="Int32" Name="Branch_Number" Nullable="false" />
+          <Property Type="Int16" Name="Hour_In_Day_24" Nullable="true" />
+          <Property Type="Int32" Name="Footfall_Volume" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_GetRegionFootfall_Result">
+          <Property Type="String" Name="Key" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Invoice_Group_Year_Name" Nullable="true" MaxLength="5" />
+          <Property Type="Int16" Name="Invoice_Group_Week_Number" Nullable="true" />
+          <Property Type="String" Name="Invoice_Day_Name" Nullable="true" MaxLength="10" />
+          <Property Type="Int16" Name="Branch_Number" Nullable="true" />
+          <Property Type="Int16" Name="Hour_In_Day_24" Nullable="true" />
+          <Property Type="Int32" Name="Footfall_Volume" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4942,6 +5018,45 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
                 <ScalarProperty Name="QuarterBudget" ColumnName="QuarterBudget" />
                 <ScalarProperty Name="AnnualActual" ColumnName="AnnualActual" />
                 <ScalarProperty Name="AnnualBudget" ColumnName="AnnualBudget" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="footfall_raw">
+            <EntityTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.footfall_raw">
+              <MappingFragment StoreEntitySet="footfall_raw">
+                <ScalarProperty Name="Footfall_Volume" ColumnName="Footfall Volume" />
+                <ScalarProperty Name="Hour_In_Day_24" ColumnName="Hour In Day 24" />
+                <ScalarProperty Name="Branch_Number" ColumnName="Branch Number" />
+                <ScalarProperty Name="Invoice_Day_Name" ColumnName="Invoice Day Name" />
+                <ScalarProperty Name="Invoice_Group_Week_Number" ColumnName="Invoice Group Week Number" />
+                <ScalarProperty Name="Invoice_Group_Year_Name" ColumnName="Invoice Group Year Name" />
+                <ScalarProperty Name="Key" ColumnName="Key" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetDivisionFootfall" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_GetDivisionFootfall">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.sp_GetDivisionFootfall_Result">
+                <ScalarProperty Name="Key" ColumnName="Key" />
+                <ScalarProperty Name="Invoice_Group_Year_Name" ColumnName="Invoice Group Year Name" />
+                <ScalarProperty Name="Invoice_Group_Week_Number" ColumnName="Invoice Group Week Number" />
+                <ScalarProperty Name="Invoice_Day_Name" ColumnName="Invoice Day Name" />
+                <ScalarProperty Name="Branch_Number" ColumnName="Branch_Number" />
+                <ScalarProperty Name="Hour_In_Day_24" ColumnName="Hour In Day 24" />
+                <ScalarProperty Name="Footfall_Volume" ColumnName="Footfall_Volume" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetRegionFootfall" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_GetRegionFootfall">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.sp_GetRegionFootfall_Result">
+                <ScalarProperty Name="Key" ColumnName="Key" />
+                <ScalarProperty Name="Invoice_Group_Year_Name" ColumnName="Invoice Group Year Name" />
+                <ScalarProperty Name="Invoice_Group_Week_Number" ColumnName="Invoice Group Week Number" />
+                <ScalarProperty Name="Invoice_Day_Name" ColumnName="Invoice Day Name" />
+                <ScalarProperty Name="Branch_Number" ColumnName="Branch_Number" />
+                <ScalarProperty Name="Hour_In_Day_24" ColumnName="Hour In Day 24" />
+                <ScalarProperty Name="Footfall_Volume" ColumnName="Footfall_Volume" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
