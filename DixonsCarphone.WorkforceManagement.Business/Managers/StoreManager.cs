@@ -931,7 +931,7 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             }
         }
 
-        public async Task<List<BmWeWorking>> GetDivisionBmWeWorking(string divisionName)
+        public async Task<List<sp_DivisionBMWorking_Result>> GetDivisionBmWeWorking(string divisionName)
         {
             using (var dbContext = new DxCpWfmContext())
             {
@@ -940,7 +940,7 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             }
         }
 
-        public async Task<List<BmWeWorking>> GetChannelBmWeWorking(string channel)
+        public async Task<List<sp_ChannelBMWorking_Result>> GetChannelBmWeWorking(string channel)
         {
             using (var dbContext = new DxCpWfmContext())
             {

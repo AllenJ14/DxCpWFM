@@ -21,5 +21,7 @@ namespace DixonsCarphone.WorkforceManagement.Business.Entities
         public string BranchName { get; set; }
         public Nullable<short> RegionNum { get; set; }
         public byte Worked { get; set; }
+        public Nullable<byte> NotPunched { get; set; }
+        public Nullable<byte> Closed { get; set; }
     }
 }

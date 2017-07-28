@@ -116,9 +116,9 @@ else
             var _labels = [];
 
             for (var i = 0; i < Sun.length; i++) {
-                _labels.push(8+i);
+                _labels.push((8+i).toString() + ":00");
             }
-
+            
             var weekCtx = document.getElementById("weekPlot");
             var weekChart = new Chart(weekCtx, {
                 type: 'bar',
@@ -185,7 +185,7 @@ else
                         case '1':
                             _labels = [];
                             for (var i = 0; i < Sun.length; i++) {
-                                _labels.push(8+i);
+                                _labels.push((8+i).toString() + ":00");
                             }
                             dayData.datasets[0].data = Sun;
                             dayData.labels = _labels;
@@ -193,7 +193,7 @@ else
                         case '2':
                             _labels = [];
                             for (var i = 0; i < Mon.length; i++) {
-                                _labels.push(8+i);
+                                _labels.push((8+i).toString() + ":00");
                             }
                             dayData.datasets[0].data = Mon;
                             dayData.labels = _labels;
@@ -201,7 +201,7 @@ else
                         case '3':
                             _labels = [];
                             for (var i = 0; i < Tue.length; i++) {
-                                _labels.push(8+i);
+                                _labels.push((8+i).toString() + ":00");
                             }
                             dayData.datasets[0].data = Tue;
                             dayData.labels = _labels;
@@ -209,7 +209,7 @@ else
                         case '4':
                             _labels = [];
                             for (var i = 0; i < Wed.length; i++) {
-                                _labels.push(8+i);
+                                _labels.push((8+i).toString() + ":00");
                             }
                             dayData.datasets[0].data = Wed;
                             dayData.labels = _labels;
@@ -217,7 +217,7 @@ else
                         case '5':
                             _labels = [];
                             for (var i = 0; i < Thu.length; i++) {
-                                _labels.push(8+i);
+                                _labels.push((8+i).toString() + ":00");
                             }
                             dayData.datasets[0].data = Thu;
                             dayData.labels = _labels;
@@ -225,7 +225,7 @@ else
                         case '6':
                             _labels = [];
                             for (var i = 0; i < Fri.length; i++) {
-                                _labels.push(8+i);
+                                _labels.push((8+i).toString() + ":00");
                             }
                             dayData.datasets[0].data = Fri;
                             dayData.labels = _labels;
@@ -233,7 +233,7 @@ else
                         case '7':
                             _labels = [];
                             for (var i = 0; i < Sat.length; i++) {
-                                _labels.push(8+i);
+                                _labels.push((8+i).toString() + ":00");
                             }
                             dayData.datasets[0].data = Sat;
                             dayData.labels = _labels;

@@ -15,5 +15,7 @@ namespace DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
         public string BranchName { get; set; }
         public short? RegionNum { get; set; }
         public byte Worked { get; set; }
+        public Nullable<byte> NotPunched { get; set; }
+        public Nullable<byte> Closed { get; set; }
     }
 }

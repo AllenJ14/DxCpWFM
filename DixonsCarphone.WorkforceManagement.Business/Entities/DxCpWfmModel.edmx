@@ -130,6 +130,8 @@
           <Property Name="BranchName" Type="nvarchar" MaxLength="500" />
           <Property Name="RegionNum" Type="smallint" />
           <Property Name="Worked" Type="tinyint" Nullable="false" />
+          <Property Name="NotPunched" Type="tinyint" />
+          <Property Name="Closed" Type="tinyint" />
         </EntityType>
         <EntityType Name="ContentDetail">
           <Key>
@@ -1806,11 +1808,8 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
             <Parameter Name="weekNumber" Mode="In" Type="Int32" />
           </FunctionImport>
           <EntitySet Name="BmWeWorkings" EntityType="DixonsCarphone.WorkforceManagement.Business.BmWeWorking" />
-          <FunctionImport Name="sp_ChannelBMWorking" EntitySet="BmWeWorkings" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.BmWeWorking)">
+          <FunctionImport Name="sp_ChannelBMWorking" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_ChannelBMWorking_Result)">
           <Parameter Name="Channel" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="sp_DivisionBMWorking" EntitySet="BmWeWorkings" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.BmWeWorking)">
-          <Parameter Name="Division" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="tempRegionLookups" EntityType="DixonsCarphone.WorkforceManagement.Business.tempRegionLookup" />
           <FunctionImport Name="udsp_GetPandLChannelSummary" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.udsp_GetPandLChannelSummary_Result)">
@@ -1830,6 +1829,9 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
             <Parameter Name="RegionNumber" Mode="In" Type="String" />
             <Parameter Name="WeekNumber" Mode="In" Type="Int16" />
             <Parameter Name="Year" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_DivisionBMWorking" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_DivisionBMWorking_Result)">
+            <Parameter Name="Division" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="BestPracticeCategoryType">
@@ -3379,17 +3381,10 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Property Name="BranchName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="RegionNum" Type="Int16" />
           <Property Name="Worked" Type="Byte" Nullable="false" />
+          <Property Name="NotPunched" Type="Byte" />
+          <Property Name="Closed" Type="Byte" />
         </EntityType>
         <ComplexType Name="sp_ChannelBMWorking_Result">
-          <Property Type="Int32" Name="EntryId" Nullable="true" />
-          <Property Type="DateTime" Name="Date" Nullable="false" />
-          <Property Type="Byte" Name="Day" Nullable="false" />
-          <Property Type="Int16" Name="BranchNum" Nullable="true" />
-          <Property Type="String" Name="BranchName" Nullable="true" MaxLength="50" />
-          <Property Type="Int16" Name="RegionNum" Nullable="true" />
-          <Property Type="Byte" Name="worked" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="sp_DivisionBMWorking_Result">
           <Property Type="Int32" Name="EntryId" Nullable="true" />
           <Property Type="DateTime" Name="Date" Nullable="false" />
           <Property Type="Byte" Name="Day" Nullable="false" />
@@ -3447,6 +3442,17 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Property Type="Int16" Name="Branch_Number" Nullable="true" />
           <Property Type="Int16" Name="Hour_In_Day_24" Nullable="true" />
           <Property Type="Int32" Name="Footfall_Volume" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_DivisionBMWorking_Result">
+          <Property Type="Int32" Name="EntryId" Nullable="true" />
+          <Property Type="DateTime" Name="Date" Nullable="false" />
+          <Property Type="Byte" Name="Day" Nullable="false" />
+          <Property Type="Int16" Name="BranchNum" Nullable="true" />
+          <Property Type="String" Name="BranchName" Nullable="true" MaxLength="50" />
+          <Property Type="Int16" Name="RegionNum" Nullable="true" />
+          <Property Type="Byte" Name="worked" Nullable="true" />
+          <Property Type="Byte" Name="NotPunched" Nullable="true" />
+          <Property Type="Byte" Name="Closed" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -4982,6 +4988,8 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <EntitySetMapping Name="BmWeWorkings">
             <EntityTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.BmWeWorking">
               <MappingFragment StoreEntitySet="BmWeWorking">
+                <ScalarProperty Name="Closed" ColumnName="Closed" />
+                <ScalarProperty Name="NotPunched" ColumnName="NotPunched" />
                 <ScalarProperty Name="Worked" ColumnName="Worked" />
                 <ScalarProperty Name="RegionNum" ColumnName="RegionNum" />
                 <ScalarProperty Name="BranchName" ColumnName="BranchName" />
@@ -4993,8 +5001,17 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="sp_ChannelBMWorking" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_ChannelBMWorking">
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_DivisionBMWorking" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_DivisionBMWorking">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.sp_ChannelBMWorking_Result">
+                <ScalarProperty Name="EntryId" ColumnName="EntryId" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Day" ColumnName="Day" />
+                <ScalarProperty Name="BranchNum" ColumnName="BranchNum" />
+                <ScalarProperty Name="BranchName" ColumnName="BranchName" />
+                <ScalarProperty Name="RegionNum" ColumnName="RegionNum" />
+                <ScalarProperty Name="worked" ColumnName="worked" />
+              </ComplexTypeMapping>
+            </ResultMapping>
           </FunctionImportMapping>
           <EntitySetMapping Name="tempRegionLookups">
             <EntityTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.tempRegionLookup">
@@ -5057,6 +5074,21 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
                 <ScalarProperty Name="Branch_Number" ColumnName="Branch_Number" />
                 <ScalarProperty Name="Hour_In_Day_24" ColumnName="Hour In Day 24" />
                 <ScalarProperty Name="Footfall_Volume" ColumnName="Footfall_Volume" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_DivisionBMWorking" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_DivisionBMWorking">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.sp_DivisionBMWorking_Result">
+                <ScalarProperty Name="EntryId" ColumnName="EntryId" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Day" ColumnName="Day" />
+                <ScalarProperty Name="BranchNum" ColumnName="BranchNum" />
+                <ScalarProperty Name="BranchName" ColumnName="BranchName" />
+                <ScalarProperty Name="RegionNum" ColumnName="RegionNum" />
+                <ScalarProperty Name="worked" ColumnName="worked" />
+                <ScalarProperty Name="NotPunched" ColumnName="NotPunched" />
+                <ScalarProperty Name="Closed" ColumnName="Closed" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

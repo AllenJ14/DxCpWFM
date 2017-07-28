@@ -4,6 +4,15 @@
     ViewBag.title = "Weekend Working";
     double branchCount;
     double secbranchCount;
+    var futuredate = DateTime.Now.AddDays(-(int)DateTime.Now.DayOfWeek -1 );
+    bool seperator = false;
+    int sunClosed = 0;
+    int satClosed = 0;
+    if(Model.DetailCollection != null)
+    {
+        sunClosed = Model.DetailCollection.Where(x => x.Day == 1 && x.Closed == 1).Select(x => x.BranchNum).Distinct().Count();
+        satClosed = Model.DetailCollection.Where(x => x.Day == 7 && x.Closed == 1).Select(x => x.BranchNum).Distinct().Count();
+    }
 }
 
 <section class="content">
@@ -27,8 +36,9 @@
                     </div>
                     <div class="panel-body">
                         <ul>
-                            <li>Future weeks shown below are based on schedules present in STAR and are updated 3 times daily.</li>
+                            <li>Future weeks (to the right of the solid line) shown below are based on schedules present in STAR and are updated 3 times daily.</li>
                             <li>Following sign off on Mondays the previous week is updated as per what was present on the completed timecard.</li>
+                            <li><u>If a colleague was previously scheduled but did not physically punch in on that day the cell will be highlighted red.</u></li>
                         </ul>
                     </div>
                 </div>
@@ -46,6 +56,11 @@
                     <th class="text-center" style="vertical-align:middle;">Branch</th>
                     @foreach (var item in Model.HeaderCollection)
                     {
+                        if (!seperator && item.Date > futuredate)
+                        {
+                            seperator = true;
+                            <th style="width:0px;border-right:2px solid black;padding:0px;"></th>
+                        }
                         <th class="text-center">
                             <small>
                                 @string.Format("{0:d}", item.Date)
@@ -59,36 +74,60 @@
             <tbody>
                 @foreach (var item in Model.BranchList)
                 {
+                    seperator = false;
                     var branchSelection = Model.DetailCollection.Where(x => x.BranchNum == item.BranchNum).OrderBy(x => x.Date).ToList();
                     <tr>
                         <td><small>@string.Format("{0} - {1}", item.BranchNum, item.BranchName)</small></td>
                         @for (int i = 0; i < Model.HeaderCollection.Count(); i++)
                         {
-                            <td class="text-center">
+                            if (!seperator && Model.HeaderCollection[i].Date > futuredate)
+                            {
+                                seperator = true;
+                                <th style="width:0px;border-right:2px solid black;padding:0px;"></th>
+                            }
+                            <td class="text-center @(branchSelection[i].NotPunched == 1 ? "danger" : "")">
                                 @if (branchSelection[i].Worked == 1)
                                 {
                                     <span class="glyphicon glyphicon-ok"></span>
+                                }
+                                else if (branchSelection[i].Closed == 1)
+                                {
+                                    <span class="glyphicon glyphicon-minus" style="font-size:xx-small"></span>
                                 }
                             </td>
                         }
                     </tr>
                 }
                 <tr>
-                    <td><strong>Region Total</strong></td>
+                    @{seperator = false;
+                    }
+                    <td><strong>Region Total <small>Excl. Closed</small></strong></td>
                     @foreach (var item in Model.HeaderCollection)
                     {
+                        if (!seperator && item.Date > futuredate)
+                        {
+                            seperator = true;
+                            <th style="width:0px;border-right:2px solid black;padding:0px;"></th>
+                        }
                         <td class="text-center">
-                            <strong>@string.Format("{0:0}%", Model.DetailCollection.Where(x => x.Date == item.Date).Sum(x => x.Worked) / branchCount * 100)</strong>
+                            @if (item.Day.Equals("Sunday"))
+                            {
+                                <strong>@string.Format("{0:0}%", Model.DetailCollection.Where(x => x.Date == item.Date).Sum(x => x.Worked) / (branchCount - sunClosed) * 100)</strong>
+                            }
+                            else
+                            {
+                                <strong>@string.Format("{0:0}%", Model.DetailCollection.Where(x => x.Date == item.Date).Sum(x => x.Worked) / (branchCount - satClosed) * 100)</strong>
+                            }                            
                         </td>
                     }
                 </tr>
             </tbody>
         </table>
-    }
-    else if (Model.DisplayType == 3)
-    {
-        branchCount = (double)Model.DetailCollection.Select(x => new { x.RegionNum, x.BranchNum }).Distinct().Sum(x => x.RegionNum);
-        secbranchCount = (double)Model.SecDetailCollection.Select(x => new { x.RegionNum, x.BranchName }).Distinct().Sum(x => x.RegionNum);
+                        }
+                        else if (Model.DisplayType == 3)
+                        {
+                            branchCount = (double)Model.DetailCollection.Select(x => new { x.RegionNum, x.BranchNum }).Distinct().Sum(x => x.RegionNum);
+                            secbranchCount = (double)Model.SecDetailCollection.Select(x => new { x.RegionNum, x.BranchName }).Distinct().Sum(x => x.RegionNum);
         <div class="row">
             <div class="col-xs-12">
                 <div class="panel panel-default">
@@ -100,6 +139,11 @@
                                         <th class="text-center" style="vertical-align:middle;">Region</th>
                                         @foreach (var item in Model.HeaderCollection)
                                         {
+                                            if (!seperator && item.Date > futuredate)
+                                            {
+                                                seperator = true;
+                                                <th style="width:0px;border-right:2px solid black;padding:0px;"></th>
+                                            }
                                             <th class="text-center">
                                                 <small>
                                                     @string.Format("{0:d}", item.Date)
@@ -113,11 +157,17 @@
                                 <tbody>
                                     @foreach (var item in Model.BranchList)
                                     {
+                                        seperator = false;
                                         var branchSelection = Model.DetailCollection.Where(x => x.BranchNum == item.BranchNum).OrderBy(x => x.Date).ToList();
                                         <tr>
                                             <td><small>@item.BranchNum</small></td>
                                             @for (int i = 0; i < Model.HeaderCollection.Count(); i++)
                                             {
+                                                if (!seperator && Model.HeaderCollection[i].Date > futuredate)
+                                                {
+                                                    seperator = true;
+                                                    <th style="width:0px;border-right:2px solid black;padding:0px;"></th>
+                                                }
                                                 <td class="text-center">
                                                     @string.Format("{0:0}%", (decimal)branchSelection[i].Worked / branchSelection[i].RegionNum * 100)
                                                 </td>
@@ -125,9 +175,16 @@
                                         </tr>
                                     }
                                     <tr>
+                                        @{seperator = false;
+                                        }
                                         <td><strong>Division Total</strong></td>
                                         @foreach (var item in Model.HeaderCollection)
                                         {
+                                            if (!seperator && item.Date > futuredate)
+                                            {
+                                                seperator = true;
+                                                <th style="width:0px;border-right:2px solid black;padding:0px;"></th>
+                                            }
                                             <td class="text-center">
                                                 <strong>@string.Format("{0:0}%", Model.DetailCollection.Where(x => x.Date == item.Date).Sum(x => x.Worked) / branchCount * 100)</strong>
                                             </td>
@@ -140,7 +197,6 @@
                 </div>
             </div>
         </div>
-
         <div class="row">
             <div class="col-xs-12">
                 <div class="panel panel-default">
@@ -149,9 +205,16 @@
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
+                                        @{seperator = false;
+                                        }
                                         <th class="text-center" style="vertical-align:middle;">Division</th>
                                         @foreach (var item in Model.SecHeaderCollection)
                                         {
+                                            if (!seperator && item.Date > futuredate)
+                                            {
+                                                seperator = true;
+                                                <th style="width:0px;border-right:2px solid black;padding:0px;"></th>
+                                            }
                                             <th class="text-center">
                                                 <small>
                                                     @string.Format("{0:d}", item.Date)
@@ -165,11 +228,17 @@
                                 <tbody>
                                     @foreach (var item in Model.SecBranchList)
                                     {
+                                        seperator = false;
                                         var branchSelection = Model.SecDetailCollection.Where(x => x.BranchName == item.BranchName).OrderBy(x => x.Date).ToList();
                                         <tr>
                                             <td><small>@item.BranchName</small></td>
                                             @for (int i = 0; i < Model.SecHeaderCollection.Count(); i++)
                                             {
+                                                if (!seperator && Model.HeaderCollection[i].Date > futuredate)
+                                                {
+                                                    seperator = true;
+                                                    <th style="width:0px;border-right:2px solid black;padding:0px;"></th>
+                                                }
                                                 <td class="text-center">
                                                     @string.Format("{0:0}%", (decimal)branchSelection[i].Worked / branchSelection[i].RegionNum * 100) 
                                                 </td>
@@ -177,9 +246,16 @@
                                         </tr>
                                     }
                                     <tr>
+                                        @{seperator = false;
+                                        }
                                         <td><strong>Channel Total</strong></td>
                                         @foreach (var item in Model.SecHeaderCollection)
                                         {
+                                            if (!seperator && item.Date > futuredate)
+                                            {
+                                                seperator = true;
+                                                <th style="width:0px;border-right:2px solid black;padding:0px;"></th>
+                                            }
                                             <td class="text-center">
                                                 <strong>@string.Format("{0:0}%", Model.SecDetailCollection.Where(x => x.Date == item.Date).Sum(x => x.Worked) / secbranchCount * 100)</strong>
                                             </td>

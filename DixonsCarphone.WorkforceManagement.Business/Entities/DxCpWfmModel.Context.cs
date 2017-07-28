@@ -657,40 +657,13 @@ namespace DixonsCarphone.WorkforceManagement.Business.Entities
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetRegionBMSchedule_Result>("sp_GetRegionBMSchedule", regionParameter, weekNumberParameter);
         }
     
-        public virtual ObjectResult<BmWeWorking> sp_ChannelBMWorking(string channel)
+        public virtual ObjectResult<sp_ChannelBMWorking_Result> sp_ChannelBMWorking(string channel)
         {
             var channelParameter = channel != null ?
                 new ObjectParameter("Channel", channel) :
                 new ObjectParameter("Channel", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<BmWeWorking>("sp_ChannelBMWorking", channelParameter);
-        }
-    
-        public virtual ObjectResult<BmWeWorking> sp_ChannelBMWorking(string channel, MergeOption mergeOption)
-        {
-            var channelParameter = channel != null ?
-                new ObjectParameter("Channel", channel) :
-                new ObjectParameter("Channel", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<BmWeWorking>("sp_ChannelBMWorking", mergeOption, channelParameter);
-        }
-    
-        public virtual ObjectResult<BmWeWorking> sp_DivisionBMWorking(string division)
-        {
-            var divisionParameter = division != null ?
-                new ObjectParameter("Division", division) :
-                new ObjectParameter("Division", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<BmWeWorking>("sp_DivisionBMWorking", divisionParameter);
-        }
-    
-        public virtual ObjectResult<BmWeWorking> sp_DivisionBMWorking(string division, MergeOption mergeOption)
-        {
-            var divisionParameter = division != null ?
-                new ObjectParameter("Division", division) :
-                new ObjectParameter("Division", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<BmWeWorking>("sp_DivisionBMWorking", mergeOption, divisionParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_ChannelBMWorking_Result>("sp_ChannelBMWorking", channelParameter);
         }
     
         public virtual ObjectResult<udsp_GetPandLChannelSummary_Result> udsp_GetPandLChannelSummary(string channelName, string periodYear, Nullable<short> periodMonth, Nullable<short> qtdStartMonth, Nullable<short> ytdStartMonth)
@@ -750,6 +723,15 @@ namespace DixonsCarphone.WorkforceManagement.Business.Entities
                 new ObjectParameter("Year", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetRegionFootfall_Result>("sp_GetRegionFootfall", regionNumberParameter, weekNumberParameter, yearParameter);
+        }
+    
+        public virtual ObjectResult<sp_DivisionBMWorking_Result> sp_DivisionBMWorking(string division)
+        {
+            var divisionParameter = division != null ?
+                new ObjectParameter("Division", division) :
+                new ObjectParameter("Division", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_DivisionBMWorking_Result>("sp_DivisionBMWorking", divisionParameter);
         }
     }
 }

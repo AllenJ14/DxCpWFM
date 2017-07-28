@@ -555,9 +555,8 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             }
             else
             {
-                vm.Message = "This page is not available in the currently selected view, please select a region from the top right menu or go back.";
-                vm.MessageType = MessageType.Error;
-                vm.DisplayType = 1;
+                vm.PopulateHeader(mapper.Map<List<WeWorkingView>>(await _storeManager.GetBmWeWorking(_store.RegionNo)));
+                vm.DisplayType = 2;
             }
 
             return View(vm);
