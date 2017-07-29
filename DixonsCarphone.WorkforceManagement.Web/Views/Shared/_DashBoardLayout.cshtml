@@ -133,14 +133,14 @@
                                     <li class="active"><a href="@Url.Action("GetDeployment", "Reports", new { area = "" })">WFM Deployment</a></li>
                                     @if (!(bool)HttpContext.Current.Session["_ROIFlag"])
                                     {
+                                        <li class="active"><a href="@Url.Action("Footfall", "Reports", new { area = "" })">Footfall Traffic</a></li>
                                         <li class="active"><a href="@Url.Action("StorePandL", "Reports", new { area = "" })">Profit &amp; Loss</a></li>
+                                        if (accessLvl == "RM" || accessLvl == "DD" || accessLvl == "Admin" || accessLvl == "TPC")
+                                        {
+                                            <li class="active"><a href="@Url.Action("WeekendWorking", "Reports", new { area = "" })">BM Weekend Working</a></li>
+                                        }
                                     }
                                     <li class="active"><a href="@Url.Action("PunchCompliance", "Reports", new { area = "" })">Punch Compliance</a></li>
-                                    @if (accessLvl == "RM" || accessLvl == "DD" || accessLvl == "Admin" || accessLvl == "TPC")
-                                    {
-                                        <li class="active"><a href="@Url.Action("WeekendWorking", "Reports", new { area = "" })">BM Weekend Working</a></li>
-                                    }
-                                    <li class="active"><a href="@Url.Action("Footfall", "Reports", new { area = "" })">Footfall Traffic</a></li>
                                     @*<li class="active"><a href="@Url.Action("MyTargets", "Reports")">My Targets</a></li>
                                         <li class="active"><a href="@Url.Action("SohSpend", "Reports")">SOH Spend</a></li>
                                         <li class="active"><a href="@Url.Action("Schedules", "Reports")">My Schedule</a></li>*@

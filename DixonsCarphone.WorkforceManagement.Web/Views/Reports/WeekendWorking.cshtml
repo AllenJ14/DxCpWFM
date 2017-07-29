@@ -6,13 +6,6 @@
     double secbranchCount;
     var futuredate = DateTime.Now.AddDays(-(int)DateTime.Now.DayOfWeek -1 );
     bool seperator = false;
-    int sunClosed = 0;
-    int satClosed = 0;
-    if(Model.DetailCollection != null)
-    {
-        sunClosed = Model.DetailCollection.Where(x => x.Day == 1 && x.Closed == 1).Select(x => x.BranchNum).Distinct().Count();
-        satClosed = Model.DetailCollection.Where(x => x.Day == 7 && x.Closed == 1).Select(x => x.BranchNum).Distinct().Count();
-    }
 }
 
 <section class="content">
@@ -104,20 +97,14 @@
                     <td><strong>Region Total <small>Excl. Closed</small></strong></td>
                     @foreach (var item in Model.HeaderCollection)
                     {
+                        var detailSelection = Model.DetailCollection.Where(x => x.Date == item.Date);
                         if (!seperator && item.Date > futuredate)
                         {
                             seperator = true;
                             <th style="width:0px;border-right:2px solid black;padding:0px;"></th>
                         }
                         <td class="text-center">
-                            @if (item.Day.Equals("Sunday"))
-                            {
-                                <strong>@string.Format("{0:0}%", Model.DetailCollection.Where(x => x.Date == item.Date).Sum(x => x.Worked) / (branchCount - sunClosed) * 100)</strong>
-                            }
-                            else
-                            {
-                                <strong>@string.Format("{0:0}%", Model.DetailCollection.Where(x => x.Date == item.Date).Sum(x => x.Worked) / (branchCount - satClosed) * 100)</strong>
-                            }                            
+                            <strong>@string.Format("{0:0}%", (decimal)detailSelection.Sum(x => x.Worked) / (detailSelection.Where(x => x.Worked == 1 || x.Closed == null).Count()) * 100)</strong>
                         </td>
                     }
                 </tr>
