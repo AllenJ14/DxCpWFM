@@ -97,6 +97,9 @@
     <Compile Include="Entities\ContractBaseDetail.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\CPCW_Managers.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\CPW_Clocking_Data.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>

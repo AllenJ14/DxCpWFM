@@ -13,6 +13,8 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
     {
         Task<List<UserAccess>> GetAuthLevel(string userName);
 
+        int CheckCPWCAuth(string payroll);
+
         Task<Store> GetStoreDetails(string ip);
 
         Task<List<Store>> GetAllStoreDetails(string ip);

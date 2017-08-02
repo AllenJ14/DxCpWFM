@@ -178,6 +178,21 @@
           <Property Name="P12" Type="numeric" Precision="3" Scale="2" />
           <Property Name="TotalHoliday" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="CPCW_Managers">
+          <Key>
+            <PropertyRef Name="Emp_num" />
+          </Key>
+          <Property Name="Store_num" Type="char" MaxLength="6" />
+          <Property Name="Emp_num" Type="char" MaxLength="7" Nullable="false" />
+          <Property Name="Forename" Type="varchar" MaxLength="50" />
+          <Property Name="Surname" Type="varchar" MaxLength="50" />
+          <Property Name="Role" Type="char" MaxLength="5" />
+          <Property Name="DOJ" Type="char" MaxLength="10" />
+          <Property Name="DOL" Type="char" MaxLength="10" />
+          <Property Name="Date_in_Current_Role" Type="char" MaxLength="10" />
+          <Property Name="Date_in_Current_Department" Type="char" MaxLength="10" />
+          <Property Name="Last_Update" Type="datetime" />
+        </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="CPW_Clocking_Data">
@@ -1197,6 +1212,7 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <EntitySet Name="ContentDetail" EntityType="Self.ContentDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ContentHeader" EntityType="Self.ContentHeader" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ContractBaseDetail" EntityType="Self.ContractBaseDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CPCW_Managers" EntityType="Self.CPCW_Managers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DailyDeployment" EntityType="Self.DailyDeployment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DailyFootfall" EntityType="Self.DailyFootfall" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DashBoardData" EntityType="Self.DashBoardData" Schema="dbo" store:Type="Tables" />
@@ -1831,8 +1847,9 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
             <Parameter Name="Year" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_DivisionBMWorking" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_DivisionBMWorking_Result)">
-            <Parameter Name="Division" Mode="In" Type="String" />
+          <Parameter Name="Division" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="CPCW_Managers" EntityType="DixonsCarphone.WorkforceManagement.Business.CPCW_Managers" />
         </EntityContainer>
         <EntityType Name="BestPracticeCategoryType">
           <Key>
@@ -3454,6 +3471,21 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Property Type="Byte" Name="NotPunched" Nullable="true" />
           <Property Type="Byte" Name="Closed" Nullable="true" />
         </ComplexType>
+        <EntityType Name="CPCW_Managers">
+          <Key>
+            <PropertyRef Name="Emp_num" />
+          </Key>
+          <Property Name="Store_num" Type="String" MaxLength="6" FixedLength="true" Unicode="false" />
+          <Property Name="Emp_num" Type="String" Nullable="false" MaxLength="7" FixedLength="true" Unicode="false" />
+          <Property Name="Forename" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Surname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Role" Type="String" MaxLength="5" FixedLength="true" Unicode="false" />
+          <Property Name="DOJ" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="DOL" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="Date_in_Current_Role" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="Date_in_Current_Department" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="Last_Update" Type="DateTime" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5092,6 +5124,22 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="CPCW_Managers">
+            <EntityTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.CPCW_Managers">
+              <MappingFragment StoreEntitySet="CPCW_Managers">
+                <ScalarProperty Name="Last_Update" ColumnName="Last_Update" />
+                <ScalarProperty Name="Date_in_Current_Department" ColumnName="Date_in_Current_Department" />
+                <ScalarProperty Name="Date_in_Current_Role" ColumnName="Date_in_Current_Role" />
+                <ScalarProperty Name="DOL" ColumnName="DOL" />
+                <ScalarProperty Name="DOJ" ColumnName="DOJ" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Forename" ColumnName="Forename" />
+                <ScalarProperty Name="Emp_num" ColumnName="Emp_num" />
+                <ScalarProperty Name="Store_num" ColumnName="Store_num" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

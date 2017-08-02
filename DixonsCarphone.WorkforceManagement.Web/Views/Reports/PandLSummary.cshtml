@@ -122,13 +122,13 @@
 
             if(current === 'All'){
                 $('#SAS').remove()
-                $('#row_SAS').prepend('<td id=\"SAS\"><a href=\"/Reports/StorePandLSelection?selectedYear=@Model.SelectedYear&selectedMonth=@Model.SelectedMonth&selection=SAS&heirarchy=@max\">SAS</a></td>')
+                $('#row_SAS').prepend('<td id="SAS"><a href="/Reports/StorePandLSelection?selectedYear=@Model.SelectedYear&selectedMonth=@Model.SelectedMonth&selection=SAS&heirarchy=@max">SAS</a></td>')
                 $('#SIS').remove()
-                $('#row_SIS').prepend('<td id=\"SIS\"><a href=\"/Reports/StorePandLSelection?selectedYear=@Model.SelectedYear&selectedMonth=@Model.SelectedMonth&selection=SIS&heirarchy=@max\">SIS</a></td>')
+                $('#row_SIS').prepend('<td id="SIS"><a href="/Reports/StorePandLSelection?selectedYear=@Model.SelectedYear&selectedMonth=@Model.SelectedMonth&selection=SIS&heirarchy=@max">SIS</a></td>')
             }
             else{
-                $('#@ViewBag.current').remove('<td id=\"@ViewBag.current\"><a href=\"/Reports/StorePandLSelection?selectedYear=@Model.SelectedYear&selectedMonth=@Model.SelectedMonth&selection=@ViewBag.current&heirarchy=@max\">@ViewBag.current</a></td>');
-                $('#row_@ViewBag.current').prepend('<td id=\"@ViewBag.current\"><a href=\"/Reports/StorePandLSelection?selectedYear=@Model.SelectedYear&selectedMonth=@Model.SelectedMonth&selection=@ViewBag.current&heirarchy=@max\">@ViewBag.current</a></td>');
+                $('#@ViewBag.current').remove();
+                $('#row_@ViewBag.current').prepend('<td id=\"@ViewBag.current\"><a href="/Reports/StorePandLSelection?selectedYear=@Model.SelectedYear&selectedMonth=@Model.SelectedMonth&selection=@ViewBag.current&heirarchy=@max">@ViewBag.current</a></td>');
             };
         });
     </script>

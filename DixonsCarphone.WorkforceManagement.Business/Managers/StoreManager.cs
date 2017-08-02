@@ -41,6 +41,16 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             }
         }
 
+        //Check CPWC GM
+        public int CheckCPWCAuth(string payroll)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                var result = dbContext.CPCW_Managers.Where(x => x.Emp_num == payroll);
+                return result.Count() > 0 ? 1 : 0;
+            }
+        }
+
         //Get week list
         public async Task<List<int?>> GetWeekNumbers(DateTime startDate, DateTime endDate)
         {

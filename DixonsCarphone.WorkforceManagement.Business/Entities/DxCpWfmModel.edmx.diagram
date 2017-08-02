@@ -71,6 +71,7 @@
         <EntityTypeShape EntityType="DixonsCarphone.WorkforceManagement.Business.BmWeWorking" Width="1.5" PointX="0.75" PointY="19.75" />
         <EntityTypeShape EntityType="DixonsCarphone.WorkforceManagement.Business.tempRegionLookup" Width="1.5" PointX="18.375" PointY="15.75" />
         <EntityTypeShape EntityType="DixonsCarphone.WorkforceManagement.Business.footfall_raw" Width="1.5" PointX="19.375" PointY="10.75" />
+        <EntityTypeShape EntityType="DixonsCarphone.WorkforceManagement.Business.CPCW_Managers" Width="1.5" PointX="20.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

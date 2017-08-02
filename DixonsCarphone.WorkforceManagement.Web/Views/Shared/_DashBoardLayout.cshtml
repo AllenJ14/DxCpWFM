@@ -154,13 +154,10 @@
                                     </span>
                                 </a>
                                 <ul class="nav nav-second-level">
-                                    @if (!(bool)HttpContext.Current.Session["_ROIFlag"])
-                                    {
-                                        <li class="active"><a href="@Url.Action("MyBudgets", "Planning", new { area = "" })">My Budgets</a></li>
-                                    }
                                     <li class="active"><a href="@Url.Action("Index", "Planning", new { area = "" })"> Opening Times</a></li>
                                     @if (!(bool)HttpContext.Current.Session["_ROIFlag"])
                                     {
+                                        <li class="active"><a href="@Url.Action("MyBudgets", "Planning", new { area = "" })">My Budgets</a></li>
                                         <li class="active"><a href="@Url.Action("MyTeam", "Reports", new { area = "" })">My Team</a></li>
                                         <li class="active"><a href="@Url.Action("HolidayPlanning", "Reports", new { area = "" })">Holiday Planning</a></li>
                                     }
@@ -181,7 +178,7 @@
 
                                     </ul>
                                 </li>*@
-                            <li>
+                            @*<li>
                                 <a href="#">
                                     <i class="glyphicon glyphicon-list-alt"></i> <span>Workflow <span id="wfBadge" class="badge-wf-red"></span></span>
                                     <span class="pull-right-container">
@@ -192,7 +189,7 @@
                                     <li class="active"><a href="@Url.Action("Index","Workflow", new { area = "Workflow" })">My Tickets</a></li>
                                     <li class="active"><a href="@Url.Action("Index","Form", new { area = "Workflow" })">Raise a ticket</a></li>
                                 </ul>
-                            </li>
+                            </li>*@
                             <li>
                                 <a href="#">
                                     <i class="glyphicon glyphicon-question-sign"></i> <span>Help & Support</span>
@@ -271,7 +268,7 @@
             <!-- Custom Theme JavaScript -->
             <script src="~/Content/New/sb-admin-2.js"></script>
 
-            @if (Request.IsAuthenticated)
+            @*@if (Request.IsAuthenticated)
             {
             <script>
                 $(function () {
@@ -282,7 +279,7 @@
                     });
                 });
             </script>
-            }
+            }*@
 
             @if (HttpContext.Current.Session["_AccessLevel"].ToString() == "Admin")
             {

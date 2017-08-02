@@ -27,10 +27,12 @@ namespace DixonsCarphone.WorkforceManagement.Web.Models
         }
 
         private readonly IAuthenticationManager authenticationManager;
+        private readonly IStoreManager storeManager;
 
         public AdAuthenticationService(IAuthenticationManager authenticationManager)
         {
             this.authenticationManager = authenticationManager;
+            this.storeManager = new StoreManager();
         }
 
 
@@ -109,7 +111,6 @@ namespace DixonsCarphone.WorkforceManagement.Web.Models
                 // revealing this information
                 return new AuthenticationResult("Your account is disabled");
             }
-            
             if(principalContext.Name != "DSG")
             {
                 if (userPrincipal.IsMemberOf(principalContext, IdentityType.Name, ConfigurationManager.AppSettings["BranchManagerGroup"]) || userPrincipal.IsMemberOf(principalContext, IdentityType.Name, ConfigurationManager.AppSettings["IEBranchManagerGroup"]))
@@ -117,12 +118,24 @@ namespace DixonsCarphone.WorkforceManagement.Web.Models
                     HttpContext.Current.Session["_AccessLevel"] = "BM";
                 }
             }
+            else
+            {
+                DirectoryEntry entry = new DirectoryEntry(ConfigurationManager.AppSettings["CPCWADfront"] + "CN=" + username + "," + ConfigurationManager.AppSettings["CPCWADback"], username, password);
+                string test1 = entry.Properties["workforceID"].Value.ToString();
+                try
+                {
+                    int authCheck = storeManager.CheckCPWCAuth(entry.Properties["workforceID"].Value.ToString());
+                    if (authCheck == 1)
+                    {
+                        HttpContext.Current.Session["_AccessLevel"] = "BM";
+                    }
+                }
+                catch (Exception)
+                {
+                }                
+            }
 
             var identity = CreateIdentity(userPrincipal);
-
-            //DirectoryEntry entry = new DirectoryEntry("LDAP://GBNVPWADC18/CN=VORAR01,OU=PCWorld,OU=Hemel,OU=Users,OU=MDS,OU=UK_Ireland,DC=DSG,DC=DSGROOT,DC=INT", username, password);
-
-            //string test1 = entry.Properties["workforceID"].Value.ToString();
 
             authenticationManager.SignOut(CpwWfmAuthentication.ApplicationCookie);
             authenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = false }, identity);
@@ -137,6 +150,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Models
             var iterGroup = groups.GetEnumerator();
             using (iterGroup)
             {
+            
                 while (iterGroup.MoveNext())
                 {
                     try

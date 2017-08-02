@@ -174,6 +174,8 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             {
                 vm.Message = "This page is not available in the currently selected view, please select a store from the top right menu or go back.";
                 vm.MessageType = MessageType.Error;
+                vm.SelectedWeek = selectedWeek;
+                vm.SelectedYear = selectedYear;
             }
             else if (System.Web.HttpContext.Current.Session["_DivisionName"] != null)
             {
@@ -187,6 +189,8 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
                 {
                     vm.Message = "No data found for the selected period";
                     vm.MessageType = MessageType.Warning;
+                    vm.SelectedWeek = selectedWeek;
+                    vm.SelectedYear = selectedYear;
                 }
             }
             else if (System.Web.HttpContext.Current.Session["_RegionNumber"] != null)
@@ -201,6 +205,8 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
                 {
                     vm.Message = "No data found for the selected period";
                     vm.MessageType = MessageType.Warning;
+                    vm.SelectedWeek = selectedWeek;
+                    vm.SelectedYear = selectedYear;
                 }
             }
             else
@@ -215,6 +221,8 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
                 {
                     vm.Message = "No data found for the selected period";
                     vm.MessageType = MessageType.Warning;
+                    vm.SelectedWeek = selectedWeek;
+                    vm.SelectedYear = selectedYear;
                 }                
             }
 

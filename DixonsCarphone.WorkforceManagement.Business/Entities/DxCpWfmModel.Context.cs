@@ -73,6 +73,7 @@ namespace DixonsCarphone.WorkforceManagement.Business.Entities
         public virtual DbSet<BmWeWorking> BmWeWorkings { get; set; }
         public virtual DbSet<tempRegionLookup> tempRegionLookups { get; set; }
         public virtual DbSet<footfall_raw> footfall_raw { get; set; }
+        public virtual DbSet<CPCW_Managers> CPCW_Managers { get; set; }
     
         public virtual ObjectResult<udsp_GetPandL_Result> udsp_GetPandL(Nullable<int> storeNumber, string periodYear, Nullable<short> periodMonth, Nullable<short> qtdStartMonth, Nullable<short> ytdStartMonth)
         {
