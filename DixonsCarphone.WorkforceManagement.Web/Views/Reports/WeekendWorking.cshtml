@@ -87,6 +87,10 @@
                                 {
                                     <span class="glyphicon glyphicon-minus" style="font-size:xx-small"></span>
                                 }
+                                else if(branchSelection[i].Worked == 2)
+                                {
+                                    <strong>H</strong>
+                                }
                             </td>
                         }
                     </tr>
@@ -104,7 +108,7 @@
                             <th style="width:0px;border-right:2px solid black;padding:0px;"></th>
                         }
                         <td class="text-center">
-                            <strong>@string.Format("{0:0}%", (decimal)detailSelection.Sum(x => x.Worked) / (detailSelection.Where(x => x.Worked == 1 || x.Closed == null).Count()) * 100)</strong>
+                            <strong>@string.Format("{0:0}%", (decimal)detailSelection.Where(x => x.Worked != 2).Sum(x => x.Worked) / (detailSelection.Where(x => x.Worked > 0 || x.Closed == null).Count()) * 100)</strong>
                         </td>
                     }
                 </tr>

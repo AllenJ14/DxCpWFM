@@ -19,14 +19,22 @@
         <tr>
             <td class="text-center"><strong>Profit & Loss Statements</strong></td>
             <td class="text-center">A Profit and Loss statement is a standard business tool. It presents all of a businesses revenue and margin first, then it shows all of the costs incurred and leaves the difference: Profit.</td>
-            <td class="text-center"><a class="btn btn-info" href="@Url.Action("TrainingDoc","Reports")" target="_blank">View</a></td>
+            <td class="text-center"><a class="btn btn-info" href="@Url.Action("TrainingDoc","Reports", new { f = "ProfitLossBriefing.pdf"})" target="_blank">View</a></td>
         </tr>
         <tr>
             <td class="text-center"><strong>Contract Bases / Holiday Planning</strong></td>
             <td class="text-center">
                 Contract bases provide guidance as to where the store's contracted cost needs to sit for the remainder of the year. Contract bases are used in order to help keep payroll controlled, ensure we recruit in the right stores and enable us to react to changes in trade.
             </td>
-            <td class="text-center"><a class="btn btn-info" href="@Url.Action("TeamTrainingDoc","Reports")" target="_blank">View</a></td>
+            <td class="text-center"><a class="btn btn-info" href="@Url.Action("TrainingDoc","Reports", new { f = "ContractBases.pdf" })" target="_blank">View</a></td>
+        </tr>
+        <tr>
+            <td class="text-center"><strong>Ignite SOH Funding</strong></td>
+            <td class="text-center">
+                You told us that whenever you send a colleague on Ignite, this removes hours which would be used on the sales floor to support sales conversion and deliver great service to our customers.<br />
+                We’ve listened to you and have now managed to source the funding required to pay for Ignite centrally…. You’ll now be able to ensure that you can always maximise your sales opportunities and deliver exceptional service with this additional SOH
+            </td>
+            <td class="text-center"><a class="btn btn-info" href="@Url.Action("TrainingDoc","Reports", new { f = "IgniteSOHProcess.pdf" })" target="_blank">View</a></td>
         </tr>
     </tbody>
 </table>

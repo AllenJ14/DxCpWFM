@@ -51,7 +51,7 @@ namespace DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
             int count = a.Max(x => x.Hour_In_Day_24) ?? 18;
             count = count < 18 ? 18 : count;
             string toReturn = "[";
-            for (int i = 8; i < count; i++)
+            for (int i = 8; i <= count; i++)
             {
                 toReturn = toReturn + (a.Where(x => x.Hour_In_Day_24 == i).Select(x => x.Footfall_Volume).FirstOrDefault() ?? 0).ToString() + ",";
             }

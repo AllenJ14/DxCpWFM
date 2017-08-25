@@ -494,14 +494,19 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             return View("StorePandL", vm);
         }
 
-        public FileResult TrainingDoc()
-        {
-            return File("/Uploads/ProfitLossBriefing.pdf", "application/pdf");
-        }
+        //public FileResult TrainingDoc()
+        //{
+        //    return File("/Uploads/ProfitLossBriefing.pdf", "application/pdf");
+        //}
 
-        public FileResult TeamTrainingDoc()
+        //public FileResult TeamTrainingDoc()
+        //{
+        //    return File("/Uploads/ContractBases.pdf", "application/pdf");
+        //}
+
+        public FileResult TrainingDoc(string f)
         {
-            return File("/Uploads/ContractBases.pdf", "application/pdf");
+            return File("/Uploads/" + f, "application/pdf");
         }
 
         public async Task<ActionResult> PunchCompliance(string selectedDate = "Last Week")

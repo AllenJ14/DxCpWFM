@@ -120,7 +120,8 @@ namespace DixonsCarphone.WorkforceManagement.Web.Models
             }
             else
             {
-                DirectoryEntry entry = new DirectoryEntry(ConfigurationManager.AppSettings["CPCWADfront"] + "CN=" + username + "," + ConfigurationManager.AppSettings["CPCWADback"], username, password);
+                //string[] server = principalContext.ConnectedServer.Split('.');
+                DirectoryEntry entry = new DirectoryEntry("LDAP://" + principalContext.ConnectedServer + "/" + userPrincipal.DistinguishedName, username, password);
                 string test1 = entry.Properties["workforceID"].Value.ToString();
                 try
                 {
