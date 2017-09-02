@@ -959,6 +959,33 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             }
         }
 
+        public async Task<List<sp_RegionContractStatus_Result>> GetRegionContractStatus()
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                var data = await Task.Run(() => dbContext.sp_RegionContractStatus().ToList());
+                return data;
+            }
+        }
+
+        public async Task<List<sp_RegionFutureDeployment_Result>> GetRegionFutureDeployment(string regionNumber)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                var data = await Task.Run(() => dbContext.sp_RegionFutureDeployment(regionNumber).ToList());
+                return data;
+            }
+        }
+
+        public async Task<List<sp_DivisionFutureDeployment_Result>> GetDivisionFutureDeployment(string division)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                var data = await Task.Run(() => dbContext.sp_DivisionFutureDeployment(division).ToList());
+                return data;
+            }
+        }
+
         private AccountEntryView MapToAccountEntryView(AccountEntryHeader data)
         {
             var toRtn = new AccountEntryView

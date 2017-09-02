@@ -14,6 +14,12 @@
 
     ViewBag.Title = "Workforce Management";
     bool firstNews = true;
+
+    List<string> wfAccess = new List<string>
+    {
+        {"Admin" },
+        {"DD" }
+    };
 }
 
 <div class="modal fade" id="feedback" tabindex="-1" role="form">
@@ -59,6 +65,33 @@
         @Html.Partial("~/Views/Partials/_ScoresAndUtilization.cshtml", Model.Scores)
     </div>
 
+    @if (wfAccess.Contains(HttpContext.Current.Session["_AccessLevel"].ToString()))
+    {
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h5 class="panel-title"><strong>Peak Planning</strong></h5>
+            </div>
+            <div class="panel-body">
+                <div class="col-sm-12 col-md-4" style="margin-bottom:15px;">
+                    <div class="col-xs-8 text-center" style="vertical-align:middle;"><p style="font-size:large;margin-bottom:0px;"><strong>Are we recruited right?</strong></p></div>
+                    <div class="col-xs-4"><a class="btn btn-info" href="@Url.Action("RecruitmentStatus","Planning")">Show me</a></div>
+                </div>
+                <div class="col-sm-12 col-md-4" style="margin-bottom:15px;">
+                    <div class="col-xs-8 text-center" style="vertical-align:middle;"><p style="font-size:large;margin-bottom:0px"><strong>Are we deployed well?</strong></p></div>
+                    <div class="col-xs-4"><a class="btn btn-info" href="@Url.Action("DeploymentStatus","Planning")">Show me</a></div>
+                </div>
+                <div class="col-sm-12 col-md-4" style="margin-bottom:15px;">
+                    <div class="col-xs-8 text-center" style="vertical-align:middle;"><p style="font-size:large;margin-bottom:0px;"><strong>Is holiday controlled?</strong></p></div>
+                    <div class="col-xs-4"><button class="btn btn-info disabled">Coming Soon</button></div>
+                </div>
+                <div class="col-sm-12 col-md-4 col-md-offset-4" style="margin-bottom:15px;">
+                    <div class="col-xs-8 text-center" style="vertical-align:middle;"><p style="font-size:large;margin-bottom:0px;"><strong>Do we have the right flex?</strong></p></div>
+                    <div class="col-xs-4"><button class="btn btn-info disabled">Coming Soon</button></div>
+                </div>
+            </div>
+        </div>
+    }
+
     @if (topNews.Count() != 0 && !(bool)HttpContext.Current.Session["_ROIFlag"])
     {
         <div class="panel panel-default">
@@ -83,12 +116,15 @@
         </div>
     }
 
-    <div class="panel panel-default">
-        <div class="panel-body">
-            <h3 style="margin-top:2px" class="text-center"><strong>Welcome to Workforce Management</strong></h3>
-            <p>Welcome to your new workforce management intranet site. The new site will give you greater access to reporting, forms and schedules along with containing all the information and support you need to help manage your team.</p>
-            <p>
-                <strong><u>Features include:</u></strong>
+    
+    @if(!wfAccess.Contains(HttpContext.Current.Session["_AccessLevel"].ToString()))
+    {
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h3 style="margin-top:2px" class="text-center"><strong>Welcome to Workforce Management</strong></h3>
+                <p>Welcome to your new workforce management intranet site. The new site will give you greater access to reporting, forms and schedules along with containing all the information and support you need to help manage your team.</p>
+                <p>
+                    <strong><u>Features include:</u></strong>
                 </p><div class="row">
                     <div class="col-md-4">
                         <ul>
@@ -138,10 +174,10 @@
                         <ul></ul>
                     </div>
                 </div>
-            <p></p>
-            <hr>
-            <p>
-                <strong><u>Coming soon:</u></strong>
+                <p></p>
+                <hr>
+                <p>
+                    <strong><u>Coming soon:</u></strong>
                 </p><div class="row">
                     <div class="col-md-4">
                         <ul>
@@ -159,18 +195,14 @@
                         </ul>
                     </div>
                 </div>
-            <hr />
-            <div class="col-md-12">
-                <p class="text-center"><strong>We have loads of useful features and reporting we are planning on bringing to the site but feedback and suggestions are always welcome. If you have any ideas for a new report or improvements to an existing feature please use the button below to submit a suggestion.</strong></p>
-                <div class="text-center"><button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#feedback">Submit Feedback</button></div>
+                <hr />
+                <div class="col-md-12">
+                    <p class="text-center"><strong>We have loads of useful features and reporting we are planning on bringing to the site but feedback and suggestions are always welcome. If you have any ideas for a new report or improvements to an existing feature please use the button below to submit a suggestion.</strong></p>
+                    <div class="text-center"><button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#feedback">Submit Feedback</button></div>
+                </div>
             </div>
         </div>
-    </div>
-
-
-
-            
-
+    }        
 
 </section>
     @section myScripts {

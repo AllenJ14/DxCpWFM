@@ -113,7 +113,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Models
             }
             if(principalContext.Name != "DSG")
             {
-                if (userPrincipal.IsMemberOf(principalContext, IdentityType.Name, ConfigurationManager.AppSettings["BranchManagerGroup"]) || userPrincipal.IsMemberOf(principalContext, IdentityType.Name, ConfigurationManager.AppSettings["IEBranchManagerGroup"]))
+                if (userPrincipal.IsMemberOf(principalContext, IdentityType.Name, ConfigurationManager.AppSettings["BranchManagerGroup"]) || userPrincipal.IsMemberOf(principalContext, IdentityType.Name, ConfigurationManager.AppSettings["IEBranchManagerGroup"]) || userPrincipal.IsMemberOf(principalContext, IdentityType.Name, ConfigurationManager.AppSettings["AMGroup"]))
                 {
                     HttpContext.Current.Session["_AccessLevel"] = "BM";
                 }

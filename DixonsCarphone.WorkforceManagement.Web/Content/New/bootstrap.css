@@ -15,6 +15,14 @@ html {
     visibility:hidden;
     background-color:white;
 }
+.depl_Popup{
+    padding:5px;
+    position: absolute;
+    display: none;
+    background: #FFF;
+    border: 1px solid;
+    border-radius: 5px;
+}
 .hiddenRow {
     padding: 0 !important;
 }

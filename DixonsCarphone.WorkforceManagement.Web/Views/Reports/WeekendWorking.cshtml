@@ -81,11 +81,11 @@
                             <td class="text-center @(branchSelection[i].NotPunched == 1 ? "danger" : "")">
                                 @if (branchSelection[i].Worked == 1)
                                 {
-                                    <span class="glyphicon glyphicon-ok"></span>
+                                    <strong>✔</strong>
                                 }
                                 else if (branchSelection[i].Closed == 1)
                                 {
-                                    <span class="glyphicon glyphicon-minus" style="font-size:xx-small"></span>
+                                    <strong>-</strong>
                                 }
                                 else if(branchSelection[i].Worked == 2)
                                 {

@@ -1,0 +1,98 @@
+﻿@model DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels.FutureDeploymentVm
+
+@{
+    ViewBag.Title = "Deployment Status";
+
+    int x = 0;
+    int y = 0;
+
+    Func<double, double, string> RAG = (a, b) =>
+    {
+        var rtn = "success";
+        var toBudget = 1 - Math.Abs(a / b);
+
+        if (toBudget >= 0.2)
+        {
+            rtn = "danger";
+        }
+        else if (toBudget >= 0.1)
+        {
+            rtn = "warning";
+        }
+
+        return rtn;
+    };
+
+}
+
+<div class="row">
+    &emsp;
+</div>
+
+@if (Model.collection == null)
+{
+    <div class="row">@Html.Partial("~/Views/Shared/_Messages.cshtml", Model)</div>
+}
+else
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th class="text-center"></th>
+                @foreach (var item in Model.WeekList)
+                {
+                    <th class="text-center">Wk @item.ToString().Substring(4)</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.BranchList)
+            {
+                { x = 0; }
+                var data = Model.collection.Where(c => c.Area == item.ToString());
+                <tr>
+                    <td>@item.ToString()</td>
+                    @foreach (var values in data)
+                    {
+                        <td class="text-center @(RAG(values.Actual, values.Target)) tooltipHover" data-tooltip="@string.Format("#{0}_{1}", x, y)">@values.deployedPerc</td>
+                        x += 1;
+                    }
+                </tr>
+                y += 1;
+            }
+        </tbody>
+    </table>
+
+    y = 0; 
+        foreach (var item in Model.BranchList)
+        {
+            x = 0;
+            var data = Model.collection.Where(c => c.Area == item.ToString());
+            foreach (var values in data)
+            {
+                <div class="depl_Popup" id="@string.Format("{0}_{1}", x, y)">
+                    <strong>Target:</strong> @values.Target<br />
+                    <strong>Actual:</strong> @values.Actual<br />
+                    <strong>Holiday:</strong> @values.Holiday
+                </div>
+                x += 1;
+            }
+            y += 1;
+    }
+}
+
+
+@section myScripts{
+<script>
+    $(function () {
+        $(".tooltipHover").hover(function (e) {
+            $($(this).data("tooltip")).css({
+                left: e.pageX + 1,
+                top: e.pageY + 1
+            }).stop().show(100);
+        }, function () {
+            $($(this).data("tooltip")).hide();
+        });
+    });
+</script>    
+}

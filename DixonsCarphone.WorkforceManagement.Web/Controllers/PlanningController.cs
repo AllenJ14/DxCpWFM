@@ -4,6 +4,7 @@ using DixonsCarphone.WorkforceManagement.Business.Managers;
 using DixonsCarphone.WorkforceManagement.ViewModels;
 using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels;
 using DixonsCarphone.WorkforceManagement.ViewModels.Model;
+using DixonsCarphone.WorkforceManagement.Web.Attributes;
 using DixonsCarphone.WorkforceManagement.Web.Mapping;
 using System;
 using System.Collections.Generic;
@@ -269,41 +270,46 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
                 }
             }
 
-            var weekNumbers = await _storeManager.GetWeekNumbers(DateTime.Now.AddDays(-28).GetFirstDayOfWeek(), DateTime.Now.GetFirstDayOfWeek().AddDays(28));
-            vm.GetWeeksOfYear(DateTime.Now.GetFirstDayOfWeek().AddDays(28), weekNumbers);
+            var weekNumbers = await _storeManager.GetWeekNumbers(DateTime.Now.AddDays(-28).GetFirstDayOfWeek(), DateTime.Now.GetFirstDayOfWeek().AddDays(42));
+            vm.GetWeeksOfYear(DateTime.Now.GetFirstDayOfWeek().AddDays(42), weekNumbers);
             vm.WeeksOfYear.ForEach(x => x.Selected = x.Value == weekOfYr.ToString());
             vm.SelectedDate = vm.WeeksOfYear.Where(x => x.Selected == true).Single().Text.ToString().Substring(11, 10);
             
             return View("Schedule", vm);
         }
 
-        //public async Task<ActionResult> Footfall(string selectedDay = null, string selectedDate = null)
-        //{
-        //    int wkOfYr;
-        //    DateTime dt;
-        //    var day1 = (int)DateTime.Now.GetFirstDayOfWeek().DayOfWeek;
-        //    int dayNum = !string.IsNullOrEmpty(selectedDay) && int.TryParse(selectedDay, out dayNum) ? dayNum : day1;
-        //    var finYr = ConfigurationManager.AppSettings["FinancialYearStart"];
+        [UserFilter(AccessLevel = "Admin,TPC,RM,DD,RD")]
+        public async Task<ActionResult> RecruitmentStatus()
+        {
+            RegionContractStatusVm vm = new RegionContractStatusVm();
 
-        //    int fullYrWeekNum = !string.IsNullOrEmpty(selectedDate) && int.TryParse(selectedDate, out wkOfYr) ? wkOfYr : DateTime.Now.GetWeekOfYear(finYr);
+            var data = mapper.Map<List<RegionContractStatusView>>(await _storeManager.GetRegionContractStatus());
+            vm.populateVm(data);
 
-        //    var wkNum = int.Parse(fullYrWeekNum.ToString().Substring(4));
-        //    var shortYr = int.Parse(fullYrWeekNum.ToString().Substring(2, 2));
+            return View(vm);
+        }
 
-        //    var invGrpYr = string.Format("{0}/{1}", shortYr, shortYr + 1);
+        [UserFilter(AccessLevel = "Admin,TPC,RM,DD,RD")]
+        public async Task<ActionResult> DeploymentStatus()
+        {
+            FutureDeploymentVm vm = new FutureDeploymentVm();
 
-        //    var footFallVm = new FootFallsViewModel
-        //    {
-        //        DailyFootFalls = mapper.Map<List<DailyFootfall>, List<DailyFootfallView>>(await _storeManager.GetDailyFootFall(_store.CST_CNTR_ID, dayNum, fullYrWeekNum)),
-        //        WeeklyFootFalls = mapper.Map<List<WeeklyFootfall>, List<WeeklyFootfallView>>(await _storeManager.GetWeeklyFootFall(_store.CST_CNTR_ID, wkNum, invGrpYr))
-        //    };
+            if (System.Web.HttpContext.Current.Session["_ChannelName"] != null)
+            {
+                vm.Message = "This page is not available in the currently selected view, please select a store from the top right menu or go back.";
+                vm.MessageType = MessageType.Error;
+            }
+            else if (System.Web.HttpContext.Current.Session["_DivisionName"] != null)
+            {
+                vm.collection = mapper.Map<List<FutureDeploymentView>>(await _storeManager.GetDivisionFutureDeployment(_store.Division));
+            }
+            else
+            {
+                vm.collection = mapper.Map<List<FutureDeploymentView>>(await _storeManager.GetRegionFutureDeployment(_store.RegionNo));
+            }
 
-        //    footFallVm.PageBlurb = ConfigurationManager.AppSettings["FootFallBlurb"];
-        //    footFallVm.SelectedDate = selectedDate;
-        //    footFallVm.SelectedDay = !string.IsNullOrEmpty(selectedDay) ? selectedDay : ((DayOfWeek)day1).ToString();
-
-        //    return View(footFallVm);
-        //}
+            return View(vm);
+        }
 
         // Display full text of a single activity
         public async Task<ActionResult> GetActivity(long activityId)

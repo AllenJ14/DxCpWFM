@@ -247,6 +247,9 @@
     <Compile Include="Entities\sp_DivisionDashboardData_Result.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\sp_DivisionFutureDeployment_Result.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\sp_DivisionHolidayPlanningEmp_Result.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
@@ -292,7 +295,13 @@
     <Compile Include="Entities\sp_RegionContractBase_Result.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\sp_RegionContractStatus_Result.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\sp_RegionDashboardData_Result.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\sp_RegionFutureDeployment_Result.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\sp_RegionHolidayPlanningEmp_Result.cs">

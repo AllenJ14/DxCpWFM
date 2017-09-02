@@ -1062,6 +1062,9 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Parameter Name="BeginWeek" Type="int" Mode="In" />
           <Parameter Name="EndWeek" Type="int" Mode="In" />
         </Function>
+        <Function Name="sp_DivisionFutureDeployment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Division" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="sp_DivisionHolidayPlanning" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Division" Type="nvarchar" Mode="In" />
         </Function>
@@ -1093,10 +1096,14 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
         <Function Name="sp_RegionContractBase" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Region" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="sp_RegionContractStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_RegionDashboardData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Region" Type="nvarchar" Mode="In" />
           <Parameter Name="BeginWeek" Type="int" Mode="In" />
           <Parameter Name="EndWeek" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_RegionFutureDeployment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="RegionNo" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="sp_RegionHolidayPlanning" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="RegionNo" Type="nvarchar" Mode="In" />
@@ -1850,6 +1857,13 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Parameter Name="Division" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="CPCW_Managers" EntityType="DixonsCarphone.WorkforceManagement.Business.CPCW_Managers" />
+          <FunctionImport Name="sp_RegionContractStatus" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_RegionContractStatus_Result)" />
+          <FunctionImport Name="sp_RegionFutureDeployment" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_RegionFutureDeployment_Result)">
+          <Parameter Name="RegionNo" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_DivisionFutureDeployment" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_DivisionFutureDeployment_Result)">
+            <Parameter Name="Division" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="BestPracticeCategoryType">
           <Key>
@@ -3486,6 +3500,28 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Property Name="Date_in_Current_Department" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
           <Property Name="Last_Update" Type="DateTime" Precision="3" />
         </EntityType>
+        <ComplexType Name="sp_RegionContractStatus_Result">
+          <Property Type="String" Name="Area" Nullable="true" MaxLength="30" />
+          <Property Type="Double" Name="ContractBase" Nullable="true" />
+          <Property Type="Double" Name="ContractHours" Nullable="true" />
+          <Property Type="Double" Name="VacancyHours" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_RegionFutureDeployment_Result">
+          <Property Type="Int16" Name="SortOrder" Nullable="true" />
+          <Property Type="Int32" Name="WeekNumber" Nullable="true" />
+          <Property Type="String" Name="Area" Nullable="true" MaxLength="288" />
+          <Property Type="Double" Name="Target" Nullable="true" />
+          <Property Type="Double" Name="Actual" Nullable="true" />
+          <Property Type="Double" Name="Holiday" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_DivisionFutureDeployment_Result">
+          <Property Type="Int16" Name="SortOrder" Nullable="true" />
+          <Property Type="Int32" Name="WeekNumber" Nullable="true" />
+          <Property Type="String" Name="Area" Nullable="true" MaxLength="50" />
+          <Property Type="Double" Name="Target" Nullable="true" />
+          <Property Type="Double" Name="Actual" Nullable="true" />
+          <Property Type="Double" Name="Holiday" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5140,6 +5176,40 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_RegionContractStatus" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_RegionContractStatus">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.sp_RegionContractStatus_Result">
+                <ScalarProperty Name="Area" ColumnName="Area" />
+                <ScalarProperty Name="ContractBase" ColumnName="ContractBase" />
+                <ScalarProperty Name="ContractHours" ColumnName="ContractHours" />
+                <ScalarProperty Name="VacancyHours" ColumnName="VacancyHours" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_RegionFutureDeployment" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_RegionFutureDeployment">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.sp_RegionFutureDeployment_Result">
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+                <ScalarProperty Name="WeekNumber" ColumnName="WeekNumber" />
+                <ScalarProperty Name="Area" ColumnName="Area" />
+                <ScalarProperty Name="Target" ColumnName="Target" />
+                <ScalarProperty Name="Actual" ColumnName="Actual" />
+                <ScalarProperty Name="Holiday" ColumnName="Holiday" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_DivisionFutureDeployment" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_DivisionFutureDeployment">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.sp_DivisionFutureDeployment_Result">
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+                <ScalarProperty Name="WeekNumber" ColumnName="WeekNumber" />
+                <ScalarProperty Name="Area" ColumnName="Area" />
+                <ScalarProperty Name="Target" ColumnName="Target" />
+                <ScalarProperty Name="Actual" ColumnName="Actual" />
+                <ScalarProperty Name="Holiday" ColumnName="Holiday" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

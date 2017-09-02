@@ -734,5 +734,28 @@ namespace DixonsCarphone.WorkforceManagement.Business.Entities
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_DivisionBMWorking_Result>("sp_DivisionBMWorking", divisionParameter);
         }
+    
+        public virtual ObjectResult<sp_RegionContractStatus_Result> sp_RegionContractStatus()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_RegionContractStatus_Result>("sp_RegionContractStatus");
+        }
+    
+        public virtual ObjectResult<sp_RegionFutureDeployment_Result> sp_RegionFutureDeployment(string regionNo)
+        {
+            var regionNoParameter = regionNo != null ?
+                new ObjectParameter("RegionNo", regionNo) :
+                new ObjectParameter("RegionNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_RegionFutureDeployment_Result>("sp_RegionFutureDeployment", regionNoParameter);
+        }
+    
+        public virtual ObjectResult<sp_DivisionFutureDeployment_Result> sp_DivisionFutureDeployment(string division)
+        {
+            var divisionParameter = division != null ?
+                new ObjectParameter("Division", division) :
+                new ObjectParameter("Division", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_DivisionFutureDeployment_Result>("sp_DivisionFutureDeployment", divisionParameter);
+        }
     }
 }

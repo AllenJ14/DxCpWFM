@@ -1,0 +1,165 @@
+﻿@model DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels.RegionContractStatusVm
+
+@{
+    ViewBag.Title = "Recruitment Status";
+}
+
+
+<div class="row">
+    &emsp;    
+</div>
+<div class="row">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            This report is an indicative view of a regions recruitment position. Small factors and a constant fluctuation in teams will effect the actual figures but will not fundamental effect the position of the region/ store or the action to be taken. For example known leavers are currently not factored in and there is a gap between an offer been made (a vacancy closed) and the applicant actually being on-boarded.
+        </div>
+    </div>
+    <div class="row text-center">
+        <div class="btn-group">
+            <button type="button" class="btn btn-default active" id="SAS">SAS</button>
+            <button type="button" class="btn btn-default" id="SIS">SIS</button>
+        </div>
+    </div>
+    <div class="col-xs-12" id="chtContainer">
+        <canvas id="chart" style="height:500px"></canvas>
+    </div>
+</div>
+
+@section myScripts{
+<script>
+    var SAS = true;
+    var $SASBtn = $('#SAS');
+    var $SISBtn = $('#SIS');
+
+    var myChart;
+    var ctx = document.getElementById("chart")
+    var myDataSAS = {
+        labels: @Model.GraphLegendSAS,
+        datasets: [
+        {
+            label: 'Contract Base',
+            borderColor: 'rgba(118, 0, 69, 0.7)',
+            data: @Model.ContractBaseSAS.ToString(),
+            fill: false,
+            pointRadius: 0,
+            hitRadius: 4,
+            hoverBorderWidth: 0.5,
+            type: 'line',
+            tension: 0,
+            style: 'dash'
+        },
+        {
+            label: 'Current Contract Hours',
+            data: @Model.ContractsSAS.ToString(),
+            backgroundColor: 'rgba(10, 23, 49,0.9)'
+        },
+        {
+            label: 'Live Vacancy Hours',
+            data: @Model.VacanciesSAS.ToString(),
+            backgroundColor: 'rgba(0, 140, 168,0.9)'
+        }
+        ]
+    };
+    var myDataSIS = {
+        labels: @Model.GraphLegendSIS,
+        datasets: [
+        {
+            label: 'Contract Base',
+            borderColor: 'rgba(118, 0, 69, 0.7)',
+            data: @Model.ContractBaseSIS.ToString(),
+            fill: false,
+            pointRadius: 0,
+            hitRadius: 4,
+            hoverBorderWidth: 0.5,
+            type: 'line',
+            tension: 0,
+            style: 'dash'
+        },
+        {
+            label: 'Current Contract Hours',
+            data: @Model.ContractsSIS.ToString(),
+            backgroundColor: 'rgba(10, 23, 49,0.9)'
+        },
+        {
+            label: 'Live Vacancy Hours',
+            data: @Model.VacanciesSIS.ToString(),
+            backgroundColor: 'rgba(0, 140, 168,0.9)'
+        }
+        ]
+    };
+    var myOptions = {
+        scales: {
+            xAxes: [{
+                stacked: true,
+                label: 'Region'
+            }],
+            yAxes: [{
+                stacked: true,
+                ticks: {
+                    beginAtZero: true,
+                    callback: function(value, index, values) {
+                        return value + '%';
+                    }
+                }
+            }]
+        },
+        maintainAspectRatio: false,
+        tooltips: {
+            mode: 'index',
+            callbacks: {
+                label: function(tooltipItem, data){
+                    //return tooltipItems.yLabel + 'hrs';
+                    var dataset = data.datasets[tooltipItem.datasetIndex];
+                    return tooltipItem.yLabel + '%';
+                }
+            }
+        }
+    };
+
+    $(function() {        
+        myChart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'bar',
+            // The data for our dataset
+            data: myDataSAS,
+            // Configuration options go here
+            options: myOptions
+        });
+    });
+
+
+    $SASBtn.click(function () {
+        if (!SAS) {
+            $(this).toggleClass('active');
+            $SISBtn.toggleClass('active');
+            SAS = !SAS;
+            myChart.destroy();
+            myChart = new Chart(ctx, {
+                // The type of chart we want to create
+                type: 'bar',
+                // The data for our dataset
+                data: myDataSAS,
+                // Configuration options go here
+                options: myOptions
+            });
+        };
+    });
+
+    $SISBtn.click(function () {
+        if (SAS) {
+            $(this).toggleClass('active');
+            $SASBtn.toggleClass('active');
+            SAS = !SAS;
+            myChart.destroy();
+            myChart = new Chart(ctx, {
+                // The type of chart we want to create
+                type: 'bar',
+                // The data for our dataset
+                data: myDataSIS,
+                // Configuration options go here
+                options: myOptions
+            });
+        };
+    });
+</script>    
+}

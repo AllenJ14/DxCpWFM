@@ -90,12 +90,16 @@
     <Compile Include="BusinessModels\FileUploadView.cs" />
     <Compile Include="BusinessModels\FootfallView.cs" />
     <Compile Include="BusinessModels\FootfallVm.cs" />
+    <Compile Include="BusinessModels\FutureDeploymentView.cs" />
+    <Compile Include="BusinessModels\FutureDeploymentVm.cs" />
     <Compile Include="BusinessModels\HolidayDetail.cs" />
     <Compile Include="BusinessModels\HolidayPlanningEmpBM.cs" />
     <Compile Include="BusinessModels\HolidayPlanningStoreBM.cs" />
     <Compile Include="BusinessModels\HolidayPlanningVM.cs" />
     <Compile Include="BusinessModels\MyTeamViewModel.cs" />
     <Compile Include="BusinessModels\MyTargetsViewModel.cs" />
+    <Compile Include="BusinessModels\RegionContractStatusView.cs" />
+    <Compile Include="BusinessModels\RegionContractStatusVm.cs" />
     <Compile Include="BusinessModels\ScheduleBMView.cs" />
     <Compile Include="BusinessModels\Ticket.cs" />
     <Compile Include="BusinessModels\PandLSummaryDetail.cs" />

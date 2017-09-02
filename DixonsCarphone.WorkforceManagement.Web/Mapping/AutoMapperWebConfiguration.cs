@@ -190,6 +190,9 @@ namespace DixonsCarphone.WorkforceManagement.Web.Mapping
             CreateMap<BmWeWorking, WeWorkingView>();
             CreateMap<sp_DivisionBMWorking_Result, WeWorkingView>();
             CreateMap<sp_ChannelBMWorking_Result, WeWorkingView>();
+            CreateMap<sp_RegionContractStatus_Result, RegionContractStatusView>();
+            CreateMap<sp_RegionFutureDeployment_Result, FutureDeploymentView>();
+            CreateMap<sp_DivisionFutureDeployment_Result, FutureDeploymentView>();
         }
     }
 

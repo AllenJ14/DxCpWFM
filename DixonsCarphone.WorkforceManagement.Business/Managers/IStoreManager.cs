@@ -148,5 +148,11 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
         Task<List<sp_GetRegionFootfall_Result>> GetRegionFootfall(string regionNumber, string year, int weeknumber);
 
         Task<List<sp_GetDivisionFootfall_Result>> GetDivisionFootfall(string divisionName, string year, int weeknumber);
+
+        Task<List<sp_RegionContractStatus_Result>> GetRegionContractStatus();
+
+        Task<List<sp_RegionFutureDeployment_Result>> GetRegionFutureDeployment(string regionNumber);
+
+        Task<List<sp_DivisionFutureDeployment_Result>> GetDivisionFutureDeployment(string division);
     }
 }
