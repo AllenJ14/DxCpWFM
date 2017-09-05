@@ -22,7 +22,6 @@
 
         return rtn;
     };
-
 }
 
 <div class="row">
@@ -33,8 +32,132 @@
 {
     <div class="row">@Html.Partial("~/Views/Shared/_Messages.cshtml", Model)</div>
 }
+else if (HttpContext.Current.Session["_DivisionName"] != null)
+{
+    <div class="panel panel-default">
+        <div class="panel-heading text-center">
+            <strong>Deployment</strong>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th class="text-center col-xs-2"></th>
+                    @foreach (var item in Model.WeekList)
+                    {
+                        <th class="text-center col-xs-1">Wk @item.ToString().Substring(4)</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Channel</strong></td>
+                    @foreach (var item in Model.collection.Where(c => c.SortOrder == null).OrderBy(c => c.WeekNumber))
+                    {
+                        <td class="text-center @(RAG(item.Actual, item.Target)) tooltipHover" data-tooltip="@string.Format("#{0}_{1}", x, y)"><strong>@item.deployedPerc</strong></td>
+                        x += 1;
+                    }
+                    @{ y += 1; }
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    foreach (var div in Model.DivisionList.Where(c => c != "NA"))
+    {
+        <div class="table-responsive" id="@(div)">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th class="text-center col-xs-2"><strong>@string.Format("DCPW0{0}",div)</strong></th>
+                        @foreach (var item in Model.WeekList)
+                        {
+                            <th class="text-center col-xs-1">Wk @item.ToString().Substring(4)</th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.BranchList(div))
+                    {
+                        { x = 0; }
+                        var data = Model.collection.Where(c => c.Area == item.ToString());
+                        <tr>
+                            <td class="col-xs-2">@item.ToString()</td>
+                            @foreach (var values in data.OrderBy(c => c.WeekNumber))
+                        {
+                                <td class="text-center @(RAG(values.Actual, values.Target)) tooltipHover" data-tooltip="@string.Format("#{0}_{1}", x, y)">@values.deployedPerc</td>
+                                x += 1;
+                            }
+                        </tr>
+                        y += 1;
+                    }
+                    <tr>
+                        <td><strong>Total</strong></td>
+                        @{ x = 0; }
+                        @foreach (var item in Model.collection.Where(c => c.SortOrder.ToString() == div).OrderBy(c => c.WeekNumber))
+                        {
+                            <td class="text-center @(RAG(item.Actual, item.Target)) tooltipHover" data-tooltip="@string.Format("#{0}_{1}", x, y)"><strong>@item.deployedPerc</strong></td>
+                            x += 1;
+                        }
+                        @{ y += 1; }
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    }
+
+    y = 0;
+    x = 0;
+    foreach(var item in Model.collection.Where(c => c.SortOrder == null).OrderBy(c => c.WeekNumber))
+    {
+        <div class="depl_Popup" id="@string.Format("{0}_{1}", x, y)">
+            <strong>Target:</strong> @item.Target<br />
+            <strong>Actual:</strong> @item.Actual<br />
+            <strong>Holiday:</strong> @item.Holiday
+        </div>
+        x += 1;
+    }
+
+    y += 1;
+    foreach (var div in Model.DivisionList.Where(c => c != "NA"))
+    {
+        foreach (var item in Model.BranchList(div))
+        {
+            x = 0;
+            var data = Model.collection.Where(c => c.Area == item.ToString());
+            foreach (var values in data.OrderBy(c => c.WeekNumber))
+            {
+                <div class="depl_Popup" id="@string.Format("{0}_{1}", x, y)">
+                    <strong>Target:</strong> @values.Target<br />
+                    <strong>Actual:</strong> @values.Actual<br />
+                    <strong>Holiday:</strong> @values.Holiday
+                </div>
+                x += 1;
+            }
+            y += 1;
+        }
+        x = 0;
+        foreach (var item in Model.collection.Where(c => c.SortOrder.ToString() == div).OrderBy(c => c.WeekNumber))
+        {
+            <div class="depl_Popup" id="@string.Format("{0}_{1}", x, y)">
+                <strong>Target:</strong> @item.Target<br />
+                <strong>Actual:</strong> @item.Actual<br />
+                <strong>Holiday:</strong> @item.Holiday
+            </div>
+                x += 1;
+            }
+            y += 1;
+        }
+}
 else
 {
+    <div class="panel panel-default">
+        <div class="panel-heading text-center">
+            <strong>Deployment</strong>
+        </div>
+    </div>
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -46,7 +169,7 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model.BranchList)
+            @foreach (var item in Model.BranchListAll)
             {
                 { x = 0; }
                 var data = Model.collection.Where(c => c.Area == item.ToString());
@@ -63,36 +186,35 @@ else
         </tbody>
     </table>
 
-    y = 0; 
-        foreach (var item in Model.BranchList)
+    y = 0;
+    foreach (var item in Model.BranchListAll)
+    {
+        x = 0;
+        var data = Model.collection.Where(c => c.Area == item.ToString());
+        foreach (var values in data)
         {
-            x = 0;
-            var data = Model.collection.Where(c => c.Area == item.ToString());
-            foreach (var values in data)
-            {
-                <div class="depl_Popup" id="@string.Format("{0}_{1}", x, y)">
-                    <strong>Target:</strong> @values.Target<br />
-                    <strong>Actual:</strong> @values.Actual<br />
-                    <strong>Holiday:</strong> @values.Holiday
-                </div>
-                x += 1;
-            }
-            y += 1;
+            <div class="depl_Popup" id="@string.Format("{0}_{1}", x, y)">
+                <strong>Target:</strong> @values.Target<br />
+                <strong>Actual:</strong> @values.Actual<br />
+                <strong>Holiday:</strong> @values.Holiday
+            </div>
+            x += 1;
+        }
+        y += 1;
     }
 }
 
-
 @section myScripts{
-<script>
-    $(function () {
-        $(".tooltipHover").hover(function (e) {
-            $($(this).data("tooltip")).css({
-                left: e.pageX + 1,
-                top: e.pageY + 1
-            }).stop().show(100);
-        }, function () {
-            $($(this).data("tooltip")).hide();
+    <script>
+        $(function () {
+            $(".tooltipHover").hover(function (e) {
+                $($(this).data("tooltip")).css({
+                    left: e.pageX + 1,
+                    top: e.pageY + 1
+                }).stop().show(100);
+            }, function () {
+                $($(this).data("tooltip")).hide();
+            });
         });
-    });
-</script>    
+    </script>
 }

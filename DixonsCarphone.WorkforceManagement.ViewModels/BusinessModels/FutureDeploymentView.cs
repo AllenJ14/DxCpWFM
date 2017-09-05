@@ -19,5 +19,17 @@ namespace DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
                 }
                 return string.Format("{0:0.0%}", Actual / Target);
             } }
+
+        public string division { get
+            {
+                if (SortOrder == null)
+                {
+                    return "NA";
+                }
+                else
+                {
+                    return SortOrder.ToString().Substring(0, 1);
+                }
+            } }
     }
 }
