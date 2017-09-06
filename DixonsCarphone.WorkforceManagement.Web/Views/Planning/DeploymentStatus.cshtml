@@ -84,7 +84,7 @@ else if (HttpContext.Current.Session["_DivisionName"] != null)
                         { x = 0; }
                         var data = Model.collection.Where(c => c.Area == item.ToString());
                         <tr>
-                            <td class="col-xs-2">@item.ToString()</td>
+                            <td class="col-xs-2"><a href="@Url.Action("SetNewStore","Profiles", new { selectedStoreNumber = "Region " + item.ToString()})">@item.ToString()</a></td>
                             @foreach (var values in data.OrderBy(c => c.WeekNumber))
                         {
                                 <td class="text-center @(RAG(values.Actual, values.Target)) tooltipHover" data-tooltip="@string.Format("#{0}_{1}", x, y)">@values.deployedPerc</td>
@@ -155,7 +155,13 @@ else
 {
     <div class="panel panel-default">
         <div class="panel-heading text-center">
+            <div class="row">
+                @if (HttpContext.Current.Session["_AccessLevel"].ToString() == "DD")
+            {
+                <a href="@Url.Action("SetNewRegion", "Profiles",new { selectedRegionNumber = HttpContext.Current.Session["_AccessArea"].ToString() })" class="btn btn-default pull-left col-md-1 col-sm-1 text-center" role="button" style="margin-left:10px;"><span class="glyphicon glyphicon-triangle-left"></span>Back</a>
+            }
             <strong>Deployment</strong>
+        </div>
         </div>
     </div>
     <table class="table table-bordered">

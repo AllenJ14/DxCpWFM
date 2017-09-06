@@ -314,11 +314,12 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             }
             else if (System.Web.HttpContext.Current.Session["_DivisionName"] != null)
             {
-                vm.collection = mapper.Map<List<FutureDeploymentView>>(await _storeManager.GetDivisionFutureDeployment(_store.Division));
+                vm.collection = mapper.Map<List<FutureDeploymentView>>(await _storeManager.GetDivisionFutureDeployment(System.Web.HttpContext.Current.Session["_DivisionName"].ToString()));
             }
             else
             {
-                vm.collection = mapper.Map<List<FutureDeploymentView>>(await _storeManager.GetRegionFutureDeployment(_store.RegionNo));
+                string crit = System.Web.HttpContext.Current.Session["_RegionNumber"].ToString() != null ? System.Web.HttpContext.Current.Session["_RegionNumber"].ToString() : _store.RegionNo;
+                vm.collection = mapper.Map<List<FutureDeploymentView>>(await _storeManager.GetRegionFutureDeployment(crit));
             }
 
             return View(vm);
