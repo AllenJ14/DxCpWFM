@@ -283,8 +283,21 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
         {
             RegionContractStatusVm vm = new RegionContractStatusVm();
 
-            var data = mapper.Map<List<RegionContractStatusView>>(await _storeManager.GetRegionContractStatus());
-            vm.populateVm(data);
+            if(System.Web.HttpContext.Current.Session["_ChannelName"] != null || System.Web.HttpContext.Current.Session["_DivisionName"] != null)
+            {
+                var data = mapper.Map<List<RegionContractStatusView>>(await _storeManager.GetRegionContractStatus());
+                vm.populateVm(data);
+            }
+            else if(System.Web.HttpContext.Current.Session["_RegionNumber"] != null)
+            {
+                var data = mapper.Map<List<RegionContractStatusView>>(await _storeManager.GetBranchContractStatus(System.Web.HttpContext.Current.Session["_RegionNumber"].ToString()));
+                vm.populateVm(data);
+            }
+            else
+            {
+                var data = mapper.Map<List<RegionContractStatusView>>(await _storeManager.GetBranchContractStatus(_store.RegionNo));
+                vm.populateVm(data);
+            }
 
             return View(vm);
         }

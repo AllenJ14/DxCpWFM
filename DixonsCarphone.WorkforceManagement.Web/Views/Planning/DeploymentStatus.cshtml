@@ -53,7 +53,7 @@ else if (HttpContext.Current.Session["_DivisionName"] != null)
             </thead>
             <tbody>
                 <tr>
-                    <td><strong>Channel</strong></td>
+                    <td><strong>Chain</strong></td>
                     @foreach (var item in Model.collection.Where(c => c.SortOrder == null).OrderBy(c => c.WeekNumber))
                     {
                         <td class="text-center @(RAG(item.Actual, item.Target)) tooltipHover" data-tooltip="@string.Format("#{0}_{1}", x, y)"><strong>@item.deployedPerc</strong></td>

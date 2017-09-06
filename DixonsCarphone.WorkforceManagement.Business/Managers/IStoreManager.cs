@@ -154,5 +154,7 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
         Task<List<sp_RegionFutureDeployment_Result>> GetRegionFutureDeployment(string regionNumber);
 
         Task<List<sp_DivisionFutureDeployment_Result>> GetDivisionFutureDeployment(string division);
+
+        Task<List<sp_BranchContractStatus_Result>> GetBranchContractStatus(string regionnumber);
     }
 }

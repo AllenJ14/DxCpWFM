@@ -1030,6 +1030,9 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Parameter Name="Division" Type="nvarchar" Mode="In" />
           <Parameter Name="BeginWeek" Type="int" Mode="In" />
         </Function>
+        <Function Name="sp_BranchContractStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="RegionNo" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="sp_BranchPunchCompliance" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="storeNumber" Type="int" Mode="In" />
           <Parameter Name="weekNumber" Type="int" Mode="In" />
@@ -1862,7 +1865,10 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Parameter Name="RegionNo" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_DivisionFutureDeployment" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_DivisionFutureDeployment_Result)">
-            <Parameter Name="Division" Mode="In" Type="String" />
+          <Parameter Name="Division" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_BranchContractStatus" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_BranchContractStatus_Result)">
+            <Parameter Name="RegionNo" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="BestPracticeCategoryType">
@@ -3521,6 +3527,12 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Property Type="Double" Name="Target" Nullable="true" />
           <Property Type="Double" Name="Actual" Nullable="true" />
           <Property Type="Double" Name="Holiday" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_BranchContractStatus_Result">
+          <Property Type="String" Name="Area" Nullable="true" MaxLength="533" />
+          <Property Type="Double" Name="ContractBase" Nullable="true" />
+          <Property Type="Double" Name="ContractHours" Nullable="true" />
+          <Property Type="Double" Name="VacancyHours" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -5207,6 +5219,16 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
                 <ScalarProperty Name="Target" ColumnName="Target" />
                 <ScalarProperty Name="Actual" ColumnName="Actual" />
                 <ScalarProperty Name="Holiday" ColumnName="Holiday" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_BranchContractStatus" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_BranchContractStatus">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.sp_BranchContractStatus_Result">
+                <ScalarProperty Name="Area" ColumnName="Area" />
+                <ScalarProperty Name="ContractBase" ColumnName="ContractBase" />
+                <ScalarProperty Name="ContractHours" ColumnName="ContractHours" />
+                <ScalarProperty Name="VacancyHours" ColumnName="VacancyHours" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

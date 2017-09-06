@@ -968,6 +968,15 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             }
         }
 
+        public async Task<List<sp_BranchContractStatus_Result>> GetBranchContractStatus(string regionnumber)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                var data = await Task.Run(() => dbContext.sp_BranchContractStatus(regionnumber).ToList());
+                return data;
+            }
+        }
+
         public async Task<List<sp_RegionFutureDeployment_Result>> GetRegionFutureDeployment(string regionNumber)
         {
             using (var dbContext = new DxCpWfmContext())

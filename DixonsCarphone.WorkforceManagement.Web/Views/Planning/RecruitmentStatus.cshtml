@@ -14,15 +14,18 @@
             <strong>Recruitment</strong>
         </div>
         <div class="panel-body">
-            This report is an indicative view of a regions recruitment position. Small factors and a constant fluctuation in teams will effect the actual figures but will not fundamental effect the position of the region/ store or the action to be taken. For example known leavers are currently not factored in and there is a gap between an offer been made (a vacancy closed) and the applicant actually being on-boarded.
+            This report is an indicative view of a regions recruitment position. Small factors and a constant fluctuation in teams will effect the actual figures but will not fundamental effect the position of the region/store or the action to be taken. For example known leavers are currently not factored in and there is a gap between an offer been made (a vacancy closed) and the applicant actually being on-boarded.
         </div>
     </div>
-    <div class="row text-center">
-        <div class="btn-group">
-            <button type="button" class="btn btn-default active" id="SAS">SAS</button>
-            <button type="button" class="btn btn-default" id="SIS">SIS</button>
+    @if (Model.Marker == 2)
+    {
+        <div class="row text-center">
+            <div class="btn-group">
+                <button type="button" class="btn btn-default active" id="SAS">SAS</button>
+                <button type="button" class="btn btn-default" id="SIS">SIS</button>
+            </div>
         </div>
-    </div>
+    }    
     <div class="col-xs-12" id="chtContainer">
         <canvas id="chart" style="height:500px"></canvas>
     </div>
@@ -37,7 +40,7 @@
     var myChart;
     var ctx = document.getElementById("chart")
     var myDataSAS = {
-        labels: @Model.GraphLegendSAS,
+        labels: @Html.Raw(Model.GraphLegendSAS),
         datasets: [
         {
             label: 'Contract Base',
@@ -63,13 +66,14 @@
         }
         ]
     };
+
     var myDataSIS = {
-        labels: @Model.GraphLegendSIS,
+        labels: @(Model.Marker == 2 ? Model.GraphLegendSIS.ToString() : "[]"),
         datasets: [
         {
             label: 'Contract Base',
             borderColor: 'rgba(118, 0, 69, 0.7)',
-            data: @Model.ContractBaseSIS.ToString(),
+            data: @(Model.Marker == 2 ? Model.ContractBaseSIS.ToString() : "[]"),
             fill: false,
             pointRadius: 0,
             hitRadius: 4,
@@ -80,12 +84,12 @@
         },
         {
             label: 'Current Contract Hours',
-            data: @Model.ContractsSIS.ToString(),
+            data: @(Model.Marker == 2 ? Model.ContractsSIS.ToString() : "[]"),
             backgroundColor: 'rgba(10, 23, 49,0.9)'
         },
         {
             label: 'Live Vacancy Hours',
-            data: @Model.VacanciesSIS.ToString(),
+            data: @(Model.Marker == 2 ? Model.VacanciesSIS.ToString() : "[]"),
             backgroundColor: 'rgba(0, 140, 168,0.9)'
         }
         ]
@@ -95,6 +99,7 @@
             xAxes: [{
                 stacked: true,
                 label: 'Region'
+                @(Model.Marker == 2 ? "" : ",ticks:{autoSkip: false,maxRotation: 90,minRotation:90}")
             }],
             yAxes: [{
                 stacked: true,
