@@ -498,6 +498,19 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
           <Property Name="AddedBy" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="Datetime" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="PeakData">
+          <Key>
+            <PropertyRef Name="BranchNumber" />
+            <PropertyRef Name="WeekNumber" />
+          </Key>
+          <Property Name="BranchNumber" Type="int" Nullable="false" />
+          <Property Name="WeekNumber" Type="int" Nullable="false" />
+          <Property Name="Budget" Type="float" />
+          <Property Name="Contract" Type="float" />
+          <Property Name="Holiday" Type="float" />
+          <Property Name="Temps" Type="tinyint" />
+          <Property Name="TempsOption" Type="tinyint" />
+        </EntityType>
         <EntityType Name="PriorityType">
           <Key>
             <PropertyRef Name="PriorityTypeId" />
@@ -524,7 +537,7 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
           <Property Name="PersonNumber" Type="int" />
           <Property Name="ContractHours" Type="numeric" Precision="3" Scale="1" />
           <Property Name="FullName" Type="nvarchar" MaxLength="100" />
-          <Property Name="ShiftType" Type="nvarchar" MaxLength="10" />
+          <Property Name="ShiftType" Type="nvarchar" MaxLength="50" />
           <Property Name="TransferBranch" Type="nvarchar" MaxLength="10" />
           <Property Name="WeekNumber" Type="int" />
           <Property Name="StartDate" Type="date" />
@@ -1234,6 +1247,7 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <EntitySet Name="IncorrectBranchLog" EntityType="Self.IncorrectBranchLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IpRef" EntityType="Self.IpRef" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OpeningTimesComments" EntityType="Self.OpeningTimesComments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PeakData" EntityType="Self.PeakData" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PriorityType" EntityType="Self.PriorityType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ROIIpRef" EntityType="Self.ROIIpRef" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ScheduleData" EntityType="Self.ScheduleData" Schema="dbo" store:Type="Tables" />
@@ -1868,8 +1882,9 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Parameter Name="Division" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_BranchContractStatus" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_BranchContractStatus_Result)">
-            <Parameter Name="RegionNo" Mode="In" Type="String" />
+          <Parameter Name="RegionNo" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="PeakDatas" EntityType="DixonsCarphone.WorkforceManagement.Business.PeakData" />
         </EntityContainer>
         <EntityType Name="BestPracticeCategoryType">
           <Key>
@@ -2535,7 +2550,7 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Property Name="PersonNumber" Type="Int32" />
           <Property Name="ContractHours" Type="Decimal" Precision="3" Scale="1" />
           <Property Name="FullName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="ShiftType" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="ShiftType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="TransferBranch" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="WeekNumber" Type="Int32" />
           <Property Name="StartDate" Type="DateTime" Precision="0" />
@@ -3534,6 +3549,19 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Property Type="Double" Name="ContractHours" Nullable="true" />
           <Property Type="Double" Name="VacancyHours" Nullable="true" />
         </ComplexType>
+        <EntityType Name="PeakData">
+          <Key>
+            <PropertyRef Name="BranchNumber" />
+            <PropertyRef Name="WeekNumber" />
+          </Key>
+          <Property Name="BranchNumber" Type="Int32" Nullable="false" />
+          <Property Name="WeekNumber" Type="Int32" Nullable="false" />
+          <Property Name="Budget" Type="Double" />
+          <Property Name="Contract" Type="Double" />
+          <Property Name="Holiday" Type="Double" />
+          <Property Name="Temps" Type="Byte" />
+          <Property Name="TempsOption" Type="Byte" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5232,6 +5260,19 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="PeakDatas">
+            <EntityTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.PeakData">
+              <MappingFragment StoreEntitySet="PeakData">
+                <ScalarProperty Name="TempsOption" ColumnName="TempsOption" />
+                <ScalarProperty Name="Temps" ColumnName="Temps" />
+                <ScalarProperty Name="Holiday" ColumnName="Holiday" />
+                <ScalarProperty Name="Contract" ColumnName="Contract" />
+                <ScalarProperty Name="Budget" ColumnName="Budget" />
+                <ScalarProperty Name="WeekNumber" ColumnName="WeekNumber" />
+                <ScalarProperty Name="BranchNumber" ColumnName="BranchNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

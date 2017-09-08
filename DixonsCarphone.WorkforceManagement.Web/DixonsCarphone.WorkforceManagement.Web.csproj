@@ -613,6 +613,7 @@
     <Content Include="Views\Planning\RecruitmentStatus.cshtml" />
     <Content Include="Uploads\IgniteSOHProcess.pdf" />
     <Content Include="Views\Planning\DeploymentStatus.cshtml" />
+    <Content Include="Views\Planning\PeakPlanning.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DixonsCarphone.WorkforceManagement.Business\DixonsCarphone.WorkforceManagement.Business.csproj">

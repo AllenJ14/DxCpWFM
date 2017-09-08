@@ -1,0 +1,73 @@
+﻿@model DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels.PeakDataVm
+
+@{
+    ViewBag.Title = "Peak Planning";
+}
+
+<div class="row">
+    &emsp;
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading text-center">
+        <strong>Peak Planning</strong>
+    </div>
+    <div class="panel-body">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <tr>
+                    <td class="active"><strong>Week</strong></td>
+                    @foreach (var item in Model.collection)
+                    {
+                        <td class="text-center active"><strong>@item.WeekNumber.ToString().Substring(4)</strong></td>
+                    }
+                </tr>
+                <tr>
+                    <td><strong>SOH Budget</strong></td>
+                    @foreach (var item in Model.collection)
+                    {
+                        <td class="text-center">@item.Budget</td>
+                    }
+                </tr>
+                <tr>
+                    <td><strong>Contract Hrs</strong></td>
+                    @foreach (var item in Model.collection)
+                    {
+                        <td class="text-center">@item.Contract</td>
+                    }
+                </tr>
+                <tr>
+                    <td><strong>Holiday Booked</strong></td>
+                    @foreach (var item in Model.collection)
+                    {
+                        <td class="text-center">@item.Holiday</td>
+                    }
+                </tr>
+                <tr>
+                    <td><strong>Flex Required</strong></td>
+                    @foreach (var item in Model.collection)
+                    {
+                        <td class="text-center">@item.Flex</td>
+                    }
+                </tr>
+            </table>
+        </div>
+        <hr />
+        <h3>Peak Temps</h3>
+        <p><strong><u>@(Model.collection.First().tempflag ? string.Format("{0} recommended, {1} optional", Model.collection.First().Temps, Model.collection.First().TempsOption) : "None required")</u></strong></p>
+        @if (Model.collection.First().tempflag)
+        {
+            <p>
+                <strong>Start Date: </strong>Week 26 (22nd Oct 2017)<br />
+                <strong>End Date: </strong>End of Week 36 (6th Jan 2018)<br />
+                <strong>Contract Hrs: </strong>8 hours per week, available to flex as needed
+            </p>
+        }
+        <p>
+            <strong>What if I need to recruit more heads than has been advised?</strong><br />
+            You should consult with your RM for any queries relating to any of the recommendations shown here, they will be able to raise with the relevant teams if changes are required.
+        </p>
+        <hr />
+        <div class="row text-center"><a class="btn btn-lg btn-success" href="#">Guide to raising vacancies</a></div>
+    </div>
+</div>

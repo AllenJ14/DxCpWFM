@@ -194,6 +194,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Mapping
             CreateMap<sp_BranchContractStatus_Result, RegionContractStatusView>();
             CreateMap<sp_RegionFutureDeployment_Result, FutureDeploymentView>();
             CreateMap<sp_DivisionFutureDeployment_Result, FutureDeploymentView>();
+            CreateMap<PeakData, PeakDataView>();
         }
     }
 

@@ -111,7 +111,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Models
                 // revealing this information
                 return new AuthenticationResult("Your account is disabled");
             }
-            if(principalContext.Name != "DSG")
+            if (principalContext.Name != "DSG")
             {
                 if (userPrincipal.IsMemberOf(principalContext, IdentityType.Name, ConfigurationManager.AppSettings["BranchManagerGroup"]) || userPrincipal.IsMemberOf(principalContext, IdentityType.Name, ConfigurationManager.AppSettings["IEBranchManagerGroup"]) || userPrincipal.IsMemberOf(principalContext, IdentityType.Name, ConfigurationManager.AppSettings["AMGroup"]))
                 {
@@ -133,7 +133,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Models
                 }
                 catch (Exception)
                 {
-                }                
+                }
             }
 
             var identity = CreateIdentity(userPrincipal);

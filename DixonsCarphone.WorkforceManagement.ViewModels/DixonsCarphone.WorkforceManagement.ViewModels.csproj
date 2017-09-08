@@ -98,6 +98,8 @@
     <Compile Include="BusinessModels\HolidayPlanningVM.cs" />
     <Compile Include="BusinessModels\MyTeamViewModel.cs" />
     <Compile Include="BusinessModels\MyTargetsViewModel.cs" />
+    <Compile Include="BusinessModels\PeakDataView.cs" />
+    <Compile Include="BusinessModels\PeakDataVm.cs" />
     <Compile Include="BusinessModels\RegionContractStatusView.cs" />
     <Compile Include="BusinessModels\RegionContractStatusVm.cs" />
     <Compile Include="BusinessModels\ScheduleBMView.cs" />

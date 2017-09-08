@@ -278,6 +278,32 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             return View("Schedule", vm);
         }
 
+        public async Task<ActionResult> PeakPlanning()
+        {
+            PeakDataVm vm = new PeakDataVm();
+            if (System.Web.HttpContext.Current.Session["_ChannelName"] != null)
+            {
+                vm.Message = "This page is not available in the currently selected view, please select a store from the top right menu or go back.";
+                vm.MessageType = MessageType.Error;
+            }
+            else if (System.Web.HttpContext.Current.Session["_DivisionName"] != null)
+            {
+                vm.Message = "This page is not available in the currently selected view, please select a store from the top right menu or go back.";
+                vm.MessageType = MessageType.Error;
+            }
+            else if (System.Web.HttpContext.Current.Session["_RegionNumber"] != null)
+            {
+                vm.Message = "This page is not available in the currently selected view, please select a store from the top right menu or go back.";
+                vm.MessageType = MessageType.Error;
+            }
+            else
+            {
+                vm.collection = mapper.Map<List<PeakDataView>>(await _storeManager.GetBranchPeakData(StoreNumber));
+            }
+
+            return View(vm);
+        }
+
         [UserFilter(AccessLevel = "Admin,TPC,RM,DD,RD")]
         public async Task<ActionResult> RecruitmentStatus()
         {

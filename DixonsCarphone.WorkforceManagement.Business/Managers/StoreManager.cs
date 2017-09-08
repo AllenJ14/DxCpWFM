@@ -995,6 +995,14 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             }
         }
 
+        public async Task<List<PeakData>> GetBranchPeakData(int storeNumber)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                return await dbContext.PeakDatas.Where(x => x.BranchNumber == storeNumber).OrderBy(x => x.WeekNumber).ToListAsync();
+            }
+        }
+
         private AccountEntryView MapToAccountEntryView(AccountEntryHeader data)
         {
             var toRtn = new AccountEntryView
