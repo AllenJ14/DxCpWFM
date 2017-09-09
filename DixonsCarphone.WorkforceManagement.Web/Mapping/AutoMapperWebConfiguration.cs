@@ -166,6 +166,8 @@ namespace DixonsCarphone.WorkforceManagement.Web.Mapping
             CreateMap<HolidayPlanningEmpBM, HolidayPlanningEmp>();
             CreateMap<HolidayPlanningStore, HolidayPlanningStoreBM>();
             CreateMap<HolidayPlanningStoreBM, HolidayPlanningStore>();
+            CreateMap<PayCalendarDate, PayCalendarDateView>();
+            CreateMap<PayCalendarRef, PayCalendarRefView>();
         }
     }
 

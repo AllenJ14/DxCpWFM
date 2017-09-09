@@ -50,7 +50,6 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
         public PartialViewResult _timeList()
         {
             IEnumerable<SelectListItem> Times = Helpers.GetTimes();
-            
             return PartialView(Times.Where(x => x.Text != "Closed"));
         }
 
@@ -68,5 +67,12 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             return "";
         }
         
+        [HttpGet]
+        public PartialViewResult _PayDates(string period)
+        {
+            var data = _storeManager.GetPayCalendarDates(_store.Channel, period);
+
+            return PartialView(mapper.Map<List<PayCalendarDateView>>(data));
+        }
     }
 }

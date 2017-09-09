@@ -196,6 +196,12 @@
     <Compile Include="Entities\OpeningTimesComment.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\PayCalendarDate.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\PayCalendarRef.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\PeakData.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>

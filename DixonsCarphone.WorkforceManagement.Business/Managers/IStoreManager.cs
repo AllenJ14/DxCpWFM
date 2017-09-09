@@ -158,5 +158,9 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
         Task<List<sp_BranchContractStatus_Result>> GetBranchContractStatus(string regionnumber);
 
         Task<List<PeakData>> GetBranchPeakData(int storeNumber);
+
+        Task<List<PayCalendarRef>> GetPayCalendarRef(string _chain);
+
+        List<PayCalendarDate> GetPayCalendarDates(string _chain, string _period);
     }
 }

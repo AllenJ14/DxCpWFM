@@ -498,6 +498,29 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
           <Property Name="AddedBy" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="Datetime" Type="datetime" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'CarphoneWfm.dbo.PayCalendarDates' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="PayCalendarDates">
+          <Key>
+            <PropertyRef Name="Chain" />
+            <PropertyRef Name="Period" />
+            <PropertyRef Name="Week" />
+            <PropertyRef Name="WCDate" />
+          </Key>
+          <Property Name="Chain" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Period" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="Week" Type="tinyint" Nullable="false" />
+          <Property Name="WCDate" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PayCalendarRef">
+          <Key>
+            <PropertyRef Name="Chain" />
+            <PropertyRef Name="Period" />
+          </Key>
+          <Property Name="Chain" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Period" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="PayDate" Type="date" Nullable="false" />
+        </EntityType>
         <EntityType Name="PeakData">
           <Key>
             <PropertyRef Name="BranchNumber" />
@@ -878,6 +901,20 @@ warning 6002: The table/view 'CarphoneWfm.dbo.footfall_raw' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PayCalendarDates_PayCalendarRef">
+          <End Role="PayCalendarRef" Type="Self.PayCalendarRef" Multiplicity="1" />
+          <End Role="PayCalendarDates" Type="Self.PayCalendarDates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PayCalendarRef">
+              <PropertyRef Name="Chain" />
+              <PropertyRef Name="Period" />
+            </Principal>
+            <Dependent Role="PayCalendarDates">
+              <PropertyRef Name="Chain" />
+              <PropertyRef Name="Period" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Store_Store">
           <End Role="StoreRegion" Type="Self.StoreRegion" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -1247,6 +1284,7 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <EntitySet Name="IncorrectBranchLog" EntityType="Self.IncorrectBranchLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IpRef" EntityType="Self.IpRef" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OpeningTimesComments" EntityType="Self.OpeningTimesComments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PayCalendarRef" EntityType="Self.PayCalendarRef" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PeakData" EntityType="Self.PeakData" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PriorityType" EntityType="Self.PriorityType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ROIIpRef" EntityType="Self.ROIIpRef" Schema="dbo" store:Type="Tables" />
@@ -1317,6 +1355,14 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
     [CPW_Clocking_Data].[Overide_PUNCHTIME_OUT] AS [Overide_PUNCHTIME_OUT]
     FROM [dbo].[CPW_Clocking_Data] AS [CPW_Clocking_Data]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="PayCalendarDates" EntityType="Self.PayCalendarDates" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [PayCalendarDates].[Chain] AS [Chain], 
+    [PayCalendarDates].[Period] AS [Period], 
+    [PayCalendarDates].[Week] AS [Week], 
+    [PayCalendarDates].[WCDate] AS [WCDate]
+    FROM [dbo].[PayCalendarDates] AS [PayCalendarDates]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="TicketEscalations" EntityType="Self.TicketEscalations" store:Type="Tables" store:Schema="tck">
             <DefiningQuery>SELECT 
     [TicketEscalations].[EscalationId] AS [EscalationId], 
@@ -1366,6 +1412,10 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <AssociationSet Name="FK_HrFeed_StaffType" Association="Self.FK_HrFeed_StaffType">
             <End Role="StaffType" EntitySet="StaffType" />
             <End Role="HrFeed" EntitySet="HrFeed" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PayCalendarDates_PayCalendarRef" Association="Self.FK_PayCalendarDates_PayCalendarRef">
+            <End Role="PayCalendarRef" EntitySet="PayCalendarRef" />
+            <End Role="PayCalendarDates" EntitySet="PayCalendarDates" />
           </AssociationSet>
           <AssociationSet Name="FK_Store_Store" Association="Self.FK_Store_Store">
             <End Role="StoreRegion" EntitySet="StoreRegion" />
@@ -1885,6 +1935,12 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Parameter Name="RegionNo" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="PeakDatas" EntityType="DixonsCarphone.WorkforceManagement.Business.PeakData" />
+          <EntitySet Name="PayCalendarRefs" EntityType="DixonsCarphone.WorkforceManagement.Business.PayCalendarRef" />
+          <EntitySet Name="PayCalendarDates" EntityType="DixonsCarphone.WorkforceManagement.Business.PayCalendarDate" />
+          <AssociationSet Name="FK_PayCalendarDates_PayCalendarRef" Association="DixonsCarphone.WorkforceManagement.Business.FK_PayCalendarDates_PayCalendarRef">
+            <End Role="PayCalendarRef" EntitySet="PayCalendarRefs" />
+            <End Role="PayCalendarDate" EntitySet="PayCalendarDates" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="BestPracticeCategoryType">
           <Key>
@@ -3562,6 +3618,43 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Property Name="Temps" Type="Byte" />
           <Property Name="TempsOption" Type="Byte" />
         </EntityType>
+        <EntityType Name="PayCalendarRef">
+          <Key>
+            <PropertyRef Name="Chain" />
+            <PropertyRef Name="Period" />
+          </Key>
+          <Property Name="Chain" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Period" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="PayDate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="PayCalendarDates" Relationship="DixonsCarphone.WorkforceManagement.Business.FK_PayCalendarDates_PayCalendarRef" FromRole="PayCalendarRef" ToRole="PayCalendarDate" />
+        </EntityType>
+        <EntityType Name="PayCalendarDate">
+          <Key>
+            <PropertyRef Name="Chain" />
+            <PropertyRef Name="Period" />
+            <PropertyRef Name="Week" />
+            <PropertyRef Name="WCDate" />
+          </Key>
+          <Property Name="Chain" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Period" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="Week" Type="Byte" Nullable="false" />
+          <Property Name="WCDate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="PayCalendarRef" Relationship="DixonsCarphone.WorkforceManagement.Business.FK_PayCalendarDates_PayCalendarRef" FromRole="PayCalendarDate" ToRole="PayCalendarRef" />
+        </EntityType>
+        <Association Name="FK_PayCalendarDates_PayCalendarRef">
+          <End Type="DixonsCarphone.WorkforceManagement.Business.PayCalendarRef" Role="PayCalendarRef" Multiplicity="1" />
+          <End Type="DixonsCarphone.WorkforceManagement.Business.PayCalendarDate" Role="PayCalendarDate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PayCalendarRef">
+              <PropertyRef Name="Chain" />
+              <PropertyRef Name="Period" />
+            </Principal>
+            <Dependent Role="PayCalendarDate">
+              <PropertyRef Name="Chain" />
+              <PropertyRef Name="Period" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5270,6 +5363,25 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
                 <ScalarProperty Name="Budget" ColumnName="Budget" />
                 <ScalarProperty Name="WeekNumber" ColumnName="WeekNumber" />
                 <ScalarProperty Name="BranchNumber" ColumnName="BranchNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PayCalendarRefs">
+            <EntityTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.PayCalendarRef">
+              <MappingFragment StoreEntitySet="PayCalendarRef">
+                <ScalarProperty Name="PayDate" ColumnName="PayDate" />
+                <ScalarProperty Name="Period" ColumnName="Period" />
+                <ScalarProperty Name="Chain" ColumnName="Chain" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PayCalendarDates">
+            <EntityTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.PayCalendarDate">
+              <MappingFragment StoreEntitySet="PayCalendarDates">
+                <ScalarProperty Name="WCDate" ColumnName="WCDate" />
+                <ScalarProperty Name="Week" ColumnName="Week" />
+                <ScalarProperty Name="Period" ColumnName="Period" />
+                <ScalarProperty Name="Chain" ColumnName="Chain" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -257,6 +257,15 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             vm.PageBlurb = ConfigurationManager.AppSettings["MyTeamBlurb"];
             return View(vm);
         }
+
+        public async Task<ActionResult> ColleaguePayPortal()
+        {
+            ColleaguePortalVm vm = new ColleaguePortalVm();
+
+            vm.rawMenu = mapper.Map<List<PayCalendarRefView>>(await _storeManager.GetPayCalendarRef(_store.Channel));
+
+            return View(vm);
+        }
         
         public async Task<ActionResult> HolidayPlanning(int year = 201800)
         {

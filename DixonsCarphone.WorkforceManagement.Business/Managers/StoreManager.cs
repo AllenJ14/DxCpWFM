@@ -1003,6 +1003,22 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             }
         }
 
+        public async Task<List<PayCalendarRef>> GetPayCalendarRef(string _chain)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                return await dbContext.PayCalendarRefs.Where(x => x.Chain == _chain).OrderBy(x => x.PayDate).ToListAsync();
+            }
+        }
+
+        public List<PayCalendarDate> GetPayCalendarDates(string _chain, string _period)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                return dbContext.PayCalendarDates.Where(x => x.Chain == _chain && x.Period == _period).OrderBy(x => x.WCDate).ToList();
+            }
+        }
+
         private AccountEntryView MapToAccountEntryView(AccountEntryHeader data)
         {
             var toRtn = new AccountEntryView

@@ -614,6 +614,8 @@
     <Content Include="Uploads\IgniteSOHProcess.pdf" />
     <Content Include="Views\Planning\DeploymentStatus.cshtml" />
     <Content Include="Views\Planning\PeakPlanning.cshtml" />
+    <Content Include="Views\Reports\ColleaguePayPortal.cshtml" />
+    <Content Include="Views\APITest\_PayDates.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DixonsCarphone.WorkforceManagement.Business\DixonsCarphone.WorkforceManagement.Business.csproj">

@@ -1,0 +1,18 @@
+﻿@model List<DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels.PayCalendarDateView>
+
+<table class="table table-bordered">
+    <tr>
+        <td class="active"><strong>CPW Week</strong></td>
+        @foreach(var item in Model)
+        {
+            <td class="active text-center"><strong>@item.Week</strong></td>
+        }
+    </tr>
+    <tr>
+        <td class="active"><strong>w/c Date:</strong></td>
+        @foreach(var item in Model)
+        {
+            <td class="text-center">@string.Format("{0:m}", item.WCDate)</td>
+        }
+    </tr>
+</table>

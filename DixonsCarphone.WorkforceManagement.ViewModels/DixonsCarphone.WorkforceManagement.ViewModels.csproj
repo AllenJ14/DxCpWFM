@@ -77,6 +77,7 @@
     <Compile Include="BusinessModels\AdminHoursReview.cs" />
     <Compile Include="BusinessModels\AdminOpeningTimes.cs" />
     <Compile Include="BusinessModels\Cms\ContentViewModel.cs" />
+    <Compile Include="BusinessModels\ColleaguePortalVm.cs" />
     <Compile Include="BusinessModels\CompFTLeakageDetail.cs" />
     <Compile Include="BusinessModels\CompOverContractDetail.cs" />
     <Compile Include="BusinessModels\CompOverTargetDetail.cs" />
@@ -98,6 +99,8 @@
     <Compile Include="BusinessModels\HolidayPlanningVM.cs" />
     <Compile Include="BusinessModels\MyTeamViewModel.cs" />
     <Compile Include="BusinessModels\MyTargetsViewModel.cs" />
+    <Compile Include="BusinessModels\PayCalendarDateView.cs" />
+    <Compile Include="BusinessModels\PayCalendarRefView.cs" />
     <Compile Include="BusinessModels\PeakDataView.cs" />
     <Compile Include="BusinessModels\PeakDataVm.cs" />
     <Compile Include="BusinessModels\RegionContractStatusView.cs" />
