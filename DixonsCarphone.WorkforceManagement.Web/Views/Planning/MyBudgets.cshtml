@@ -38,58 +38,68 @@
         </div>
 
         var branchList = Model.BudgetCollection.GroupBy(x => x.Branch).Select(x => x.Key).ToList();
-        <div class="row">
-            <div class="col-md-12">
-                <div class="panel-body">
-                    <table class="table table-condensed table-bordered">
-                        <thead style="background-color:#002249; color:aliceblue">
-                            <tr>
-                                @if (branchList.Count() > 1)
-                                {
-                                    <th class="text-center col-md-3">Branch</th>
-                                }
-                                @foreach (var item in weekList)
-                                {
-                                    <th class="text-center">@string.Format("Week {0}", item.ToString())</th>
-                                }
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @if (branchList.Count() == 1)
-                            {
+        var pageSize = branchList.Count() > 1 ? 10 : 12;
+        var pages = Model.BudgetCollection.GroupBy(x => x.Week).Count() / pageSize + 1;
+        var a = Model.BudgetCollection.OrderBy(x => x.Week).Take(pageSize).ToList();
+        var b = weekList.OrderBy(x => x).Take(pageSize).ToList();
+
+        for (int i = 1; i <= pages; i++)
+        {
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel-body">
+                        <table class="table table-condensed table-bordered">
+                            <thead style="background-color:#002249; color:aliceblue">
                                 <tr>
-                                    @foreach (var item in Model.BudgetCollection.OrderBy(x => x.Week))
+                                    @if (branchList.Count() > 1)
                                     {
-                                        <td class="text-center">@item.SOHTarget</td>
+                                        <th class="text-center col-xs-2">Branch</th>
+                                    }
+                                    @foreach (var item in b)
+                                    {
+                                        <th class="text-center col-xs-1">@string.Format("Week {0}", item.ToString())</th>
                                     }
                                 </tr>
-                            }
-                            else
-                            {
-                                foreach (var item in branchList)
+                            </thead>
+                            <tbody>
+                                @if (branchList.Count() == 1)
                                 {
-                                    var branchDetails = Model.BudgetCollection.Where(x => x.Branch == item).OrderBy(x => x.Week).ToList();
                                     <tr>
-                                        <td>@branchDetails[0].Branch</td>
-                                        @foreach (var subitem in branchDetails)
+                                        @foreach (var item in a)
                                         {
-                                            <td class="text-center">@subitem.SOHTarget</td>
+                                            <td class="text-center">@item.SOHTarget</td>
                                         }
                                     </tr>
                                 }
-                                <tr>
-                                    <td><strong>Region Total</strong></td>
-                                    @foreach (var item in weekList)
+                                else
+                                {
+                                    foreach (var item in branchList)
                                     {
-                                        <td class="text-center"><strong>@string.Format("{0:0}", Model.BudgetCollection.Where(x => x.Week == item.Value).Sum(x => x.SOHTarget))</strong></td>
+                                        var branchDetails = Model.BudgetCollection.Where(x => x.Branch == item).OrderBy(x => x.Week).Skip(pageSize * (i-1)).Take(pageSize).ToList();
+                                        <tr>
+                                            <td>@branchDetails[0].Branch</td>
+                                            @foreach (var subitem in branchDetails)
+                                            {
+                                                <td class="text-center">@subitem.SOHTarget</td>
+                                            }
+                                        </tr>
                                     }
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
+                                    <tr>
+                                        <td><strong>Region Total</strong></td>
+                                        @foreach (var item in b)
+                                        {
+                                            <td class="text-center"><strong>@string.Format("{0:0}", Model.BudgetCollection.Where(x => x.Week == item.Value).Sum(x => x.SOHTarget))</strong></td>
+                                        }
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>
+            a = Model.BudgetCollection.OrderBy(x => x.Week).Skip(pageSize * i).Take(pageSize).ToList();
+            b = weekList.OrderBy(x => x).Skip(pageSize * i).Take(pageSize).ToList();
+        }
     }
     else
     {

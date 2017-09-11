@@ -344,7 +344,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             }
             else
             {
-                string crit = System.Web.HttpContext.Current.Session["_RegionNumber"].ToString() != null ? System.Web.HttpContext.Current.Session["_RegionNumber"].ToString() : _store.RegionNo;
+                string crit = System.Web.HttpContext.Current.Session["_RegionNumber"] != null ? System.Web.HttpContext.Current.Session["_RegionNumber"].ToString() : _store.RegionNo;
                 vm.collection = mapper.Map<List<FutureDeploymentView>>(await _storeManager.GetRegionFutureDeployment(crit));
             }
 

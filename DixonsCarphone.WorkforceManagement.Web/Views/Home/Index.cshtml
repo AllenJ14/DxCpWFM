@@ -92,6 +92,20 @@
             </div>
         </div>
     }
+    else if(!(bool)HttpContext.Current.Session["_ROIFlag"])
+    {
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h5 class="panel-title"><strong>Peak Planning</strong></h5>
+            </div>
+            <div class="panel-body">
+                <div class="col-sm-12 col-md-12 text-center" style="margin-bottom:15px;">
+                    <strong style="vertical-align:middle;font-size:large;margin-right:15px;">Peak One Pager</strong>
+                    <a class="btn btn-lg btn-info" href="@Url.Action("PeakPlanning","Planning")">Show me</a>
+                </div>
+            </div>
+        </div>
+    }
 
     @if (topNews.Count() != 0 && !(bool)HttpContext.Current.Session["_ROIFlag"])
     {
