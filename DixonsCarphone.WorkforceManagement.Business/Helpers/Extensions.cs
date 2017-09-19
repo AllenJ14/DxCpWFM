@@ -19,6 +19,32 @@ namespace DixonsCarphone.WorkforceManagement.Business.Helpers
     {
         private static CookieContainer cookieContainer = new CookieContainer();
 
+        public static string PostString(this string data, string url)
+        {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            request.Method = "POST";
+            request.CookieContainer = cookieContainer;
+            request.KeepAlive = false;
+            request.Timeout = 10000;
+
+            //Encode content request
+            byte[] byteArray = Encoding.UTF8.GetBytes(data);
+            request.ContentType = "application/x-www-form-urlencoded";
+            request.ContentLength = byteArray.Length;
+
+            //Initialise stream and send
+            Stream dataStream = request.GetRequestStream();
+            dataStream.Write(byteArray, 0, byteArray.Length);
+            dataStream.Close();
+
+            //Get response
+            WebResponse response = request.GetResponse();
+            dataStream = response.GetResponseStream();
+            StreamReader reader = new StreamReader(dataStream);
+
+            return reader.ReadToEnd();
+        }
+
         public static async Task<string> PostStringAsync(this string data, string url) 
         {
             var toRtn = string.Empty;
@@ -59,7 +85,7 @@ namespace DixonsCarphone.WorkforceManagement.Business.Helpers
         //    return wkNum;
         //}
 
-        public static async Task<List<T>> DeserializeToObject<T>(this string xmlString) where T : new()
+        public static async Task<List<T>> DeserializeToObjectAsync<T>(this string xmlString) where T : new()
         {
             var result = new List<T>();
             if (string.IsNullOrEmpty(xmlString)) return result; 
@@ -82,6 +108,31 @@ namespace DixonsCarphone.WorkforceManagement.Business.Helpers
                 }
             }
 
+            return result;
+        }
+
+        public static List<T> DeserializeToObject<T>(this string xmlString) where T : new()
+        {
+            var result = new List<T>();
+            if (string.IsNullOrEmpty(xmlString)) return result;
+
+            var serializer = new XmlSerializer(typeof(T));
+            
+            var byteArray = Encoding.UTF8.GetBytes(xmlString);
+            var stream = new MemoryStream(byteArray);
+            var reader = new XmlTextReader(stream);
+
+            var objName = typeof(T).Name;
+            while (reader.Read())
+            {
+                while(reader.NodeType == XmlNodeType.Element &&
+                    reader.Name.Equals(objName, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    var doc = new XmlDocument();
+                    doc.LoadXml(reader.ReadOuterXml());
+                    result.Add(Deserialize<T>(doc));
+                }
+            }
             return result;
         }
 

@@ -274,42 +274,42 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             return RedirectToAction("Index","Home");
         }
 
-        //public async Task<ActionResult> People()
-        //{
-        //    var currWkNum = DateTime.Now.GetWeekOfYear(ConfigurationManager.AppSettings["FinancialYearStart"]);
-        //    var currYr = currWkNum.ToString().Substring(0, 4);
-        //    var wk1 = int.Parse(string.Format("{0}01", currYr));
-        //    var lastWk = int.Parse(string.Format("{0}52", currYr));
+        public async Task<ActionResult> People()
+        {
+            var currWkNum = DateTime.Now.GetWeekOfYear(ConfigurationManager.AppSettings["FinancialYearStart"]);
+            var currYr = currWkNum.ToString().Substring(0, 4);
+            var wk1 = int.Parse(string.Format("{0}01", currYr));
+            var lastWk = int.Parse(string.Format("{0}52", currYr));
 
-        //    var result = await _peopleManager.GetStoreStaff(StoreNumber);
-        //    var dashData = await _dashBoardManager.GetStoreDashBoardData(StoreNumber, wk1, lastWk);
-        //    var vm = new PeopleViewModel { Staff = mapper.Map<List<HrFeed>, List<HrFeedView>>(result) };
+            var result = await _peopleManager.GetStoreStaff(StoreNumber);
+            var dashData = await _dashBoardManager.GetStoreDashBoardData(StoreNumber, wk1, lastWk);
+            var vm = new PeopleViewModel { Staff = mapper.Map<List<HrFeed>, List<HrFeedView>>(result) };
 
-        //    var currDt = DateTime.Now.GetFirstDayOfWeek();
-        //    var kronosEndDate = currDt.AddDays(35);
+            var currDt = DateTime.Now.GetFirstDayOfWeek();
+            var kronosEndDate = currDt.AddDays(35);
 
-        //    var kronos = await Utils.GetKronosData(currDt, kronosEndDate, _store.KronosStoreName, isOffice);
+            var kronos = await Utils.GetKronosData(currDt, kronosEndDate, _store.KronosStoreName, isOffice);
 
-        //    for (var i = 1; i < 53; i++)
-        //    {
-        //        double? hols = null;
-        //        var yr = int.Parse(string.Format("{0}{1}", currYr, i.ToString().PadLeft(2, '0')));
+            for (var i = 1; i < 53; i++)
+            {
+                double? hols = null;
+                var yr = int.Parse(string.Format("{0}{1}", currYr, i.ToString().PadLeft(2, '0')));
 
-        //        if (yr < currWkNum)
-        //        {
-        //            hols = dashData.FirstOrDefault(x => x.WeekNumber == yr)?.HolidayTaken;
-        //        }
-        //        else
-        //        {
-        //            var absent = kronos.Where(x => x.ScheduledDate.GetWeekOfYear(ConfigurationManager.AppSettings["FinancialYearStart"]) == yr && x.IsAbsent).ToList();
-        //            hols = absent.Sum(x => Utils.CalculateHours(x.AbscenceAmountInTime, "0:00"));
-        //        }
+                if (yr < currWkNum)
+                {
+                    hols = dashData.FirstOrDefault(x => x.WeekNumber == yr)?.HolidayTaken;
+                }
+                else
+                {
+                    var absent = kronos.Where(x => x.ScheduledDate.GetWeekOfYear(ConfigurationManager.AppSettings["FinancialYearStart"]) == yr && x.IsAbsent).ToList();
+                    hols = absent.Sum(x => Utils.CalculateHours(x.AbscenceAmountInTime, "0:00"));
+                }
 
-        //        vm.HolidaysTakenForYear.Add(i, hols);
-        //    }
+                vm.HolidaysTakenForYear.Add(i, hols);
+            }
 
-        //    vm.PageBlurb = ConfigurationManager.AppSettings["StaffDetailsBlurb"];
-        //    return View(vm);
-        //}
+            vm.PageBlurb = ConfigurationManager.AppSettings["StaffDetailsBlurb"];
+            return View(vm);
+        }
     }
 }

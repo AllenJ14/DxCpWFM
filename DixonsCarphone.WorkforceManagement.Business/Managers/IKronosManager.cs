@@ -13,6 +13,8 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
 
         Task<ScheduleItems> GetStoreScheduleForWeek(string startDate, string endDate, List<string> personNumbers);
 
+        List<Timesheet> GetTimesheet(DateTime[] dates, string personNumber);
+
         Task<bool> LogOff();
     }
 }

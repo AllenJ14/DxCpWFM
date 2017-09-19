@@ -40,10 +40,10 @@ namespace DixonsCarphone.WorkforceManagement.Business.Kronos
         public string AccrualProfileName { get; set; }
 
         [XmlAttribute]
-        public string ManagerSignoffThrustring { get; set; }
+        public string ManagerSignoffThruDate { get; set; }
 
         [XmlAttribute]
-        public string PayrollLockoutThrustring { get; set; }
+        public string PayrollLockoutThruDate { get; set; }
 
         [XmlAttribute]
         public bool FingerRequiredFlag { get; set; }

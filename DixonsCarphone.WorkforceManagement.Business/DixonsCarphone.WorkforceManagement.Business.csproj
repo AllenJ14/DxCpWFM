@@ -88,6 +88,9 @@
     <Compile Include="Entities\BmWeWorking.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\ColleaguePayData.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\ContentDetail.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
@@ -402,6 +405,7 @@
     <Compile Include="Kronos\PersonData.cs" />
     <Compile Include="Kronos\ScheduleItems.cs" />
     <Compile Include="Kronos\ShiftSegment.cs" />
+    <Compile Include="Kronos\Timesheet.cs" />
     <Compile Include="Managers\ActivityManager.cs" />
     <Compile Include="Managers\ContentManager.cs" />
     <Compile Include="Managers\DashBoardDataManager.cs" />

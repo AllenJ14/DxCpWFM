@@ -16,7 +16,7 @@ namespace DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
                 List<SelectListItem> a = new List<SelectListItem>();
                 foreach (var item in rawMenu)
                 {
-                    a.Add(new SelectListItem { Text = string.Format("{0} - Paid: {1:D}", item.Period, item.PayDate), Value = item.Period });
+                    a.Add(new SelectListItem { Text = string.Format("{0} - Paid: {1:D}", item.Period, item.PayDate), Value = string.Format("{0}_{1}", item.Year, item.Period) });
                 }
                 return a;
             } }

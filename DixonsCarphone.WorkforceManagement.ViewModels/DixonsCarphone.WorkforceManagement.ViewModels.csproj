@@ -77,6 +77,8 @@
     <Compile Include="BusinessModels\AdminHoursReview.cs" />
     <Compile Include="BusinessModels\AdminOpeningTimes.cs" />
     <Compile Include="BusinessModels\Cms\ContentViewModel.cs" />
+    <Compile Include="BusinessModels\ColleaguePayDataView.cs" />
+    <Compile Include="BusinessModels\ColleaguePayDataVm.cs" />
     <Compile Include="BusinessModels\ColleaguePortalVm.cs" />
     <Compile Include="BusinessModels\CompFTLeakageDetail.cs" />
     <Compile Include="BusinessModels\CompOverContractDetail.cs" />
@@ -159,6 +161,8 @@
     <Compile Include="BusinessModels\TicketSummaryView.cs" />
     <Compile Include="BusinessModels\TicketSummaryVM.cs" />
     <Compile Include="BusinessModels\TicketTemplateView.cs" />
+    <Compile Include="BusinessModels\TimecardSignOffVm.cs" />
+    <Compile Include="BusinessModels\TimesheetView.cs" />
     <Compile Include="BusinessModels\UserAccessDetail.cs" />
     <Compile Include="BusinessModels\UserAccessSummary.cs" />
     <Compile Include="BusinessModels\WeeklyFootfallView.cs" />

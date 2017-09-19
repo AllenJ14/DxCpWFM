@@ -1,18 +1,82 @@
-﻿@model List<DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels.PayCalendarDateView>
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels;
+@model ColleaguePayDataVm
 
+<p>
+    <strong>This pay packet includes these weeks:</strong>
+</p>
 <table class="table table-bordered">
     <tr>
-        <td class="active"><strong>CPW Week</strong></td>
-        @foreach(var item in Model)
+        <td class="active col-xs-2"><strong>CPW Week</strong></td>
+        @foreach (var item in Model.payDates)
         {
-            <td class="active text-center"><strong>@item.Week</strong></td>
+            <td class="active text-center col-xs-2"><strong>@item.Week.ToString().Substring(4)</strong></td>
         }
     </tr>
     <tr>
         <td class="active"><strong>w/c Date:</strong></td>
-        @foreach(var item in Model)
+        @foreach (var item in Model.payDates)
         {
             <td class="text-center">@string.Format("{0:m}", item.WCDate)</td>
         }
     </tr>
 </table>
+
+<div>
+    <strong>These hours have currently been processed for you:</strong>
+    <p>The below reflects the hours submitted on STAR - please see your manager as soon as possible if you are unsure about anything shown below. Pay queries should be raised to your store manager in the first instance.</p>
+</div>
+
+@if (Model.errorPayroll)
+{
+    <div class="alert alert-warning"><strong>We are unable to confirm your payroll number, escalation to be confirmed.</strong></div>
+}
+else if (Model.tSheet != null && Model.tSheet.Count() > 0)
+{
+
+    <table class="table table-bordered">
+        <tr>
+            <td class="active col-xs-2"><strong>Worked Hours</strong></td>
+            @foreach (var item in Model.payDates)
+            {
+                var a = Model.tSheet.Where(x => x.Period.TimeFramePeriod.PeriodDateSpan.Contains(item.WCDate.ToShortDateString())).FirstOrDefault().PeriodTotalData.PeriodTotals.Totals.Total.Where(x => x.PayCodeName == "IE @WFM Worked Hours").FirstOrDefault();
+                <td class="text-center col-xs-2">@(a != null ? a.AmountInTime : "")</td>
+            }
+        </tr>
+        <tr>
+            <td class="active"><strong>Holiday</strong></td>
+            @foreach (var item in Model.payDates)
+            {
+                var a = Model.tSheet.Where(x => x.Period.TimeFramePeriod.PeriodDateSpan.Contains(item.WCDate.ToShortDateString())).FirstOrDefault().PeriodTotalData.PeriodTotals.Totals.Total.Where(x => x.PayCodeName == "IE @WFM Holiday").FirstOrDefault();
+                <td class="text-center">@(a != null ? a.AmountInTime : "")</td>
+            }
+        </tr>
+        <tr>
+            <td class="active"><strong>Sickness</strong></td>
+            @foreach (var item in Model.payDates)
+            {
+                var a = Model.tSheet.Where(x => x.Period.TimeFramePeriod.PeriodDateSpan.Contains(item.WCDate.ToShortDateString())).FirstOrDefault().PeriodTotalData.PeriodTotals.Totals.Total.Where(x => x.PayCodeName == "IE @WFM Sick").FirstOrDefault();
+                <td class="text-center">@(a != null ?a.AmountInTime : "")</td>
+            }
+        </tr>
+        <tr>
+            <td class="active"><strong>All Other Paid Absence</strong></td>
+            @foreach (var item in Model.payDates)
+            {
+                var a = Model.tSheet.Where(x => x.Period.TimeFramePeriod.PeriodDateSpan.Contains(item.WCDate.ToShortDateString())).FirstOrDefault().PeriodTotalData.PeriodTotals.Totals.Total.Where(x => x.PayCodeName == "IE @WFM Paid Absence").FirstOrDefault();
+                <td class="text-center">@(a != null ? a.AmountInTime : "")</td>
+            }
+        </tr>
+        <tr>
+            <td class="active"><strong>All Other Unpaid Absence</strong></td>
+            @foreach (var item in Model.payDates)
+            {
+                var a = Model.tSheet.Where(x => x.Period.TimeFramePeriod.PeriodDateSpan.Contains(item.WCDate.ToShortDateString())).FirstOrDefault().PeriodTotalData.PeriodTotals.Totals.Total.Where(x => x.PayCodeName == "IE @WFM Unpaid Absence").FirstOrDefault();
+                <td class="text-center">@(a != null ? a.AmountInTime : "")</td>
+            }
+        </tr>
+    </table>
+}
+else
+{
+    <div class="alert alert-info text-center"><strong>No data found for selected period</strong></div>
+}

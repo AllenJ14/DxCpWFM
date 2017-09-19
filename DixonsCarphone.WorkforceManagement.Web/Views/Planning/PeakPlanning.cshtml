@@ -1,14 +1,21 @@
-﻿@model DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels.PeakDataVm
+﻿@using DixonsCarphone.WorkforceManagement.Business.Entities;
+@model DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels.PeakDataVm
 
 @{
     ViewBag.Title = "Peak Planning";
+    var store = HttpContext.Current.GetSessionObject<Store>("_StoreDetails");
+
 }
 
 <div class="row">
     &emsp;
 </div>
 
-@if (Model.collection == null || Model.collection.Count() == 0)
+@if (store.Channel == "SIS")
+{
+    <div class="alert alert-danger text-center"><strong>SIS branches should refer to the peak planning pack on the Dixons reporting site</strong></div>
+}
+else if (Model.collection == null || Model.collection.Count() == 0)
 {
     <div class="row">
         <div class="col-lg-12">
@@ -78,7 +85,7 @@ else
                 You should consult with your RM for queries relating to any of the recommendations shown here, they will be able to raise with the relevant teams if changes are required.
             </p>
             <hr />
-            <div class="row text-center"><a class="btn btn-lg btn-success" href="@Url.Action("TrainingDoc","Reports", new { f = "Recruitment.pdf" })">Guide to raising vacancies</a></div>
+            <div class="row text-center"><a class="btn btn-lg btn-success" target="_blank" href="@Url.Action("TrainingDoc","Reports", new { f = "Recruitment.pdf" })">Guide to raising vacancies</a></div>
         </div>
     </div>
 }

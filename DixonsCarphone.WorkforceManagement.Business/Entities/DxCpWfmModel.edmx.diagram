@@ -73,9 +73,10 @@
         <EntityTypeShape EntityType="DixonsCarphone.WorkforceManagement.Business.footfall_raw" Width="1.5" PointX="19.375" PointY="10.75" />
         <EntityTypeShape EntityType="DixonsCarphone.WorkforceManagement.Business.CPCW_Managers" Width="1.5" PointX="20.375" PointY="0.75" />
         <EntityTypeShape EntityType="DixonsCarphone.WorkforceManagement.Business.PeakData" Width="1.5" PointX="20.375" PointY="14.75" />
-        <EntityTypeShape EntityType="DixonsCarphone.WorkforceManagement.Business.PayCalendarRef" Width="1.5" PointX="21.375" PointY="11" />
         <EntityTypeShape EntityType="DixonsCarphone.WorkforceManagement.Business.PayCalendarDate" Width="1.5" PointX="23.625" PointY="10.875" />
+        <EntityTypeShape EntityType="DixonsCarphone.WorkforceManagement.Business.PayCalendarRef" Width="1.5" PointX="21.375" PointY="11" />
         <AssociationConnector Association="DixonsCarphone.WorkforceManagement.Business.FK_PayCalendarDates_PayCalendarRef" />
+        <EntityTypeShape EntityType="DixonsCarphone.WorkforceManagement.Business.ColleaguePayData" Width="1.5" PointX="5.375" PointY="21.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

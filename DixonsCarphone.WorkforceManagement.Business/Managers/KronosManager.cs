@@ -27,6 +27,13 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             return hyperFindResult;
         }
 
+        public List<Timesheet> GetTimesheet(DateTime[] dates, string personNumber)
+        {
+            var timesheetResult = KronosApi.RequestTimesheet(dates, personNumber );
+
+            return timesheetResult;
+        }
+
         public async Task<ScheduleItems> GetStoreScheduleForWeek(string startDate, string endDate, List<string> personNumbers)
         {
             var toRtn = new ScheduleItems();

@@ -166,9 +166,9 @@
                                 </a>
                                 <ul class="nav nav-second-level">
                                     <li class="active"><a href="@Url.Action("Index", "Planning", new { area = "" })"> Opening Times</a></li>
+                                    <li class="active"><a href="@Url.Action("MyBudgets", "Planning", new { area = "" })">My Budgets</a></li>
                                     @if (!(bool)HttpContext.Current.Session["_ROIFlag"])
                                     {
-                                        <li class="active"><a href="@Url.Action("MyBudgets", "Planning", new { area = "" })">My Budgets</a></li>
                                         <li class="active"><a href="@Url.Action("MyTeam", "Reports", new { area = "" })">My Team</a></li>
                                         <li class="active"><a href="@Url.Action("HolidayPlanning", "Reports", new { area = "" })">Holiday Planning</a></li>
                                     }

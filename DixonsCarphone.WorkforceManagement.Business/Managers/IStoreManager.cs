@@ -162,5 +162,7 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
         Task<List<PayCalendarRef>> GetPayCalendarRef(string _chain);
 
         List<PayCalendarDate> GetPayCalendarDates(string _chain, string _period);
+
+        List<ColleaguePayData> GetColleaguePayData(int[] weeks, string _PersonNumber);
     }
 }

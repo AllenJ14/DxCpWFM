@@ -48,6 +48,10 @@
       <HintPath>..\packages\AutoMapper.5.1.1\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Elmah, Version=1.2.14706.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\elmah.corelibrary.1.2.2\lib\Elmah.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -205,6 +209,7 @@
     <Compile Include="Controllers\PlanningController.cs" />
     <Compile Include="Controllers\ProfilesController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
+    <Compile Include="Controllers\RightFirstTimeController.cs" />
     <Compile Include="Controllers\ROIController.cs" />
     <Compile Include="Controllers\STARHandbookController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
@@ -218,6 +223,7 @@
     <Compile Include="Utils.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Readme\Elmah.txt" />
     <Content Include="Areas\Workflow\Views\Form\NewSubmission.cshtml" />
     <Content Include="Areas\Workflow\Views\Partials\_Comments.cshtml" />
     <Content Include="Areas\Workflow\Views\Partials\_EscOptions.cshtml" />
@@ -614,7 +620,7 @@
     <Content Include="Uploads\IgniteSOHProcess.pdf" />
     <Content Include="Views\Planning\DeploymentStatus.cshtml" />
     <Content Include="Views\Planning\PeakPlanning.cshtml" />
-    <Content Include="Views\Reports\ColleaguePayPortal.cshtml" />
+    <Content Include="Views\RightFirstTime\ColleaguePayPortal.cshtml" />
     <Content Include="Views\APITest\_PayDates.cshtml" />
     <Content Include="Uploads\Recruitment.pdf" />
   </ItemGroup>

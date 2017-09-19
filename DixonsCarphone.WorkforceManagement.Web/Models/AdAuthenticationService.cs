@@ -111,17 +111,34 @@ namespace DixonsCarphone.WorkforceManagement.Web.Models
                 // revealing this information
                 return new AuthenticationResult("Your account is disabled");
             }
+
+            DirectoryEntry entry = new DirectoryEntry("LDAP://" + principalContext.ConnectedServer + "/" + userPrincipal.DistinguishedName, username, password);
             if (principalContext.Name != "DSG")
             {
                 if (userPrincipal.IsMemberOf(principalContext, IdentityType.Name, ConfigurationManager.AppSettings["BranchManagerGroup"]) || userPrincipal.IsMemberOf(principalContext, IdentityType.Name, ConfigurationManager.AppSettings["IEBranchManagerGroup"]) || userPrincipal.IsMemberOf(principalContext, IdentityType.Name, ConfigurationManager.AppSettings["AMGroup"]))
                 {
                     HttpContext.Current.Session["_AccessLevel"] = "BM";
                 }
+                try
+                {
+                    string empNum = entry.Properties["employeeNumber"].Value.ToString();
+                    if (!(bool)HttpContext.Current.Session["_ROIFlag"])
+                    {
+                        HttpContext.Current.Session["_EmpNum"] = "UK" + empNum.PadLeft(6, '0');
+                    }
+                    else
+                    {
+                        HttpContext.Current.Session["_EmpNum"] = empNum;
+                    }
+                }
+                catch (Exception e)
+                {
+                    HttpContext.Current.Session["_EmpNum"] = "e";
+                }
             }
             else
             {
-                //string[] server = principalContext.ConnectedServer.Split('.');
-                DirectoryEntry entry = new DirectoryEntry("LDAP://" + principalContext.ConnectedServer + "/" + userPrincipal.DistinguishedName, username, password);
+                HttpContext.Current.Session["_EmpNum"] = "e";
                 string test1 = entry.Properties["workforceID"].Value.ToString();
                 try
                 {

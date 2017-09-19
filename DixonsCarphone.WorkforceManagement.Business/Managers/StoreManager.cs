@@ -1015,7 +1015,27 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
         {
             using (var dbContext = new DxCpWfmContext())
             {
-                return dbContext.PayCalendarDates.Where(x => x.Chain == _chain && x.Period == _period).OrderBy(x => x.WCDate).ToList();
+                string[] crit = _period.Split('_');
+                string zYear = crit[0];
+                string zPeriod = crit[1];
+
+                return dbContext.PayCalendarDates.Where(x => x.Chain == _chain && x.Period == zPeriod && x.Year == zYear).OrderBy(x => x.WCDate).ToList();
+            }
+        }
+
+        public List<ColleaguePayData> GetColleaguePayData(int[] weeks, string _PersonNumber)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                int a;
+                if(int.TryParse(_PersonNumber, out a))
+                {
+                    return dbContext.ColleaguePayDatas.Where(x => x.PersonNumber == a && weeks.Contains(x.WeekNumber)).OrderBy(x => x.WeekNumber).ToList();
+                }
+                else
+                {
+                    return new List<ColleaguePayData>();
+                }                
             }
         }
 

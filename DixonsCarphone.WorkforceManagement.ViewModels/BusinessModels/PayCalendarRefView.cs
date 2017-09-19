@@ -9,6 +9,7 @@ namespace DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
     public class PayCalendarRefView
     {
         public string Chain { get; set; }
+        public string Year { get; set; }
         public string Period { get; set; }
         public System.DateTime PayDate { get; set; }
     }

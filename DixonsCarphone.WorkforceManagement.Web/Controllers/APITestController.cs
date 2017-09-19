@@ -13,13 +13,13 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
 {
     public class APITestController : BaseController
     {
-        //IKronosManager _KronosManager;
+        IKronosManager _KronosManager;
         IDashMaintenance _DashMaintenance;
         IPeopleManager _PeopleManager;
 
         public APITestController()
         {
-            //_KronosManager = new KronosManager();
+            _KronosManager = new KronosManager();
             _DashMaintenance = new DashMaintenance();
             _PeopleManager = new PeopleManager();
         }
@@ -70,9 +70,24 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
         [HttpGet]
         public PartialViewResult _PayDates(string period)
         {
-            var data = _storeManager.GetPayCalendarDates(_store.Channel, period);
+            ColleaguePayDataVm vm = new ColleaguePayDataVm();
 
-            return PartialView(mapper.Map<List<PayCalendarDateView>>(data));
+            string payroll = System.Web.HttpContext.Current.Session["_EmpNum"].ToString();
+            var dates = _storeManager.GetPayCalendarDates(_store.Channel, period);
+
+            if(payroll != "e")
+            {
+                var payData = _KronosManager.GetTimesheet(dates.Select(x => x.WCDate).ToArray(), System.Web.HttpContext.Current.Session["_Empnum"].ToString());
+                vm.tSheet = mapper.Map<List<TimesheetView>>(payData);
+            }
+            else
+            {
+                vm.errorPayroll = true;
+            }        
+            
+            vm.payDates = mapper.Map<List<PayCalendarDateView>>(dates);
+            
+            return PartialView(vm);
         }
     }
 }

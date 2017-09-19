@@ -1,12 +1,9 @@
 ﻿using AutoMapper;
 using DixonsCarphone.WorkforceManagement.Business.Entities;
+using DixonsCarphone.WorkforceManagement.Business.Kronos;
 using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels;
 using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels.Cms;
 using DixonsCarphone.WorkforceManagement.ViewModels.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace DixonsCarphone.WorkforceManagement.Web.Mapping
 {
@@ -41,6 +38,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Mapping
                 cfg.AddProfile(new MaintenanceProfile());
                 cfg.AddProfile(new ScheduleProfile());
                 cfg.AddProfile(new WorkflowProfile());
+                cfg.AddProfile(new TimesheetProfile());
             });
         }
     }
@@ -168,6 +166,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Mapping
             CreateMap<HolidayPlanningStoreBM, HolidayPlanningStore>();
             CreateMap<PayCalendarDate, PayCalendarDateView>();
             CreateMap<PayCalendarRef, PayCalendarRefView>();
+            CreateMap<ColleaguePayData, ColleaguePayDataView>();
         }
     }
 
@@ -197,6 +196,22 @@ namespace DixonsCarphone.WorkforceManagement.Web.Mapping
             CreateMap<sp_RegionFutureDeployment_Result, FutureDeploymentView>();
             CreateMap<sp_DivisionFutureDeployment_Result, FutureDeploymentView>();
             CreateMap<PeakData, PeakDataView>();
+        }
+    }
+
+    public class TimesheetProfile : Profile
+    {
+        public TimesheetProfile()
+        {
+            CreateMap<Timesheet, TimesheetView>();
+            CreateMap<Employee, EmployeeView>();
+            CreateMap<PeriodTotalData, PeriodTotalDataView>();
+            CreateMap<Period, PeriodView>();
+            CreateMap<TimeFramePeriod, TimeFramePeriodView>();
+            CreateMap<PeriodTotals, PeriodTotalsView>();
+            CreateMap<Totals, TotalsView>();
+            CreateMap<Total, TotalView>();
+            CreateMap<PersonIdentity, PersonIdentityView>();
         }
     }
 

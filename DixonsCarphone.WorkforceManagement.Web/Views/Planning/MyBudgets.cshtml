@@ -37,6 +37,13 @@
             </div>
         </div>
 
+        <div class="alert alert-danger text-center">
+            <strong>
+                We have been made aware of an issue that affected this page on Monday 11th September resulting in some stores seeing a budget 45 hours higher than was intended. The issue was quickly identified and fixed the same day, all numbers now shown on
+                this page have been checked and are displaying correctly. Please ensure you are working to these budgets, we apologise for any inconvenience.
+            </strong>
+        </div>
+
         var branchList = Model.BudgetCollection.GroupBy(x => x.Branch).Select(x => x.Key).ToList();
         var pageSize = branchList.Count() > 1 ? 10 : 12;
         var pages = Model.BudgetCollection.GroupBy(x => x.Week).Count() / pageSize + 1;
@@ -75,7 +82,7 @@
                                 {
                                     foreach (var item in branchList)
                                     {
-                                        var branchDetails = Model.BudgetCollection.Where(x => x.Branch == item).OrderBy(x => x.Week).Skip(pageSize * (i-1)).Take(pageSize).ToList();
+                                        var branchDetails = Model.BudgetCollection.Where(x => x.Branch == item).OrderBy(x => x.Week).Skip(pageSize * (i - 1)).Take(pageSize).ToList();
                                         <tr>
                                             <td>@branchDetails[0].Branch</td>
                                             @foreach (var subitem in branchDetails)

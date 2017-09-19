@@ -75,8 +75,9 @@ namespace DixonsCarphone.WorkforceManagement.Business.Entities
         public virtual DbSet<footfall_raw> footfall_raw { get; set; }
         public virtual DbSet<CPCW_Managers> CPCW_Managers { get; set; }
         public virtual DbSet<PeakData> PeakDatas { get; set; }
-        public virtual DbSet<PayCalendarRef> PayCalendarRefs { get; set; }
         public virtual DbSet<PayCalendarDate> PayCalendarDates { get; set; }
+        public virtual DbSet<PayCalendarRef> PayCalendarRefs { get; set; }
+        public virtual DbSet<ColleaguePayData> ColleaguePayDatas { get; set; }
     
         public virtual ObjectResult<udsp_GetPandL_Result> udsp_GetPandL(Nullable<int> storeNumber, string periodYear, Nullable<short> periodMonth, Nullable<short> qtdStartMonth, Nullable<short> ytdStartMonth)
         {

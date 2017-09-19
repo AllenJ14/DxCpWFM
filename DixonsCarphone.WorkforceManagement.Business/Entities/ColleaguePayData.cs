@@ -12,14 +12,14 @@ namespace DixonsCarphone.WorkforceManagement.Business.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class PayCalendarDate
+    public partial class ColleaguePayData
     {
-        public string Chain { get; set; }
-        public string Year { get; set; }
-        public string Period { get; set; }
-        public int Week { get; set; }
-        public System.DateTime WCDate { get; set; }
-    
-        public virtual PayCalendarRef PayCalendarRef { get; set; }
+        public int PersonNumber { get; set; }
+        public int WeekNumber { get; set; }
+        public decimal WorkedHours { get; set; }
+        public decimal Holiday { get; set; }
+        public decimal Sickness { get; set; }
+        public decimal PaidAbsence { get; set; }
+        public decimal UnpaidAbsence { get; set; }
     }
 }
