@@ -1157,6 +1157,12 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Parameter Name="WeekNumber" Type="smallint" Mode="In" />
           <Parameter Name="Year" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="sp_PeakFlexDivision" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="channel" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_PeakFlexRegion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="RegionNo" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="sp_RegionComplianceDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="regionNumber" Type="int" Mode="In" />
           <Parameter Name="weeknumber" Type="int" Mode="In" />
@@ -1951,6 +1957,12 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
             <End Role="PayCalendarDate" EntitySet="PayCalendarDates" />
           </AssociationSet>
           <EntitySet Name="ColleaguePayDatas" EntityType="DixonsCarphone.WorkforceManagement.Business.ColleaguePayData" />
+          <FunctionImport Name="sp_PeakFlexDivision" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_PeakFlexDivision_Result)">
+            <Parameter Name="channel" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_PeakFlexRegion" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_PeakFlexRegion_Result)">
+            <Parameter Name="RegionNo" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="BestPracticeCategoryType">
           <Key>
@@ -3682,6 +3694,27 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Property Name="PaidAbsence" Type="Decimal" Nullable="false" Precision="5" Scale="2" />
           <Property Name="UnpaidAbsence" Type="Decimal" Nullable="false" Precision="5" Scale="2" />
         </EntityType>
+        <ComplexType Name="sp_PeakFlexDivision_Result">
+          <Property Type="String" Name="Division" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="RegionNo" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="HighMix" Nullable="true" />
+          <Property Type="Int32" Name="HealthyMix" Nullable="true" />
+          <Property Type="Int32" Name="LowMix" Nullable="true" />
+          <Property Type="Int32" Name="Temps" Nullable="true" />
+          <Property Type="Int32" Name="TempsOption" Nullable="true" />
+          <Property Type="Int32" Name="TempVacancies" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_PeakFlexRegion_Result">
+          <Property Type="String" Name="RegionNo" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Branch" Nullable="true" MaxLength="533" />
+          <Property Type="Double" Name="ContractHrs" Nullable="true" />
+          <Property Type="Int32" Name="Headcount" Nullable="true" />
+          <Property Type="Double" Name="HighestPeak" Nullable="true" />
+          <Property Type="Double" Name="AvgFlex" Nullable="true" />
+          <Property Type="Int32" Name="Temps" Nullable="true" />
+          <Property Type="Int32" Name="TempsOption" Nullable="true" />
+          <Property Type="Int32" Name="TempVacancies" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5427,6 +5460,35 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_PeakFlexDivision" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_PeakFlexDivision">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.sp_PeakFlexDivision_Result">
+                <ScalarProperty Name="Division" ColumnName="Division" />
+                <ScalarProperty Name="RegionNo" ColumnName="RegionNo" />
+                <ScalarProperty Name="HighMix" ColumnName="HighMix" />
+                <ScalarProperty Name="HealthyMix" ColumnName="HealthyMix" />
+                <ScalarProperty Name="LowMix" ColumnName="LowMix" />
+                <ScalarProperty Name="Temps" ColumnName="Temps" />
+                <ScalarProperty Name="TempsOption" ColumnName="TempsOption" />
+                <ScalarProperty Name="TempVacancies" ColumnName="TempVacancies" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_PeakFlexRegion" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_PeakFlexRegion">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.sp_PeakFlexRegion_Result">
+                <ScalarProperty Name="RegionNo" ColumnName="RegionNo" />
+                <ScalarProperty Name="Branch" ColumnName="Branch" />
+                <ScalarProperty Name="ContractHrs" ColumnName="ContractHrs" />
+                <ScalarProperty Name="Headcount" ColumnName="Headcount" />
+                <ScalarProperty Name="HighestPeak" ColumnName="HighestPeak" />
+                <ScalarProperty Name="AvgFlex" ColumnName="AvgFlex" />
+                <ScalarProperty Name="Temps" ColumnName="Temps" />
+                <ScalarProperty Name="TempsOption" ColumnName="TempsOption" />
+                <ScalarProperty Name="TempVacancies" ColumnName="TempVacancies" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

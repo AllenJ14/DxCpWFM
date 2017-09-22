@@ -995,6 +995,24 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             }
         }
 
+        public async Task<List<sp_PeakFlexRegion_Result>> GetRegionPeakFlex(string regionNumber)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                var data = await Task.Run(() => dbContext.sp_PeakFlexRegion(regionNumber).ToList());
+                return data;
+            }
+        }
+
+        public async Task<List<sp_PeakFlexDivision_Result>> GetDivisionPeakFlex(string channel)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                var data = await Task.Run(() => dbContext.sp_PeakFlexDivision(channel).ToList());
+                return data;
+            }
+        }
+
         public async Task<List<PeakData>> GetBranchPeakData(int storeNumber)
         {
             using (var dbContext = new DxCpWfmContext())

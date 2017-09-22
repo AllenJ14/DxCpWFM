@@ -625,6 +625,7 @@
     <Content Include="Views\APITest\_PayDates.cshtml" />
     <Content Include="Uploads\Recruitment.pdf" />
     <Content Include="Views\RightFirstTime\TimecardSignOff.cshtml" />
+    <Content Include="Views\Planning\FlexStatus.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DixonsCarphone.WorkforceManagement.Business\DixonsCarphone.WorkforceManagement.Business.csproj">

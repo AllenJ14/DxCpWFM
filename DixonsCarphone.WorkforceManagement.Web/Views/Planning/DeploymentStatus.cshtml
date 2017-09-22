@@ -1,4 +1,5 @@
-﻿@model DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels.FutureDeploymentVm
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
+@model FutureDeploymentVm
 
 @{
     ViewBag.Title = "Deployment Status";
@@ -6,18 +7,24 @@
     int x = 0;
     int y = 0;
 
-    Func<double, double, string> RAG = (a, b) =>
+    Func<FutureDeploymentView, string> RAG = (a) =>
     {
         var rtn = "success";
-        var toBudget = 1 - Math.Abs(a / b);
+        var toBudget = 1 - (a.Actual / a.Target);
+        var percHoliday = a.Holiday / a.Target;
 
-        if (toBudget >= 0.2)
+        if (Math.Abs(toBudget) >= 0.2)
         {
             rtn = "danger";
         }
-        else if (toBudget >= 0.1)
+        else if (Math.Abs(toBudget) >= 0.1)
         {
             rtn = "warning";
+        }
+
+        if (toBudget >= 0.5 && percHoliday >= 0.1)
+        {
+            rtn += " toRed";
         }
 
         return rtn;
@@ -28,17 +35,26 @@
     &emsp;
 </div>
 
+<div class="panel panel-default">
+    <div class="panel-heading text-center">
+        <strong>Deployment</strong>
+        <label class="switch pull-right">
+            <input type="checkbox" id="advView" />
+            <span class="slider round"></span>
+        </label>
+        <span class="pull-right adv-label">Advanced view</span>
+    </div>
+    <div id="advComment" class="panel-body" style="display:none;">
+        Where the cell has a red border this indicates an underspend where potentially too much holiday is booked.
+    </div>
+</div>
+
 @if (Model.collection == null)
 {
     <div class="row">@Html.Partial("~/Views/Shared/_Messages.cshtml", Model)</div>
 }
 else if (HttpContext.Current.Session["_DivisionName"] != null)
 {
-    <div class="panel panel-default">
-        <div class="panel-heading text-center">
-            <strong>Deployment</strong>
-        </div>
-    </div>
 
     <div class="table-responsive">
         <table class="table table-bordered">
@@ -56,7 +72,7 @@ else if (HttpContext.Current.Session["_DivisionName"] != null)
                     <td><strong>Chain</strong></td>
                     @foreach (var item in Model.collection.Where(c => c.SortOrder == null).OrderBy(c => c.WeekNumber))
                     {
-                        <td class="text-center @(RAG(item.Actual, item.Target)) tooltipHover" data-tooltip="@string.Format("#{0}_{1}", x, y)"><strong>@item.deployedPerc</strong></td>
+                        <td class="text-center @(RAG(item)) tooltipHover" data-tooltip="@string.Format("#{0}_{1}", x, y)"><strong>@item.deployedPerc</strong></td>
                         x += 1;
                     }
                     @{ y += 1; }
@@ -87,7 +103,7 @@ else if (HttpContext.Current.Session["_DivisionName"] != null)
                             <td class="col-xs-2"><a href="@Url.Action("SetNewStore","Profiles", new { selectedStoreNumber = "Region " + item.ToString()})">@item.ToString()</a></td>
                             @foreach (var values in data.OrderBy(c => c.WeekNumber))
                         {
-                                <td class="text-center @(RAG(values.Actual, values.Target)) tooltipHover" data-tooltip="@string.Format("#{0}_{1}", x, y)">@values.deployedPerc</td>
+                                <td class="text-center @(RAG(values)) tooltipHover" data-tooltip="@string.Format("#{0}_{1}", x, y)">@values.deployedPerc</td>
                                 x += 1;
                             }
                         </tr>
@@ -98,7 +114,7 @@ else if (HttpContext.Current.Session["_DivisionName"] != null)
                         @{ x = 0; }
                         @foreach (var item in Model.collection.Where(c => c.SortOrder.ToString() == div).OrderBy(c => c.WeekNumber))
                         {
-                            <td class="text-center @(RAG(item.Actual, item.Target)) tooltipHover" data-tooltip="@string.Format("#{0}_{1}", x, y)"><strong>@item.deployedPerc</strong></td>
+                            <td class="text-center @(RAG(item)) tooltipHover" data-tooltip="@string.Format("#{0}_{1}", x, y)"><strong>@item.deployedPerc</strong></td>
                             x += 1;
                         }
                         @{ y += 1; }
@@ -183,7 +199,7 @@ else
                     <td>@item.ToString()</td>
                     @foreach (var values in data)
                     {
-                        <td class="text-center @(RAG(values.Actual, values.Target)) tooltipHover" data-tooltip="@string.Format("#{0}_{1}", x, y)">@values.deployedPerc</td>
+                        <td class="text-center @(RAG(values)) tooltipHover" data-tooltip="@string.Format("#{0}_{1}", x, y)">@values.deployedPerc</td>
                         x += 1;
                     }
                 </tr>
@@ -213,6 +229,17 @@ else
 @section myScripts{
     <script>
         $(function () {
+            var toRed = false;
+            var onLoad = @ViewBag.adv;
+            var $advComment = $('#advComment');
+
+            if(onLoad){
+                $('#advView').click();
+                $('.toRed').css({ border: "2px solid #F00" });
+                $advComment.slideDown(300);
+                toRed = !toRed;
+            };
+
             $(".tooltipHover").hover(function (e) {
                 $($(this).data("tooltip")).css({
                     left: e.pageX + 1,
@@ -220,6 +247,21 @@ else
                 }).stop().show(100);
             }, function () {
                 $($(this).data("tooltip")).hide();
+            });
+
+            $('#advView').click(function () {
+                console.log('here');
+                if (toRed) {
+                    $('.toRed').css({ border: "1px solid #ddd" })
+                    toRed = !toRed;
+                    $advComment.slideUp(300);
+                }
+                else {
+                    $('.toRed').css({ border: "2px solid #F00" })
+                    toRed = !toRed;
+                    $advComment.slideDown(300);
+                }
+                
             });
         });
     </script>

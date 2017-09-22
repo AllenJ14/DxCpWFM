@@ -770,5 +770,23 @@ namespace DixonsCarphone.WorkforceManagement.Business.Entities
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_BranchContractStatus_Result>("sp_BranchContractStatus", regionNoParameter);
         }
+    
+        public virtual ObjectResult<sp_PeakFlexDivision_Result> sp_PeakFlexDivision(string channel)
+        {
+            var channelParameter = channel != null ?
+                new ObjectParameter("channel", channel) :
+                new ObjectParameter("channel", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_PeakFlexDivision_Result>("sp_PeakFlexDivision", channelParameter);
+        }
+    
+        public virtual ObjectResult<sp_PeakFlexRegion_Result> sp_PeakFlexRegion(string regionNo)
+        {
+            var regionNoParameter = regionNo != null ?
+                new ObjectParameter("RegionNo", regionNo) :
+                new ObjectParameter("RegionNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_PeakFlexRegion_Result>("sp_PeakFlexRegion", regionNoParameter);
+        }
     }
 }

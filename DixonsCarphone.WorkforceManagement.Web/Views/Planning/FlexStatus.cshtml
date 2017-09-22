@@ -1,0 +1,129 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
+@model PeakFlexVm
+
+@{
+    ViewBag.Title = "Flex Status";
+}
+
+<div class="row">
+    &emsp;
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading text-center">
+        <strong>Contract Flex</strong>
+    </div>
+</div>
+
+
+@if (Model.regionCollection != null && Model.regionCollection.Count() > 0)
+{
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th class="text-center" rowspan="2">Store</th>
+                <th class="text-center" colspan="3">Core Team</th>
+                <th class="text-center" colspan="2">Peak Temps</th>
+            </tr>
+            <tr>
+                <th class="text-center col-xs-2">Headcount</th>
+                <th class="text-center col-xs-2">Avg. Contract</th>
+                <th class="text-center col-xs-2">Estimated Flex</th>
+                <th class="text-center col-xs-2">Required</th>
+                <th class="text-center col-xs-2">Optional</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.regionCollection)
+            {
+                <tr>
+                    <td>@item.Branch</td>
+                    <td class="text-center">@item.Headcount</td>
+                    <td class="text-center">@item.ContractHrs</td>
+                    <td class="text-center">@item.AvgFlex</td>
+                    <td class="text-center">@item.Temps</td>
+                    <td class="text-center">@item.TempsOption</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else if(Model.divisionCollection != null && Model.divisionCollection.Count() > 0)
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th class="text-center" rowspan="2"></th>
+                <th class="text-center" colspan="3">No. of stores with</th>
+                <th class="text-center" colspan="3">Peak Temps</th>
+            </tr>
+            <tr>
+                <th class="text-center" style="width:14%">Low Contract Mix</th>
+                <th class="text-center" style="width:14%">Healthy Contract Mix</th>
+                <th class="text-center" style="width:14%">High Contract Mix</th>
+                <th class="text-center" style="width:14%">Recommended</th>
+                <th class="text-center" style="width:14%">Optional</th>
+                <th class="text-center" style="width:14%">Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Chain</strong></td>
+                <td class="text-center"><strong>@Model.Chain.LowMix</strong></td>
+                <td class="text-center"><strong>@Model.Chain.HealthyMix</strong></td>
+                <td class="text-center"><strong>@Model.Chain.HighMix</strong></td>
+                <td class="text-center"><strong>@Model.Chain.Temps</strong></td>
+                <td class="text-center"><strong>@Model.Chain.TempsOption</strong></td>
+                <td class="text-center"><strong>@Model.Chain.TempTotal</strong></td>
+            </tr>
+        </tbody>
+    </table>
+    foreach(var division in Model.DivisionList)
+    {
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th class="text-center" rowspan="2">@division</th>
+                    <th class="text-center" colspan="3">No. of stores with</th>
+                    <th class="text-center" colspan="3">Peak Temps</th>
+                </tr>
+                <tr>
+                    <th class="text-center" style="width:14%">Low Contract Mix</th>
+                    <th class="text-center" style="width:14%">Healthy Contract Mix</th>
+                    <th class="text-center" style="width:14%">High Contract Mix</th>
+                    <th class="text-center" style="width:14%">Recommended</th>
+                    <th class="text-center" style="width:14%">Optional</th>
+                    <th class="text-center" style="width:14%">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var item in Model.divisionCollection.Where(x => x.Division == division && x.RegionNo != null))
+                {
+                    <tr>
+                        <td>@item.RegionNo</td>
+                        <td class="text-center">@item.LowMix</td>
+                        <td class="text-center">@item.HealthyMix</td>
+                        <td class="text-center">@item.HighMix</td>
+                        <td class="text-center">@item.Temps</td>
+                        <td class="text-center">@item.TempsOption</td>
+                        <td class="text-center">@item.TempTotal</td>
+                    </tr>
+                }
+                @{ var a = Model.divisionCollection.Where(x => x.Division == division && x.RegionNo == null).FirstOrDefault();}
+                <tr>
+                    <td><strong>Total</strong></td>
+                    <td class="text-center"><strong>@a.LowMix</strong></td>
+                    <td class="text-center"><strong>@a.HealthyMix</strong></td>
+                    <td class="text-center"><strong>@a.HighMix</strong></td>
+                    <td class="text-center"><strong>@a.Temps</strong></td>
+                    <td class="text-center"><strong>@a.TempsOption</strong></td>
+                    <td class="text-center"><strong>@a.TempTotal</strong></td>
+                </tr>
+            </tbody>
+        </table>
+    }
+}
+else
+{
+    <div class="alert alert-info text-center"><strong>No data found for the current selection</strong></div>
+}

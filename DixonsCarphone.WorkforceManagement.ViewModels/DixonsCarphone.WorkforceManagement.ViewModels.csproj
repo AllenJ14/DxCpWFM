@@ -106,6 +106,9 @@
     <Compile Include="BusinessModels\PayCalendarRefView.cs" />
     <Compile Include="BusinessModels\PeakDataView.cs" />
     <Compile Include="BusinessModels\PeakDataVm.cs" />
+    <Compile Include="BusinessModels\PeakFlexDivisionView.cs" />
+    <Compile Include="BusinessModels\PeakFlexRegionView.cs" />
+    <Compile Include="BusinessModels\PeakFlexVm.cs" />
     <Compile Include="BusinessModels\RegionContractStatusView.cs" />
     <Compile Include="BusinessModels\RegionContractStatusVm.cs" />
     <Compile Include="BusinessModels\ScheduleBMView.cs" />

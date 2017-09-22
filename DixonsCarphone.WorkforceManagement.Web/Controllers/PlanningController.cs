@@ -329,14 +329,13 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
         }
 
         [UserFilter(AccessLevel = "Admin,TPC,RM,DD,RD")]
-        public async Task<ActionResult> DeploymentStatus()
+        public async Task<ActionResult> DeploymentStatus(bool adv = false)
         {
             FutureDeploymentVm vm = new FutureDeploymentVm();
 
             if (System.Web.HttpContext.Current.Session["_ChannelName"] != null)
             {
-                vm.Message = "This page is not available in the currently selected view, please select a store from the top right menu or go back.";
-                vm.MessageType = MessageType.Error;
+                vm.collection = mapper.Map<List<FutureDeploymentView>>(await _storeManager.GetDivisionFutureDeployment(_store.Division));
             }
             else if (System.Web.HttpContext.Current.Session["_DivisionName"] != null)
             {
@@ -346,6 +345,30 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             {
                 string crit = System.Web.HttpContext.Current.Session["_RegionNumber"] != null ? System.Web.HttpContext.Current.Session["_RegionNumber"].ToString() : _store.RegionNo;
                 vm.collection = mapper.Map<List<FutureDeploymentView>>(await _storeManager.GetRegionFutureDeployment(crit));
+            }
+
+            ViewBag.adv = adv.ToString().ToLower();
+
+            return View(vm);
+        }
+
+        [UserFilter(AccessLevel = "Admin,TPC,RM,DD,RD")]
+        public async Task<ActionResult> FlexStatus()
+        {
+            PeakFlexVm vm = new PeakFlexVm();
+
+            if (System.Web.HttpContext.Current.Session["_ChannelName"] != null)
+            {
+                vm.divisionCollection = mapper.Map<List<PeakFlexDivisionView>>(await _storeManager.GetDivisionPeakFlex(_store.Channel));
+            }
+            else if (System.Web.HttpContext.Current.Session["_DivisionName"] != null)
+            {
+                vm.divisionCollection = mapper.Map<List<PeakFlexDivisionView>>(await _storeManager.GetDivisionPeakFlex(_store.Channel));
+            }
+            else
+            {
+                string crit = System.Web.HttpContext.Current.Session["_RegionNumber"] != null ? System.Web.HttpContext.Current.Session["_RegionNumber"].ToString() : _store.RegionNo;
+                vm.regionCollection = mapper.Map<List<PeakFlexRegionView>>(await _storeManager.GetRegionPeakFlex(crit));
             }
 
             return View(vm);

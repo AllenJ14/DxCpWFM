@@ -164,5 +164,9 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
         List<PayCalendarDate> GetPayCalendarDates(string _chain, string _period);
 
         List<ColleaguePayData> GetColleaguePayData(int[] weeks, string _PersonNumber);
+
+        Task<List<sp_PeakFlexRegion_Result>> GetRegionPeakFlex(string regionNumber);
+
+        Task<List<sp_PeakFlexDivision_Result>> GetDivisionPeakFlex(string channel);
     }
 }
