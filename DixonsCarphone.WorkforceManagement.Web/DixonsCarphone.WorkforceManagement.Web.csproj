@@ -223,6 +223,7 @@
     <Compile Include="Utils.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\ELMAH\empty.txt" />
     <Content Include="App_Readme\Elmah.txt" />
     <Content Include="Areas\Workflow\Views\Form\NewSubmission.cshtml" />
     <Content Include="Areas\Workflow\Views\Partials\_Comments.cshtml" />
@@ -623,6 +624,7 @@
     <Content Include="Views\RightFirstTime\ColleaguePayPortal.cshtml" />
     <Content Include="Views\APITest\_PayDates.cshtml" />
     <Content Include="Uploads\Recruitment.pdf" />
+    <Content Include="Views\RightFirstTime\TimecardSignOff.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DixonsCarphone.WorkforceManagement.Business\DixonsCarphone.WorkforceManagement.Business.csproj">

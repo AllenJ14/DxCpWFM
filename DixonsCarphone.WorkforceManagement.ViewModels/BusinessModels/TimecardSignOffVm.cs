@@ -8,6 +8,9 @@ namespace DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
 {
     public class TimecardSignOffVm
     {
+        public List<TimesheetView> ts { get; set; }
+        public List<HyperFindResultView> hf { get; set; }
 
+        public DateTime weekStart { get; set; }
     }
 }

@@ -212,6 +212,9 @@ namespace DixonsCarphone.WorkforceManagement.Web.Mapping
             CreateMap<Totals, TotalsView>();
             CreateMap<Total, TotalView>();
             CreateMap<PersonIdentity, PersonIdentityView>();
+            CreateMap<HyperFindResult, HyperFindResultView>();
+            CreateMap<PersonData, PersonDataView>();
+            CreateMap<Person, PersonView>();
         }
     }
 

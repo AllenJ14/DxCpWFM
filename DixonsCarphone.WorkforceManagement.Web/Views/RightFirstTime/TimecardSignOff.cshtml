@@ -1,0 +1,41 @@
+﻿@model DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels.TimecardSignOffVm
+
+@{
+    ViewBag.Title = "Timecard Sign Off";
+}
+
+
+<div class="row">
+    &emsp;
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="panel-title"><strong>Timecard Sign Off</strong></div>
+    </div>
+    <div class="panel-body">
+        <strong style="font-size:large;">Week Commencing @Model.weekStart.ToShortDateString()</strong>
+        <table class="table table-bordered" style="margin-top:15px;">
+            <tr>
+                <th class="text-center">Name</th>
+                <th class="text-center col-xs-1">Timecard Signed Off</th>
+                <th class="text-center col-xs-1">Zero Hour</th>
+                <th class="text-center">Edited Clocks</th>
+                <th class="text-center">I have a problem</th>
+            </tr>
+            @foreach (var item in Model.hf.OrderBy(x => x.FullName))
+            {
+                var data = Model.ts.Where(x => x.Employee.PersonIdentity.PersonNumber == item.PersonNumber).FirstOrDefault();
+                <tr>
+                    <td>@item.FullName</td>
+                    <td class="text-center"><strong>@(data.ManagerSignoffDateTime.Contains(Model.weekStart.AddDays(6).ToShortDateString()) ? "✔" : "X")</strong></td>
+                    <td class="text-center">@(data.PeriodTotalData.PeriodTotals.Totals.Total.Count() == 0 ? "Yes" : "")</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+
+

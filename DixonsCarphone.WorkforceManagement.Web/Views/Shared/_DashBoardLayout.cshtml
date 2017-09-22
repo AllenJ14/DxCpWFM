@@ -89,6 +89,9 @@
         <div class="row">
             <div class="alert alert-danger text-center" style="position:absolute; top:50%; width:80%; left:10%"><strong>The site is not optimised for older versions of Internet Explorer, please reopen in Chrome.</strong></div>
         </div>
+        <div style="display:none;">
+            @RenderBody()
+        </div>
         @RenderSection("myScripts", false)
     }
     else
@@ -138,8 +141,6 @@
                                     </span>
                                 </a>
                                 <ul class="nav nav-second-level">
-
-                                    <li>
                                     <li class="active"><a href="@Url.Action("GetCompliance", "Reports", new { area = "" })">WFM Compliance</a></li>
                                     <li class="active"><a href="@Url.Action("GetDeployment", "Reports", new { area = "" })">WFM Deployment</a></li>
                                     @if (!(bool)HttpContext.Current.Session["_ROIFlag"])
@@ -155,6 +156,20 @@
                                     @*<li class="active"><a href="@Url.Action("MyTargets", "Reports")">My Targets</a></li>
                     <li class="active"><a href="@Url.Action("SohSpend", "Reports")">SOH Spend</a></li>
                     <li class="active"><a href="@Url.Action("Schedules", "Reports")">My Schedule</a></li>*@
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="glyphicon glyphicon-time"></i> <span>Right First Time Pay</span>
+                                    <span class="pull-right-container">
+                                        <i class="glyphicon glyphicon-menu-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <li class="active"><a href="@Url.Action("TimecardSignOff", "RightFirstTime", new { area = "" })">Timecard Sign Off</a>
+                                        <li class="active"><a href="@Url.Action("ColleaguePayPortal", "RightFirstTime", new { area = "" })">Colleague Portal</a>
+                                    </li>
                                 </ul>
                             </li>
                             <li>

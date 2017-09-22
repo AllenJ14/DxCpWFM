@@ -31,10 +31,13 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
 
         public async Task<ActionResult> TimecardSignOff()
         {
-            DateTime startDate = DateTime.Now.AddDays(-7).GetFirstDayOfWeek();
-            var result = await _KronosManager.GetKronosHyperFind(_store.KronosStoreName, startDate.ToShortDateString(), startDate.AddDays(6).ToShortDateString());
+            TimecardSignOffVm vm = new TimecardSignOffVm();
+            vm.weekStart = DateTime.Now.AddDays(-7).GetFirstDayOfWeek();
 
-            return View();
+            vm.hf = mapper.Map<List<HyperFindResultView>>(await _KronosManager.GetKronosHyperFind(_store.KronosStoreName, vm.weekStart.ToShortDateString(), vm.weekStart.AddDays(6).ToShortDateString()));
+            vm.ts = mapper.Map<List<TimesheetView>>(await _KronosManager.GetTimesheetForStore(vm.weekStart, vm.hf.Select(x => x.PersonNumber).ToArray()));
+
+            return View(vm);
         }
     }
 }

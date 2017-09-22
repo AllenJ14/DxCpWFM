@@ -64,6 +64,20 @@ namespace DixonsCarphone.WorkforceManagement.Business.Kronos
             return CheckResponse(outcome) ? outcome.DeserializeToObject<Timesheet>() : new List<Timesheet>();
         }
 
+        public static async Task<List<Timesheet>> RequestTimesheet(DateTime date, string[] personNumber)
+        {
+            var xmlString = XMLheader;
+            foreach(var item in personNumber)
+            {
+                xmlString += "<Transaction><Request Action='LoadPeriodTotals'><Timesheet><Employee><PersonIdentity PersonNumber='" + item + "'/></Employee><Period><TimeFramePeriod PeriodDateSpan='" + date.ToShortDateString() + "-" + date.AddDays(6).ToShortDateString() + "' TimeFrameName='9'/></Period></Timesheet></Request></Transaction>";
+            }
+            xmlString += XMLfooter;
+
+            var outcome = await postRequestAsync(xmlString);
+
+            return CheckResponse(outcome) ? await outcome.DeserializeToObjectAsync<Timesheet>() : new List<Timesheet>();
+        }
+
         //Build Data xml request
         public static async Task<List<ScheduleItems>> RequestScheduleDetail(string startDate, string endDate, List<string> employeeList)
         {
