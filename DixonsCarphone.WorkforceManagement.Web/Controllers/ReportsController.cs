@@ -411,11 +411,11 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
 
         //Get P&L data for selected period
         [UserFilter(AccessLevel = "Admin,TPC,RM,DD,RD,BM")]
-        public async Task<ActionResult> StorePandLselection(int heirarchy, string selection, string selectedYear = null, string selectedMonth = null)
+        public async Task<ActionResult> StorePandLselection(string selection, string selectedYear = null, int heirarchy = 0, string selectedMonth = null)
         {
             if(selection == null)
             {
-                return RedirectToAction("PandLSummary", new { selectedYear = selectedYear, selectedMonth = selectedMonth, a = true });
+                return RedirectToAction("PandLSummary", new { selectedYear = selectedYear, selectedMonth = selectedMonth, a = false });
             }
             StorePandLViewModel vm = new StorePandLViewModel();
 

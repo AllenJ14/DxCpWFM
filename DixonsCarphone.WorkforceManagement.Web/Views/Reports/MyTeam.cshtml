@@ -48,7 +48,7 @@
                             <i><u>Team Know How hours are not included in the max contract base.</u></i>
                         </p>
                         <div class="text-center">
-                            <a href="@Url.Action("TeamTrainingDoc", "Reports")" class="btn btn-success" role="button" target="_blank">Training Guide</a>
+                            <a class="btn btn-info" href="@Url.Action("TrainingDoc","Reports", new { f = "ContractBases.pdf" })" target="_blank">Training Guide</a>
                         </div>
                         <div class="row">
                             @Html.Partial("~/Views/Partials/_MyContractBase.cshtml", Model)
