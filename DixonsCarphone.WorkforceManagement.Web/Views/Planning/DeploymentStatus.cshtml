@@ -37,15 +37,21 @@
 
 <div class="panel panel-default">
     <div class="panel-heading text-center">
-        <strong>Deployment</strong>
-        <label class="switch pull-right">
-            <input type="checkbox" id="advView" />
-            <span class="slider round"></span>
-        </label>
-        <span class="pull-right adv-label">Advanced view</span>
+        <div class="row">
+            @if (HttpContext.Current.Session["_AccessLevel"].ToString() == "DD" && HttpContext.Current.Session["_DivisionName"] == null)
+            {
+                <a href="@Url.Action("SetNewRegion", "Profiles",new { selectedRegionNumber = HttpContext.Current.Session["_AccessArea"].ToString() })" class="btn btn-default pull-left col-md-1 col-sm-1 text-center" role="button" style="margin-left:10px;"><span class="glyphicon glyphicon-triangle-left"></span>Back</a>
+            }
+            <strong>Deployment</strong>
+            <label class="switch pull-right">
+                <input type="checkbox" id="advView" />
+                <span class="slider round"></span>
+            </label>
+            <span class="pull-right adv-label">Advanced view</span>
+        </div>                
     </div>
-    <div id="advComment" class="panel-body" style="display:none;">
-        Where the cell has a red border this indicates an underspend where potentially too much holiday is booked.
+    <div id="advComment" class="panel-body text-center" style="display:none;">
+        Red borders indicate the store aren't deploying enough hours and may be using too much holiday.
     </div>
 </div>
 

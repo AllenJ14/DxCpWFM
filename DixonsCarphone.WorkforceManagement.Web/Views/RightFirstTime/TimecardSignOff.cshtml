@@ -4,7 +4,6 @@
     ViewBag.Title = "Timecard Sign Off";
 }
 
-
 <div class="row">
     &emsp;
 </div>
@@ -19,17 +18,18 @@
             <tr>
                 <th class="text-center">Name</th>
                 <th class="text-center col-xs-1">Timecard Signed Off</th>
-                <th class="text-center col-xs-1">Zero Hour</th>
+                @*<th class="text-center col-xs-1">Zero Hour</th>*@
                 <th class="text-center">Edited Clocks</th>
-                <th class="text-center">I have a problem</th>
+                <th class="text-center">I Need Help</th>
             </tr>
             @foreach (var item in Model.hf.OrderBy(x => x.FullName))
             {
-                var data = Model.ts.Where(x => x.Employee.PersonIdentity.PersonNumber == item.PersonNumber).FirstOrDefault();
+                //var data = Model.ts.Where(x => x.Employee.PersonIdentity.PersonNumber == item.PersonNumber).FirstOrDefault();
                 <tr>
                     <td>@item.FullName</td>
-                    <td class="text-center"><strong>@(data.ManagerSignoffDateTime.Contains(Model.weekStart.AddDays(6).ToShortDateString()) ? "✔" : "X")</strong></td>
-                    <td class="text-center">@(data.PeriodTotalData.PeriodTotals.Totals.Total.Count() == 0 ? "Yes" : "")</td>
+                    <td class="text-center"><strong>@(item.PersonData.Person.ManagerSignoffThruDateTime == Model.weekStart.AddDays(6).ToShortDateString() ? "✔" : "X")</strong></td>
+                    @*<td class="text-center"><strong>@(data.ManagerSignoffDateTime.Contains(Model.weekStart.AddDays(6).ToShortDateString()) ? "✔" : "X")</strong></td>*@
+                    @*<td class="text-center">@(data.PeriodTotalData.PeriodTotals.Totals.Total.Count() == 0 ? "Yes" : "")</td>*@
                     <td></td>
                     <td></td>
                 </tr>

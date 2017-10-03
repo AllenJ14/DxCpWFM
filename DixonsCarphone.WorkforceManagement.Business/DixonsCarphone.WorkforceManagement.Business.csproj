@@ -226,6 +226,9 @@
     <Compile Include="Entities\ScheduleData.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\ShortShift.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\SiteFeedback.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>

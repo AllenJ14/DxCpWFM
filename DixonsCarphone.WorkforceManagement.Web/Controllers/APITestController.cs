@@ -77,7 +77,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
 
             if(payroll != "e")
             {
-                var payData = _KronosManager.GetTimesheet(dates.Select(x => x.WCDate).ToArray(), System.Web.HttpContext.Current.Session["_Empnum"].ToString());
+                var payData = _KronosManager.GetTimesheet(dates.Select(x => x.WCDate).ToArray(), payroll);
                 vm.tSheet = mapper.Map<List<TimesheetView>>(payData);
             }
             else

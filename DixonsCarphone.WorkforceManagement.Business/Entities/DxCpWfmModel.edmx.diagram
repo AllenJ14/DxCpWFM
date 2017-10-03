@@ -77,6 +77,7 @@
         <EntityTypeShape EntityType="DixonsCarphone.WorkforceManagement.Business.PayCalendarRef" Width="1.5" PointX="21.375" PointY="11" />
         <AssociationConnector Association="DixonsCarphone.WorkforceManagement.Business.FK_PayCalendarDates_PayCalendarRef" />
         <EntityTypeShape EntityType="DixonsCarphone.WorkforceManagement.Business.ColleaguePayData" Width="1.5" PointX="5.375" PointY="21.75" />
+        <EntityTypeShape EntityType="DixonsCarphone.WorkforceManagement.Business.ShortShift" Width="1.5" PointX="7.375" PointY="21.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

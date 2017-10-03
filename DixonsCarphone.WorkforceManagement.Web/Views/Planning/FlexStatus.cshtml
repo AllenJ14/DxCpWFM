@@ -3,6 +3,8 @@
 
 @{
     ViewBag.Title = "Flex Status";
+
+
 }
 
 <div class="row">
@@ -11,24 +13,32 @@
 
 <div class="panel panel-default">
     <div class="panel-heading text-center">
-        <strong>Contract Flex</strong>
+        <div class="row">
+            @if (HttpContext.Current.Session["_AccessLevel"].ToString() == "DD" && HttpContext.Current.Session["_DivisionName"] == null)
+            {
+                <a href="@Url.Action("SetNewRegion", "Profiles",new { selectedRegionNumber = HttpContext.Current.Session["_AccessArea"].ToString() })" class="btn btn-default pull-left col-md-1 col-sm-1 text-center" role="button" style="margin-left:10px;"><span class="glyphicon glyphicon-triangle-left"></span>Back</a>
+            }
+            <strong>Contract Flex</strong>
+        </div>
     </div>
 </div>
 
 
 @if (Model.regionCollection != null && Model.regionCollection.Count() > 0)
 {
-    <table class="table table-bordered table-hover">
+    <table class="table table-bordered">
         <thead>
             <tr>
                 <th class="text-center active" rowspan="2">Store</th>
-                <th class="text-center active" colspan="3">Core Team</th>
+                <th class="text-center active" colspan="5">Core Team</th>
                 <th class="text-center active" colspan="2">Peak Temps</th>
             </tr>
             <tr>
                 <th class="text-center active">Headcount</th>
+                <th class="text-center active">Contract Hours</th>
                 <th class="text-center active">Avg. Contract</th>
                 <th class="text-center active">Estimated Flex</th>
+                <th class="text-center active">Highest Peak Time</th>
                 <th class="text-center active">Required</th>
                 <th class="text-center active">Optional</th>
             </tr>
@@ -40,7 +50,9 @@
                     <td>@item.Branch</td>
                     <td class="text-center">@item.Headcount</td>
                     <td class="text-center">@item.ContractHrs</td>
-                    <td class="text-center">@item.AvgFlex</td>
+                    <td class="text-center">@string.Format("{0:0.0}", item.ContractHrs / item.Headcount)</td>
+                    <td class="text-center">@(item.AvgFlex + item.ContractHrs)</td>
+                    <td class="text-center">@item.HighestPeak</td>
                     <td class="text-center">@item.Temps</td>
                     <td class="text-center">@item.TempsOption</td>
                 </tr>
@@ -48,7 +60,7 @@
         </tbody>
     </table>
 }
-else if(Model.divisionCollection != null && Model.divisionCollection.Count() > 0)
+else if (Model.divisionCollection != null && Model.divisionCollection.Count() > 0)
 {
     <table class="table table-bordered">
         <thead>
@@ -56,8 +68,8 @@ else if(Model.divisionCollection != null && Model.divisionCollection.Count() > 0
                 <th class="text-center active" rowspan="2"></th>
                 <th class="text-center active" colspan="3">No. of stores with</th>
                 <th class="text-center active" colspan="3">Peak Temps</th>
-            </tr>                     
-            <tr>                      
+            </tr>
+            <tr>
                 <th class="text-center active" style="width:14%">Low Contract Mix</th>
                 <th class="text-center active" style="width:14%">Healthy Contract Mix</th>
                 <th class="text-center active" style="width:14%">High Contract Mix</th>
@@ -78,9 +90,9 @@ else if(Model.divisionCollection != null && Model.divisionCollection.Count() > 0
             </tr>
         </tbody>
     </table>
-    foreach(var division in Model.DivisionList)
+    foreach (var division in Model.DivisionList)
     {
-        <table class="table table-bordered table-hover">
+        <table class="table table-bordered">
             <thead>
                 <tr>
                     <th class="text-center active" rowspan="2">@division</th>
@@ -97,10 +109,10 @@ else if(Model.divisionCollection != null && Model.divisionCollection.Count() > 0
                 </tr>
             </thead>
             <tbody>
-                @foreach(var item in Model.divisionCollection.Where(x => x.Division == division && x.RegionNo != null))
+                @foreach (var item in Model.divisionCollection.Where(x => x.Division == division && x.RegionNo != null))
                 {
                     <tr>
-                        <td>@item.RegionNo</td>
+                        <td><a href="@Url.Action("SetNewStore","Profiles", new { selectedStoreNumber = "Region " + item.RegionNo.ToString()})">@item.RegionNo.ToString()</a></td>
                         <td class="text-center">@item.LowMix</td>
                         <td class="text-center">@item.HealthyMix</td>
                         <td class="text-center">@item.HighMix</td>
@@ -121,9 +133,9 @@ else if(Model.divisionCollection != null && Model.divisionCollection.Count() > 0
                 </tr>
             </tbody>
         </table>
-    }
-}
-else
-{
-    <div class="alert alert-info text-center"><strong>No data found for the current selection</strong></div>
-}
+                        }
+                    }
+                    else
+                    {
+                        <div class="alert alert-info text-center"><strong>No data found for the current selection</strong></div>
+                    }

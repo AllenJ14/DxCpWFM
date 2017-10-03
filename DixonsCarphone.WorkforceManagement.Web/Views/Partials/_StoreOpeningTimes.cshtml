@@ -64,12 +64,12 @@
     </div>
 }
 
-@*@if (Model.PeakTimes != null)
+@if (Model.PeakTimes != null)
 {
     <br />
 
     <div class="panel panel-default">
-        <div class="panel-heading text-center"><strong>May 29th Bank Holiday</strong></div>
+        <div class="panel-heading text-center"><strong>Peak Trading Hours</strong></div>
         <div class="panel-body">
             <p>Make any corrections to the opening times by clicking the date for the relevant week, then confirm they are correct by clicking 'Accept'.</p>
             Making a change to a previously confirmed week will 'unconfirm' the hours for that week, so they must again be confirmed by clicking 'Accept'.
@@ -109,29 +109,21 @@
                     @for (var peakIndex = 0; peakIndex < Model.PeakTimes.Count(); peakIndex++)
                 {
                         <tr>
-                            <td colspan="2" style=@(Model.PeakTimes[peakIndex].EffectiveDate.ToShortDateString() == "09/04/2017" || Model.PeakTimes[peakIndex].EffectiveDate.ToShortDateString() == "16/04/2017" || Model.PeakTimes[peakIndex].EffectiveDate.ToShortDateString() == "25/12/2016"? "" : "padding:15px")>
+                            <td colspan="2" style=@(Model.PeakTimes[peakIndex].EffectiveDate.ToShortDateString() == "19/11/2017" || Model.PeakTimes[peakIndex].EffectiveDate.ToShortDateString() == "17/12/2017" || Model.PeakTimes[peakIndex].EffectiveDate.ToShortDateString() == "24/12/2017"? "" : "padding:15px")>
                                 @Html.ActionLink(Model.PeakTimes[peakIndex].EffectiveDate.ToShortDateString(), "EditSingleTime", new { EntryId = Model.PeakTimes[peakIndex].EntryID })
                                 <br />
-                                @if (Model.PeakTimes[peakIndex].EffectiveDate.ToShortDateString() == "20/11/2016")
+                                @if (Model.PeakTimes[peakIndex].EffectiveDate.ToShortDateString() == "19/11/2017")
                                 {
                                     @:<small>Black Friday</small>
                                     }
-                                else if (Model.PeakTimes[peakIndex].EffectiveDate.ToShortDateString() == "18/12/2016")
+                                else if (Model.PeakTimes[peakIndex].EffectiveDate.ToShortDateString() == "17/12/2017")
                                 {
                                     @:<small>Xmas Week 1</small>
                                     }
-                                else if (Model.PeakTimes[peakIndex].EffectiveDate.ToShortDateString() == "25/12/2016")
+                                else if (Model.PeakTimes[peakIndex].EffectiveDate.ToShortDateString() == "24/12/2017")
                                 {
                                     @:<small>Xmas Week 2</small>
-                                    }
-                                else if (Model.PeakTimes[peakIndex].EffectiveDate.ToShortDateString() == "09/04/2017")
-                                {
-                                    @:<small>Good Friday</small>
-                                    }
-                                else if (Model.PeakTimes[peakIndex].EffectiveDate.ToShortDateString() == "16/04/2017")
-                                {
-                                    @:<small>Easter Sunday</small>
-                                    }
+                                }
                             </td>
 
                             <td>
@@ -201,7 +193,7 @@
             </table>
         </div>
     </div>
-}*@
+}
 
 @if (Model.PendingTimes != null && Model.PendingTimes.Count != 0)
 {

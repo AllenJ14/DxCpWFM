@@ -585,6 +585,18 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
           <Property Name="DateTimeUpdated" Type="datetime" />
           <Property Name="JobCode" Type="smallint" />
         </EntityType>
+        <EntityType Name="ShortShifts">
+          <Key>
+            <PropertyRef Name="WeekNumber" />
+            <PropertyRef Name="PersonNum" />
+            <PropertyRef Name="PunchDate" />
+          </Key>
+          <Property Name="WeekNumber" Type="int" Nullable="false" />
+          <Property Name="HomeBranch" Type="int" Nullable="false" />
+          <Property Name="PersonNum" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="PersonName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="PunchDate" Type="date" Nullable="false" />
+        </EntityType>
         <EntityType Name="SiteFeedback">
           <Key>
             <PropertyRef Name="EntryId" />
@@ -1312,6 +1324,7 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <EntitySet Name="PriorityType" EntityType="Self.PriorityType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ROIIpRef" EntityType="Self.ROIIpRef" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ScheduleData" EntityType="Self.ScheduleData" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ShortShifts" EntityType="Self.ShortShifts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SiteFeedback" EntityType="Self.SiteFeedback" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StaffType" EntityType="Self.StaffType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Store" EntityType="Self.Store" Schema="dbo" store:Type="Tables" />
@@ -1958,11 +1971,12 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           </AssociationSet>
           <EntitySet Name="ColleaguePayDatas" EntityType="DixonsCarphone.WorkforceManagement.Business.ColleaguePayData" />
           <FunctionImport Name="sp_PeakFlexDivision" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_PeakFlexDivision_Result)">
-            <Parameter Name="channel" Mode="In" Type="String" />
+          <Parameter Name="channel" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_PeakFlexRegion" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_PeakFlexRegion_Result)">
-            <Parameter Name="RegionNo" Mode="In" Type="String" />
+          <Parameter Name="RegionNo" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="ShortShifts" EntityType="DixonsCarphone.WorkforceManagement.Business.ShortShift" />
         </EntityContainer>
         <EntityType Name="BestPracticeCategoryType">
           <Key>
@@ -3715,6 +3729,18 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Property Type="Int32" Name="TempsOption" Nullable="true" />
           <Property Type="Int32" Name="TempVacancies" Nullable="false" />
         </ComplexType>
+        <EntityType Name="ShortShift">
+          <Key>
+            <PropertyRef Name="WeekNumber" />
+            <PropertyRef Name="PersonNum" />
+            <PropertyRef Name="PunchDate" />
+          </Key>
+          <Property Name="WeekNumber" Type="Int32" Nullable="false" />
+          <Property Name="HomeBranch" Type="Int32" Nullable="false" />
+          <Property Name="PersonNum" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="PersonName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PunchDate" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5489,6 +5515,17 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="ShortShifts">
+            <EntityTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.ShortShift">
+              <MappingFragment StoreEntitySet="ShortShifts">
+                <ScalarProperty Name="PunchDate" ColumnName="PunchDate" />
+                <ScalarProperty Name="PersonName" ColumnName="PersonName" />
+                <ScalarProperty Name="PersonNum" ColumnName="PersonNum" />
+                <ScalarProperty Name="HomeBranch" ColumnName="HomeBranch" />
+                <ScalarProperty Name="WeekNumber" ColumnName="WeekNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
