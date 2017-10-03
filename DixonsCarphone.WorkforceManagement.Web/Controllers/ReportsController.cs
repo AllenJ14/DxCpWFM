@@ -111,7 +111,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             DeploymentViewModel vm = new DeploymentViewModel();
 
             var weekOfYr = GetWeekNumber(selectedDate);
-            var weekNumbers = await _storeManager.GetWeekNumbers(DateTime.Now.GetFirstDayOfWeek().AddDays(-56), DateTime.Now.GetFirstDayOfWeek().AddDays(28));
+            var weekNumbers = await _storeManager.GetWeekNumbers(DateTime.Now.GetFirstDayOfWeek().AddDays(-56), DateTime.Now.GetFirstDayOfWeek().AddDays(49));
 
             if (System.Web.HttpContext.Current.Session["_ChannelName"] != null)
             {
