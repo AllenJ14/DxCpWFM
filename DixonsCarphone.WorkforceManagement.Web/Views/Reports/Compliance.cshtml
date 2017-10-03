@@ -9,33 +9,7 @@
         &nbsp;
     </div>
 
-    @Html.Partial("~/Views/Partials/_PageBlurb.cshtml", (BaseViewModel)Model)
-
-    <div class="row">
-        <div class="col-lg-12 col-md-12">
-            <div class="panel panel-default">
-                <div class="panel-heading text-center">
-                    <strong>WFM Compliance</strong>
-                </div>
-                <div class="panel-body">
-                    <p>The WFM compliance score is a measure of how well aligned your store is with current best practices. Good compliance helps ensure that staffing costs are well controlled whilst also avoiding any payroll issues for you and your team.</p>
-                    @if ((bool)HttpContext.Current.Session["_ROIFlag"])
-                    {
-                        <p>There are currently 4 metrics that contribute to your overall compliance score, as shown below. For each of these metrics where there is an issue you will lose <strong>2</strong> points out of a possible maximum of <strong>8</strong>.</p>
-                    }
-                    else
-                    {
-                        <p>There are currently 5 metrics that contribute to your overall compliance score, as shown below. For each of these metrics where there is an issue you will lose <strong>2</strong> points out of a possible maximum of <strong>10</strong>.</p>
-                    }
-
-                    <p>Shown below is your overall compliance score along with a breakdown of all the areas and where there is a compliance issue. Click on the metric heading for full details and an explanation of the risk associated with poor compliance in this area.</p>
-                    <strong>Note:</strong>The compliance scores for the previous week are not published until <u>3PM Monday</u> to allow for sign off and data validation, before this time the schedule information will continue to be shown.
-                </div>
-            </div>
-        </div>
-    </div>
-
-    @Html.Partial("~/Views/Partials/_Compliance.cshtml", Model)
+   NEW VERSION HERE
 
 </section>
 @section myScripts {
