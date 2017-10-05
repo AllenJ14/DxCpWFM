@@ -17,9 +17,9 @@
         <table class="table table-bordered" style="margin-top:15px;">
             <tr>
                 <th class="text-center">Name</th>
-                <th class="text-center col-xs-1">Timecard Signed Off</th>
+                <th class="text-center col-xs-2">Timecard Signed Off</th>
                 @*<th class="text-center col-xs-1">Zero Hour</th>*@
-                <th class="text-center">Edited Clocks</th>
+                <th class="text-center col-xs-2">Edited Clocks (Shortened Shifts)</th>
                 <th class="text-center">I Need Help</th>
             </tr>
             @foreach (var item in Model.hf.OrderBy(x => x.FullName))
@@ -34,6 +34,55 @@
                     <td></td>
                 </tr>
             }
+        </table>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="panel-title">
+        <strong>Timecard Sign Off</strong>
+        </div>
+    </div>
+    <div class="panel-body">
+        <strong style="font-size:large;">Week Commencing @Model.weekStart.ToShortDateString()</strong>
+        <table class="table table-bordered" style="margin-top:15px;">
+            <tr>
+                <th class="text-center">Branch Name</th>
+                <th class="text-center col-xs-2">Timecards Completed</th>
+                <th class="text-center col-xs-2">Star User Clocked</th>
+                <th class="text-center col-xs-2">Star User Scheduled</th>
+            </tr>
+            <tr>
+                <td>1 - Test Branch</td>
+                <td class="text-center">5/5</td>
+                <td class="text-center">Yes</td>
+                <td class="text-center">Yes</td>
+            </tr>
+            <tr>
+                <td>2 - Test Branch</td>
+                <td class="text-center danger">9/10</td>
+                <td class="text-center">Yes</td>
+                <td class="text-center">Yes</td>
+            </tr>
+            <tr>
+                <td>3 - Test Branch</td>
+                <td class="text-center danger">5/10</td>
+                <td class="text-center warning">No</td>
+                <td class="text-center">Yes</td>
+            </tr>
+            <tr>
+                <td>4 - Test Branch</td>
+                <td class="text-center danger">2/10</td>
+                <td class="text-center danger">No</td>
+                <td class="text-center danger">No</td>
+            </tr>
+            <tr>
+                <td>5 - Test Branch</td>
+                <td class="text-center">10/10</td>
+                <td class="text-center">No</td>
+                <td class="text-center">No</td>
+            </tr>
         </table>
     </div>
 </div>
