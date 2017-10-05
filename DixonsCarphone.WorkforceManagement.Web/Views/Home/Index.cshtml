@@ -61,12 +61,12 @@
     </div>
 
     @Html.Partial("~/Views/Partials/_PageBlurb.cshtml", (BaseViewModel)Model)
-    <div class="alert alert-danger text-center">
+    @*<div class="alert alert-danger text-center">
         <strong>
             We have been made aware of an issue that affected the "My Budgets" page on Monday 11th September resulting in some stores seeing a budget 45 hours higher than was intended. The issue was quickly identified and fixed the same day, all numbers now shown on
             this page have been checked and are displaying correctly. Please ensure you are working to these budgets, we apologise for any inconvenience.
         </strong>
-    </div>
+    </div>*@
     <div class="row">
         @Html.Partial("~/Views/Partials/_ScoresAndUtilization.cshtml", Model.Scores)
     </div>
