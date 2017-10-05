@@ -151,7 +151,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
                 vm.DeployedGraphArray = Helpers.BuildGraphArray(vm.DailyDetails, "deployed");
             }
 
-            vm.GetWeeksOfYear(DateTime.Now.GetFirstDayOfWeek().AddDays(28), weekNumbers);
+            vm.GetWeeksOfYear(DateTime.Now.GetFirstDayOfWeek().AddDays(49), weekNumbers);
             vm.PageBlurb = ConfigurationManager.AppSettings["DeploymentBlurb"];
 
             vm.WeeksOfYear.ForEach(x => x.Selected = x.Value == weekOfYr.ToString());
