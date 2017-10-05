@@ -9,7 +9,160 @@
         &nbsp;
     </div>
 
-   NEW VERSION HERE
+    @Html.Partial("~/Views/Partials/_PageBlurb.cshtml", (BaseViewModel)Model)
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading text-center">
+                    <strong>WFM Compliance</strong>
+                </div>
+                <div class="panel-body">
+                    <strong class="text-danger"><u>Needs to be rewritten</u></strong><br />
+                    <strong>Note:</strong>The compliance scores for the previous week are not published until <u>3PM Monday</u> to allow for sign off and data validation, before this time the schedule information will continue to be shown.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*@Html.Partial("~/Views/Partials/_Compliance.cshtml", Model)*@
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading text-center">
+                    <strong>WFM Compliance</strong>
+                </div>
+                <!-- .panel-heading -->
+                <div class="panel-body">
+                    <div class="panel-group" id="accordion">
+                        <div class="panel panel-default panel-danger">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <strong>
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTimecard">Timecard Non Compliance - 2</a>
+                                    </strong>
+                                </h4>
+                            </div>
+                            <div id="collapseTimecard" class="panel-collapse collapse">
+                                @if (true)
+                                {
+                                    <div class="panel-body">
+                                        <p>
+                                            <h5>What is the risk?</h5>
+                                            <ul>
+                                                <li>Payroll Risk – Colleagues not paid for hours they have worked, Inaccurate SOH Reporting</li>
+                                                <li>Financial risk – Colleagues paid for hours they have not worked (FT).</li>
+                                            </ul>
+                                        </p>
+                                        <table class="table table-bordered-blue table-condensed">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-md-1 text-center">Employee Name</th>
+                                                    <th class="col-md-1 text-center">Not Submitted / Zero Hours</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="text-center">John Smith</td>
+                                                    <td class="text-center">Not Submitted</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-center">John Smith</td>
+                                                    <td class="text-center">Zero Hour</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <div class="panel panel-danger">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <strong>
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseShift">Short Shifts - 2</a>
+                                    </strong>
+                                </h4>
+                            </div>
+                            <div id="collapseShift" class="panel-collapse collapse">
+                                @if (true)
+                                {
+                                    <div class="panel-body">
+                                        <strong class="text-danger"><u>Needs blurb</u></strong>
+                                        <table class="table table-bordered-blue table-condensed">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center">Employee Name</th>
+                                                    <th class="text-center">Shifts Edited</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="text-center">John Smith</td>
+                                                    <td class="text-center">5</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-center">John Smith</td>
+                                                    <td class="text-center">5</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                        <div class="text-center"><a href="@Url.Action("PunchCompliance", "Reports",new { selectedDate = "201812"})" class="btn btn-primary" role="button">Short Shifts</a></div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <div class="panel panel-success">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <strong>
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapsePunch">Punch Compliance - 75%)</a>
+                                    </strong>
+                                </h4>
+                            </div>
+                            <div id="collapsePunch" class="panel-collapse collapse">
+                                @if (true)
+                                {
+                                    <div class="panel-body">
+                                        <strong class="text-danger"><u>Needs blurb</u></strong>
+                                        <table class="table table-bordered-blue table-condensed">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center col-md-1" style="vertical-align:middle">Name</th>
+                                                    <th class="text-center col-md-1" style="vertical-align:middle">Punch Compliance</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="text-center">Deenoo, Keeshan</td>
+                                                    <td class="text-center danger">50.0%</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-center">Noor, Arif</td>
+                                                    <td class="text-center danger">80.0%</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-center">Paul, Leon</td>
+                                                    <td class="text-center danger">85.0%</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-center">Vidal, Phillip</td>
+                                                    <td class="text-center danger">20.0%</td>
+                                                </tr>
+                                        </table>
+                                        <div class="text-center"><a href="@Url.Action("PunchCompliance", "Reports",new { selectedDate = Model.WeeksOfYear.Where(x => x.Selected == true).First().Value})" class="btn btn-primary" role="button">Punch Compliance</a></div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- .panel-body -->
+    </div>
 
 </section>
 @section myScripts {
@@ -17,7 +170,7 @@
         function dateChanged(ev) {
             if ($('#SelectedDate').val() != '') {
                 $('#complianceDateForm').submit();
-            } 
+            }
         }
     </script>
 }

@@ -402,6 +402,53 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
           <Property Name="L2Holiday" Type="float" />
           <Property Name="IgniteCredits" Type="float" />
         </EntityType>
+        <EntityType Name="DashBoardData_v2">
+          <Key>
+            <PropertyRef Name="DashBoardDataId" />
+          </Key>
+          <Property Name="DashBoardDataId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Year" Type="nvarchar" MaxLength="10" />
+          <Property Name="Quarter" Type="tinyint" />
+          <Property Name="Period" Type="tinyint" />
+          <Property Name="WeekNumber" Type="int" />
+          <Property Name="BranchNumber" Type="smallint" />
+          <Property Name="UkBranchNumber" Type="nvarchar" MaxLength="10" />
+          <Property Name="StoreName" Type="nvarchar" MaxLength="255" />
+          <Property Name="Division" Type="nvarchar" MaxLength="255" />
+          <Property Name="Region" Type="smallint" />
+          <Property Name="RegionName" Type="nvarchar" MaxLength="255" />
+          <Property Name="TotalHeadCount" Type="smallint" />
+          <Property Name="TimeCardsCompleted" Type="smallint" />
+          <Property Name="ZeroHour" Type="smallint" />
+          <Property Name="ContractHours" Type="float" />
+          <Property Name="FTContractHours" Type="float" />
+          <Property Name="PTContractHours" Type="float" />
+          <Property Name="OriginalTarget" Type="float" />
+          <Property Name="FinalTarget" Type="float" />
+          <Property Name="HolidayTaken" Type="float" />
+          <Property Name="FTLeakage" Type="float" />
+          <Property Name="LeakageCount" Type="smallint" />
+          <Property Name="AllApprovedHours" Type="float" />
+          <Property Name="SOH" Type="float" />
+          <Property Name="OverTargetFlag" Type="bit" />
+          <Property Name="OverContractFlag" Type="bit" />
+          <Property Name="ComplianceScore" Type="smallint" />
+          <Property Name="SOHUtilization" Type="smallint" />
+          <Property Name="UtilizationZeroFlag" Type="bit" />
+          <Property Name="GSContract" Type="float" />
+          <Property Name="GSTarget" Type="float" />
+          <Property Name="GSHolidayTaken" Type="float" />
+          <Property Name="GSFTLeakage" Type="float" />
+          <Property Name="GSAllApprovedHours" Type="float" />
+          <Property Name="GSSOHSpend" Type="float" />
+          <Property Name="GSOverTargetFlag" Type="bit" />
+          <Property Name="GSOverContractFlag" Type="bit" />
+          <Property Name="StoreFlag" Type="nvarchar" MaxLength="50" />
+          <Property Name="ContractBaseTarget" Type="float" />
+          <Property Name="IgniteCredits" Type="float" />
+          <Property Name="PunchCompliance" Type="float" />
+          <Property Name="ShortShifts" Type="smallint" />
+        </EntityType>
         <EntityType Name="EmpComplianceDetail">
           <Key>
             <PropertyRef Name="EntryId" />
@@ -1310,6 +1357,7 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <EntitySet Name="DailyDeployment" EntityType="Self.DailyDeployment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DailyFootfall" EntityType="Self.DailyFootfall" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DashBoardData" EntityType="Self.DashBoardData" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DashBoardData_v2" EntityType="Self.DashBoardData_v2" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmpComplianceDetail" EntityType="Self.EmpComplianceDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FileUploadRecord" EntityType="Self.FileUploadRecord" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HolidayPlanningEmp" EntityType="Self.HolidayPlanningEmp" Schema="dbo" store:Type="Tables" />
@@ -1977,6 +2025,7 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Parameter Name="RegionNo" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="ShortShifts" EntityType="DixonsCarphone.WorkforceManagement.Business.ShortShift" />
+          <EntitySet Name="DashBoardData_v2" EntityType="DixonsCarphone.WorkforceManagement.Business.DashBoardData_v2" />
         </EntityContainer>
         <EntityType Name="BestPracticeCategoryType">
           <Key>
@@ -3740,6 +3789,53 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Property Name="PersonNum" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="PersonName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="PunchDate" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
+        <EntityType Name="DashBoardData_v2">
+          <Key>
+            <PropertyRef Name="DashBoardDataId" />
+          </Key>
+          <Property Name="DashBoardDataId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Year" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Quarter" Type="Byte" />
+          <Property Name="Period" Type="Byte" />
+          <Property Name="WeekNumber" Type="Int32" />
+          <Property Name="BranchNumber" Type="Int16" />
+          <Property Name="UkBranchNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="StoreName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Division" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Region" Type="Int16" />
+          <Property Name="RegionName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="TotalHeadCount" Type="Int16" />
+          <Property Name="TimeCardsCompleted" Type="Int16" />
+          <Property Name="ZeroHour" Type="Int16" />
+          <Property Name="ContractHours" Type="Double" />
+          <Property Name="FTContractHours" Type="Double" />
+          <Property Name="PTContractHours" Type="Double" />
+          <Property Name="OriginalTarget" Type="Double" />
+          <Property Name="FinalTarget" Type="Double" />
+          <Property Name="HolidayTaken" Type="Double" />
+          <Property Name="FTLeakage" Type="Double" />
+          <Property Name="LeakageCount" Type="Int16" />
+          <Property Name="AllApprovedHours" Type="Double" />
+          <Property Name="SOH" Type="Double" />
+          <Property Name="OverTargetFlag" Type="Boolean" />
+          <Property Name="OverContractFlag" Type="Boolean" />
+          <Property Name="ComplianceScore" Type="Int16" />
+          <Property Name="SOHUtilization" Type="Int16" />
+          <Property Name="UtilizationZeroFlag" Type="Boolean" />
+          <Property Name="GSContract" Type="Double" />
+          <Property Name="GSTarget" Type="Double" />
+          <Property Name="GSHolidayTaken" Type="Double" />
+          <Property Name="GSFTLeakage" Type="Double" />
+          <Property Name="GSAllApprovedHours" Type="Double" />
+          <Property Name="GSSOHSpend" Type="Double" />
+          <Property Name="GSOverTargetFlag" Type="Boolean" />
+          <Property Name="GSOverContractFlag" Type="Boolean" />
+          <Property Name="StoreFlag" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ContractBaseTarget" Type="Double" />
+          <Property Name="IgniteCredits" Type="Double" />
+          <Property Name="PunchCompliance" Type="Double" />
+          <Property Name="ShortShifts" Type="Int16" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -5523,6 +5619,54 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
                 <ScalarProperty Name="PersonNum" ColumnName="PersonNum" />
                 <ScalarProperty Name="HomeBranch" ColumnName="HomeBranch" />
                 <ScalarProperty Name="WeekNumber" ColumnName="WeekNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DashBoardData_v2">
+            <EntityTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.DashBoardData_v2">
+              <MappingFragment StoreEntitySet="DashBoardData_v2">
+                <ScalarProperty Name="ShortShifts" ColumnName="ShortShifts" />
+                <ScalarProperty Name="PunchCompliance" ColumnName="PunchCompliance" />
+                <ScalarProperty Name="IgniteCredits" ColumnName="IgniteCredits" />
+                <ScalarProperty Name="ContractBaseTarget" ColumnName="ContractBaseTarget" />
+                <ScalarProperty Name="StoreFlag" ColumnName="StoreFlag" />
+                <ScalarProperty Name="GSOverContractFlag" ColumnName="GSOverContractFlag" />
+                <ScalarProperty Name="GSOverTargetFlag" ColumnName="GSOverTargetFlag" />
+                <ScalarProperty Name="GSSOHSpend" ColumnName="GSSOHSpend" />
+                <ScalarProperty Name="GSAllApprovedHours" ColumnName="GSAllApprovedHours" />
+                <ScalarProperty Name="GSFTLeakage" ColumnName="GSFTLeakage" />
+                <ScalarProperty Name="GSHolidayTaken" ColumnName="GSHolidayTaken" />
+                <ScalarProperty Name="GSTarget" ColumnName="GSTarget" />
+                <ScalarProperty Name="GSContract" ColumnName="GSContract" />
+                <ScalarProperty Name="UtilizationZeroFlag" ColumnName="UtilizationZeroFlag" />
+                <ScalarProperty Name="SOHUtilization" ColumnName="SOHUtilization" />
+                <ScalarProperty Name="ComplianceScore" ColumnName="ComplianceScore" />
+                <ScalarProperty Name="OverContractFlag" ColumnName="OverContractFlag" />
+                <ScalarProperty Name="OverTargetFlag" ColumnName="OverTargetFlag" />
+                <ScalarProperty Name="SOH" ColumnName="SOH" />
+                <ScalarProperty Name="AllApprovedHours" ColumnName="AllApprovedHours" />
+                <ScalarProperty Name="LeakageCount" ColumnName="LeakageCount" />
+                <ScalarProperty Name="FTLeakage" ColumnName="FTLeakage" />
+                <ScalarProperty Name="HolidayTaken" ColumnName="HolidayTaken" />
+                <ScalarProperty Name="FinalTarget" ColumnName="FinalTarget" />
+                <ScalarProperty Name="OriginalTarget" ColumnName="OriginalTarget" />
+                <ScalarProperty Name="PTContractHours" ColumnName="PTContractHours" />
+                <ScalarProperty Name="FTContractHours" ColumnName="FTContractHours" />
+                <ScalarProperty Name="ContractHours" ColumnName="ContractHours" />
+                <ScalarProperty Name="ZeroHour" ColumnName="ZeroHour" />
+                <ScalarProperty Name="TimeCardsCompleted" ColumnName="TimeCardsCompleted" />
+                <ScalarProperty Name="TotalHeadCount" ColumnName="TotalHeadCount" />
+                <ScalarProperty Name="RegionName" ColumnName="RegionName" />
+                <ScalarProperty Name="Region" ColumnName="Region" />
+                <ScalarProperty Name="Division" ColumnName="Division" />
+                <ScalarProperty Name="StoreName" ColumnName="StoreName" />
+                <ScalarProperty Name="UkBranchNumber" ColumnName="UkBranchNumber" />
+                <ScalarProperty Name="BranchNumber" ColumnName="BranchNumber" />
+                <ScalarProperty Name="WeekNumber" ColumnName="WeekNumber" />
+                <ScalarProperty Name="Period" ColumnName="Period" />
+                <ScalarProperty Name="Quarter" ColumnName="Quarter" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="DashBoardDataId" ColumnName="DashBoardDataId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

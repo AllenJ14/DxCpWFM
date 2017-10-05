@@ -96,7 +96,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
                 }
             }
 
-            var weekNumbers = await _storeManager.GetWeekNumbers(DateTime.Now.GetFirstDayOfWeek().AddDays(-56), DateTime.Now.GetFirstDayOfWeek().AddDays(28));
+            var weekNumbers = await _storeManager.GetWeekNumbers(DateTime.Now.GetFirstDayOfWeek().AddDays(-56), DateTime.Now.GetFirstDayOfWeek());
 
             vm.GetWeeksOfYear(DateTime.Now.GetFirstDayOfWeek().AddDays(28), weekNumbers);
             vm.PageBlurb = ConfigurationManager.AppSettings["ComplianceBlurb"];

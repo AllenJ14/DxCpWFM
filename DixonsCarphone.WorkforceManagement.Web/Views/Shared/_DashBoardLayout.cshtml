@@ -158,7 +158,7 @@
                     <li class="active"><a href="@Url.Action("Schedules", "Reports")">My Schedule</a></li>*@
                                 </ul>
                             </li>
-                            <li>
+                            @*<li>
                                 <a href="#">
                                     <i class="glyphicon glyphicon-time"></i> <span>Right First Time Pay</span>
                                     <span class="pull-right-container">
@@ -171,7 +171,7 @@
                                         <li class="active"><a href="@Url.Action("ColleaguePayPortal", "RightFirstTime", new { area = "" })">Colleague Portal</a>
                                     </li>
                                 </ul>
-                            </li>
+                            </li>*@
                             <li>
                                 <a href="#">
                                     <i class="glyphicon glyphicon-th"></i> <span>My Store</span>
@@ -336,7 +336,7 @@
             }
 
             <!-- INCLUDE ONLY IN RELEASE-->
-            @*<script>
+            <script>
                   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
                   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
                   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -344,7 +344,7 @@
 
                   ga('create', 'UA-97493047-1', 'auto');
                   ga('send', 'pageview');
-                </script>*@
+                </script>
 
             @if (Request.IsAuthenticated)
             {

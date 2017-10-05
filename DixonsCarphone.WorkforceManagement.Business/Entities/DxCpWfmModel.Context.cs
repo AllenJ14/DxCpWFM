@@ -79,6 +79,7 @@ namespace DixonsCarphone.WorkforceManagement.Business.Entities
         public virtual DbSet<PayCalendarRef> PayCalendarRefs { get; set; }
         public virtual DbSet<ColleaguePayData> ColleaguePayDatas { get; set; }
         public virtual DbSet<ShortShift> ShortShifts { get; set; }
+        public virtual DbSet<DashBoardData_v2> DashBoardData_v2 { get; set; }
     
         public virtual ObjectResult<udsp_GetPandL_Result> udsp_GetPandL(Nullable<int> storeNumber, string periodYear, Nullable<short> periodMonth, Nullable<short> qtdStartMonth, Nullable<short> ytdStartMonth)
         {
