@@ -86,28 +86,28 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             var weekNumbers = await _storeManager.GetWeekNumbers(DateTime.Now.GetFirstDayOfWeek().AddDays(-7), DateTime.Now.GetFirstDayOfWeek().AddDays(14));
 
             // retrieve dashboard records for relevant weeks
-            List<DashBoardData> current;
-            List<DashBoardData> lastWeek;
-            List<DashBoardData> nextWeek;
-            List<DashBoardData> weekAfter;
+            List<DashBoardData_v2> current;
+            List<DashBoardData_v2> lastWeek;
+            List<DashBoardData_v2> nextWeek;
+            List<DashBoardData_v2> weekAfter;
 
             // retrieve dashboard records for relevant weeks
-            List<DashBoardData> allData;
+            List<DashBoardData_v2> allData;
 
             if(System.Web.HttpContext.Current.Session["_ChannelName"] != null)
             {
                 var result = await _dashBoardManager.GetChannelDashboardData(System.Web.HttpContext.Current.Session["_ChannelName"].ToString(), (int)weekNumbers[3], (int)weekNumbers[0]);
-                allData = mapper.Map<List<DashBoardData>>(result);
+                allData = mapper.Map<List<DashBoardData_v2>>(result);
             }
             else if(System.Web.HttpContext.Current.Session["_DivisionName"] != null)
             {
                 var result = await _dashBoardManager.GetDivisionDashboardData(System.Web.HttpContext.Current.Session["_DivisionName"].ToString(), (int)weekNumbers[3], (int)weekNumbers[0]);
-                allData = mapper.Map<List<DashBoardData>>(result);
+                allData = mapper.Map<List<DashBoardData_v2>>(result);
             }
             else if(System.Web.HttpContext.Current.Session["_RegionNumber"] != null)
             {
                 var result = await _dashBoardManager.GetRegionDashboardData(System.Web.HttpContext.Current.Session["_RegionNumber"].ToString(), (int)weekNumbers[3], (int)weekNumbers[0]);
-                allData =  mapper.Map<List<DashBoardData>>(result);
+                allData =  mapper.Map<List<DashBoardData_v2>>(result);
             }
             else
             {

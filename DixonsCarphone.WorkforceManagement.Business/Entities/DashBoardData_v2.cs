@@ -56,5 +56,6 @@ namespace DixonsCarphone.WorkforceManagement.Business.Entities
         public Nullable<double> IgniteCredits { get; set; }
         public Nullable<double> PunchCompliance { get; set; }
         public Nullable<short> ShortShifts { get; set; }
+        public Nullable<double> PayEscalations { get; set; }
     }
 }

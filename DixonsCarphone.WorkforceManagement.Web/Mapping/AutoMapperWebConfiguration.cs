@@ -106,22 +106,22 @@ namespace DixonsCarphone.WorkforceManagement.Web.Mapping
     {
         public RegionDashboardProfile()
         {
-            CreateMap<DashBoardData, sp_RegionDashboardData_Result>();
-            CreateMap<sp_RegionDashboardData_Result, DashBoardData>();
-            CreateMap<sp_RegionDashboardData_Result, DashBoardView>();
-            CreateMap<sp_DivisionDashboardData_Result, DashBoardData>();
-            CreateMap<sp_DivisionDashboardData_Result, DashBoardView>();
-            CreateMap<DashBoardData, sp_DivisionDashboardData_Result>();
-            CreateMap<sp_ChannelDashboardData_Result, DashBoardData>();
-            CreateMap<DashBoardData, sp_ChannelDashboardData_Result>();
-            CreateMap<DashBoardView, sp_AllChannelDashboardData_Result>();
-            CreateMap<sp_AllChannelDashboardData_Result, DashBoardView>();
-            CreateMap<DashBoardView, sp_AllDivisionDashboardData_Result>();
-            CreateMap<sp_AllDivisionDashboardData_Result, DashBoardView>();
-            CreateMap<DashboardViewChannel, sp_AllChannelDashboardData_Result>();
-            CreateMap<sp_AllChannelDashboardData_Result, DashboardViewChannel>();
-            CreateMap<DashboardViewChannel, sp_AllDivisionDashboardData_Result>();
-            CreateMap<sp_AllDivisionDashboardData_Result, DashboardViewChannel>();
+            CreateMap<DashBoardData_v2, sp_RegionDashboardData_v2_Result>();
+            CreateMap<sp_RegionDashboardData_v2_Result, DashBoardData_v2>();
+            CreateMap<sp_RegionDashboardData_v2_Result, DashBoardView>();
+            CreateMap<sp_DivisionDashboardData_v2_Result, DashBoardData_v2>();
+            CreateMap<sp_DivisionDashboardData_v2_Result, DashBoardView>();
+            CreateMap<DashBoardData_v2, sp_DivisionDashboardData_v2_Result>();
+            CreateMap<sp_ChannelDashboardData_v2_Result, DashBoardData_v2>();
+            CreateMap<DashBoardData_v2, sp_ChannelDashboardData_v2_Result>();
+            CreateMap<DashBoardView, sp_AllChannelDashboardData_v2_Result>();
+            CreateMap<sp_AllChannelDashboardData_v2_Result, DashBoardView>();
+            CreateMap<DashBoardView, sp_AllDivisionDashboardData_v2_Result>();
+            CreateMap<sp_AllDivisionDashboardData_v2_Result, DashBoardView>();
+            CreateMap<DashboardViewChannel, sp_AllChannelDashboardData_v2_Result>();
+            CreateMap<sp_AllChannelDashboardData_v2_Result, DashboardViewChannel>();
+            CreateMap<DashboardViewChannel, sp_AllDivisionDashboardData_v2_Result>();
+            CreateMap<sp_AllDivisionDashboardData_v2_Result, DashboardViewChannel>();
             CreateMap<PublishedBudgetsBranch_Result, PublishedBudgetBranch>();
             CreateMap<PublishedBudgetBranch, PublishedBudgetsBranch_Result>();
             CreateMap<PublishedBudgetsRegion_Result, PublishedBudgetBranch>();
@@ -224,8 +224,8 @@ namespace DixonsCarphone.WorkforceManagement.Web.Mapping
     {
         public DashBoardProfile()
         {
-            CreateMap<DashBoardView, DashBoardData>();
-            CreateMap<DashBoardData, DashBoardView>();
+            CreateMap<DashBoardView, DashBoardData_v2>();
+            CreateMap<DashBoardData_v2, DashBoardView>();
             CreateMap<DailyDeploymentView, DailyDeployment>();
             CreateMap<DailyDeployment, DailyDeploymentView>();
             CreateMap<EmpComplianceDetail, EmpComplianceDetailView>();

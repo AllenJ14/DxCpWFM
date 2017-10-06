@@ -545,6 +545,11 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             return View("PunchCompliance", vm);
         }
 
+        public async Task<ActionResult> EditedShifts(string selectedDate = "Last Week")
+        {
+            return View();
+        }
+
         [UserFilter(AccessLevel = "Admin,TPC,RM,DD,RD")]
         public async Task<ActionResult> WeekendWorking()
         {

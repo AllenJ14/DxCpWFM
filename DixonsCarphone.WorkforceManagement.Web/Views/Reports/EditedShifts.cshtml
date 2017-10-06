@@ -1,0 +1,102 @@
+﻿
+@{
+    ViewBag.Title = "Edited Shifts";
+}
+
+
+<div class="row">
+    &nbsp;
+</div>
+
+<div class="row">
+    <div class="col-lg-12 col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading text-center">
+                <strong>Edited Shifts</strong>
+            </div>
+            <div class="panel-body">
+                <p>This report measures the compliance of the colleague’s physical punches.  If a colleague forgets to clock in for their shift it will trigger on this report as a missed punch, even if the punch has since been manually added to the timecard. The punch compliance shows the percentage of expected punches that were present.</p>
+                <p>Lateness is only monitored for punches at the start of the shift and is measured against the schedule that was present at the end of the week, rather than what was submitted on the colleague's timecard. The colleague will show as late if the physical punch is more than 7 minutes later than what has been recorded on the schedule.</p>
+                <p><strong>If a colleague is not scheduled for some of the shifts they punched in for they will not be penalised, unless they failed to punch in/out. However, if a colleague has no schedule for the week every shift will be counted as non compliant.</strong></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    &nbsp;
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <table class="table table-bordered-blue table-condensed">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Person Name</th>
+                            <th class="text-center">Shift Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>John Smith</td>
+                            <td class="text-center">24/09/2016</td>
+                        </tr>
+                        <tr>
+                            <td style="border-bottom:0px;border-left:0px;"></td>
+                            <td class="text-center">26/09/2016</td>
+                        </tr>
+                        <tr>
+                            <td style="border-bottom:0px;border-left:0px;"></td>
+                            <td class="text-center">27/09/2016</td>
+                        </tr>
+                        <tr>
+                            <td style="border-bottom:0px;border-left:0px;"></td>
+                            <td class="text-center">28/09/2016</td>
+                        </tr>
+                        <tr>
+                            <td>Bob Smith</td>
+                            <td class="text-center">24/09/2016</td>
+                        </tr>
+                        <tr>
+                            <td>Terry Smith</td>
+                            <td class="text-center">24/09/2016</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <table class="table table-bordered-blue table-condensed">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Branch</th>
+                            <th class="text-center">Shifts Edited</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1 - Test Branch</td>
+                            <td class="text-center danger">5</td>
+                        </tr>
+                        <tr>
+                            <td>2 - Test Branch</td>
+                            <td class="text-center">0</td>
+                        </tr>
+                        <tr>
+                            <td>3 - Test Branch</td>
+                            <td class="text-center warning">1</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -112,9 +112,6 @@
     <Compile Include="Entities\DailyFootfall.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\DashBoardData.cs">
-      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Entities\DashBoardData_v2.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
@@ -235,10 +232,10 @@
     <Compile Include="Entities\SiteFeedback.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\sp_AllChannelDashboardData_Result.cs">
+    <Compile Include="Entities\sp_AllChannelDashboardData_v2_Result.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\sp_AllDivisionDashboardData_Result.cs">
+    <Compile Include="Entities\sp_AllDivisionDashboardData_v2_Result.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\sp_BranchContractStatus_Result.cs">
@@ -253,7 +250,7 @@
     <Compile Include="Entities\sp_ChannelComplianceDetail_Result.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\sp_ChannelDashboardData_Result.cs">
+    <Compile Include="Entities\sp_ChannelDashboardData_v2_Result.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\sp_ChannelPunchCompliance_Result.cs">
@@ -265,7 +262,7 @@
     <Compile Include="Entities\sp_DivisionComplianceDetail_Result.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\sp_DivisionDashboardData_Result.cs">
+    <Compile Include="Entities\sp_DivisionDashboardData_v2_Result.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\sp_DivisionFutureDeployment_Result.cs">
@@ -325,7 +322,7 @@
     <Compile Include="Entities\sp_RegionContractStatus_Result.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\sp_RegionDashboardData_Result.cs">
+    <Compile Include="Entities\sp_RegionDashboardData_v2_Result.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\sp_RegionFutureDeployment_Result.cs">
