@@ -25,145 +25,145 @@
         </div>
     </div>
 
-    @*@Html.Partial("~/Views/Partials/_Compliance.cshtml", Model)*@
+    @Html.Partial("~/Views/Shared/_WeekPicker.cshtml", new WeekPickerViewModel { Action = "GetCompliance", Controller = "Reports", WeeksOfYear = Model.WeeksOfYear, SelectedDate = Model.SelectedDate })
 
     @*Branch View*@
     <div class="row">
-        <div class="col-lg-12">
-            <div class="panel panel-default">
-                <div class="panel-heading text-center">
-                    <strong>WFM Compliance</strong>
-                </div>
-                <!-- .panel-heading -->
-                <div class="panel-body">
-                    <div class="panel-group" id="accordion">
-                        <div class="panel panel-default panel-danger">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <strong>
-                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTimecard">Timecard Non Compliance - 2</a>
-                                    </strong>
-                                </h4>
-                            </div>
-                            <div id="collapseTimecard" class="panel-collapse collapse">
-                                @if (true)
-                                {
-                                    <div class="panel-body">
-                                        <p>
-                                            <h5>What is the risk?</h5>
-                                            <ul>
-                                                <li>Payroll Risk – Colleagues not paid for hours they have worked, Inaccurate SOH Reporting</li>
-                                                <li>Financial risk – Colleagues paid for hours they have not worked (FT).</li>
-                                            </ul>
-                                        </p>
-                                        <table class="table table-bordered-blue table-condensed">
-                                            <thead>
-                                                <tr>
-                                                    <th class="col-md-1 text-center">Employee Name</th>
-                                                    <th class="col-md-1 text-center">Not Submitted / Zero Hours</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td class="text-center">John Smith</td>
-                                                    <td class="text-center">Not Submitted</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-center">John Smith</td>
-                                                    <td class="text-center">Zero Hour</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                }
-                            </div>
-                        </div>
-                        <div class="panel panel-danger">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <strong>
-                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseShift">Edited Shifts - 2</a>
-                                    </strong>
-                                </h4>
-                            </div>
-                            <div id="collapseShift" class="panel-collapse collapse">
-                                @if (true)
-                                {
-                                    <div class="panel-body">
-                                        <strong class="text-danger"><u>Needs blurb</u></strong>
-                                        <table class="table table-bordered-blue table-condensed">
-                                            <thead>
-                                                <tr>
-                                                    <th class="text-center">Employee Name</th>
-                                                    <th class="text-center">Shifts Edited</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td class="text-center">John Smith</td>
-                                                    <td class="text-center">5</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-center">John Smith</td>
-                                                    <td class="text-center">5</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+        &nbsp;
+    </div>
 
-                                        <div class="text-center"><a href="@Url.Action("EditedShifts", "Reports",new { selectedDate = "201812"})" class="btn btn-primary" role="button">Edited Shifts</a></div>
-                                    </div>
-                                }
+    @if (Model.MessageType == MessageType.Warning)
+    {
+        <div class="alert alert-danger text-center"><strong>Budgets for the selected period have not yet been finalised, check back once you have received more information.</strong></div>
+    }
+    else if (Model._dashboardView != null)
+    {
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading text-center">
+                        <strong>WFM Compliance</strong>
+                    </div>
+                    <!-- .panel-heading -->
+                    <div class="panel-body">
+                        <div class="panel-group" id="accordion">
+                            <div class="panel panel-default @(Model.Timecard.TimecardDetail.Count() ==0 ? "panel-success" : "panel-danger")">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <strong>
+                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTimecard">Timecard Non Compliance - @(Model.Timecard.TimecardDetail.Count() == 0 ? "No timecard issues!" : "(" + Model.Timecard.HeadlineFigure + ")")</a>
+                                        </strong>
+                                    </h4>
+                                </div>
+                                <div id="collapseTimecard" class="panel-collapse collapse">
+                                    @if (Model.Timecard.TimecardDetail.Count() > 0)
+                                    {
+                                        <div class="panel-body">
+                                            <p>
+                                                <h5>What is the risk?</h5>
+                                                <ul>
+                                                    <li>Payroll Risk – Colleagues not paid for hours they have worked, Inaccurate SOH Reporting</li>
+                                                    <li>Financial risk – Colleagues paid for hours they have not worked (FT).</li>
+                                                </ul>
+                                            </p>
+                                            <table class="table table-bordered-blue table-condensed">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="col-md-1 text-center">Employee Name</th>
+                                                        <th class="col-md-1 text-center">Not Submitted / Zero Hours</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var item in Model.Timecard.TimecardDetail)
+                                                    {
+                                                        <tr>
+                                                            <td class="text-center">@item.empName</td>
+                                                            <td class="text-center">@item.type</td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    }
+                                </div>
                             </div>
-                        </div>
-                        <div class="panel panel-success">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <strong>
-                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapsePunch">Punch Compliance - 75%)</a>
-                                    </strong>
-                                </h4>
+                            <div class="panel @(Model._dashboardView.ShortShifts == 0 ? "panel-success" : "panel-danger")">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <strong>
+                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseShift">Edited Shifts - @(Model._dashboardView.ShortShifts == 0 ? "No shift edit issues!" : "(" + Model._dashboardView.ShortShifts + ")")</a>
+                                        </strong>
+                                    </h4>
+                                </div>
+                                <div id="collapseShift" class="panel-collapse collapse">
+                                    @if (Model._dashboardView.ShortShifts > 0)
+                                    {
+                                        <div class="panel-body">
+                                            <strong class="text-danger"><u>Needs blurb</u></strong>
+                                            <table class="table table-bordered-blue table-condensed">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-center">Employee Name</th>
+                                                        <th class="text-center">Shifts Edited</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var item in Model.SS)
+                                                    {
+                                                        <tr>
+                                                            <td>@item.PersonName</td>
+                                                            <td class="text-center">@item.ShortShifts</td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+
+                                            <div class="text-center"><a href="@Url.Action("EditedShifts", "Reports",new { selectedDate = Model.WeeksOfYear.Where(x => x.Selected == true).First().Value })})" class="btn btn-primary" role="button">Edited Shifts</a></div>
+                                        </div>
+                                    }
+                                </div>
                             </div>
-                            <div id="collapsePunch" class="panel-collapse collapse">
-                                @if (true)
-                                {
-                                    <div class="panel-body">
-                                        <strong class="text-danger"><u>Needs blurb</u></strong>
-                                        <table class="table table-bordered-blue table-condensed">
-                                            <thead>
-                                                <tr>
-                                                    <th class="text-center col-md-1" style="vertical-align:middle">Name</th>
-                                                    <th class="text-center col-md-1" style="vertical-align:middle">Punch Compliance</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td class="text-center">Deenoo, Keeshan</td>
-                                                    <td class="text-center danger">50.0%</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-center">Noor, Arif</td>
-                                                    <td class="text-center danger">80.0%</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-center">Paul, Leon</td>
-                                                    <td class="text-center danger">85.0%</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-center">Vidal, Phillip</td>
-                                                    <td class="text-center danger">20.0%</td>
-                                                </tr>
-                                        </table>
-                                        <div class="text-center"><a href="@Url.Action("PunchCompliance", "Reports",new { selectedDate = Model.WeeksOfYear.Where(x => x.Selected == true).First().Value})" class="btn btn-primary" role="button">Punch Compliance</a></div>
-                                    </div>
-                                }
+                            <div class="panel @(Model._dashboardView.PunchCompliance >= 0.9 ? "panel-success" : "panel-danger")">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <strong>
+                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapsePunch">Punch Compliance - @(Model._dashboardView.PunchCompliance >= 0.9 ? "No punch issues!" : "(" + string.Format("{0:0}%", Model._dashboardView.PunchCompliance * 100) + ")"))</a>
+                                        </strong>
+                                    </h4>
+                                </div>
+                                <div id="collapsePunch" class="panel-collapse collapse">
+                                    @if (Model._dashboardView.PunchCompliance < 0.9)
+                                    {
+                                        <div class="panel-body">
+                                            <strong class="text-danger"><u>Needs blurb</u></strong>
+                                            <table class="table table-bordered-blue table-condensed">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-center col-md-1" style="vertical-align:middle">Name</th>
+                                                        <th class="text-center col-md-1" style="vertical-align:middle">Punch Compliance</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var item in Model.Punch.Where(x => x.PunchComp < 90))
+                                                    {
+                                                        <tr>
+                                                            <td>@item.PersonName</td>
+                                                            <td class="text-center">@(string.Format("{0:0.0}%",item.PunchComp))</td>
+                                                        </tr>
+                                                    }
+                                            </table>
+                                            <div class="text-center"><a href="@Url.Action("PunchCompliance", "Reports",new { selectedDate = Model.WeeksOfYear.Where(x => x.Selected == true).First().Value})" class="btn btn-primary" role="button">Punch Compliance</a></div>
+                                        </div>
+                                    }
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <!-- .panel-body -->
         </div>
-        <!-- .panel-body -->
-    </div>
+    }
 
     @*Region view*@
     <div class="row">

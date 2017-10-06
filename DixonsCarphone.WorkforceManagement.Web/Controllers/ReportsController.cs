@@ -94,11 +94,21 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
                 {
                     vm.MessageType = MessageType.Warning;
                 }
+
+                if (data.PunchCompliance < 0.9)
+                {
+                    vm.populatePunch(mapper.Map<List<PunchCompView>>(await _storeManager.GetStorePunch(StoreNumber, weekOfYr)));
+                }           
+                if(data.ShortShifts > 0)
+                {
+                    vm.populateSS(mapper.Map<List<ShortShiftView>>(await _storeManager.GetShortShiftsBranch(StoreNumber, weekOfYr)));
+                }
+                
             }
 
-            var weekNumbers = await _storeManager.GetWeekNumbers(DateTime.Now.GetFirstDayOfWeek().AddDays(-56), DateTime.Now.GetFirstDayOfWeek());
+            var weekNumbers = await _storeManager.GetWeekNumbers(DateTime.Now.GetFirstDayOfWeek().AddDays(-56), DateTime.Now.AddDays(-7).GetFirstDayOfWeek());
 
-            vm.GetWeeksOfYear(DateTime.Now.GetFirstDayOfWeek().AddDays(28), weekNumbers);
+            vm.GetWeeksOfYear(DateTime.Now.GetFirstDayOfWeek().AddDays(-7), weekNumbers);
             vm.PageBlurb = ConfigurationManager.AppSettings["ComplianceBlurb"];
 
             vm.WeeksOfYear.ForEach(x => x.Selected = x.Value == weekOfYr.ToString());

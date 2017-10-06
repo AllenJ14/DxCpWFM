@@ -80,9 +80,6 @@
     <Compile Include="BusinessModels\ColleaguePayDataView.cs" />
     <Compile Include="BusinessModels\ColleaguePayDataVm.cs" />
     <Compile Include="BusinessModels\ColleaguePortalVm.cs" />
-    <Compile Include="BusinessModels\CompFTLeakageDetail.cs" />
-    <Compile Include="BusinessModels\CompOverContractDetail.cs" />
-    <Compile Include="BusinessModels\CompOverTargetDetail.cs" />
     <Compile Include="BusinessModels\CompTimecardDetail.cs" />
     <Compile Include="BusinessModels\ContractBaseView.cs" />
     <Compile Include="BusinessModels\DailyDeploymentArrayForm.cs" />
@@ -112,6 +109,7 @@
     <Compile Include="BusinessModels\RegionContractStatusView.cs" />
     <Compile Include="BusinessModels\RegionContractStatusVm.cs" />
     <Compile Include="BusinessModels\ScheduleBMView.cs" />
+    <Compile Include="BusinessModels\ShortShiftView.cs" />
     <Compile Include="BusinessModels\Ticket.cs" />
     <Compile Include="BusinessModels\PandLSummaryDetail.cs" />
     <Compile Include="BusinessModels\PandLSummaryvm.cs" />

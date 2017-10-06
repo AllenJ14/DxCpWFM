@@ -168,5 +168,7 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
         Task<List<sp_PeakFlexRegion_Result>> GetRegionPeakFlex(string regionNumber);
 
         Task<List<sp_PeakFlexDivision_Result>> GetDivisionPeakFlex(string channel);
+
+        Task<List<ShortShift>> GetShortShiftsBranch(int storeNumber, int weekNumber);
     }
 }

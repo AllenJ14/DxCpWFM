@@ -238,6 +238,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Mapping
             CreateMap<RegionPunchComplianceItem, sp_DivisionPunchCompliance_Result>();
             CreateMap<sp_ChannelPunchCompliance_Result, RegionPunchComplianceItem>();
             CreateMap<RegionPunchComplianceItem, sp_ChannelPunchCompliance_Result>();
+            CreateMap<ShortShift, ShortShiftView>();
         }
     }
 

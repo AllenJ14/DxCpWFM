@@ -1029,6 +1029,14 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             }
         }
 
+        public async Task<List<ShortShift>> GetShortShiftsBranch(int storeNumber, int weekNumber)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                return await dbContext.ShortShifts.Where(x => x.WeekNumber == weekNumber && x.HomeBranch == storeNumber).ToListAsync();
+            }
+        }
+
         public List<PayCalendarDate> GetPayCalendarDates(string _chain, string _period)
         {
             using (var dbContext = new DxCpWfmContext())
@@ -1056,6 +1064,8 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
                 }                
             }
         }
+
+        
 
         private AccountEntryView MapToAccountEntryView(AccountEntryHeader data)
         {
