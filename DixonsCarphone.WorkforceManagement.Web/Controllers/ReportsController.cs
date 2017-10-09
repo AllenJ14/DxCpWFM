@@ -59,7 +59,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             {
                 var data = await _dashBoardManager.GetAllChannelDashboardData(System.Web.HttpContext.Current.Session["_ChannelName"].ToString(), weekOfYr);
                 vm._dashboardViewCollectionChannel = mapper.Map<List<DashboardViewChannel>>(data);
-                if (data.Sum(x => x.FinalTarget) == 0)
+                if (data.Sum(x => x.PunchCompliance) == 0)
                 {
                     vm.MessageType = MessageType.Warning;
                 }
@@ -68,7 +68,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             {
                 var data = await _dashBoardManager.GetAllDivisionDashboardData(System.Web.HttpContext.Current.Session["_DivisionName"].ToString(), weekOfYr);
                 vm._dashboardViewCollectionChannel = mapper.Map<List<DashboardViewChannel>>(data);
-                if (data.Sum(x => x.FinalTarget) == 0)
+                if (data.Sum(x => x.PunchCompliance) == 0)
                 {
                     vm.MessageType = MessageType.Warning;
                 }
@@ -77,7 +77,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             {
                 var data = await _dashBoardManager.GetAllRegionDashBoardData((int)System.Web.HttpContext.Current.Session["_RegionNumber"], weekOfYr, weekOfYr);
                 vm._dashboardViewCollection = mapper.Map<List<DashBoardView>>(data);
-                if (data.Sum(x => x.FinalTarget) == 0)
+                if (data.Sum(x => x.PunchCompliance) == 0)
                 {
                     vm.MessageType = MessageType.Warning;
                 }
@@ -86,7 +86,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             {
                 var data = mapper.Map<DashBoardView>(await _dashBoardManager.GetStoreDashBoardData(StoreNumber, weekOfYr));
                 var detailData = mapper.Map<List<EmpComplianceDetailView>>(await _storeManager.GetComplianceDetail(StoreNumber, weekOfYr));
-                if (data.FinalTarget != null)
+                if (data.PunchCompliance != null)
                 {
                     vm.populateClass(detailData, data);
                 }

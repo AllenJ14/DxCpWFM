@@ -34,7 +34,7 @@
 
     @if (Model.MessageType == MessageType.Warning)
     {
-        <div class="alert alert-danger text-center"><strong>Budgets for the selected period have not yet been finalised, check back once you have received more information.</strong></div>
+        <div class="alert alert-danger text-center"><strong>Reporting for the selected period has not yet been finalised, check back later.</strong></div>
     }
     else if (Model._dashboardView != null)
     {
@@ -148,7 +148,7 @@
                                                     {
                                                         <tr>
                                                             <td>@item.PersonName</td>
-                                                            <td class="text-center">@(string.Format("{0:0.0}%",item.PunchComp))</td>
+                                                            <td class="text-center">@(string.Format("{0:0.0}%", item.PunchComp))</td>
                                                         </tr>
                                                     }
                                             </table>
@@ -164,208 +164,137 @@
             <!-- .panel-body -->
         </div>
     }
-
-    @*Region view*@
-    <div class="row">
-        <div class="panel panel-default">
-            <div class="panel-heading text-center">
-                <strong>WFM Compliance</strong>
-            </div>
-            <div class="panel-body">
-                <table class="table table-bordered-blue table-condensed col-md-6">
-                    <thead>
-                        <tr>
-                            <th class="text-center col-md-2" style="vertical-align:middle">Branch Name</th>
-                            <th class="text-center col-md-1" style="vertical-align:middle">Zero Hour/Missing Timecard</th>
-                            <th class="text-center col-md-1" style="vertical-align:middle">Edited Shifts</th>
-                            <th class="text-center col-md-1" style="vertical-align:middle">Punch Compliance</th>
-                            <th class="text-center col-md-1" style="vertical-align:middle">Compliant</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>4 - Moorgate</td>
-                            <td class="text-center">-/-</td>
-                            <td class="text-center warning">4</td>
-                            <td class="text-center">92.1%</td>
-                            <td class="text-center danger">N</td>
-                        </tr>
-                        <tr>
-                            <td>11 - Oxford St (407)</td>
-                            <td class="text-center">-/-</td>
-                            <td class="text-center warning">4</td>
-                            <td class="text-center">92.1%</td>
-                            <td class="text-center success">Y</td>
-                        </tr>
-                        <tr>
-                            <td>12 - Victoria (Vauxhall Br Rd)</td>
-                            <td class="text-center">-/-</td>
-                            <td class="text-center warning">4</td>
-                            <td class="text-center">92.1%</td>
-                            <td class="text-center danger">N</td>
-                        </tr>
-                        <tr>
-                            <td>33 - The Strand (434)</td>
-                            <td class="text-center">-/-</td>
-                            <td class="text-center warning">4</td>
-                            <td class="text-center">92.1%</td>
-                            <td class="text-center danger">N</td>
-                        </tr>
-                        <tr>
-                            <td>34 - Oxford St (Selfridges)</td>
-                            <td class="text-center">-/-</td>
-                            <td class="text-center warning">4</td>
-                            <td class="text-center">92.1%</td>
-                            <td class="text-center danger">N</td>
-                        </tr>
-                        <tr>
-                            <td>126 - Kings Rd (69)</td>
-                            <td class="text-center">-/-</td>
-                            <td class="text-center warning">4</td>
-                            <td class="text-center">92.1%</td>
-                            <td class="text-center danger">N</td>
-                        </tr>
-                        <tr>
-                            <td>135 - Soho (Wardour St)</td>
-                            <td class="text-center">-/-</td>
-                            <td class="text-center warning">4</td>
-                            <td class="text-center">92.1%</td>
-                            <td class="text-center danger">N</td>
-                        </tr>
-                        <tr>
-                            <td>205 - Queensway (60)</td>
-                            <td class="text-center">-/-</td>
-                            <td class="text-center warning">4</td>
-                            <td class="text-center">92.1%</td>
-                            <td class="text-center danger">N</td>
-                        </tr>
-                        <tr>
-                            <td>791 - Brompton Rd (130)</td>
-                            <td class="text-center">-/-</td>
-                            <td class="text-center warning">4</td>
-                            <td class="text-center">92.1%</td>
-                            <td class="text-center danger">N</td>
-                        </tr>
-                        <tr>
-                            <td>1028 - Victoria (Victoria St)</td>
-                            <td class="text-center">-/-</td>
-                            <td class="text-center warning">4</td>
-                            <td class="text-center">92.1%</td>
-                            <td class="text-center danger">N</td>
-                        </tr>
-                        <tr>
-                            <td>1044 - Kensington (High St, 80)</td>
-                            <td class="text-center">-/-</td>
-                            <td class="text-center warning">4</td>
-                            <td class="text-center">92.1%</td>
-                            <td class="text-center danger">N</td>
-                        </tr>
-                        <tr>
-                            <td>1198 - High Holborn (231)</td>
-                            <td class="text-center">-/-</td>
-                            <td class="text-center warning">4</td>
-                            <td class="text-center">92.1%</td>
-                            <td class="text-center danger">N</td>
-                        </tr>
-                        <tr>
-                            <td>1275 - Earls Court (Earls Crt Rd)</td>
-                            <td class="text-center">-/-</td>
-                            <td class="text-center warning">4</td>
-                            <td class="text-center">92.1%</td>
-                            <td class="text-center danger">N</td>
-                        </tr>
-                        <tr>
-                            <td>1473 - Oxford St (Centre Point)</td>
-                            <td class="text-center">-/-</td>
-                            <td class="text-center warning">4</td>
-                            <td class="text-center">92.1%</td>
-                            <td class="text-center danger">N</td>
-                        </tr>
-                        <tr>
-                            <td>2040 - Oxford St </td>
-                            <td class="text-center">-/-</td>
-                            <td class="text-center warning">4</td>
-                            <td class="text-center">92.1%</td>
-                            <td class="text-center danger">N</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Region Total</strong></td>
-                            <td class="text-center">-/-</td>
-                            <td class="text-center warning">4</td>
-                            <td class="text-center">92.1%</td>
-                            <td class="text-center danger">12</td>
-                        </tr>
-                    </tbody>
-                </table>
+    else if (HttpContext.Current.Session["_RegionNumber"] != null)
+    {
+        @*Region view*@
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading text-center">
+                    <strong>WFM Compliance</strong>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-bordered-blue table-condensed col-md-6">
+                        <thead>
+                            <tr>
+                                <th class="text-center col-md-2" style="vertical-align:middle">Branch Name</th>
+                                <th class="text-center col-md-1" style="vertical-align:middle">Zero Hour/Missing Timecard</th>
+                                <th class="text-center col-md-1" style="vertical-align:middle">Edited Shifts</th>
+                                <th class="text-center col-md-1" style="vertical-align:middle">Punch Compliance</th>
+                                <th class="text-center col-md-1" style="vertical-align:middle">Compliant</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model._dashboardViewCollection)
+                            {
+                                <tr>
+                                    <td>@(item.BranchNumber + " - " + item.StoreName)</td>
+                                    <td class="text-center">@string.Format("{0}/{1}", item.ZeroHour > 0 ? item.ZeroHour.ToString() : "-", item.TotalHeadCount - item.TimeCardsCompleted > 0 ? (item.TotalHeadCount - item.TimeCardsCompleted).ToString() : "-")</td>
+                                    <td class="text-center">@item.ShortShifts</td>
+                                    <td class="text-center">@string.Format("{0:0.0}%", item.PunchCompliance * 100)</td>
+                                    <td class="text-center @(item.ComplianceScore > 0 ? "danger" : "")">@(item.ComplianceScore > 0 ? 'N' : 'Y')</td>
+                                </tr>
+                            }
+                            <tr>
+                                <td><strong>Region Total</strong></td>
+                                <td class="text-center"><strong>@(Model._dashboardViewCollection.Sum(x => x.ZeroHour))/@(Model._dashboardViewCollection.Sum(x => x.TotalHeadCount) - Model._dashboardViewCollection.Sum(x => x.TimeCardsCompleted))</strong></td>
+                                <td class="text-center"><strong>@Model._dashboardViewCollection.Sum(x => x.ShortShifts)</strong></td>
+                                <td class="text-center"><strong>@(string.Format("{0:0.0}%",Model._dashboardViewCollection.Average(x => x.PunchCompliance)*100))</strong></td>
+                                <td class="text-center"><strong>@Model._dashboardViewCollection.Where(x => x.ComplianceScore > 0).Count()</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
-
-    @*Rolled up view*@
-    <div class="row">
-        <div class="panel panel-default">
-            <div class="panel-heading text-center">
-                <strong>WFM Compliance</strong>
-            </div>
-            <div class="panel-body">
-                <table class="table table-bordered-blue table-condensed">
-                    <thead>
-                        <tr>
-                            <th class="text-center col-md-2" style="vertical-align:middle">Name</th>
-                            <th class="text-center col-md-1" style="vertical-align:middle">Zero Hour/Missing Timecard</th>
-                            <th class="text-center col-md-1" style="vertical-align:middle">Edited Shifts</th>
-                            <th class="text-center col-md-1" style="vertical-align:middle">Punch Compliance</th>
-                            <th class="text-center col-md-1" style="vertical-align:middle">Compliant</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>101</td>
-                            <td class="text-center">10/5</td>
-                            <td class="text-center">12</td>
-                            <td class="text-center">84.2%</td>
-                            <td class="text-center">10/24</td>
-                        </tr>
-                        <tr>
-                            <td>102</td>
-                            <td class="text-center">10/5</td>
-                            <td class="text-center">12</td>
-                            <td class="text-center">84.2%</td>
-                            <td class="text-center">10/24</td>
-                        </tr>
-                        <tr>
-                            <td>103</td>
-                            <td class="text-center">10/5</td>
-                            <td class="text-center">12</td>
-                            <td class="text-center">84.2%</td>
-                            <td class="text-center">10/24</td>
-                        </tr>
-                        <tr>
-                            <td>104</td>
-                            <td class="text-center">10/5</td>
-                            <td class="text-center">12</td>
-                            <td class="text-center">84.2%</td>
-                            <td class="text-center">10/24</td>
-                        </tr>
-                        <tr>
-                            <td>105</td>
-                            <td class="text-center">10/5</td>
-                            <td class="text-center">12</td>
-                            <td class="text-center">84.2%</td>
-                            <td class="text-center">10/24</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Division Total</strong></td>
-                            <td class="text-center">10/5</td>
-                            <td class="text-center">12</td>
-                            <td class="text-center">84.2%</td>
-                            <td class="text-center">10/24</td>
-                        </tr>
-                    </tbody>
-                </table>
+    }
+    else if (HttpContext.Current.Session["_DivisionName"] != null)
+    {
+        var subtotal = Model._dashboardViewCollectionChannel.Where(x => x.Region == null).Single();
+        @*Rolled up view*@
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading text-center">
+                    <strong>WFM Compliance</strong>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-bordered-blue table-condensed">
+                        <thead>
+                            <tr>
+                                <th class="text-center col-md-2" style="vertical-align:middle">Name</th>
+                                <th class="text-center col-md-1" style="vertical-align:middle">Zero Hour/Missing Timecard</th>
+                                <th class="text-center col-md-1" style="vertical-align:middle">Edited Shifts</th>
+                                <th class="text-center col-md-1" style="vertical-align:middle">Punch Compliance</th>
+                                <th class="text-center col-md-1" style="vertical-align:middle">Compliant</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model._dashboardViewCollectionChannel.Where(x => x.Region != null))
+                            {
+                                <tr>
+                                    <td>Region @item.Region</td>
+                                    <td class="text-center">@string.Format("{0}/{1}", item.ZeroHour > 0 ? item.ZeroHour.ToString() : "-", item.TotalHeadcount - item.TimeCardsCompleted > 0 ? (item.TotalHeadcount - item.TimeCardsCompleted).ToString() : "-")</td>
+                                    <td class="text-center">@item.ShortShifts</td>
+                                    <td class="text-center">@string.Format("{0:0.0}%", item.PunchCompliance * 100)</td>
+                                    <td class="text-center">@string.Format("{0}/{1}", item.ComplianceScore, item.BranchNumber)</td>
+                                </tr>
+                            }
+                            <tr>
+                                <td><strong>Division Total</strong></td>
+                                <td class="text-center"><strong>@string.Format("{0}/{1}", subtotal.ZeroHour > 0 ? subtotal.ZeroHour.ToString() : "-", subtotal.TotalHeadcount - subtotal.TimeCardsCompleted > 0 ? (subtotal.TotalHeadcount - subtotal.TimeCardsCompleted).ToString() : "-")</strong></td>
+                                <td class="text-center"><strong>@subtotal.ShortShifts</strong></td>
+                                <td class="text-center"><strong>@string.Format("{0:0.0}%", subtotal.PunchCompliance*100)</strong></td>
+                                <td class="text-center"><strong>@string.Format("{0}/{1}", subtotal.ComplianceScore, subtotal.BranchNumber)</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
+    }
+    else if (HttpContext.Current.Session["_ChannelName"] != null)
+    {
+        var subtotal = Model._dashboardViewCollectionChannel.Where(x => x.Division == null).Single();
+        @*Rolled up view*@
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading text-center">
+                    <strong>WFM Compliance</strong>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-bordered-blue table-condensed">
+                        <thead>
+                            <tr>
+                                <th class="text-center col-md-2" style="vertical-align:middle">Name</th>
+                                <th class="text-center col-md-1" style="vertical-align:middle">Zero Hour/Missing Timecard</th>
+                                <th class="text-center col-md-1" style="vertical-align:middle">Edited Shifts</th>
+                                <th class="text-center col-md-1" style="vertical-align:middle">Punch Compliance</th>
+                                <th class="text-center col-md-1" style="vertical-align:middle">Compliant</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model._dashboardViewCollectionChannel.Where(x => x.Division != null))
+                            {
+                                <tr>
+                                    <td>@item.Division</td>
+                                    <td class="text-center">@string.Format("{0}/{1}", item.ZeroHour > 0 ? item.ZeroHour.ToString() : "-", item.TotalHeadcount - item.TimeCardsCompleted > 0 ? (item.TotalHeadcount - item.TimeCardsCompleted).ToString() : "-")</td>
+                                    <td class="text-center">@item.ShortShifts</td>
+                                    <td class="text-center">@string.Format("{0:0.0}%", item.PunchCompliance * 100)</td>
+                                    <td class="text-center">@string.Format("{0}/{1}", item.ComplianceScore, item.BranchNumber)</td>
+                                </tr>
+                            }
+                            <tr>
+                                <td><strong>Channel Total</strong></td>
+                                <td class="text-center"><strong>@string.Format("{0}/{1}", subtotal.ZeroHour > 0 ? subtotal.ZeroHour.ToString() : "-", subtotal.TotalHeadcount - subtotal.TimeCardsCompleted > 0 ? (subtotal.TotalHeadcount - subtotal.TimeCardsCompleted).ToString() : "-")</strong></td>
+                                <td class="text-center"><strong>@subtotal.ShortShifts</strong></td>
+                                <td class="text-center"><strong>@string.Format("{0:0.0}%", subtotal.PunchCompliance * 100)</strong></td>
+                                <td class="text-center"><strong>@string.Format("{0}/{1}", subtotal.ComplianceScore, subtotal.BranchNumber)</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
 
 </section>
 @section myScripts {
