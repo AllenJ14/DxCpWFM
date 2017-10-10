@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
 {
@@ -24,5 +21,33 @@ namespace DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
         public string BranchName { get; set; }
         public int SignedOff { get; set; }
         public int Headcount { get; set; }
+        public bool KronosScheduled { get; set; }
+        public bool KronosPunched { get; set; }
+
+        public short RAG
+        {
+            get
+            {
+                if(SignedOff < Headcount)
+                {
+                    if(!KronosScheduled && !KronosPunched)
+                    {
+                        return 2;
+                    }
+                    else if(!KronosScheduled || !KronosPunched)
+                    {
+                        return 1;
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+        }
     }
 }

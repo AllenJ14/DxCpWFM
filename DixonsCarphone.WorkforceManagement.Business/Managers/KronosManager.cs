@@ -54,6 +54,18 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             return toRtn;
         }
 
+        public async Task<List<PunchStatus>> GetPunchStatus(List<string> employeeList)
+        {
+            var toRtn = new List<PunchStatus>();
+
+            if(employeeList.Count > 0)
+            {
+                toRtn = await KronosApi.RequestPunchStatus(employeeList);
+            }
+
+            return toRtn;
+        }
+
         public async Task<bool> LogOff()
         {
             return await KronosApi.Logoff();

@@ -481,6 +481,7 @@ warning 6002: The table/view 'CarphoneWfm.dbo.KronosEmployeeSummary' does not ha
         <EntityType Name="KronosEmployeeSummary">
           <Key>
             <PropertyRef Name="KronosUser" />
+            <PropertyRef Name="Scheduled" />
           </Key>
           <Property Name="HomeBranch" Type="smallint" />
           <Property Name="Region" Type="smallint" />
@@ -493,6 +494,7 @@ warning 6002: The table/view 'CarphoneWfm.dbo.KronosEmployeeSummary' does not ha
           <Property Name="PersonName" Type="nvarchar" MaxLength="100" />
           <Property Name="KronosUser" Type="bit" Nullable="false" />
           <Property Name="BranchName" Type="varchar" MaxLength="100" />
+          <Property Name="Scheduled" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="OpeningTimesComments">
           <Key>
@@ -1396,7 +1398,8 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
     [KronosEmployeeSummary].[JobRole] AS [JobRole], 
     [KronosEmployeeSummary].[PersonName] AS [PersonName], 
     [KronosEmployeeSummary].[KronosUser] AS [KronosUser], 
-    [KronosEmployeeSummary].[BranchName] AS [BranchName]
+    [KronosEmployeeSummary].[BranchName] AS [BranchName], 
+    [KronosEmployeeSummary].[Scheduled] AS [Scheduled]
     FROM [dbo].[KronosEmployeeSummary] AS [KronosEmployeeSummary]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="TicketEscalations" EntityType="Self.TicketEscalations" store:Type="Tables" store:Schema="tck">
@@ -3601,6 +3604,7 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
         <EntityType Name="KronosEmployeeSummary">
           <Key>
             <PropertyRef Name="KronosUser" />
+            <PropertyRef Name="Scheduled" />
           </Key>
           <Property Name="HomeBranch" Type="Int16" />
           <Property Name="Region" Type="Int16" />
@@ -3613,6 +3617,7 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Property Name="PersonName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="KronosUser" Type="Boolean" Nullable="false" />
           <Property Name="BranchName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Scheduled" Type="Boolean" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -5250,6 +5255,7 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <EntitySetMapping Name="KronosEmployeeSummaries">
             <EntityTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.KronosEmployeeSummary">
               <MappingFragment StoreEntitySet="KronosEmployeeSummary">
+                <ScalarProperty Name="Scheduled" ColumnName="Scheduled" />
                 <ScalarProperty Name="BranchName" ColumnName="BranchName" />
                 <ScalarProperty Name="KronosUser" ColumnName="KronosUser" />
                 <ScalarProperty Name="PersonName" ColumnName="PersonName" />

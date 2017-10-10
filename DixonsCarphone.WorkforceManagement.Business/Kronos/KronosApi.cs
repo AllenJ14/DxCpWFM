@@ -93,8 +93,21 @@ namespace DixonsCarphone.WorkforceManagement.Business.Kronos
             var outcome = await postRequestAsync(xmlString);
 
             return CheckResponse(outcome) ? await outcome.DeserializeToObjectAsync<ScheduleItems>() : new List<ScheduleItems>();
-        }
+        }       
 
+        public static async Task<List<PunchStatus>> RequestPunchStatus(List<string> employeeList)
+        {
+            var xmlString = XMLheader;
+            foreach(var item in employeeList)
+            {
+                xmlString += "<Request Action='CheckStatus'><PunchStatus><Employee><PersonIdentity PersonNumber='" + item + "'></PersonIdentity></Employee></PunchStatus></Request>";
+            }
+            xmlString += "</Transaction>" + XMLfooter;
+
+            var outcome = await postRequestAsync(xmlString);
+
+            return CheckResponse(outcome) ? await outcome.DeserializeToObjectAsync<PunchStatus>() : new List<PunchStatus>();
+        }
 
         //Post request to server and save response to file
         static async Task<string> postRequestAsync(string postData)

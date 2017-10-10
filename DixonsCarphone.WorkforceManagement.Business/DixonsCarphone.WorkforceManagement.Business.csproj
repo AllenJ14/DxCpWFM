@@ -415,6 +415,7 @@
     <Compile Include="Kronos\KronosApi.cs" />
     <Compile Include="Kronos\Person.cs" />
     <Compile Include="Kronos\PersonData.cs" />
+    <Compile Include="Kronos\PunchStatus.cs" />
     <Compile Include="Kronos\ScheduleItems.cs" />
     <Compile Include="Kronos\ShiftSegment.cs" />
     <Compile Include="Kronos\Timesheet.cs" />

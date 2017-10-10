@@ -3,6 +3,22 @@
 
 @{
     ViewBag.Title = "Timecard Sign Off";
+
+    Func<short,string> RAG = (a) =>
+    {
+        var rtn = "";
+
+        if(a == 1)
+        {
+            rtn = "warning";
+        }
+        else if(a ==2)
+        {
+            rtn = "danger";
+        }
+
+        return rtn;
+    };
 }
 
 <div class="row">
@@ -34,8 +50,8 @@ else if (true)
                 <tr>
                     <th class="text-center">Branch Name</th>
                     <th class="text-center col-xs-2">Timecards Completed</th>
-                    <th class="text-center col-xs-2">Star User Clocked</th>
                     <th class="text-center col-xs-2">Star User Scheduled</th>
+                    <th class="text-center col-xs-2">Star User Clocked</th>                    
                 </tr>
             </thead>
             <tbody>
@@ -43,16 +59,16 @@ else if (true)
                 {
                     <tr>
                         <td>@string.Format("{0} - {1}", item.BranchNumber, item.BranchName)</td>
-                        <td class="text-center">@string.Format("{0}/{1}", item.SignedOff, item.Headcount)</td>
-                        <td class="text-center"></td>
-                        <td class="text-center"></td>
+                        <td class="text-center @(item.RAG > 0 ? "danger" : "")">@string.Format("{0}/{1}", item.SignedOff, item.Headcount)</td>
+                        <td class="text-center @(!item.KronosScheduled ? RAG(item.RAG) : "")">@(item.KronosScheduled ? "Y" : "N")</td>
+                        <td class="text-center @(!item.KronosPunched ? RAG(item.RAG) : "")">@(item.KronosPunched ? "Y" : "N")</td>
                     </tr>
                 }
                 <tr>
                     <td><strong>Region Total</strong></td>
                     <td class="text-center"><strong>@string.Format("{0}/{1}", Model.rso.Sum(x => x.SignedOff), Model.rso.Sum(x => x.Headcount))</strong></td>
-                    <td class="text-center"><strong></strong></td>
-                    <td class="text-center"><strong></strong></td>
+                    <td class="text-center"><strong>@string.Format("{0}/{1}", Model.rso.Where(x => x.KronosScheduled).Count(), Model.rso.Count())</strong></td>
+                    <td class="text-center"><strong>@string.Format("{0}/{1}", Model.rso.Where(x => x.KronosPunched).Count(), Model.rso.Count())</strong></td>                    
                 </tr>
             </tbody>
         </table>

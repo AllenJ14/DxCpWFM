@@ -15,5 +15,6 @@ namespace DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
         public string PersonName { get; set; }
         public bool KronosUser { get; set; }
         public string BranchName { get; set; }
+        public bool Scheduled { get; set; }
     }
 }
