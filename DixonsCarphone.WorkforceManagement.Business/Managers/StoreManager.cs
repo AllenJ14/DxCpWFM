@@ -1065,7 +1065,22 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             }
         }
 
-        
+        public async Task<List<KronosEmployeeSummary>> GetActiveColleagues(string Region)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                int crit = int.Parse(Region);
+                return await dbContext.KronosEmployeeSummaries.Where(x => x.Region == crit).AsNoTracking().ToListAsync();
+            }
+        }
+
+        public async Task<List<KronosEmployeeSummary>> GetActiveColleaguesDivision(string Division)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                return await dbContext.KronosEmployeeSummaries.Where(x => x.Division == Division).AsNoTracking().ToListAsync();
+            }
+        }
 
         private AccountEntryView MapToAccountEntryView(AccountEntryHeader data)
         {

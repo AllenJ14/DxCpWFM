@@ -170,5 +170,9 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
         Task<List<sp_PeakFlexDivision_Result>> GetDivisionPeakFlex(string channel);
 
         Task<List<ShortShift>> GetShortShiftsBranch(int storeNumber, int weekNumber);
+
+        Task<List<KronosEmployeeSummary>> GetActiveColleagues(string Region);
+
+        Task<List<KronosEmployeeSummary>> GetActiveColleaguesDivision(string Division);
     }
 }

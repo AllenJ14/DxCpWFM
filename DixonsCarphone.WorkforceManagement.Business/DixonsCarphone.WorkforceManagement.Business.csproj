@@ -196,6 +196,9 @@
     <Compile Include="Entities\IpRef.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\KronosEmployeeSummary.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\OpeningTimesComment.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>

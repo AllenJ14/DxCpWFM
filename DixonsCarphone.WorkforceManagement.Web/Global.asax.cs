@@ -31,7 +31,7 @@ namespace DixonsCarphone.WorkforceManagement.Web
 
             AntiForgeryConfig.SuppressIdentityHeuristicChecks = true;
 
-            MvcHelper.LoadStaticCache();
+            //MvcHelper.LoadStaticCache();
         }
 
         void Session_Start(object sender, EventArgs e)

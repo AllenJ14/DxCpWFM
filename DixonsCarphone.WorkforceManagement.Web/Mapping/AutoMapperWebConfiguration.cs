@@ -217,6 +217,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Mapping
             CreateMap<HyperFindResult, HyperFindResultView>();
             CreateMap<PersonData, PersonDataView>();
             CreateMap<Person, PersonView>();
+            CreateMap<KronosEmployeeSummary, KronosEmpSummaryView>();
         }
     }
 

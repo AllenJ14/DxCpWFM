@@ -97,6 +97,7 @@
     <Compile Include="BusinessModels\HolidayPlanningStoreBM.cs" />
     <Compile Include="BusinessModels\HolidayPlanningVM.cs" />
     <Compile Include="BusinessModels\HyperFindResultView.cs" />
+    <Compile Include="BusinessModels\KronosEmpSummaryView.cs" />
     <Compile Include="BusinessModels\MyTeamViewModel.cs" />
     <Compile Include="BusinessModels\MyTargetsViewModel.cs" />
     <Compile Include="BusinessModels\PayCalendarDateView.cs" />

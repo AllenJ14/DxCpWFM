@@ -476,6 +476,24 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
           <Property Name="storeNumber" Type="int" Nullable="false" />
           <Property Name="IpRange" Type="nvarchar" MaxLength="150" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'CarphoneWfm.dbo.KronosEmployeeSummary' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="KronosEmployeeSummary">
+          <Key>
+            <PropertyRef Name="KronosUser" />
+          </Key>
+          <Property Name="HomeBranch" Type="smallint" />
+          <Property Name="Region" Type="smallint" />
+          <Property Name="Division" Type="varchar" MaxLength="25" />
+          <Property Name="Channel" Type="nvarchar" MaxLength="10" />
+          <Property Name="PersonNumber" Type="varchar" MaxLength="10" />
+          <Property Name="EmployeeStandardHours" Type="decimal" Precision="3" Scale="1" />
+          <Property Name="SignedOffThrough" Type="date" />
+          <Property Name="JobRole" Type="nvarchar" MaxLength="50" />
+          <Property Name="PersonName" Type="nvarchar" MaxLength="100" />
+          <Property Name="KronosUser" Type="bit" Nullable="false" />
+          <Property Name="BranchName" Type="varchar" MaxLength="100" />
+        </EntityType>
         <EntityType Name="OpeningTimesComments">
           <Key>
             <PropertyRef Name="CommentID" />
@@ -1366,6 +1384,21 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
     [CPW_Clocking_Data].[Overide_PUNCHTIME_OUT] AS [Overide_PUNCHTIME_OUT]
     FROM [dbo].[CPW_Clocking_Data] AS [CPW_Clocking_Data]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="KronosEmployeeSummary" EntityType="Self.KronosEmployeeSummary" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [KronosEmployeeSummary].[HomeBranch] AS [HomeBranch], 
+    [KronosEmployeeSummary].[Region] AS [Region], 
+    [KronosEmployeeSummary].[Division] AS [Division], 
+    [KronosEmployeeSummary].[Channel] AS [Channel], 
+    [KronosEmployeeSummary].[PersonNumber] AS [PersonNumber], 
+    [KronosEmployeeSummary].[EmployeeStandardHours] AS [EmployeeStandardHours], 
+    [KronosEmployeeSummary].[SignedOffThrough] AS [SignedOffThrough], 
+    [KronosEmployeeSummary].[JobRole] AS [JobRole], 
+    [KronosEmployeeSummary].[PersonName] AS [PersonName], 
+    [KronosEmployeeSummary].[KronosUser] AS [KronosUser], 
+    [KronosEmployeeSummary].[BranchName] AS [BranchName]
+    FROM [dbo].[KronosEmployeeSummary] AS [KronosEmployeeSummary]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="TicketEscalations" EntityType="Self.TicketEscalations" store:Type="Tables" store:Schema="tck">
             <DefiningQuery>SELECT 
     [TicketEscalations].[EscalationId] AS [EscalationId], 
@@ -1952,6 +1985,7 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
             <Parameter Name="BeginWeek" Mode="In" Type="Int32" />
             <Parameter Name="EndWeek" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="KronosEmployeeSummaries" EntityType="DixonsCarphone.WorkforceManagement.Business.KronosEmployeeSummary" />
         </EntityContainer>
         <EntityType Name="BestPracticeCategoryType">
           <Key>
@@ -3564,6 +3598,22 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Property Type="Int32" Name="ShortShifts" Nullable="true" />
           <Property Type="Double" Name="PayEscalations" Nullable="true" />
         </ComplexType>
+        <EntityType Name="KronosEmployeeSummary">
+          <Key>
+            <PropertyRef Name="KronosUser" />
+          </Key>
+          <Property Name="HomeBranch" Type="Int16" />
+          <Property Name="Region" Type="Int16" />
+          <Property Name="Division" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Channel" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="PersonNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="EmployeeStandardHours" Type="Decimal" Precision="3" Scale="1" />
+          <Property Name="SignedOffThrough" Type="DateTime" Precision="0" />
+          <Property Name="JobRole" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PersonName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="KronosUser" Type="Boolean" Nullable="false" />
+          <Property Name="BranchName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5197,6 +5247,23 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="KronosEmployeeSummaries">
+            <EntityTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.KronosEmployeeSummary">
+              <MappingFragment StoreEntitySet="KronosEmployeeSummary">
+                <ScalarProperty Name="BranchName" ColumnName="BranchName" />
+                <ScalarProperty Name="KronosUser" ColumnName="KronosUser" />
+                <ScalarProperty Name="PersonName" ColumnName="PersonName" />
+                <ScalarProperty Name="JobRole" ColumnName="JobRole" />
+                <ScalarProperty Name="SignedOffThrough" ColumnName="SignedOffThrough" />
+                <ScalarProperty Name="EmployeeStandardHours" ColumnName="EmployeeStandardHours" />
+                <ScalarProperty Name="PersonNumber" ColumnName="PersonNumber" />
+                <ScalarProperty Name="Channel" ColumnName="Channel" />
+                <ScalarProperty Name="Division" ColumnName="Division" />
+                <ScalarProperty Name="Region" ColumnName="Region" />
+                <ScalarProperty Name="HomeBranch" ColumnName="HomeBranch" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

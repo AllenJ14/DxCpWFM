@@ -12,7 +12,17 @@ namespace DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
         public List<HyperFindResultView> hf { get; set; }
         public List<ShortShiftView> ss { get; set; }
 
+        public List<RegionSignOff> rso { get; set; }
+
         public DateTime weekStart { get; set; }
         public string SelectedDate { get; set; }
+    }
+
+    public class RegionSignOff
+    {
+        public short? BranchNumber { get; set; }
+        public string BranchName { get; set; }
+        public int SignedOff { get; set; }
+        public int Headcount { get; set; }
     }
 }
