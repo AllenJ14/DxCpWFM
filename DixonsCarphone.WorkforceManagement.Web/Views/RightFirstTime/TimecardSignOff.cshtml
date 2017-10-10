@@ -1,4 +1,5 @@
-﻿@model DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels.TimecardSignOffVm
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
+@model TimecardSignOffVm
 
 @{
     ViewBag.Title = "Timecard Sign Off";
@@ -8,35 +9,50 @@
     &emsp;
 </div>
 
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <div class="panel-title"><strong>Timecard Sign Off</strong></div>
+@if (Model.hf == null || Model.hf.Count() == 0)
+{
+    <div id="errorContainer" class="col-xs-12" style="margin-top:15px;padding:0px 30px;display:none;">
+        <div class="row text-center">
+            <strong>Oops...</strong>
+            <p>Something went wrong, please try again. Please try refreshing the page</p>
+        </div>
     </div>
-    <div class="panel-body">
-        <strong style="font-size:large;">Week Commencing @Model.weekStart.ToShortDateString()</strong>
-        <table class="table table-bordered" style="margin-top:15px;">
-            <tr>
-                <th class="text-center">Name</th>
-                <th class="text-center col-xs-2">Timecard Signed Off</th>
-                @*<th class="text-center col-xs-1">Zero Hour</th>*@
-                <th class="text-center col-xs-2">Edited Clocks (Shortened Shifts)</th>
-                <th class="text-center">I Need Help</th>
-            </tr>
-            @foreach (var item in Model.hf.OrderBy(x => x.FullName))
-            {
-                //var data = Model.ts.Where(x => x.Employee.PersonIdentity.PersonNumber == item.PersonNumber).FirstOrDefault();
+}
+else
+{
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="panel-title"><strong>Timecard Sign Off</strong></div>
+        </div>
+        <div class="panel-body">
+            @Html.Partial("~/Views/Shared/_WeekPicker.cshtml", new WeekPickerViewModel { Action = "TimecardSignOff", Controller = "RightFirstTime", WeeksOfYear = Model.WeeksOfYear, SelectedDate = Model.SelectedDate })
+            @*<strong style="font-size:large;">Week Commencing @Model.weekStart.ToShortDateString()</strong>*@
+            <table class="table table-bordered" style="margin-top:15px;">
                 <tr>
-                    <td>@item.FullName</td>
-                    <td class="text-center"><strong>@(item.PersonData.Person.ManagerSignoffThruDateTime == Model.weekStart.AddDays(6).ToShortDateString() ? "✔" : "X")</strong></td>
-                    @*<td class="text-center"><strong>@(data.ManagerSignoffDateTime.Contains(Model.weekStart.AddDays(6).ToShortDateString()) ? "✔" : "X")</strong></td>*@
-                    @*<td class="text-center">@(data.PeriodTotalData.PeriodTotals.Totals.Total.Count() == 0 ? "Yes" : "")</td>*@
-                    <td></td>
-                    <td></td>
+                    <th class="text-center">Name</th>
+                    <th class="text-center col-xs-2">Timecard Signed Off</th>
+                    @*<th class="text-center col-xs-1">Zero Hour</th>*@
+                    <th class="text-center col-xs-2">Edited Clocks (Shortened Shifts)</th>
+                    <th class="text-center">I Need Help</th>
                 </tr>
-            }
-        </table>
+                @foreach (var item in Model.hf.OrderBy(x => x.FullName))
+                {
+                    //var data = Model.ts.Where(x => x.Employee.PersonIdentity.PersonNumber == item.PersonNumber).FirstOrDefault();
+                    var ss = Model.ss.Where(x => x.PersonNum == item.PersonNumber).Count();
+                    <tr>
+                        <td>@item.FullName</td>
+                        <td class="text-center"><strong>@(item.PersonData.Person.ManagerSignoffThruDateTime >= Model.weekStart.AddDays(6) ? "✔" : "X")</strong></td>
+                        @*<td class="text-center"><strong>@(data.ManagerSignoffDateTime.Contains(Model.weekStart.AddDays(6).ToShortDateString()) ? "✔" : "X")</strong></td>*@
+                        @*<td class="text-center">@(data.PeriodTotalData.PeriodTotals.Totals.Total.Count() == 0 ? "Yes" : "")</td>*@
+                        <td class="text-center">@(ss > 0 ? ss.ToString() : "")</td>
+                        <td></td>
+                    </tr>
+                }
+            </table>
+        </div>
     </div>
-</div>
+}
+
 
 <div class="panel panel-default">
     <div class="panel-heading">

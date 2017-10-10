@@ -302,6 +302,21 @@ namespace DixonsCarphone.WorkforceManagement.ViewModels
             return ls;
         }
 
+        // Populate select list with current week plus 4 future and 8 past
+        public static List<SelectListItem> GetFinancialDates(DateTime lastDate, List<int?> weekNumbers)
+        {
+            var ls = new List<SelectListItem>();
+            var _date = lastDate;
+
+            for (int i = 0; i < weekNumbers.Count(); i++)
+            {
+                ls.Add(new SelectListItem { Value = _date.ToShortDateString(), Text = string.Format("{0} (wc {1})", weekNumbers[i].ToString(), _date.ToShortDateString()) });
+                _date = _date.AddDays(-7);
+            }
+
+            return ls;
+        }
+
         private static string CalculateTime(string[] dec)
         {
             var fullVal = dec.Length > 1 ? Convert.ToDouble(dec[0]) + Convert.ToDouble(Convert.ToDouble("0." + dec[1]) * 0.6) : Convert.ToDouble(dec[0]);

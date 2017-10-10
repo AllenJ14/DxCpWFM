@@ -29,13 +29,20 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             return View(vm);
         }
 
-        public async Task<ActionResult> TimecardSignOff()
+        public async Task<ActionResult> TimecardSignOff(string selectedDate = "Last Week")
         {
             TimecardSignOffVm vm = new TimecardSignOffVm();
-            vm.weekStart = DateTime.Now.AddDays(-7).GetFirstDayOfWeek();
+            vm.weekStart = selectedDate == "Last Week" ? DateTime.Now.AddDays(-7).GetFirstDayOfWeek().Date : DateTime.Parse(selectedDate);
+            var weekOfYr = (int)_storeManager.GetSingleWeek(vm.weekStart);
 
             vm.hf = mapper.Map<List<HyperFindResultView>>(await _KronosManager.GetKronosHyperFind(_store.KronosStoreName, vm.weekStart.ToShortDateString(), vm.weekStart.AddDays(6).ToShortDateString()));
+            vm.ss = mapper.Map<List<ShortShiftView>>(await _storeManager.GetShortShiftsBranch(StoreNumber, weekOfYr));
             //vm.ts = mapper.Map<List<TimesheetView>>(await _KronosManager.GetTimesheetForStore(vm.weekStart, vm.hf.Select(x => x.PersonNumber).ToArray()));
+
+            var weekNumbers = await _storeManager.GetWeekNumbers(DateTime.Now.GetFirstDayOfWeek().AddDays(-56), DateTime.Now.GetFirstDayOfWeek().AddDays(-7));
+
+            vm.GetDatesOfYear(DateTime.Now.GetFirstDayOfWeek().AddDays(-7), weekNumbers);
+            vm.WeeksOfYear.ForEach(x => x.Selected = x.Value == vm.weekStart.ToShortDateString());
 
             return View(vm);
         }

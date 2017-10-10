@@ -1,4 +1,6 @@
-﻿namespace DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
+﻿using System;
+
+namespace DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
 {
     public class HyperFindResultView
     {
@@ -25,7 +27,7 @@
         public int EmployeeStandardHours { get; set; }
         public int FullTimeStandardHours { get; set; }
         public string AccrualProfileName { get; set; }
-        public string ManagerSignoffThruDateTime { get; set; }
+        public DateTime ManagerSignoffThruDateTime { get; set; }
         public string PayrollLockoutThruDateTime { get; set; }
         public bool FingerRequiredFlag { get; set; }
         public decimal BaseWageHourly { get; set; }

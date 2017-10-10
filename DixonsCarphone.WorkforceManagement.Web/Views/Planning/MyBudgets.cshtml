@@ -37,12 +37,12 @@
             </div>
         </div>
 
-        <div class="alert alert-danger text-center">
+        @*<div class="alert alert-danger text-center">
             <strong>
                 We have been made aware of an issue that affected this page on Monday 11th September resulting in some stores seeing a budget 45 hours higher than was intended. The issue was quickly identified and fixed the same day, all numbers now shown on
                 this page have been checked and are displaying correctly. Please ensure you are working to these budgets, we apologise for any inconvenience.
             </strong>
-        </div>
+        </div>*@
 
         var branchList = Model.BudgetCollection.GroupBy(x => x.Branch).Select(x => x.Key).ToList();
         var pageSize = branchList.Count() > 1 ? 10 : 12;
