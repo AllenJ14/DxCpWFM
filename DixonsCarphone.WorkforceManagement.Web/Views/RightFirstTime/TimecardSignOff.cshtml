@@ -34,7 +34,7 @@
         </div>
     </div>
 }
-else if (true)
+else if (System.Web.HttpContext.Current.Session["_RegionNumber"] != null)
 {
     <div class="panel panel-default">
     <div class="panel-heading">
@@ -90,10 +90,10 @@ else
                     <th class="text-center">Name</th>
                     <th class="text-center col-xs-2">Timecard Signed Off</th>
                     @*<th class="text-center col-xs-1">Zero Hour</th>*@
-                    <th class="text-center col-xs-2">Edited Clocks (Shortened Shifts)</th>
+                    <th class="text-center col-xs-2">Edited Clocks</th>
                     <th class="text-center">I Need Help</th>
                 </tr>
-                @foreach (var item in Model.hf.OrderBy(x => x.FullName))
+                @foreach (var item in Model.hf.Where(x => x.PersonData.Person.ManagerSignoffThruDateTime.Year != 1901).OrderBy(x => x.FullName))
                 {
                     //var data = Model.ts.Where(x => x.Employee.PersonIdentity.PersonNumber == item.PersonNumber).FirstOrDefault();
                     var ss = Model.ss.Where(x => x.PersonNum == item.PersonNumber).Count();
