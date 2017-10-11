@@ -32,7 +32,7 @@
             case "deployment":
                 action = Url.Action("GetDeployment", "Reports", new { selectedDate = week });
                 break;
-            case "compliance":
+            case "compliant":
                 action = Url.Action("GetCompliance", "Reports", new { selectedDate = week });
                 break;
             case "non-scheduled":
@@ -52,7 +52,6 @@
 @foreach (var week in Model)
 {
     r = 0;
-    //var weekStr = week.Key == "Last Week" ? "Last<br />Week" : week.Key;
 
     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
         <div class="panel panel-@GetColor(x)">
@@ -62,7 +61,6 @@
                         <i class="glyphicon glyphicon-stats" style="font-size:35px"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                        @*<span class="pull-right-container"><i class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="top" title="Compliance & Deployment Scores - @Html.Raw(week.Key)"></i></span>*@
                         <h2 class="hidden-lg">@Html.Raw(week.Key)</h2>
                         <h1 class="visible-lg">@Html.Raw(week.Key)</h1>
                     </div>
@@ -76,9 +74,16 @@
 
                 <a href="@Html.Raw(action)">
                     <div class="panel-footer">
-                        @if ((bool)HttpContext.Current.Session["_ROIFlag"] && score.ScoreType == ScoreType.Compliance)
+                        @if (score.ScoreType == ScoreType.Compliance)
                         {
-                            <span class="pull-left">@score.Title &nbsp;&nbsp;&nbsp;<span class="pull-right badge bg-blue">@(score.Score == -1 ? "-" : score.Score.ToString()) / 8</span></span>
+                            if (HttpContext.Current.Session["_RegionNumber"] != null || HttpContext.Current.Session["_DivisionName"] != null || HttpContext.Current.Session["_ChannelName"] != null)
+                            {
+                                <span class="pull-left">Compliant &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pull-right badge bg-blue">@(string.Format("{0}/{1}", score.Score, score.Total))</span></span>
+                            }
+                            else
+                            {
+                                <span class="pull-left">@score.Title &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pull-right badge bg-blue">@(score.Score > 0 ? "No" : "Yes")</span></span>
+                            }
                         }
                         else
                         {
@@ -96,15 +101,15 @@
                         <span class="pull-right">&nbsp;</span>
                         <div class="clearfix"></div>
                     </div>
-                }
-                @if (r < 2)
-                {
-                    <div class="panel-footer">
-                        <span class="pull-left">&nbsp;&nbsp;&nbsp;</span>
-                        <span class="pull-right">&nbsp;</span>
-                        <div class="clearfix"></div>
-                    </div>
                 }*@
+            @if (r < 2)
+                {
+                <div class="panel-footer">
+                    <span class="pull-left">&nbsp;&nbsp;&nbsp;</span>
+                    <span class="pull-right">&nbsp;</span>
+                    <div class="clearfix"></div>
+                </div>
+            }
 
         </div>
     </div>
