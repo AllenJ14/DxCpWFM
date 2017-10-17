@@ -73,12 +73,12 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             ColleaguePayDataVm vm = new ColleaguePayDataVm();
 
             string payroll = System.Web.HttpContext.Current.Session["_EmpNum"].ToString();
-            var dates = _storeManager.GetPayCalendarDates(_store.Channel, period);
+            var dates = _storeManager.GetPayCalendarDates((_store.Channel == "ROI" ? "ROI" : "CPW") + System.Web.HttpContext.Current.Session["_PTFlag"].ToString(), period);
 
             if(payroll != "e")
             {
-                var payData = _KronosManager.GetTimesheet(dates.Select(x => x.WCDate).ToArray(), payroll);
-                vm.tSheet = mapper.Map<List<TimesheetView>>(payData);
+                vm.tSheet = mapper.Map<List<TimesheetView>>(_KronosManager.GetTimesheet(dates.Select(x => x.WCDate).ToArray(), payroll));
+                vm.punch = mapper.Map<List<PunchCompView>>(_storeManager.GetEmployeePunch(payroll, dates.Min(x => x.Week), dates.Max(x => x.Week)));
             }
             else
             {

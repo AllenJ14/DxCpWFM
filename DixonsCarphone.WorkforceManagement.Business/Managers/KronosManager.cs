@@ -14,30 +14,25 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
              Logon();
         }
 
-        ~KronosManager()
-        {
-            LogOff();
-        }
-
         public async Task<List<HyperFindResult>> GetKronosHyperFind(string kronosStoreName, string startDate, string endDate)
         {
             var hyperFindResult = await KronosApi.HyperfindResult(kronosStoreName, string.Format("{0}-{1}", startDate, endDate));
             //var personNumbers = hyperFindResult.Select(x => x.PersonNumber).ToList();
-
+            
             return hyperFindResult;
         }
 
         public List<Timesheet> GetTimesheet(DateTime[] dates, string personNumber)
         {
             var timesheetResult = KronosApi.RequestTimesheet(dates, personNumber );
-
+            
             return timesheetResult;
         }
 
         public async Task<List<Timesheet>> GetTimesheetForStore(DateTime date, string[] personList)
         {
             var timesheetResult = await KronosApi.RequestTimesheet(date, personList);
-
+            
             return timesheetResult;
         }
 
@@ -50,7 +45,7 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
                 var data = await KronosApi.RequestScheduleDetail(startDate, endDate, personNumbers);
                 toRtn = data.FirstOrDefault();
             }
-
+            
             return toRtn;
         }
 
@@ -62,7 +57,7 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             {
                 toRtn = await KronosApi.RequestPunchStatus(employeeList);
             }
-
+            
             return toRtn;
         }
 

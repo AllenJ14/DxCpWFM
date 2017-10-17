@@ -101,6 +101,17 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             }
         }
 
+        //Get punch detail for person
+        public List<CPW_Clocking_Data> GetEmployeePunch(string empNumber, int startWeek, int endWeek)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                var crit = int.Parse(empNumber.Replace("UK", ""));
+                var result = dbContext.CPW_Clocking_Data.AsNoTracking().Where(x => x.EMP_NUM == crit && x.FNCL_WK_NUM >= startWeek && x.FNCL_WK_NUM <= endWeek).ToList();
+                return result;
+            }
+        }
+
         //Get punch detail for region
         public async Task<List<sp_RegionPunchCompliance_Result>> GetRegionPunch(string regionNo, int weekNum)
         {
@@ -1062,6 +1073,14 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
                 {
                     return new List<ColleaguePayData>();
                 }                
+            }
+        }
+
+        public bool FTPTCheck(string empNum)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                return dbContext.KronosEmployeeSummaries.Where(x => x.PersonNumber == empNum).Select(x => x.EmployeeStandardHours).FirstOrDefault() != 45;
             }
         }
 

@@ -171,8 +171,12 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
 
         Task<List<ShortShift>> GetShortShiftsBranch(int storeNumber, int weekNumber);
 
+        bool FTPTCheck(string empNum);
+
         Task<List<KronosEmployeeSummary>> GetActiveColleagues(string Region);
 
         Task<List<KronosEmployeeSummary>> GetActiveColleaguesDivision(string Division);
+
+        List<CPW_Clocking_Data> GetEmployeePunch(string empNumber, int startWeek, int endWeek);
     }
 }

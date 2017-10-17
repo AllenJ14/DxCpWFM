@@ -7,6 +7,7 @@ namespace DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
         public List<PayCalendarDateView> payDates { get; set; }
         public List<ColleaguePayDataView> payData { get; set; }
         public List<TimesheetView> tSheet { get; set; }
+        public List<PunchCompView> punch { get; set; }
 
         public bool errorPayroll { get; set; }
     }

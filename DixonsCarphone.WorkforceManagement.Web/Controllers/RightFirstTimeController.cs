@@ -17,6 +17,14 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
         public RightFirstTimeController()
         {
             _KronosManager = new KronosManager();
+            if (!(bool)System.Web.HttpContext.Current.Session["_ROIFlag"])
+            {
+                System.Web.HttpContext.Current.Session["_PTFlag"] = _storeManager.FTPTCheck(System.Web.HttpContext.Current.Session["_EmpNum"].ToString()) ? "PT" : "FT";
+            }
+            else
+            {
+                System.Web.HttpContext.Current.Session["_PTFlag"] = "";
+            }
         }
 
         [Authorize]
@@ -24,11 +32,11 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
         {
             ColleaguePortalVm vm = new ColleaguePortalVm();
 
-            vm.rawMenu = mapper.Map<List<PayCalendarRefView>>(await _storeManager.GetPayCalendarRef(_store.Channel));
-
+            vm.rawMenu = mapper.Map<List<PayCalendarRefView>>(await _storeManager.GetPayCalendarRef((_store.Channel == "ROI" ? "ROI" : "CPW") + System.Web.HttpContext.Current.Session["_PTFlag"].ToString()));
+            
             return View(vm);
         }
-
+        
         public async Task<ActionResult> TimecardSignOff(string selectedDate = "Last Week")
         {
             TimecardSignOffVm vm = new TimecardSignOffVm();
@@ -69,16 +77,23 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             }
             else
             {
-                // if statement to change path if not for last week
                 vm.hf = mapper.Map<List<HyperFindResultView>>(await _KronosManager.GetKronosHyperFind(_store.KronosStoreName, vm.weekStart.ToShortDateString(), vm.weekStart.AddDays(6).ToShortDateString()));
                 vm.ss = mapper.Map<List<ShortShiftView>>(await _storeManager.GetShortShiftsBranch(StoreNumber, weekOfYr));
+
+                short a = 1;
+                while(vm.hf == null && a<3)
+                {
+                    vm.hf = mapper.Map<List<HyperFindResultView>>(await _KronosManager.GetKronosHyperFind(_store.KronosStoreName, vm.weekStart.ToShortDateString(), vm.weekStart.AddDays(6).ToShortDateString()));
+                    a++;
+                }
                 //vm.ts = mapper.Map<List<TimesheetView>>(await _KronosManager.GetTimesheetForStore(vm.weekStart, vm.hf.Select(x => x.PersonNumber).ToArray()));
             }
-            var weekNumbers = await _storeManager.GetWeekNumbers(DateTime.Now.GetFirstDayOfWeek().AddDays(-56), DateTime.Now.GetFirstDayOfWeek().AddDays(-7));
+            //var weekNumbers = await _storeManager.GetWeekNumbers(DateTime.Now.GetFirstDayOfWeek().AddDays(-56), DateTime.Now.GetFirstDayOfWeek().AddDays(-7));
 
-            vm.GetDatesOfYear(DateTime.Now.GetFirstDayOfWeek().AddDays(-7), weekNumbers);
-            vm.WeeksOfYear.ForEach(x => x.Selected = x.Value == vm.weekStart.ToShortDateString());
+            //vm.GetDatesOfYear(DateTime.Now.GetFirstDayOfWeek().AddDays(-7), weekNumbers);
+            //vm.WeeksOfYear.ForEach(x => x.Selected = x.Value == vm.weekStart.ToShortDateString());
 
+            await _KronosManager.LogOff();
             return View(vm);
         }
     }

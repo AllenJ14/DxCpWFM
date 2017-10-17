@@ -32,15 +32,15 @@ namespace DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
                 {
                     if(!KronosScheduled && !KronosPunched)
                     {
-                        return 2;
+                        return 3;
                     }
                     else if(!KronosScheduled || !KronosPunched)
                     {
-                        return 1;
+                        return 2;
                     }
                     else
                     {
-                        return 0;
+                        return 1;
                     }
                 }
                 else
