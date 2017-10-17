@@ -73,6 +73,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             ColleaguePayDataVm vm = new ColleaguePayDataVm();
 
             string payroll = System.Web.HttpContext.Current.Session["_EmpNum"].ToString();
+
             var dates = _storeManager.GetPayCalendarDates((_store.Channel == "ROI" ? "ROI" : "CPW") + System.Web.HttpContext.Current.Session["_PTFlag"].ToString(), period);
 
             if(payroll != "e")

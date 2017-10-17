@@ -86,7 +86,7 @@ else if (Model.tSheet != null && Model.tSheet.Count() > 0)
             @foreach (var item in Model.payDates)
             {
                 var a = Model.punch.Where(x => x.FNCL_WK_NUM == item.Week);
-                if (a != null)
+                if (a.Count() != 0)
                 {
                     <td class="text-center @(a.Sum(x => x.Count_In_Missing + x.Count_Out_Missing) > 1 ? "danger" : "")">@(string.Format("{0:0.0}%", 100 - a.Sum(x => x.Count_In_Missing + x.Count_Out_Missing) / (decimal)(a.Count() * 2) * 100))</td>
                 }

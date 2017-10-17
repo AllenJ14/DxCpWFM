@@ -43,6 +43,9 @@ else if (HttpContext.Current.Session["_RegionNumber"] != null)
     <div class="panel-body">
         @*@Html.Partial("~/Views/Shared/_WeekPicker.cshtml", new WeekPickerViewModel { Action = "TimecardSignOff", Controller = "RightFirstTime", WeeksOfYear = Model.WeeksOfYear, SelectedDate = Model.SelectedDate })*@
         <strong style="font-size:large;">Week Commencing @Model.weekStart.ToShortDateString()</strong>
+        <p>
+            <span class="glyphicon glyphicon-time"></span> Timecard Sign off information is shown as live from STAR. Edited clocks count are updated at 8AM Monday - Wednesday.
+        </p>
         <table class="table table-bordered-blue table-condensed" style="margin-top:15px;">
             <thead>
                 <tr>
@@ -76,230 +79,8 @@ else if (HttpContext.Current.Session["_RegionNumber"] != null)
 }
 else
 {
-    <div class="modal fade" tabindex="-1" role="dialog" id="helpModal" data-backdrop="static">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title text-center"><strong>I Need Help</strong></h4>
-                </div>
-                <div id="helpBody" class="modal-body" style="min-height:400px;">
-                    <div id="baseContainer">
-                        <div class="list-group">
-                            <button type="button" class="list-group-item lvl1" data-step="1">Absence Processing</button>
-                            <button type="button" class="list-group-item lvl1" data-step="2">Cross Region Transfer</button>
-                            <button type="button" class="list-group-item lvl1" data-step="3">This colleague isn't in my store</button>
-                            <button type="button" class="list-group-item lvl1" data-step="4">Ignite related issue</button>
-                            <button type="button" class="list-group-item lvl1" data-step="5">Error message on timecard</button>
-                            <button type="button" class="list-group-item lvl1" data-step="6">Cannot access STAR</button>
-                        </div>
-                    </div>
-                    <div id="level1">
-                        <div id="1" style="display:none;">
-                            <div class="panel panel-default">
-                                <div class="panel-heading"><strong>Absence Processing</strong></div>
-                                <div class="panel-body">
-                                    <div class="list-group">
-                                        <a href="/STARHandbook/Scheduling?articleNumber=6" target="_blank" onClick="getElementById('1_ticket').style.display= null" class="list-group-item">Self help - Using Paycodes<span class="pull-right glyphicon glyphicon-circle-arrow-right"></span></a>
-                                    </div>
-                                    <div id="1_ticket" class="panel panel-default" style="display:none;">
-                                        <div class="panel-heading">Did this help?</div>
-                                        <div class="panel-body">
-                                            <button type="button" class="btn btn-success dismiss col-sm-3 col-sm-offset-3" data-dismiss="modal">Yes</button>
-                                            <button class="btn btn-danger lvl2 col-sm-3" data-step="1_1">No</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>                          
-                        </div>
-                        <div id="2" style="display:none;">
-                            <div class="panel panel-default">
-                                <div class="panel-heading"><strong>Cross Region Transfer</strong></div>
-                                <div class="panel-body">
-                                    <div class="list-group">
-                                        <a href="#" target="_blank" class="list-group-item active text-center"><strong>Raise a cross region request</strong></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="3" style="display:none;">
-                            <div class="panel panel-default">
-                                <div class="panel-heading"><strong>Do you know who this colleague is? (eg. a leaver, new starter on the system early)</strong></div>
-                                <div class="panel-body">
-                                    <div class="list-group">
-                                        <button type="button" class="list-group-item lvl2" data-step="3_1">Yes - They are due to start in my store</button>
-                                        <button type="button" class="list-group-item lvl2" data-step="3_2">Yes - They are due to leave my store</button>
-                                        <button type="button" class="list-group-item lvl2" data-step="3_3">Yes - They are on extended leave</button>
-                                        <button type="button" class="list-group-item lvl2" data-step="3_4">No</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="4" style="display:none;">
-                            <div class="panel panel-default">
-                                <div class="panel-heading"><strong>Ignite related issue</strong></div>
-                                <div class="panel-body">
-                                    <div class="list-group">
-                                        <button type="button" class="list-group-item lvl2" data-step="4_1">Ignite course date pushed back</button>
-                                        <button type="button" class="list-group-item lvl2" data-step="4_2">Colleague has exited mid-course / failed</button>
-                                        <button type="button" class="list-group-item lvl2" data-step="4_3">Colleague was absent for Ignite course and will not be joining CPW</button>
-                                        <button type="button" class="list-group-item lvl2" data-step="4_4">Colleague was on Ignite, how do I process?</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="5" style="display:none;">
-                            <div class="panel panel-default">
-                                <div class="panel-heading"><strong>Error message on timecard</strong></div>
-                                <div class="panel-body">
-                                    <p>Has the colleague just come back from extended leave (e.g. maternity) (This would normally be at least 4 weeks).</p>
-                                    <button type="button" class="btn btn-success dismiss col-sm-3 col-sm-offset-3 lvl2" data-step="5_1">Yes</button>
-                                    <button class="btn btn-danger lvl2 col-sm-3" data-step="5_2">No</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="6" style="display:none;">
-                            2.6
-                        </div>
-                    </div>
-                    <div id="level2">
-                        <div id="1_1" style="display:none;">
-                            <div class="list-group">
-                                <a href="#" target="_blank" class="list-group-item active text-center"><strong>Raise a ticket</strong></a>
-                            </div>
-                        </div>
-                        <div id="3_1" style="display:none;">
-                            <div class="panel panel-default">
-                                <div class="panel-heading"><strong>Yes - They are due to start in my store</strong></div>
-                                <div class="panel-body">
-                                    <div class="list-group">
-                                        <button type="button" class="list-group-item lvl3" data-step="3_1_1">A transfer was cancelled or has happened at the wrong time</button>
-                                        <button type="button" class="list-group-item lvl3" data-step="3_1_2">New starter is no longer joining <u>and did not attend Ignite</u></button>
-                                        <button type="button" class="list-group-item lvlup" data-step="4">New starter that is still joining</button>
-                                        <button type="button" class="list-group-item lvl3" data-step="3_1_4">New starter attended Ignite but failed</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="3_2" style="display:none;">
-                            <div class="panel panel-default">
-                                <div class="panel-heading"><strong>Yes - They are due to leave my store</strong></div>
-                                <div class="panel-body">
-                                    <ol>
-                                        <li>Process this with your TPC</li>
-                                        <li>Complete the timecard with the colleague's contract hours as the <u>'Approved Unpaid Leave'</u> paycode</li>
-                                    </ol>
-                                    <div class="text-center"><button type="button" class="btn btn-primary dismiss" data-dismiss="modal">Done</button></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="3_3" style="display:none;">
-                            <div class="panel panel-default">
-                                <div class="panel-heading"><strong>Yes - They are on extended leave</strong></div>
-                                <div class="panel-body">
-                                    <ol>
-                                        <li>Process this with your TPC</li>
-                                        <li>Complete the timecard with the colleague's contract hours as the <u>'Approved Unpaid Leave'</u> paycode</li>
-                                    </ol>
-                                    <div class="text-center"><button type="button" class="btn btn-primary dismiss" data-dismiss="modal">Done</button></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="3_4" style="display:none;">
-                            <div class="list-group">
-                                <a href="#" target="_blank" class="list-group-item active text-center"><strong>Raise a ticket</strong></a>
-                            </div>
-                        </div>
-                        <div id="4_1" style="display:none;">
-                            <div class="panel panel-default">
-                                <div class="panel-heading"><strong>Ignite course date pushed back</strong></div>
-                                <div class="panel-body">
-                                    <ol>
-                                        <li>Complete the timecard with the colleague's contract hours as the <u>'Approved Unpaid Leave'</u> paycode</li>
-                                    </ol>
-                                    <div class="text-center"><button type="button" class="btn btn-primary dismiss" data-dismiss="modal">Done</button></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="4_2" style="display:none;">
-                            <div class="panel panel-default">
-                                <div class="panel-heading"><strong>Colleague has exited mid-course / failed</strong></div>
-                                <div class="panel-body">
-                                    <ol>
-                                        <li>Process this with your TPC</li>
-                                        <li>Complete the timecard with the colleague's contract hours as the <u>'Approved Unpaid Leave'</u> paycode</li>
-                                    </ol>
-                                    <div class="text-center"><button type="button" class="btn btn-primary dismiss" data-dismiss="modal">Done</button></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="4_3" style="display:none;">
-                            <div class="panel panel-default">
-                                <div class="panel-heading"><strong>Colleague was absent for Ignite course and will not be joining CPW</strong></div>
-                                <div class="panel-body">
-                                    <ol>
-                                        <li>Process this with your TPC</li>
-                                        <li>Complete the timecard with the colleague's contract hours as the <u>'Approved Unpaid Leave'</u> paycode</li>
-                                    </ol>
-                                    <div class="text-center"><button type="button" class="btn btn-primary dismiss" data-dismiss="modal">Done</button></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="4_4" style="display:none;">
-                            <div class="panel panel-default">
-                                <div class="panel-heading"><strong>Colleague was on Ignite, how do I process?</strong></div>
-                                <div class="panel-body">
-                                    <div class="text-center"><button class="btn btn-primary dismiss" data-dismiss="modal" onclick="window.open('/Reports/TrainingDoc?f=IgniteSOHProcess.pdf', '_blank');">Briefing pack</button></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="5_1" style="display:none;">
-                            <p>Have you Contacted your TPC to process the return?</p>
-                            <button type="button" class="btn btn-success dismiss col-sm-3 col-sm-offset-3 lvl3" data-step="5_1">Yes</button>
-                            <button class="btn btn-danger col-sm-3">No</button>
-                            <div class="panel panel-default">
-                                <div class="panel-body">
-                                    <p>please contact your TPC to process the return </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="level3">
-                        <div id="3_1_1" style="display:none;">
-                            <div class="list-group">
-                                <a href="#" target="_blank" class="list-group-item active text-center"><strong>Raise a ticket</strong></a>
-                            </div>
-                        </div>
-                        <div id="3_1_2" style="display:none;">
-                            <div class="panel panel-default">
-                                <div class="panel-heading"><strong>New starter is no longer joining <U>and did not attend Ignite</U></strong></div>
-                                <div class="panel-body">
-                                    <ol>
-                                        <li>Process this with your TPC</li>
-                                        <li>Complete the timecard with the colleague's contract hours as the <u>'Approved Unpaid Leave'</u> paycode</li>
-                                    </ol>
-                                    <div class="text-center"><button type="button" class="btn btn-primary dismiss" data-dismiss="modal">Done</button></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="3_1_4" style="display:none;">
-                            <div class="panel panel-default">
-                                <div class="panel-heading"><strong>New starter attended Ignite but failed</strong></div>
-                                <div class="panel-body">
-                                    <ol>
-                                        <li>Process this with your TPC</li>
-                                        <li>Complete the timecard with the colleague's contract hours as the <u>'Approved Unpaid Leave'</u> paycode</li>
-                                    </ol>
-                                    <div class="text-center"><button type="button" class="btn btn-primary dismiss" data-dismiss="modal">Done</button></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-
+    @Html.Partial("~/Views/Partials/_INeedHelpModal.cshtml")
+    
     <div class="panel panel-default">
         <div class="panel-heading">
             <div class="panel-title"><strong>Timecard Sign Off</strong></div>
@@ -307,6 +88,9 @@ else
         <div class="panel-body">
             @*@Html.Partial("~/Views/Shared/_WeekPicker.cshtml", new WeekPickerViewModel { Action = "TimecardSignOff", Controller = "RightFirstTime", WeeksOfYear = Model.WeeksOfYear, SelectedDate = Model.SelectedDate })*@
             <strong style="font-size:large;">Week Commencing @Model.weekStart.ToShortDateString()</strong>
+            <p>
+                <span class="glyphicon glyphicon-time"></span> Timecard Sign off information is shown as live from STAR. Edited clocks count is updated at 8AM Monday - Wednesday.
+            </p>
             <table class="table table-bordered-blue table-condensed" style="margin-top:15px;">
                 <tr>
                     <th class="text-center">Name</th>
