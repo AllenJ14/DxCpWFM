@@ -25,7 +25,11 @@
     &emsp;
 </div>
 
-@if (Model.hf == null || Model.hf.Count() == 0)
+@if (Model.MessageType == MessageType.Error)
+{
+    @Html.Partial("~/Views/Shared/_Messages.cshtml", Model)
+}
+else if (Model.hf == null || Model.hf.Count() == 0)
 {
     <div class="alert alert-danger text-center">
         <strong>Oops...</strong>
@@ -45,7 +49,10 @@ else if (HttpContext.Current.Session["_RegionNumber"] != null)
         @*@Html.Partial("~/Views/Shared/_WeekPicker.cshtml", new WeekPickerViewModel { Action = "TimecardSignOff", Controller = "RightFirstTime", WeeksOfYear = Model.WeeksOfYear, SelectedDate = Model.SelectedDate })*@
         <strong style="font-size:large;">Week Commencing @Model.weekStart.ToShortDateString()</strong>
         <p>
-            <span class="glyphicon glyphicon-time"></span> Timecard Sign off information is shown as live from STAR. Edited clocks count are updated at 8AM each day.
+            <span class="glyphicon glyphicon-time"></span> All information is shown as live from STAR.
+        </p>
+        <p>
+            If there are no STAR users in a store with timecards still outstanding you can engage your TPC who will be able to support.
         </p>
         <table class="table table-bordered-blue table-condensed" style="margin-top:15px;">
             <thead>

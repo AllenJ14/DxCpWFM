@@ -57,14 +57,24 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             //        vm.rso.Add(new RegionSignOff { BranchNumber = data.First().Region, Headcount = data.Count(), SignedOff = data.Where(x => x.signedOff.Date >= vm.weekStart).Count() });
             //    }
             //}
-            if (System.Web.HttpContext.Current.Session["_RegionNumber"] != null)
+            if(System.Web.HttpContext.Current.Session["_ChannelName"] != null)
+            {
+                vm.Message = "This page is not available in the currently selected view, please select a store from the top right menu or go back.";
+                vm.MessageType = MessageType.Error;
+            }
+            else if(System.Web.HttpContext.Current.Session["_DivisionName"] != null)
+            {
+                vm.Message = "This page is not available in the currently selected view, please select a store from the top right menu or go back.";
+                vm.MessageType = MessageType.Error;
+            }
+            else if (System.Web.HttpContext.Current.Session["_RegionNumber"] != null)
             {
                 vm.hf = mapper.Map<List<HyperFindResultView>>(await _KronosManager.GetKronosHyperFind("UK - Region CPW" + _store.RegionNo, vm.weekStart.ToShortDateString(), vm.weekStart.AddDays(6).ToShortDateString()));
                 var employeeList = await _storeManager.GetActiveColleagues(_store.RegionNo);
-                var combined = vm.hf.Where(x => x.PersonData.Person.ManagerSignoffThruDateTime.Year != 1901).Join(employeeList, kronos => kronos.PersonNumber, db => db.PersonNumber, (kronos, db) => new { PersonNumber = kronos.PersonNumber, BranchNumber = db.HomeBranch, BranchName = db.BranchName, signedOff = kronos.PersonData.Person.ManagerSignoffThruDateTime });
+                var combined = vm.hf.Where(x => x.PersonData.Person.ManagerSignoffThruDateTime.Year != 1901).Join(employeeList, kronos => kronos.PersonNumber, db => db.PersonNumber, (kronos, db) => new { PersonNumber = kronos.PersonNumber, BranchNumber = db.HomeBranch, BranchName = db.BranchName, signedOff = kronos.PersonData.Person.ManagerSignoffThruDateTime, PersonName = db.PersonName });
                 var punched = await _KronosManager.GetPunchStatus(employeeList.Where(x => x.KronosUser).Select(x => x.PersonNumber).ToList());
                 var punchCombined = employeeList.Where(x => x.KronosUser).Join(punched, db => db.PersonNumber, kronos => kronos.Employee.PersonIdentity.PersonNumber, (db, kronos) => new { PersonNumer = db.PersonNumber, BranchNumber = db.HomeBranch, punched = kronos.Status });
-
+                
                 vm.rso = new List<RegionSignOff>();
                 foreach(var item in employeeList.GroupBy(x => x.HomeBranch).Select(c => c.Key).OrderBy(x => x).ToList())
                 {
@@ -72,7 +82,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
                     bool userScheduled = employeeList.Where(x => x.HomeBranch == item && x.Scheduled && x.KronosUser).Count() > 0;
                     bool userPunched = punchCombined.Where(x => x.BranchNumber == item && x.punched == "In").Count() > 0;
 
-                    vm.rso.Add(new RegionSignOff { BranchNumber = item, BranchName = data.First().BranchName, Headcount = data.Count(), SignedOff = data.Where(x => x.signedOff.Date >= vm.weekStart).Count() , KronosScheduled = userScheduled, KronosPunched = userPunched});
+                    vm.rso.Add(new RegionSignOff { BranchNumber = item, BranchName = data.First().BranchName, Headcount = data.Count(), SignedOff = data.Where(x => x.signedOff.Date >= vm.weekStart).Count() , KronosScheduled = userScheduled, KronosPunched = userPunched });
                 }
             }
             else

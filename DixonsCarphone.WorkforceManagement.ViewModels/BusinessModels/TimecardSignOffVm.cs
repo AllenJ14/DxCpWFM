@@ -24,6 +24,8 @@ namespace DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
         public bool KronosScheduled { get; set; }
         public bool KronosPunched { get; set; }
 
+        public List<string> EmpIssues { get; set; }
+
         public short RAG
         {
             get
@@ -50,4 +52,5 @@ namespace DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
             }
         }
     }
+
 }
