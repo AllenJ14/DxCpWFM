@@ -29,7 +29,8 @@
 {
     <div class="alert alert-danger text-center">
         <strong>Oops...</strong>
-        <p>Something went wrong, please try again. Please try refreshing the page</p>
+        <p>Something went wrong, please try again.</p>
+        <a class="btn btn-sm btn-info" href="#">Retry</a>
     </div>
 }
 else if (HttpContext.Current.Session["_RegionNumber"] != null)
@@ -44,7 +45,7 @@ else if (HttpContext.Current.Session["_RegionNumber"] != null)
         @*@Html.Partial("~/Views/Shared/_WeekPicker.cshtml", new WeekPickerViewModel { Action = "TimecardSignOff", Controller = "RightFirstTime", WeeksOfYear = Model.WeeksOfYear, SelectedDate = Model.SelectedDate })*@
         <strong style="font-size:large;">Week Commencing @Model.weekStart.ToShortDateString()</strong>
         <p>
-            <span class="glyphicon glyphicon-time"></span> Timecard Sign off information is shown as live from STAR. Edited clocks count are updated at 8AM Monday - Wednesday.
+            <span class="glyphicon glyphicon-time"></span> Timecard Sign off information is shown as live from STAR. Edited clocks count are updated at 8AM each day.
         </p>
         <table class="table table-bordered-blue table-condensed" style="margin-top:15px;">
             <thead>
@@ -89,7 +90,7 @@ else
             @*@Html.Partial("~/Views/Shared/_WeekPicker.cshtml", new WeekPickerViewModel { Action = "TimecardSignOff", Controller = "RightFirstTime", WeeksOfYear = Model.WeeksOfYear, SelectedDate = Model.SelectedDate })*@
             <strong style="font-size:large;">Week Commencing @Model.weekStart.ToShortDateString()</strong>
             <p>
-                <span class="glyphicon glyphicon-time"></span> Timecard Sign off information is shown as live from STAR. Edited clocks count is updated at 8AM Monday - Wednesday.
+                <span class="glyphicon glyphicon-time"></span> Timecard Sign off information is shown as live from STAR. Edited clocks count is updated at 8AM each day.
             </p>
             <table class="table table-bordered-blue table-condensed" style="margin-top:15px;">
                 <tr>

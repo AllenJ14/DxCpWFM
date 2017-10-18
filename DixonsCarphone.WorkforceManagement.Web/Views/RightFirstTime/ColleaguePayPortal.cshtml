@@ -78,6 +78,11 @@
             $menu.change(dataPull);
             $error.click(dataPull);
 
+            $cont.popover({
+                selector: '[data-toggle="popover"]',
+                trigger: 'focus'
+            });
+                        
         });
     </script>
 }

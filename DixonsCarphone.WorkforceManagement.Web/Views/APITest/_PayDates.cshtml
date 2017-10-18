@@ -42,7 +42,10 @@ else if (Model.tSheet != null && Model.tSheet.Count() > 0)
             }
         </tr>
         <tr>
-            <td class="active col-xs-2"><strong>Worked Hours</strong></td>
+            <td class="active col-xs-2">
+                <strong>Worked Hours</strong>
+                <span class="pull-right text-center"><a tabindex="0" role="button" class="glyphicon glyphicon-info-sign" data-toggle="popover" data-placement="right" data-content="Worked time will also include meetings and training." style="color:black"></a></span>
+            </td>
             @foreach (var item in Model.payDates)
             {
                 var a = Model.tSheet.Where(x => x.Period.TimeFramePeriod.PeriodDateSpan.Contains(item.WCDate.ToShortDateString())).FirstOrDefault().PeriodTotalData.PeriodTotals.Totals.Total.Where(x => x.PayCodeName == "UK IE @WFM Worked Hours").FirstOrDefault();
@@ -58,7 +61,10 @@ else if (Model.tSheet != null && Model.tSheet.Count() > 0)
             }
         </tr>
         <tr>
-            <td class="active"><strong>Sickness</strong><span class="pull-right text-center"><span class="glyphicon glyphicon-info-sign"></span></span></td>
+            <td class="active">
+                <strong>Sickness</strong>
+                <span class="pull-right text-center"><a tabindex="0" role="button" class="glyphicon glyphicon-info-sign" data-toggle="popover" data-placement="right" data-content="These are the hours that have been processed on STAR as sickness. We are unable to determine whether these hours will be paid or unpaid at this point as they will be subject to the companies sickness rules which are applied in the payroll system before you receive your pay cheque." style="color:black"></a></span>
+            </td>
             @foreach (var item in Model.payDates)
             {
                 var a = Model.tSheet.Where(x => x.Period.TimeFramePeriod.PeriodDateSpan.Contains(item.WCDate.ToShortDateString())).FirstOrDefault().PeriodTotalData.PeriodTotals.Totals.Total.Where(x => x.PayCodeName == "UK IE @WFM Sick").FirstOrDefault();
@@ -66,7 +72,7 @@ else if (Model.tSheet != null && Model.tSheet.Count() > 0)
             }
         </tr>
         <tr>
-            <td class="active"><strong>Other Paid Absence</strong><span class="pull-right text-center"><span class="glyphicon glyphicon-info-sign"></span></span></td>
+            <td class="active"><strong>Other Paid Absence</strong></td>
             @foreach (var item in Model.payDates)
             {
                 var a = Model.tSheet.Where(x => x.Period.TimeFramePeriod.PeriodDateSpan.Contains(item.WCDate.ToShortDateString())).FirstOrDefault().PeriodTotalData.PeriodTotals.Totals.Total.Where(x => x.PayCodeName == "UK IE @WFM Paid Absence").FirstOrDefault();
@@ -74,7 +80,7 @@ else if (Model.tSheet != null && Model.tSheet.Count() > 0)
             }
         </tr>
         <tr>
-            <td class="active"><strong>Other Unpaid Absence</strong><span class="pull-right text-center"><span class="glyphicon glyphicon-info-sign"></span></span></td>
+            <td class="active"><strong>Other Unpaid Absence</strong></td>
             @foreach (var item in Model.payDates)
             {
                 var a = Model.tSheet.Where(x => x.Period.TimeFramePeriod.PeriodDateSpan.Contains(item.WCDate.ToShortDateString())).FirstOrDefault().PeriodTotalData.PeriodTotals.Totals.Total.Where(x => x.PayCodeName == "UK IE @WFM Unpaid Absence").FirstOrDefault();
