@@ -1125,6 +1125,10 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Parameter Name="ChannelName" Type="nvarchar" Mode="In" />
           <Parameter Name="weekNumber" Type="int" Mode="In" />
         </Function>
+        <Function Name="sp_ChannelShortShifts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Channel" Type="nvarchar" Mode="In" />
+          <Parameter Name="WeekNumber" Type="int" Mode="In" />
+        </Function>
         <Function Name="sp_DivisionBMWorking" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Division" Type="varchar" Mode="In" />
         </Function>
@@ -1149,6 +1153,10 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
         <Function Name="sp_DivisionPunchCompliance" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="DivisionName" Type="nvarchar" Mode="In" />
           <Parameter Name="weekNumber" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_DivisionShortShifts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Division" Type="nvarchar" Mode="In" />
+          <Parameter Name="WeekNumber" Type="int" Mode="In" />
         </Function>
         <Function Name="sp_GetDivisionFootfall" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="DivisionName" Type="nvarchar" Mode="In" />
@@ -1195,6 +1203,10 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
         <Function Name="sp_RegionPunchCompliance" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="regionNumber" Type="nvarchar" Mode="In" />
           <Parameter Name="weekNumber" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_RegionShortShifts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="RegionNo" Type="nvarchar" Mode="In" />
+          <Parameter Name="WeekNumber" Type="int" Mode="In" />
         </Function>
         <Function Name="udsp_GetPandL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="StoreNumber" Type="int" Mode="In" />
@@ -1989,6 +2001,18 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
             <Parameter Name="EndWeek" Mode="In" Type="Int32" />
           </FunctionImport>
           <EntitySet Name="KronosEmployeeSummaries" EntityType="DixonsCarphone.WorkforceManagement.Business.KronosEmployeeSummary" />
+          <FunctionImport Name="sp_RegionShortShifts" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_RegionShortShifts_Result)">
+            <Parameter Name="RegionNo" Mode="In" Type="String" />
+            <Parameter Name="WeekNumber" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ChannelShortShifts" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_RegionShortShifts_Result)">
+            <Parameter Name="Channel" Mode="In" Type="String" />
+            <Parameter Name="WeekNumber" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_DivisionShortShifts" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_RegionShortShifts_Result)">
+            <Parameter Name="Division" Mode="In" Type="String" />
+            <Parameter Name="WeekNumber" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="BestPracticeCategoryType">
           <Key>
@@ -3619,6 +3643,27 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Property Name="BranchName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Scheduled" Type="Boolean" Nullable="false" />
         </EntityType>
+        <ComplexType Name="sp_RegionShortShifts_Result">
+          <Property Type="String" Name="Channel" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="Division" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="RegionNo" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="BranchName" Nullable="true" MaxLength="533" />
+          <Property Type="Int32" Name="CountS" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_ChannelShortShifts_Result">
+          <Property Type="String" Name="Channel" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="Division" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Column1" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="BranchName" Nullable="false" MaxLength="1" />
+          <Property Type="Int32" Name="CountS" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_DivisionShortShifts_Result">
+          <Property Type="String" Name="Channel" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="Division" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="RegionNo" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="BranchName" Nullable="false" MaxLength="1" />
+          <Property Type="Int32" Name="CountS" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5270,6 +5315,39 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_RegionShortShifts" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_RegionShortShifts">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.sp_RegionShortShifts_Result">
+                <ScalarProperty Name="Channel" ColumnName="Channel" />
+                <ScalarProperty Name="Division" ColumnName="Division" />
+                <ScalarProperty Name="RegionNo" ColumnName="RegionNo" />
+                <ScalarProperty Name="BranchName" ColumnName="BranchName" />
+                <ScalarProperty Name="CountS" ColumnName="CountS" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_ChannelShortShifts" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_ChannelShortShifts">
+          <ResultMapping>
+              <ComplexTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.sp_RegionShortShifts_Result">
+                <ScalarProperty Name="Channel" ColumnName="Channel" />
+                <ScalarProperty Name="Division" ColumnName="Division" />
+                <ScalarProperty Name="RegionNo" ColumnName="RegionNo" />
+                <ScalarProperty Name="BranchName" ColumnName="BranchName" />
+                <ScalarProperty Name="CountS" ColumnName="CountS" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_DivisionShortShifts" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_DivisionShortShifts">
+          <ResultMapping>
+              <ComplexTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.sp_RegionShortShifts_Result">
+                <ScalarProperty Name="Channel" ColumnName="Channel" />
+                <ScalarProperty Name="Division" ColumnName="Division" />
+                <ScalarProperty Name="RegionNo" ColumnName="RegionNo" />
+                <ScalarProperty Name="BranchName" ColumnName="BranchName" />
+                <ScalarProperty Name="CountS" ColumnName="CountS" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

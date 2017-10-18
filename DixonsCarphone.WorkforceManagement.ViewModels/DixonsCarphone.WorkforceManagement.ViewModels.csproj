@@ -109,8 +109,10 @@
     <Compile Include="BusinessModels\PeakFlexVm.cs" />
     <Compile Include="BusinessModels\RegionContractStatusView.cs" />
     <Compile Include="BusinessModels\RegionContractStatusVm.cs" />
+    <Compile Include="BusinessModels\RegionShortShiftView.cs" />
     <Compile Include="BusinessModels\ScheduleBMView.cs" />
     <Compile Include="BusinessModels\ShortShiftView.cs" />
+    <Compile Include="BusinessModels\ShortShiftVm.cs" />
     <Compile Include="BusinessModels\Ticket.cs" />
     <Compile Include="BusinessModels\PandLSummaryDetail.cs" />
     <Compile Include="BusinessModels\PandLSummaryvm.cs" />

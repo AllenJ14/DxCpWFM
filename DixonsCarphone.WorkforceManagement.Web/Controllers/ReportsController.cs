@@ -557,7 +557,31 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
 
         public async Task<ActionResult> EditedShifts(string selectedDate = "Last Week")
         {
-            return View();
+            ShortShiftVm vm = new ShortShiftVm();
+            var weekOfYr = GetWeekNumber(selectedDate);
+
+            if (System.Web.HttpContext.Current.Session["_ChannelName"] != null)
+            {
+                vm.Message = "This page is not available in the currently selected view, please select a store from the top right menu or go back.";
+                vm.MessageType = MessageType.Error;
+            }
+            else if (System.Web.HttpContext.Current.Session["_DivisionName"] != null)
+            {
+                vm.type = 2;
+                vm.RegionShortShifts = mapper.Map<List<RegionShortShiftView>>(await _storeManager.GetShortShiftsDivision(System.Web.HttpContext.Current.Session["_DivisionName"].ToString(), weekOfYr));
+            }
+            else if (System.Web.HttpContext.Current.Session["_RegionNumber"] != null)
+            {
+                vm.type = 1;
+                vm.RegionShortShifts = mapper.Map<List<RegionShortShiftView>>(await _storeManager.GetShortShiftsRegion(System.Web.HttpContext.Current.Session["_RegionNumber"].ToString(), weekOfYr));
+            }
+            else
+            {
+                vm.type = 0;
+                vm.ShortShifts = mapper.Map<List<ShortShiftView>>(await _storeManager.GetShortShiftsBranch(StoreNumber, weekOfYr));
+            }
+
+            return View(vm);
         }
 
         [UserFilter(AccessLevel = "Admin,TPC,RM,DD,RD")]

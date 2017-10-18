@@ -790,5 +790,44 @@ namespace DixonsCarphone.WorkforceManagement.Business.Entities
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_RegionDashboardData_v2_Result>("sp_RegionDashboardData_v2", regionParameter, beginWeekParameter, endWeekParameter);
         }
+    
+        public virtual ObjectResult<sp_RegionShortShifts_Result> sp_RegionShortShifts(string regionNo, Nullable<int> weekNumber)
+        {
+            var regionNoParameter = regionNo != null ?
+                new ObjectParameter("RegionNo", regionNo) :
+                new ObjectParameter("RegionNo", typeof(string));
+    
+            var weekNumberParameter = weekNumber.HasValue ?
+                new ObjectParameter("WeekNumber", weekNumber) :
+                new ObjectParameter("WeekNumber", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_RegionShortShifts_Result>("sp_RegionShortShifts", regionNoParameter, weekNumberParameter);
+        }
+    
+        public virtual ObjectResult<sp_RegionShortShifts_Result> sp_ChannelShortShifts(string channel, Nullable<int> weekNumber)
+        {
+            var channelParameter = channel != null ?
+                new ObjectParameter("Channel", channel) :
+                new ObjectParameter("Channel", typeof(string));
+    
+            var weekNumberParameter = weekNumber.HasValue ?
+                new ObjectParameter("WeekNumber", weekNumber) :
+                new ObjectParameter("WeekNumber", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_RegionShortShifts_Result>("sp_ChannelShortShifts", channelParameter, weekNumberParameter);
+        }
+    
+        public virtual ObjectResult<sp_RegionShortShifts_Result> sp_DivisionShortShifts(string division, Nullable<int> weekNumber)
+        {
+            var divisionParameter = division != null ?
+                new ObjectParameter("Division", division) :
+                new ObjectParameter("Division", typeof(string));
+    
+            var weekNumberParameter = weekNumber.HasValue ?
+                new ObjectParameter("WeekNumber", weekNumber) :
+                new ObjectParameter("WeekNumber", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_RegionShortShifts_Result>("sp_DivisionShortShifts", divisionParameter, weekNumberParameter);
+        }
     }
 }

@@ -1,8 +1,8 @@
-﻿
+﻿@model DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels.ShortShiftVm
+
 @{
     ViewBag.Title = "Edited Shifts";
 }
-
 
 <div class="row">
     &nbsp;
@@ -27,76 +27,106 @@
     &nbsp;
 </div>
 
-<div class="row">
-    <div class="col-md-12">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <table class="table table-bordered-blue table-condensed">
-                    <thead>
-                        <tr>
-                            <th class="text-center">Person Name</th>
-                            <th class="text-center">Shift Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>John Smith</td>
-                            <td class="text-center">24/09/2016</td>
-                        </tr>
-                        <tr>
-                            <td style="border-bottom:0px;border-left:0px;"></td>
-                            <td class="text-center">26/09/2016</td>
-                        </tr>
-                        <tr>
-                            <td style="border-bottom:0px;border-left:0px;"></td>
-                            <td class="text-center">27/09/2016</td>
-                        </tr>
-                        <tr>
-                            <td style="border-bottom:0px;border-left:0px;"></td>
-                            <td class="text-center">28/09/2016</td>
-                        </tr>
-                        <tr>
-                            <td>Bob Smith</td>
-                            <td class="text-center">24/09/2016</td>
-                        </tr>
-                        <tr>
-                            <td>Terry Smith</td>
-                            <td class="text-center">24/09/2016</td>
-                        </tr>
-                    </tbody>
-                </table>
+@if (Model.type == 1 && Model.RegionShortShifts != null)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <table class="table table-bordered-blue table-condensed">
+                        <thead>
+                            <tr>
+                                <th class="text-center">Branch</th>
+                                <th class="text-center">Shifts Edited</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach(var item in Model.RegionShortShifts)
+                            {
+                                <tr>
+                                    <td>@item.BranchName</td>
+                                    <td class="text-center @(item.CountS > 1 ? "danger" : "")">@item.CountS</td>
+                                </tr>
+                            }
+                            <tr>
+                                <td><strong>Region Total</strong></td>
+                                <td class="text-center"><strong>@Model.RegionShortShifts.Sum(x => x.CountS)</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-</div>
-
-<div class="row">
-    <div class="col-md-12">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <table class="table table-bordered-blue table-condensed">
-                    <thead>
-                        <tr>
-                            <th class="text-center">Branch</th>
-                            <th class="text-center">Shifts Edited</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1 - Test Branch</td>
-                            <td class="text-center danger">5</td>
-                        </tr>
-                        <tr>
-                            <td>2 - Test Branch</td>
-                            <td class="text-center">0</td>
-                        </tr>
-                        <tr>
-                            <td>3 - Test Branch</td>
-                            <td class="text-center warning">1</td>
-                        </tr>
-                    </tbody>
-                </table>
+}
+else if (Model.type == 2 && Model.RegionShortShifts != null)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <table class="table table-bordered-blue table-condensed">
+                        <thead>
+                            <tr>
+                                <th class="text-center">Region</th>
+                                <th class="text-center">Shifts Edited</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.RegionShortShifts)
+                            {
+                                <tr>
+                                    <td>@item.RegionNo</td>
+                                    <td class="text-center @(item.CountS > 1 ? "danger" : "")">@item.CountS</td>
+                                </tr>
+                            }
+                            <tr>
+                                <td><strong>Division Total</strong></td>
+                                <td class="text-center"><strong>@Model.RegionShortShifts.Sum(x => x.CountS)</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-</div>
+}
+else if (Model.ShortShifts.Count() == 0)
+{
+    <div class="alert alert-info"><strong>No edited shifts compliance issues!</strong></div>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <table class="table table-bordered-blue table-condensed">
+                        <thead>
+                            <tr>
+                                <th class="text-center">Person Name</th>
+                                <th class="text-center">Shift Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.ShortShifts.OrderBy(x => x.PersonName).GroupBy(x => x.PersonName).Select(x => x.Key))
+                            {
+                                var data = Model.ShortShifts.Where(x => x.PersonName == item).OrderBy(x => x.PunchDate).ToList();
+                                <tr>
+                                    <td rowspan="@(data.Count())">@item</td>
+                                    <td class="text-center">@data.First().PunchDate.ToShortDateString()</td>
+                                </tr>
+                                for (int i = 1; i < data.Count(); i++)
+                                {
+                                    <tr>
+                                        <td class="text-center">@data[i].PunchDate.ToShortDateString()</td>
+                                    </tr>
+                                }
+}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+}

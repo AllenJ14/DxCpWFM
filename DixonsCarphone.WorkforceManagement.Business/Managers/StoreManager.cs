@@ -1047,6 +1047,30 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
                 return await dbContext.ShortShifts.Where(x => x.WeekNumber == weekNumber && x.HomeBranch == storeNumber).ToListAsync();
             }
         }
+        
+        public async Task<List<sp_RegionShortShifts_Result>> GetShortShiftsRegion(string regionNumber, int weekNumber)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                return await Task.Run(() => dbContext.sp_RegionShortShifts(regionNumber, weekNumber).ToList());
+            }
+        }
+
+        public async Task<List<sp_RegionShortShifts_Result>> GetShortShiftsDivision(string division, int weekNumber)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                return await Task.Run(() => dbContext.sp_DivisionShortShifts(division, weekNumber).ToList());
+            }
+        }
+
+        public async Task<List<sp_RegionShortShifts_Result>> GetShortShiftsChannel(string channel, int weekNumber)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                return await Task.Run(() => dbContext.sp_ChannelShortShifts(channel, weekNumber).ToList());
+            }
+        }
 
         public List<PayCalendarDate> GetPayCalendarDates(string _chain, string _period)
         {
@@ -1100,7 +1124,7 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
                 return await dbContext.KronosEmployeeSummaries.Where(x => x.Division == Division).AsNoTracking().ToListAsync();
             }
         }
-
+        
         private AccountEntryView MapToAccountEntryView(AccountEntryHeader data)
         {
             var toRtn = new AccountEntryView
