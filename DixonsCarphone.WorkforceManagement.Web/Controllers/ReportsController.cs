@@ -555,6 +555,38 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             return View("PunchCompliance", vm);
         }
 
+        [UserFilter(AccessLevel = "Admin,TPC,RM,DD,RD")]
+        public async Task<ActionResult> PunchExceptions()
+        {
+            PunchExceptionsVm vm = new PunchExceptionsVm();
+
+            if (System.Web.HttpContext.Current.Session["_ChannelName"] != null)
+            {
+                vm.Message = "This page is not available in the currently selected view, please select a store from the top right menu or go back.";
+                vm.MessageType = MessageType.Error;
+            }
+            else if (System.Web.HttpContext.Current.Session["_DivisionName"] != null)
+            {
+                vm.level = 2;
+                vm.Exceptions = mapper.Map<List<PunchExceptionsView>>(await _storeManager.GetDivisionPunchExceptions(System.Web.HttpContext.Current.Session["_DivisionName"].ToString()));
+                vm.Trend = mapper.Map<List<PunchTrendView>>(await _storeManager.GetDivisionPunchTrend(System.Web.HttpContext.Current.Session["_DivisionName"].ToString()));
+            }
+            else if (System.Web.HttpContext.Current.Session["_RegionNumber"] != null)
+            {
+                vm.level = 1;
+                vm.Exceptions = mapper.Map<List<PunchExceptionsView>>(await _storeManager.GetRegionPunchExceptions(System.Web.HttpContext.Current.Session["_RegionNumber"].ToString()));
+                vm.Trend = mapper.Map<List<PunchTrendView>>(await _storeManager.GetRegionPunchTrend(System.Web.HttpContext.Current.Session["_RegionNumber"].ToString()));
+            }
+            else
+            {
+                vm.level = 1;
+                vm.Exceptions = mapper.Map<List<PunchExceptionsView>>(await _storeManager.GetRegionPunchExceptions(_store.RegionNo));
+                vm.Trend = mapper.Map<List<PunchTrendView>>(await _storeManager.GetRegionPunchTrend(_store.RegionNo));
+            }
+
+            return View(vm);
+        }
+
         public async Task<ActionResult> EditedShifts(string selectedDate = "Last Week")
         {
             ShortShiftVm vm = new ShortShiftVm();

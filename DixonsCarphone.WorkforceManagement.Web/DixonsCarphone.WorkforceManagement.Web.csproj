@@ -628,6 +628,7 @@
     <Content Include="Views\Planning\FlexStatus.cshtml" />
     <Content Include="Views\Reports\EditedShifts.cshtml" />
     <Content Include="Views\Partials\_INeedHelpModal.cshtml" />
+    <Content Include="Views\Reports\PunchExceptions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DixonsCarphone.WorkforceManagement.Business\DixonsCarphone.WorkforceManagement.Business.csproj">

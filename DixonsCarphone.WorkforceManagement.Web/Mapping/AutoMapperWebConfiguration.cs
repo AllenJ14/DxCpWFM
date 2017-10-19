@@ -233,6 +233,10 @@ namespace DixonsCarphone.WorkforceManagement.Web.Mapping
             CreateMap<EmpComplianceDetailView, EmpComplianceDetail>();
             CreateMap<PunchCompView, CPW_Clocking_Data>();
             CreateMap<CPW_Clocking_Data, PunchCompView>();
+            CreateMap<sp_RegionPunchExceptions_Result, PunchExceptionsView>();
+            CreateMap<sp_DivisionPunchExceptions_Result, PunchExceptionsView>();
+            CreateMap<sp_RegionPunchTrend_Result, PunchTrendView>();
+            CreateMap<sp_DivisionPunchTrend_Result, PunchTrendView>();
             CreateMap<sp_RegionPunchCompliance_Result, RegionPunchComplianceItem>();
             CreateMap<RegionPunchComplianceItem, sp_RegionPunchCompliance_Result>();
             CreateMap<sp_DivisionPunchCompliance_Result, RegionPunchComplianceItem>();

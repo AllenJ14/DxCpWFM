@@ -99,6 +99,14 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
 
         Task<List<sp_RegionPunchCompliance_Result>> GetRegionPunch(string regionNo, int weekNum);
 
+        Task<List<sp_RegionPunchTrend_Result>> GetRegionPunchTrend(string regionNo);
+
+        Task<List<sp_RegionPunchExceptions_Result>> GetRegionPunchExceptions(string regionNo);
+
+        Task<List<sp_DivisionPunchTrend_Result>> GetDivisionPunchTrend(string division);
+
+        Task<List<sp_DivisionPunchExceptions_Result>> GetDivisionPunchExceptions(string division);
+
         Task<List<Store>> GetAllRegions();
 
         Task<List<sp_DivisionPunchCompliance_Result>> GetDivisionPunch(string Division, int weekNum);

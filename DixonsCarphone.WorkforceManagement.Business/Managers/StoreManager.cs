@@ -122,6 +122,24 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             }
         }
 
+        //get punch trend for region
+        public async Task<List<sp_RegionPunchTrend_Result>> GetRegionPunchTrend(string regionNo)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                return await Task.Run(() => dbContext.sp_RegionPunchTrend(regionNo).ToList());
+            }
+        }
+
+        //get punch exceptions for region
+        public async Task<List<sp_RegionPunchExceptions_Result>> GetRegionPunchExceptions(string regionNo)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                return await Task.Run(() => dbContext.sp_RegionPunchExceptions(regionNo).ToList());
+            }
+        }
+
         //Get punch detail for region BMs
         public async Task<List<CPW_Clocking_Data>> GetRegionBMPunch(string regionNo, int weekNum)
         {
@@ -139,6 +157,24 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             {
                 var data = await Task.Run(() => dbContext.sp_DivisionPunchCompliance(Division, weekNum));
                 return data.ToList();
+            }
+        }
+
+        //get punch trend for region
+        public async Task<List<sp_DivisionPunchTrend_Result>> GetDivisionPunchTrend(string division)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                return await Task.Run(() => dbContext.sp_DivisionPunchTrend(division).ToList());
+            }
+        }
+
+        //get punch exceptions for region
+        public async Task<List<sp_DivisionPunchExceptions_Result>> GetDivisionPunchExceptions(string division)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                return await Task.Run(() => dbContext.sp_DivisionPunchExceptions(division).ToList());
             }
         }
 

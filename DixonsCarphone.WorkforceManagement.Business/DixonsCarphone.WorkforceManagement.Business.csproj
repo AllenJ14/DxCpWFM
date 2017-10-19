@@ -283,6 +283,12 @@
     <Compile Include="Entities\sp_DivisionPunchCompliance_Result.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\sp_DivisionPunchExceptions_Result.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\sp_DivisionPunchTrend_Result.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\sp_DivisionShortShifts_Result.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
@@ -344,6 +350,12 @@
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\sp_RegionPunchCompliance_Result.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\sp_RegionPunchExceptions_Result.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\sp_RegionPunchTrend_Result.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\sp_RegionShortShifts_Result.cs">

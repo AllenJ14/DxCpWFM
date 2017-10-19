@@ -829,5 +829,41 @@ namespace DixonsCarphone.WorkforceManagement.Business.Entities
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_RegionShortShifts_Result>("sp_DivisionShortShifts", divisionParameter, weekNumberParameter);
         }
+    
+        public virtual ObjectResult<sp_RegionPunchTrend_Result> sp_RegionPunchTrend(string region)
+        {
+            var regionParameter = region != null ?
+                new ObjectParameter("Region", region) :
+                new ObjectParameter("Region", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_RegionPunchTrend_Result>("sp_RegionPunchTrend", regionParameter);
+        }
+    
+        public virtual ObjectResult<sp_DivisionPunchTrend_Result> sp_DivisionPunchTrend(string division)
+        {
+            var divisionParameter = division != null ?
+                new ObjectParameter("Division", division) :
+                new ObjectParameter("Division", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_DivisionPunchTrend_Result>("sp_DivisionPunchTrend", divisionParameter);
+        }
+    
+        public virtual ObjectResult<sp_RegionPunchExceptions_Result> sp_RegionPunchExceptions(string region)
+        {
+            var regionParameter = region != null ?
+                new ObjectParameter("Region", region) :
+                new ObjectParameter("Region", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_RegionPunchExceptions_Result>("sp_RegionPunchExceptions", regionParameter);
+        }
+    
+        public virtual ObjectResult<sp_DivisionPunchExceptions_Result> sp_DivisionPunchExceptions(string division)
+        {
+            var divisionParameter = division != null ?
+                new ObjectParameter("division", division) :
+                new ObjectParameter("division", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_DivisionPunchExceptions_Result>("sp_DivisionPunchExceptions", divisionParameter);
+        }
     }
 }

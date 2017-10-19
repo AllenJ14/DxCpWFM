@@ -1154,6 +1154,12 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Parameter Name="DivisionName" Type="nvarchar" Mode="In" />
           <Parameter Name="weekNumber" Type="int" Mode="In" />
         </Function>
+        <Function Name="sp_DivisionPunchExceptions" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="division" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_DivisionPunchTrend" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Division" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="sp_DivisionShortShifts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Division" Type="nvarchar" Mode="In" />
           <Parameter Name="WeekNumber" Type="int" Mode="In" />
@@ -1203,6 +1209,12 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
         <Function Name="sp_RegionPunchCompliance" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="regionNumber" Type="nvarchar" Mode="In" />
           <Parameter Name="weekNumber" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_RegionPunchExceptions" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Region" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_RegionPunchTrend" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Region" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="sp_RegionShortShifts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="RegionNo" Type="nvarchar" Mode="In" />
@@ -2012,6 +2024,18 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <FunctionImport Name="sp_DivisionShortShifts" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_RegionShortShifts_Result)">
             <Parameter Name="Division" Mode="In" Type="String" />
             <Parameter Name="WeekNumber" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_RegionPunchTrend" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_RegionPunchTrend_Result)">
+          <Parameter Name="Region" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_DivisionPunchTrend" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_DivisionPunchTrend_Result)">
+          <Parameter Name="Division" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_RegionPunchExceptions" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_RegionPunchExceptions_Result)">
+          <Parameter Name="Region" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_DivisionPunchExceptions" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_DivisionPunchExceptions_Result)">
+          <Parameter Name="division" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="BestPracticeCategoryType">
@@ -3663,6 +3687,36 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Property Type="String" Name="RegionNo" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="BranchName" Nullable="false" MaxLength="1" />
           <Property Type="Int32" Name="CountS" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_RegionPunchTrend_Result">
+          <Property Type="String" Name="RegionNo" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="CST_CNTR_ID" Nullable="true" />
+          <Property Type="String" Name="StoreName" Nullable="true" MaxLength="500" />
+          <Property Type="Int32" Name="WeekNumber" Nullable="true" />
+          <Property Type="Decimal" Name="Compliance" Nullable="true" Precision="26" Scale="14" />
+        </ComplexType>
+        <ComplexType Name="sp_DivisionPunchTrend_Result">
+          <Property Type="String" Name="RegionNo" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="CST_CNTR_ID" Nullable="false" />
+          <Property Type="String" Name="StoreName" Nullable="false" MaxLength="1" />
+          <Property Type="Int32" Name="WeekNumber" Nullable="true" />
+          <Property Type="Decimal" Name="Compliance" Nullable="true" Precision="26" Scale="14" />
+        </ComplexType>
+        <ComplexType Name="sp_RegionPunchExceptions_Result">
+          <Property Type="String" Name="RegionNo" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="CST_CNTR_ID" Nullable="false" />
+          <Property Type="String" Name="StoreName" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="FORENAME" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="WeekNumber" Nullable="true" />
+          <Property Type="Decimal" Name="Compliance" Nullable="true" Precision="25" Scale="14" />
+        </ComplexType>
+        <ComplexType Name="sp_DivisionPunchExceptions_Result">
+          <Property Type="String" Name="RegionNo" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="CST_CNTR_ID" Nullable="false" />
+          <Property Type="String" Name="StoreName" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="FORENAME" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="WeekNumber" Nullable="true" />
+          <Property Type="Decimal" Name="Compliance" Nullable="true" Precision="25" Scale="14" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -5345,6 +5399,52 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
                 <ScalarProperty Name="RegionNo" ColumnName="RegionNo" />
                 <ScalarProperty Name="BranchName" ColumnName="BranchName" />
                 <ScalarProperty Name="CountS" ColumnName="CountS" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_RegionPunchTrend" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_RegionPunchTrend">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.sp_RegionPunchTrend_Result">
+                <ScalarProperty Name="RegionNo" ColumnName="RegionNo" />
+                <ScalarProperty Name="CST_CNTR_ID" ColumnName="CST_CNTR_ID" />
+                <ScalarProperty Name="StoreName" ColumnName="StoreName" />
+                <ScalarProperty Name="WeekNumber" ColumnName="WeekNumber" />
+                <ScalarProperty Name="Compliance" ColumnName="Compliance" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_DivisionPunchTrend" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_DivisionPunchTrend">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.sp_DivisionPunchTrend_Result">
+                <ScalarProperty Name="RegionNo" ColumnName="RegionNo" />
+                <ScalarProperty Name="CST_CNTR_ID" ColumnName="CST_CNTR_ID" />
+                <ScalarProperty Name="StoreName" ColumnName="StoreName" />
+                <ScalarProperty Name="WeekNumber" ColumnName="WeekNumber" />
+                <ScalarProperty Name="Compliance" ColumnName="Compliance" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_RegionPunchExceptions" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_RegionPunchExceptions">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.sp_RegionPunchExceptions_Result">
+                <ScalarProperty Name="RegionNo" ColumnName="RegionNo" />
+                <ScalarProperty Name="CST_CNTR_ID" ColumnName="CST_CNTR_ID" />
+                <ScalarProperty Name="StoreName" ColumnName="StoreName" />
+                <ScalarProperty Name="FORENAME" ColumnName="FORENAME" />
+                <ScalarProperty Name="WeekNumber" ColumnName="WeekNumber" />
+                <ScalarProperty Name="Compliance" ColumnName="Compliance" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_DivisionPunchExceptions" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_DivisionPunchExceptions">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.sp_DivisionPunchExceptions_Result">
+                <ScalarProperty Name="RegionNo" ColumnName="RegionNo" />
+                <ScalarProperty Name="CST_CNTR_ID" ColumnName="CST_CNTR_ID" />
+                <ScalarProperty Name="StoreName" ColumnName="StoreName" />
+                <ScalarProperty Name="FORENAME" ColumnName="FORENAME" />
+                <ScalarProperty Name="WeekNumber" ColumnName="WeekNumber" />
+                <ScalarProperty Name="Compliance" ColumnName="Compliance" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
