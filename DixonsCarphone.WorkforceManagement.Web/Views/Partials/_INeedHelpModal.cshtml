@@ -28,7 +28,7 @@
                                     <div class="panel-heading">Did this help?</div>
                                     <div class="panel-body">
                                         <button type="button" class="btn btn-success dismiss col-sm-3 col-sm-offset-3" data-dismiss="modal">Yes</button>
-                                        <button class="btn btn-danger lvl2 col-sm-3" data-step="1_1">No</button>
+                                        <button class="btn btn-danger lvl2 col-sm-3" data-step="1l_1">No</button>
                                     </div>
                                 </div>
                             </div>
@@ -94,7 +94,7 @@
                                 <div class="list-group">
                                     <button type="button" class="list-group-item lvl3" data-step="3_1_1">A transfer was cancelled or has happened at the wrong time</button>
                                     <button type="button" class="list-group-item lvl3" data-step="3_1_2">New starter is no longer joining <u>and did not attend Ignite</u></button>
-                                    <button type="button" class="list-group-item lvlup" data-step="4">New starter that is still joining</button>
+                                    <button type="button" class="list-group-item lvlup3" data-step="4">New starter that is still joining</button>
                                     <button type="button" class="list-group-item lvl3" data-step="3_1_4">New starter attended Ignite but failed</button>
                                 </div>
                             </div>
@@ -133,9 +133,7 @@
                         <div class="panel panel-default">
                             <div class="panel-heading"><strong>Ignite course date pushed back</strong></div>
                             <div class="panel-body">
-                                <ol>
-                                    <li>Complete the timecard with the colleague's contract hours as the <u>'Approved Unpaid Leave'</u> paycode</li>
-                                </ol>
+                                <p>If the course has been pushed back and your collegues hasn't worked any hours this week you should process this as <u>'Approved Unpaid Leave'</u> for the colleague's contracted hours.</p>
                                 <div class="text-center"><button type="button" class="btn btn-primary dismiss" data-dismiss="modal">Done</button></div>
                             </div>
                         </div>
@@ -146,7 +144,7 @@
                             <div class="panel-body">
                                 <ol>
                                     <li>Process this with your TPC</li>
-                                    <li>Complete the timecard with the colleague's contract hours as the <u>'Approved Unpaid Leave'</u> paycode</li>
+                                    <li>Process the hours the colleague attended Ignite on the timecard as normal</li>
                                 </ol>
                                 <div class="text-center"><button type="button" class="btn btn-primary dismiss" data-dismiss="modal">Done</button></div>
                             </div>
@@ -156,10 +154,9 @@
                         <div class="panel panel-default">
                             <div class="panel-heading"><strong>Colleague was absent for Ignite course and will not be joining CPW</strong></div>
                             <div class="panel-body">
-                                <ol>
-                                    <li>Process this with your TPC</li>
-                                    <li>Complete the timecard with the colleague's contract hours as the <u>'Approved Unpaid Leave'</u> paycode</li>
-                                </ol>
+                                <p>
+                                    If the colleague is no longer joining and did not attend any of the ignite course then process this as <u>'Approved Unpaid Leave'</u> for the colleague's contracted hours and ensure the colleague's termination has been processed.
+                                </p>
                                 <div class="text-center"><button type="button" class="btn btn-primary dismiss" data-dismiss="modal">Done</button></div>
                             </div>
                         </div>
@@ -173,16 +170,26 @@
                         </div>
                     </div>
                     <div id="5_1" style="display:none;">
-                        <p>Change the time period back and review any missed exceptions.<br />Once done change to the previous pay period and sign off as normal.</p>
-                        <p>Has this fixed the issue?</p>
-                        <button type="button" class="btn btn-success dismiss col-sm-3 col-sm-offset-3 dismiss" data-dismiss="modal">Yes</button>
-                        <button type="button" class="btn btn-danger col-sm-3 lvl3" data-step="5_1_1">No</button>
+                        <div class="panel panel-default">
+                            <div class="panel-heading"><strong>Outstanding Exceptions</strong></div>
+                            <div class="panel-body">
+                                <p>Please check back through previous weeks and review any missed exceptions.<br />Once done change to the previous pay period and sign off as normal.</p>
+                                <p>Has this fixed the issue?</p>
+                                <button type="button" class="btn btn-success dismiss col-sm-3 col-sm-offset-3 dismiss" data-dismiss="modal">Yes</button>
+                                <button type="button" class="btn btn-danger col-sm-3 lvl3" data-step="5_1_1">No</button>
+                            </div>
+                        </div>
                     </div>
                     <div id="5_2" style="display:none;">
-                        <p>Handle all exceptions as per BAU process.</p>
-                        <p>Can you now sign off the timecard?</p>
-                        <button type="button" class="btn btn-success dismiss col-sm-3 col-sm-offset-3 dismiss" data-dismiss="modal">Yes</button>
-                        <button type="button" class="btn btn-danger col-sm-3 lvl3" data-step="5_2_1">No</button>
+                        <div class="panel panel-default">
+                            <div class="panel-heading"><strong>Outstanding Exceptions</strong></div>
+                            <div class="panel-body">
+                                <p>Handle all exceptions as per BAU process.</p>
+                                <p>Can you now sign off the timecard?</p>
+                                <button type="button" class="btn btn-success dismiss col-sm-3 col-sm-offset-3 dismiss" data-dismiss="modal">Yes</button>
+                                <button type="button" class="btn btn-danger col-sm-3 lvlup4" data-step="5_1">No</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div id="level3">
@@ -196,7 +203,7 @@
                             <div class="panel-heading"><strong>New starter is no longer joining <U>and did not attend Ignite</U></strong></div>
                             <div class="panel-body">
                                 <ol>
-                                    <li>Process this with your TPC</li>
+                                    <li>Process the leaver with your TPC</li>
                                     <li>Complete the timecard with the colleague's contract hours as the <u>'Approved Unpaid Leave'</u> paycode</li>
                                 </ol>
                                 <div class="text-center"><button type="button" class="btn btn-primary dismiss" data-dismiss="modal">Done</button></div>
@@ -208,8 +215,8 @@
                             <div class="panel-heading"><strong>New starter attended Ignite but failed</strong></div>
                             <div class="panel-body">
                                 <ol>
-                                    <li>Process this with your TPC</li>
-                                    <li>Complete the timecard with the colleague's contract hours as the <u>'Approved Unpaid Leave'</u> paycode</li>
+                                    <li>Process the leaver with your TPC</li>
+                                    <li>Process the hours the colleague attended Ignite on the timecard as normal</li>
                                 </ol>
                                 <div class="text-center"><button type="button" class="btn btn-primary dismiss" data-dismiss="modal">Done</button></div>
                             </div>

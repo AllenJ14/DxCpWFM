@@ -169,13 +169,21 @@ else
             });
         });
 
-        //change path
-        $('#helpModal').on('click', '.lvlup', function () {
+        //change path 3
+        $('#helpModal').on('click', '.lvlup3', function () {
             var path = $(this).data('step').toString();
             $('#3_1').slideUp(350, function () {
                 $('#' + path).toggle()
                 $('#3').toggle();
                 $('#level1').slideDown(350);
+            });
+        });
+
+        //change path 4
+        $('#helpModal').on('click', '.lvlup4', function () {
+            var path = $(this).data('step').toString();
+            $('#5_2').slideUp(350, function () {
+                $('#' + path).slideDown(350);
             });
         });
     });
