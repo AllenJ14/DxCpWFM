@@ -7036,8 +7036,8 @@ dl.table-display {
   white-space: nowrap;
   vertical-align: middle;
   background-color: indianred;
-  border-radius: 50%;
-  margin: -1px 0px;
+  border-radius: 25%;
+  margin: -1px 5px;
 }
 
 .badge-wf-red:empty {

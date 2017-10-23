@@ -23,13 +23,9 @@
         });
     };        
 
-    $('input[type=date]').attr({
-        value: $script.attr('today'),
-        min: $script.attr('min')
-    });
-
-    $grp.wrapAll('<div id="grp' + grpCount + '" class="col-sm-12"><hr /></div>');
+    $grp.wrapAll('<div id="grp' + grpCount + '" class="col-sm-12"></div>');
     $grp = $('#grp0');
+    $grp.prepend('<hr/>');
 
     $('.branchValidate').blur(function(){
         if($(this).val() !== 0){

@@ -116,7 +116,7 @@ else
                         <td class="text-center"><strong>@(item.PersonData.Person.ManagerSignoffThruDateTime >= Model.weekStart.AddDays(6) ? "✔" : "X")</strong></td>
                         @*<td class="text-center"><strong>@(data.ManagerSignoffDateTime.Contains(Model.weekStart.AddDays(6).ToShortDateString()) ? "✔" : "X")</strong></td>*@
                         @*<td class="text-center">@(data.PeriodTotalData.PeriodTotals.Totals.Total.Count() == 0 ? "Yes" : "")</td>*@
-                        <td class="text-center">@(ss > 0 ? ss.ToString() : "")</td>
+                        <td class="text-center @(ss > 1 ? "danger" : "")">@(ss > 0 ? ss.ToString() : "")</td>
                         <td class="text-center"><button type="button" class="btn btn-sm btn-info helpModal" data-empnum="@item.PersonNumber">Help</button></td>
                     </tr>
                 }
@@ -147,7 +147,6 @@ else
         //base to level 1
         $('#helpModal').on('click', '.lvl1', function () {
             var path = $(this).data('step').toString();
-            console.log(path);
             $('#baseContainer').slideUp(350, function () {
                 $('#' + path).slideDown(350);
             });            

@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "View Ticket";
     var grpQuestions = Model.TicketAnswers.Where(x => x.TicketTemplate.GrpLimit != null).OrderBy(x => x.EntryId).ToList();
-    var firstGrpq = grpQuestions.First().QuestionId;
+    var firstGrpq = grpQuestions.Count() > 0 ? grpQuestions.First().QuestionId : 0;
     var grpCount = Model.TicketAnswers.Where(x => x.QuestionId == firstGrpq).Count();
     var qInGrp = grpQuestions.Select(x => x.QuestionId).Distinct().Count();
 }

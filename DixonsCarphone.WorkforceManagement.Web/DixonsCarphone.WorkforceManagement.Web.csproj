@@ -267,6 +267,10 @@
     <Content Include="Content\Workflow\WorkflowCrossRegion.min.js">
       <DependentUpon>WorkflowCrossRegion.js</DependentUpon>
     </Content>
+    <Content Include="Content\Workflow\WorkflowHelpTransfer.js" />
+    <Content Include="Content\Workflow\WorkflowHelpTransfer.min.js">
+      <DependentUpon>WorkflowHelpTransfer.js</DependentUpon>
+    </Content>
     <Content Include="Content\Workflow\WorkflowMaster.js" />
     <Content Include="Content\Workflow\WorkflowMaster.min.js">
       <DependentUpon>WorkflowMaster.js</DependentUpon>

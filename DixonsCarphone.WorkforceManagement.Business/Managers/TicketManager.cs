@@ -50,7 +50,11 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
         {
             using(var dbContext = new DxCpWfmContext())
             {
+#if DEBUG
+                return await dbContext.TicketTemplates.Where(x => x.TicketTypeId == _TicketTypeId).OrderBy(x => x.QuestionId).ToListAsync();
+#else
                 return await dbContext.TicketTemplates.Where(x => x.TicketTypeId == _TicketTypeId && (bool)x.TicketType.Live).OrderBy(x => x.QuestionId).ToListAsync();
+#endif
             }
         }
 
@@ -230,7 +234,11 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
         {
             using (var dbContext = new DxCpWfmContext())
             {
+#if DEBUG
+                return await dbContext.TicketTypes.ToListAsync();
+#else
                 return await dbContext.TicketTypes.Where(x => (bool)x.Live).ToListAsync();
+#endif
             }
         }
 

@@ -64,5 +64,11 @@
     "inputFiles": [
       "Content/Workflow/WorkflowViewTicketCR.js"
     ]
+  },
+  {
+    "outputFileName": "Content/Workflow/WorkflowHelpTransfer.min.js",
+    "inputFiles": [
+      "Content/Workflow/WorkflowHelpTransfer.js"
+    ]
   }
 ]
