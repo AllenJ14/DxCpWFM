@@ -726,7 +726,7 @@ warning 6002: The table/view 'CarphoneWfm.dbo.KronosEmployeeSummary' does not ha
           <Property Name="EntryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TicketId" Type="int" Nullable="false" />
           <Property Name="QuestionId" Type="int" Nullable="false" />
-          <Property Name="Answer" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Answer" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="TicketAudit">
           <Key>
@@ -2864,7 +2864,7 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Property Name="EntryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TicketId" Type="Int32" Nullable="false" />
           <Property Name="QuestionId" Type="Int32" Nullable="false" />
-          <Property Name="Answer" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Answer" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="TicketStub" Relationship="DixonsCarphone.WorkforceManagement.Business.FK_TicketAnswers_TicketStub" FromRole="TicketAnswer" ToRole="TicketStub" />
           <NavigationProperty Name="TicketTemplate" Relationship="DixonsCarphone.WorkforceManagement.Business.FK_TicketAnswers_TicketTemplate" FromRole="TicketAnswer" ToRole="TicketTemplate" />
         </EntityType>

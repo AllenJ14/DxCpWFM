@@ -70,5 +70,17 @@
     "inputFiles": [
       "Content/Workflow/WorkflowHelpTransfer.js"
     ]
+  },
+  {
+    "outputFileName": "Content/Workflow/WorkflowViewTicketHT.min.js",
+    "inputFiles": [
+      "Content/Workflow/WorkflowViewTicketHT.js"
+    ]
+  },
+  {
+    "outputFileName": "Content/Workflow/WorkflowHelpUnknown.min.js",
+    "inputFiles": [
+      "Content/Workflow/WorkflowHelpUnknown.js"
+    ]
   }
 ]

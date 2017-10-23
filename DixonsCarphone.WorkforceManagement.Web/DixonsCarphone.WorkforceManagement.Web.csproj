@@ -271,6 +271,10 @@
     <Content Include="Content\Workflow\WorkflowHelpTransfer.min.js">
       <DependentUpon>WorkflowHelpTransfer.js</DependentUpon>
     </Content>
+    <Content Include="Content\Workflow\WorkflowHelpUnknown.js" />
+    <Content Include="Content\Workflow\WorkflowHelpUnknown.min.js">
+      <DependentUpon>WorkflowHelpUnknown.js</DependentUpon>
+    </Content>
     <Content Include="Content\Workflow\WorkflowMaster.js" />
     <Content Include="Content\Workflow\WorkflowMaster.min.js">
       <DependentUpon>WorkflowMaster.js</DependentUpon>
@@ -286,6 +290,10 @@
     <Content Include="Content\Workflow\WorkflowViewTicketCR.js" />
     <Content Include="Content\Workflow\WorkflowViewTicketCR.min.js">
       <DependentUpon>WorkflowViewTicketCR.js</DependentUpon>
+    </Content>
+    <Content Include="Content\Workflow\WorkflowViewTicketHT.js" />
+    <Content Include="Content\Workflow\WorkflowViewTicketHT.min.js">
+      <DependentUpon>WorkflowViewTicketHT.js</DependentUpon>
     </Content>
     <Content Include="Error\404.html" />
     <Content Include="Error\Default.html" />

@@ -191,4 +191,8 @@
     {
         <script id="wfCR" src="~/Content/Workflow/WorkflowViewTicketCR.min.js" data-branch="@Model.TicketAnswers.Where(x => x.QuestionId == 2).First().Answer" data-exception="@Model.Exception"></script>
     }
+    else if(Model.TicketTypeId == 4)
+    {
+        <script id="wfHT" src="~/Content/Workflow/WorkflowViewTicketHT.min.js"></script>
+    }
 }
