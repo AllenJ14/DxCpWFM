@@ -234,6 +234,7 @@
     <Content Include="Areas\Workflow\Views\Workflow\ViewTicket.cshtml" />
     <Content Include="Areas\Workflow\Views\_ViewStart.cshtml" />
     <Content Include="CacheDependencyFiles\TextFile1.txt" />
+    <Content Include="Content\Custom\TCSignOff.js" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\New\bootstrap.css" />
     <Content Include="Content\New\bootstrap.js" />
