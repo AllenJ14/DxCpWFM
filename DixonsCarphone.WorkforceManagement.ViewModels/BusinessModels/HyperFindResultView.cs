@@ -9,9 +9,9 @@ namespace DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
 
         public PersonDataView PersonData { get; set; }
 
-        public int parsedPerson { get
+        public string parsedPerson { get
             {
-                return int.Parse(PersonNumber.Replace("UK", ""));
+                return int.Parse(PersonNumber.Replace("UK", "")).ToString();
             } }
     }
 

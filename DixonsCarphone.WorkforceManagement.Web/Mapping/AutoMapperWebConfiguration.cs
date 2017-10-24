@@ -72,6 +72,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Mapping
             CreateMap<sp_GetClosedFormsByUser_Result, TicketSummaryView>();
             CreateMap<sp_GetClosedFormsByTPC_Result, TicketSummaryView>();
             CreateMap<sp_GetClosedFormsByGroup_Result, TicketSummaryView>();
+            CreateMap<sp_CheckHelpTickets_Result, HelpTckSummaryView>();
         }
     }
 

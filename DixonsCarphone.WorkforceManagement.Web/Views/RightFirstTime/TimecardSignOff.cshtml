@@ -111,13 +111,25 @@ else
                 {
                     //var data = Model.ts.Where(x => x.Employee.PersonIdentity.PersonNumber == item.PersonNumber).FirstOrDefault();
                     var ss = Model.ss.Where(x => x.PersonNum == item.PersonNumber).Count();
+                    var help = Model.HelpTcks.Where(x => x.EmpNum == item.parsedPerson).FirstOrDefault();
                     <tr>
                         <td>@item.FullName</td>
                         <td class="text-center"><strong>@(item.PersonData.Person.ManagerSignoffThruDateTime >= Model.weekStart.AddDays(6) ? "✔" : "X")</strong></td>
                         @*<td class="text-center"><strong>@(data.ManagerSignoffDateTime.Contains(Model.weekStart.AddDays(6).ToShortDateString()) ? "✔" : "X")</strong></td>*@
                         @*<td class="text-center">@(data.PeriodTotalData.PeriodTotals.Totals.Total.Count() == 0 ? "Yes" : "")</td>*@
                         <td class="text-center @(ss > 1 ? "danger" : "")">@(ss > 0 ? ss.ToString() : "")</td>
-                        <td class="text-center"><button type="button" class="btn btn-sm btn-info helpModal" data-empnum="@item.PersonNumber">Help</button></td>
+                        @if (help != null)
+                        {
+                            <td class="text-center"><button type="button" class="btn btn-sm @(help.Status == "Completed" ? "btn-success" : "btn-warning")">@(help.Status == "Completed" ? "Resolved" : "Raised")</button></td>
+                        }
+                        else if(item.PersonData.Person.ManagerSignoffThruDateTime < Model.weekStart.AddDays(6))
+                        {
+                            <td class="text-center"><button type="button" class="btn btn-sm btn-info helpModal" data-empnum="@item.PersonNumber">Help</button></td>
+                        }
+                        else
+                        {
+                            <td><button class="btn btn-sm" style="visibility:hidden;">a</button></td>
+                        }
                     </tr>
                 }
             </table>

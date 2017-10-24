@@ -89,6 +89,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             {
                 vm.hf = mapper.Map<List<HyperFindResultView>>(await _KronosManager.GetKronosHyperFind(_store.KronosStoreName, vm.weekStart.ToShortDateString(), vm.weekStart.AddDays(6).ToShortDateString()));
                 vm.ss = mapper.Map<List<ShortShiftView>>(await _storeManager.GetShortShiftsBranch(StoreNumber, weekOfYr));
+                vm.HelpTcks = mapper.Map<List<HelpTckSummaryView>>(await _storeManager.GetHelpTickets(StoreNumber));
 
                 short a = 1;
                 while(vm.hf == null && a<3)

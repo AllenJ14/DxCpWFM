@@ -8,6 +8,7 @@ namespace DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
         //public List<TimesheetView> ts { get; set; }
         public List<HyperFindResultView> hf { get; set; }
         public List<ShortShiftView> ss { get; set; }
+        public List<HelpTckSummaryView> HelpTcks { get; set; }
 
         public List<RegionSignOff> rso { get; set; }
 
