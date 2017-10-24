@@ -1144,6 +1144,14 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             }
         }
 
+        public async Task<List<sp_CheckHelpTickets_Result>> GetHelpTickets(int branchNum)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                return await Task.Run(() => dbContext.sp_CheckHelpTickets((short)branchNum).ToList());
+            }
+        }
+
         public async Task<List<KronosEmployeeSummary>> GetActiveColleagues(string Region)
         {
             using (var dbContext = new DxCpWfmContext())

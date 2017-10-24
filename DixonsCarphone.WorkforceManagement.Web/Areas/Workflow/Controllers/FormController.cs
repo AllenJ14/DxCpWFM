@@ -59,7 +59,9 @@ namespace DixonsCarphone.WorkforceManagement.Web.Areas.Workflow.Controllers
             }
 
             var name = _ticketManager.GetFormName(FormTypeId);
-            
+
+            ViewBag.defaultEmp = TempData["empId"] != null ? TempData["empId"].ToString() : "e";
+
             return View(new TicketFormTemplate
             {
                 QuestionList = mapper.Map<List<TicketTemplateView>>(data),

@@ -865,5 +865,14 @@ namespace DixonsCarphone.WorkforceManagement.Business.Entities
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_DivisionPunchExceptions_Result>("sp_DivisionPunchExceptions", divisionParameter);
         }
+    
+        public virtual ObjectResult<sp_CheckHelpTickets_Result> sp_CheckHelpTickets(Nullable<short> branchNum)
+        {
+            var branchNumParameter = branchNum.HasValue ?
+                new ObjectParameter("BranchNum", branchNum) :
+                new ObjectParameter("BranchNum", typeof(short));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_CheckHelpTickets_Result>("sp_CheckHelpTickets", branchNumParameter);
+        }
     }
 }

@@ -106,5 +106,13 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             await _KronosManager.LogOff();
             return View(vm);
         }
+
+        [HttpPost]
+        public ActionResult RaiseTicket(string empId, string formType)
+        {
+            TempData["empId"] = int.Parse(empId.Replace("UK", ""));
+
+            return RedirectToAction("NewSubmission","Form", new {area="Workflow", FormTypeId=formType });
+        }
     }
 }

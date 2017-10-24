@@ -127,6 +127,7 @@ else
 
 @section myScripts{
 <script>
+    
     $(function () {
         var empNum = 0;
         var first = true;
@@ -134,13 +135,30 @@ else
         var contentHtml = $helpBody.html();
 
         $('.helpModal').click(function () {
-            empNum = $(this).data('empnum');        
+            empNum = $(this).data('empnum');
             if (!first) {
                 $helpBody.html(contentHtml);
             }
             else {
                 first = !first;
             };
+            $('#helpModal').modal('toggle');
+        });
+
+        $('#helpModal').on('click', '.tckRaise', function () {
+            var form = $('<form></form>');
+            console.log($(this));
+
+            form.attr('method', 'post');
+            form.attr('action', '/RightFirstTime/RaiseTicket');
+            form.attr('target', '_blank');
+
+            form.append('<input type="hidden" name="empId" value="' + empNum + '">');
+            form.append('<input type="hidden" name="formType" value="' + $(this).data('formtype').toString() + '">');
+
+            $(document.body).append(form);
+            form.submit();
+
             $('#helpModal').modal('toggle');
         });
 

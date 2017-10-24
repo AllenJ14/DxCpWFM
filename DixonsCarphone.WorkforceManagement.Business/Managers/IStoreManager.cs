@@ -192,5 +192,7 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
         Task<List<KronosEmployeeSummary>> GetActiveColleaguesDivision(string Division);
 
         List<CPW_Clocking_Data> GetEmployeePunch(string empNumber, int startWeek, int endWeek);
+
+        Task<List<sp_CheckHelpTickets_Result>> GetHelpTickets(int branchNum);
     }
 }

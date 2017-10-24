@@ -1,4 +1,8 @@
 ﻿<div class="modal fade" tabindex="-1" role="dialog" id="helpModal" data-backdrop="static">
+    <form action="/RightFirstTime/Help" id="helpForm" method="post">
+        <input id="helpType" name="helpType" type="hidden" value="e" />
+        <input id="id" name="id" type="hidden" value="e" />
+    </form>
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -36,12 +40,7 @@
                     </div>
                     <div id="2" style="display:none;">
                         <div class="panel panel-default">
-                            <div class="panel-heading"><strong>Cross Region Transfer</strong></div>
-                            <div class="panel-body">
-                                <div class="list-group">
-                                    <a href="#" target="_blank" class="list-group-item active text-center"><strong>Raise a cross region request</strong></a>
-                                </div>
-                            </div>
+                            <button type="button" class="btn btn-lg btn-primary col-xs-12 text-center tckRaise" data-formtype="1"><strong>Raise a ticket</strong></button>
                         </div>
                     </div>
                     <div id="3" style="display:none;">
@@ -93,9 +92,7 @@
                 </div>
                 <div id="level2">
                     <div id="1_1" style="display:none;">
-                        <div class="list-group">
-                            <a href="#" target="_blank" class="list-group-item active text-center"><strong>Raise a ticket</strong></a>
-                        </div>
+                        <button type="button" class="btn btn-lg btn-primary col-xs-12 text-center tckRaise" data-formtype="3"><strong>Raise a ticket</strong></button>
                     </div>
                     <div id="3_1" style="display:none;">
                         <div class="panel panel-default">
@@ -135,9 +132,7 @@
                         </div>
                     </div>
                     <div id="3_4" style="display:none;">
-                        <div class="list-group">
-                            <a href="#" target="_blank" class="list-group-item active text-center"><strong>Raise a ticket</strong></a>
-                        </div>
+                        <button type="button" class="btn btn-lg btn-primary col-xs-12 text-center tckRaise" data-formtype="5"><strong>Raise a ticket</strong></button>
                     </div>
                     <div id="4_1" style="display:none;">
                         <div class="panel panel-default">
@@ -204,9 +199,7 @@
                 </div>
                 <div id="level3">
                     <div id="3_1_1" style="display:none;">
-                        <div class="list-group">
-                            <a href="#" target="_blank" class="list-group-item active text-center"><strong>Raise a ticket</strong></a>
-                        </div>
+                        <button type="button" class="btn btn-lg btn-primary col-xs-12 text-center tckRaise" data-formtype="4"><strong>Raise a ticket</strong></button>
                     </div>
                     <div id="3_1_2" style="display:none;">
                         <div class="panel panel-default">
@@ -233,9 +226,7 @@
                         </div>
                     </div>
                     <div id="5_1_1" style="display:none;">
-                        <div class="list-group">
-                            <a href="#" target="_blank" class="list-group-item active text-center"><strong>Raise a ticket</strong></a>
-                        </div>
+                        <button type="button" class="btn btn-lg btn-primary col-xs-12 text-center tckRaise" data-formtype="6"><strong>Raise a ticket</strong></button>
                     </div>
                 </div>
             </div>

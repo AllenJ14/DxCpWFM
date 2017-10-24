@@ -262,6 +262,9 @@
     <Compile Include="Entities\sp_ChannelShortShifts_Result.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\sp_CheckHelpTickets_Result.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\sp_DivisionBMWorking_Result.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>

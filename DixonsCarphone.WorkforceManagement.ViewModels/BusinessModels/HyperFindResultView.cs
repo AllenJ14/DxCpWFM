@@ -8,6 +8,11 @@ namespace DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
         public string PersonNumber { get; set; }
 
         public PersonDataView PersonData { get; set; }
+
+        public int parsedPerson { get
+            {
+                return int.Parse(PersonNumber.Replace("UK", ""));
+            } }
     }
 
     public class PersonDataView

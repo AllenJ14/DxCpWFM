@@ -6,12 +6,20 @@
     var grpLimit = $script.attr('data-grplimit');
     var qCount = $script.attr('data-qcount');
     var grpCount = 0;
+    var defaultEmp = $script.data('defaultemp');
 
     if ($empList.length) {
         var action = '/APITest/_empList';
         $.get(action, function (result) {
             $empList.empty;
             $empList.html(result);
+            if (defaultEmp != "e") {
+                $(".empList option").each(function () {
+                    if ($(this).val().startsWith(defaultEmp)) {
+                        $(this).attr({selected: true});
+                    };
+                });
+            };
         });
     };
 

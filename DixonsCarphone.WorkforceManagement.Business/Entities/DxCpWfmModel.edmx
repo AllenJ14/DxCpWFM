@@ -1278,6 +1278,9 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Parameter Name="TicketId" Type="int" Mode="In" />
           <Parameter Name="Username" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="sp_CheckHelpTickets" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="tck">
+          <Parameter Name="BranchNum" Type="smallint" Mode="In" />
+        </Function>
         <Function Name="sp_ChkInteractLvl" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="tck">
           <Parameter Name="level" Type="int" Mode="In" />
           <Parameter Name="TicketTypeId" Type="int" Mode="In" />
@@ -2036,6 +2039,9 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           </FunctionImport>
           <FunctionImport Name="sp_DivisionPunchExceptions" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_DivisionPunchExceptions_Result)">
           <Parameter Name="division" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_CheckHelpTickets" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_CheckHelpTickets_Result)">
+            <Parameter Name="BranchNum" Mode="In" Type="Int16" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="BestPracticeCategoryType">
@@ -3717,6 +3723,11 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Property Type="String" Name="FORENAME" Nullable="true" MaxLength="50" />
           <Property Type="Int32" Name="WeekNumber" Nullable="true" />
           <Property Type="Decimal" Name="Compliance" Nullable="true" Precision="25" Scale="14" />
+        </ComplexType>
+        <ComplexType Name="sp_CheckHelpTickets_Result">
+          <Property Type="Int32" Name="TicketId" Nullable="false" />
+          <Property Type="String" Name="Status" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="EmpNum" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -5445,6 +5456,15 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
                 <ScalarProperty Name="FORENAME" ColumnName="FORENAME" />
                 <ScalarProperty Name="WeekNumber" ColumnName="WeekNumber" />
                 <ScalarProperty Name="Compliance" ColumnName="Compliance" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_CheckHelpTickets" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_CheckHelpTickets">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.sp_CheckHelpTickets_Result">
+                <ScalarProperty Name="TicketId" ColumnName="TicketId" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="EmpNum" ColumnName="EmpNum" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

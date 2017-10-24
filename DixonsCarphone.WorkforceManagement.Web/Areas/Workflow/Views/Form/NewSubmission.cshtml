@@ -121,7 +121,7 @@
 }
 
 @section myScripts{ 
-<script id="wfMaster" src="~/Content/Workflow/WorkflowMaster.min.js" data-grpLimit="@(Model.QuestionList.Where(x => x.GrpLimit != null).FirstOrDefault() != null ? Model.QuestionList.Where(x => x.GrpLimit != null).First().GrpLimit : 0)" data-qCount="@Model.QuestionList.Count()"></script>
+<script id="wfMaster" src="~/Content/Workflow/WorkflowMaster.min.js" data-grpLimit="@(Model.QuestionList.Where(x => x.GrpLimit != null).FirstOrDefault() != null ? Model.QuestionList.Where(x => x.GrpLimit != null).First().GrpLimit : 0)" data-qCount="@Model.QuestionList.Count()" data-defaultemp="@ViewBag.defaultEmp"></script>
 @if (ticketType == 1)
 {
     <script id="wf1" src="~/Content/Workflow/WorkflowCrossRegion.min.js" today="@DateTime.Now.ToString("yyyy-MM-dd")" min="@DateTime.Now.AddDays(-14).ToString("yyyy-MM-dd")"></script>

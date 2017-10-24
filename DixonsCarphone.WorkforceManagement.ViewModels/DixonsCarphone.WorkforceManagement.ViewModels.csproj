@@ -92,6 +92,7 @@
     <Compile Include="BusinessModels\FootfallVm.cs" />
     <Compile Include="BusinessModels\FutureDeploymentView.cs" />
     <Compile Include="BusinessModels\FutureDeploymentVm.cs" />
+    <Compile Include="BusinessModels\HelpTckSummaryView.cs" />
     <Compile Include="BusinessModels\HolidayDetail.cs" />
     <Compile Include="BusinessModels\HolidayPlanningEmpBM.cs" />
     <Compile Include="BusinessModels\HolidayPlanningStoreBM.cs" />
