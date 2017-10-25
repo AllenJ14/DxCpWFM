@@ -172,18 +172,21 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             else if(AccessLevel == "RD")
             {
                 var stores = await _storeManager.GetDivisionsForChannel(AccessArea);
+                var regions = await _storeManager.GetRegionsForDivision(stores.First().Division);
+                regions = regions.OrderBy(x => x.RegionNo).ToList();
+
                 var storesVm = new StoresMenuViewModel {
-                    Stores = stores.Select(x => new SelectListItem { Value = x.Division, Text = x.Division}).ToList(),
+                    Stores = regions.Select(x => new SelectListItem { Value = "Region " + x.RegionNo, Text = "Region " + x.RegionNo}).ToList(),
                     Regions = stores.Select(x => new SelectListItem { Value = x.Division, Text = x.Division }).ToList()
                 };
                 
-                foreach(var item in stores)
-                {
-                    storesVm.Stores.Add(new SelectListItem { Value = item.Division, Text = item.Division });
-                }
-
-                storesVm.Stores.Add(new SelectListItem { Value = stores[0].Channel.ToString(), Text = stores[0].Channel.ToString() });
                 System.Web.HttpContext.Current.Session.Add("_StoresMenu", storesVm);
+                var newSelectedStore = await _storeManager.GetStoreDetails(stores.Select(x => x.CST_CNTR_ID).First());
+                if (newSelectedStore != null)
+                {
+                    System.Web.HttpContext.Current.Session.Add("_StoreDetails", newSelectedStore);
+                    System.Web.HttpContext.Current.Session.Add("_ROIFlag", newSelectedStore.Channel == "ROI");
+                }
                 System.Web.HttpContext.Current.Session.Add("_DivisionName", stores.First().Division.ToString());
             }
             else if(AccessLevel == "Admin" || AccessLevel == "TPC")
