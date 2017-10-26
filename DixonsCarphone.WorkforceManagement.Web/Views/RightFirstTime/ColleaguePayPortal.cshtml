@@ -15,7 +15,7 @@
     <div class="panel-body">
         @if (HttpContext.Current.Session["_PTFlag"].ToString() == "FT")
         {
-            <div class="alert alert-info text-center"><strong>This view is currently only available for part time colleagues</strong></div>
+            <div class="alert alert-info text-center"><strong>This view is currently only available for colleagues on the part time payroll</strong></div>
         }
         else
         {

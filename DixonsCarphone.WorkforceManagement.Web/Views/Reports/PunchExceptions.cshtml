@@ -37,7 +37,7 @@
                     @foreach (var item in Model.RegionRowList)
                 {
                         <tr>
-                            <td>@string.Format("{0} - {1}", item, Model.Trend.Where(x => x.CST_CNTR_ID == item).First().StoreName))</td>
+                            <td>@string.Format("{0} - {1}", item, Model.Trend.Where(x => x.CST_CNTR_ID == item).First().StoreName)</td>
                             @foreach (var week in Model.WeekNumber)
                             {
                                 <td class="text-center @(Model.Trend.Where(x => x.CST_CNTR_ID == item && x.WeekNumber == week).First().Compliance < 0.95M ? "danger" : "")">@string.Format("{0:0.0}%", Model.Trend.Where(x => x.CST_CNTR_ID == item && x.WeekNumber == week).First().Compliance * 100)</td>

@@ -52,7 +52,7 @@ else if (HttpContext.Current.Session["_RegionNumber"] != null)
             <span class="glyphicon glyphicon-time"></span> All information is shown as live from STAR.
         </p>
         <p>
-            If there are no STAR users in a store with timecards still outstanding you can engage your TPC who will be able to support.
+            If there are no STAR users in a store with timecards still outstanding you should engage your TPC who will be able to support.
         </p>
         <table class="table table-bordered-blue table-condensed" style="margin-top:15px;">
             <thead>
@@ -117,7 +117,7 @@ else
                         <td class="text-center"><strong>@(item.PersonData.Person.ManagerSignoffThruDateTime >= Model.weekStart.AddDays(6) ? "✔" : "X")</strong></td>
                         @*<td class="text-center"><strong>@(data.ManagerSignoffDateTime.Contains(Model.weekStart.AddDays(6).ToShortDateString()) ? "✔" : "X")</strong></td>*@
                         @*<td class="text-center">@(data.PeriodTotalData.PeriodTotals.Totals.Total.Count() == 0 ? "Yes" : "")</td>*@
-                        <td class="text-center @(ss > 1 ? "danger" : "")">@(ss > 0 ? ss.ToString() : "")</td>
+                        <td class="text-center @(ss > 0 ? "danger" : "")">@(ss > 0 ? ss.ToString() : "")</td>
                         @if (help != null)
                         {
                             <td class="text-center"><button type="button" class="btn btn-sm @(help.Status == "Completed" ? "btn-success" : "btn-warning")">@(help.Status == "Completed" ? "Resolved" : "Raised")</button></td>
