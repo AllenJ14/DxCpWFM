@@ -1,4 +1,5 @@
-﻿@model DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels.ShortShiftVm
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels;
+@model ShortShiftVm
 
 @{
     ViewBag.Title = "Edited Shifts";
@@ -12,7 +13,7 @@
     <div class="col-lg-12 col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading text-center">
-                <strong>Edited Shifts</strong>
+                <strong>Edited Clocks (Shortened Duration)</strong>
             </div>
             <div class="panel-body">
                 <p>This report measures the compliance of the colleague’s physical punches.  If a colleague forgets to clock in for their shift it will trigger on this report as a missed punch, even if the punch has since been manually added to the timecard. The punch compliance shows the percentage of expected punches that were present.</p>
@@ -22,6 +23,12 @@
         </div>
     </div>
 </div>
+
+<div class="row">
+    &nbsp;
+</div>
+
+@Html.Partial("~/Views/Shared/_WeekPicker.cshtml", new WeekPickerViewModel { Action = "EditedClocks", Controller = "Reports", WeeksOfYear = Model.WeeksOfYear, SelectedDate = Model.SelectedDate })
 
 <div class="row">
     &nbsp;
@@ -37,7 +44,7 @@
                         <thead>
                             <tr>
                                 <th class="text-center">Branch</th>
-                                <th class="text-center">Shifts Edited</th>
+                                <th class="text-center">Clocks Edited</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -69,7 +76,7 @@ else if (Model.type == 2 && Model.RegionShortShifts != null)
                         <thead>
                             <tr>
                                 <th class="text-center">Region</th>
-                                <th class="text-center">Shifts Edited</th>
+                                <th class="text-center">Clocks Edited</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -93,7 +100,7 @@ else if (Model.type == 2 && Model.RegionShortShifts != null)
 }
 else if (Model.ShortShifts.Count() == 0)
 {
-    <div class="alert alert-info"><strong>No edited shifts compliance issues!</strong></div>
+    <div class="alert alert-info text-center"><strong>No edited clocks!</strong></div>
 }
 else
 {

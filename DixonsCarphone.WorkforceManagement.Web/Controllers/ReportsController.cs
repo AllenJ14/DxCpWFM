@@ -519,7 +519,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             return File("/Uploads/" + f, "application/pdf");
         }
 
-        public async Task<ActionResult> PunchCompliance(string selectedDate = "Last Week")
+        public async Task<ActionResult> ClockingCompliance(string selectedDate = "Last Week")
         {
             PunchCompVM vm = new PunchCompVM();
             var weekOfYr = GetWeekNumber(selectedDate);
@@ -552,11 +552,11 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             vm.GetWeeksOfYear(DateTime.Now.GetFirstDayOfWeek().AddDays(-7), weekNumbers);
             vm.WeeksOfYear.ForEach(x => x.Selected = x.Value == weekOfYr.ToString());
 
-            return View("PunchCompliance", vm);
+            return View("ClockingCompliance", vm);
         }
 
         [UserFilter(AccessLevel = "Admin,TPC,RM,DD,RD")]
-        public async Task<ActionResult> PunchExceptions()
+        public async Task<ActionResult> ClockingBehaviours()
         {
             PunchExceptionsVm vm = new PunchExceptionsVm();
 
@@ -587,7 +587,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             return View(vm);
         }
 
-        public async Task<ActionResult> EditedShifts(string selectedDate = "Last Week")
+        public async Task<ActionResult> EditedClocks(string selectedDate = "Last Week")
         {
             ShortShiftVm vm = new ShortShiftVm();
             var weekOfYr = GetWeekNumber(selectedDate);
@@ -612,6 +612,11 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
                 vm.type = 0;
                 vm.ShortShifts = mapper.Map<List<ShortShiftView>>(await _storeManager.GetShortShiftsBranch(StoreNumber, weekOfYr));
             }
+
+            var weekNumbers = await _storeManager.GetWeekNumbers(DateTime.Now.GetFirstDayOfWeek().AddDays(-56), DateTime.Now.GetFirstDayOfWeek().AddDays(-7));
+
+            vm.GetWeeksOfYear(DateTime.Now.GetFirstDayOfWeek().AddDays(-7), weekNumbers);
+            vm.WeeksOfYear.ForEach(x => x.Selected = x.Value == weekOfYr.ToString());
 
             return View(vm);
         }

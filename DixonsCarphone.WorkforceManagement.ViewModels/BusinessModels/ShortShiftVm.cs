@@ -7,5 +7,6 @@ namespace DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
         public short type { get; set; }
         public List<ShortShiftView> ShortShifts { get; set; }
         public List<RegionShortShiftView> RegionShortShifts { get; set; }
+        public string SelectedDate { get; set; }
     }
 }

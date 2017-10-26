@@ -49,10 +49,10 @@ else if (HttpContext.Current.Session["_RegionNumber"] != null)
         @*@Html.Partial("~/Views/Shared/_WeekPicker.cshtml", new WeekPickerViewModel { Action = "TimecardSignOff", Controller = "RightFirstTime", WeeksOfYear = Model.WeeksOfYear, SelectedDate = Model.SelectedDate })*@
         <strong style="font-size:large;">Week Commencing @Model.weekStart.ToShortDateString()</strong>
         <p>
-            <span class="glyphicon glyphicon-time"></span> All information is shown as live from STAR.
+            <span class="glyphicon glyphicon-time"></span> All information is shown as live from STAR <u><strong>today</strong></u>.
         </p>
         <p>
-            If there are no STAR users in a store with timecards still outstanding you should engage your TPC who will be able to support.
+            If you hae outstanding timecars and no STAR user scheduled or clocked in, by exception, your TPC can support on request.
         </p>
         <table class="table table-bordered-blue table-condensed" style="margin-top:15px;">
             <thead>
@@ -99,6 +99,12 @@ else
             <p>
                 <span class="glyphicon glyphicon-time"></span> Timecard Sign off information is shown as live from STAR. Edited clocks count is updated at 8AM each day.
             </p>
+            <div class="alert alert-info" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <strong>Zero Hour Timecards</strong> - No timecard should ever be signed off completely blank. If you are unsure what paycode to use please refer to the self help below.
+            </div>
             <table class="table table-bordered-blue table-condensed" style="margin-top:15px;">
                 <tr>
                     <th class="text-center">Name</th>

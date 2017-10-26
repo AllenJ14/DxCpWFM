@@ -35,7 +35,10 @@ else if (Model.tSheet != null && Model.tSheet.Count() > 0)
 
     <table class="table table-bordered">
         <tr>
-            <td class="active col-xs-2"><strong>Signed Off</strong></td>
+            <td class="active col-xs-2">
+                <strong>Signed Off</strong>
+                <span class="pull-right text-center"><a tabindex="0" role="button" class="glyphicon glyphicon-info-sign" data-toggle="popover" data-placement="right" data-content="Weeks that are not yet signed off can be subject to change, consult your BM for more information." style="color:black"></a></span>
+            </td>
             @foreach (var item in Model.payDates)
             {
                 <td class="text-center col-xs-2">@(item.WCDate <= DateTime.Parse(Model.tSheet.First().ManagerSignoffDateTime) ? "Yes" : "")</td>
@@ -88,7 +91,10 @@ else if (Model.tSheet != null && Model.tSheet.Count() > 0)
             }
         </tr>
         <tr>
-            <td class="active"><strong>Punch Compliance</strong></td>
+            <td style="border: 0px;">&emsp;</td>
+        </tr>
+        <tr>
+            <td class="active"><strong>Clocking Compliance</strong></td>
             @foreach (var item in Model.payDates)
             {
                 var a = Model.punch.Where(x => x.FNCL_WK_NUM == item.Week);

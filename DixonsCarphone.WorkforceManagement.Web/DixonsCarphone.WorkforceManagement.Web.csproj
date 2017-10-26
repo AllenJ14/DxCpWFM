@@ -603,7 +603,7 @@
     <Content Include="Views\STARHandbook\EscalationsSupport3.cshtml" />
     <Content Include="Views\STARHandbook\EscalationsSupport4.cshtml" />
     <Content Include="Views\Partials\_ChangeStoreOpeningTimesAdmin.cshtml" />
-    <Content Include="Views\Reports\PunchCompliance.cshtml" />
+    <Content Include="Views\Reports\ClockingCompliance.cshtml" />
     <Content Include="Views\Partials\_PunchComp.cshtml" />
     <Content Include="Views\Planning\Schedule.cshtml" />
     <Content Include="Views\Partials\_Schedule.cshtml" />
@@ -639,9 +639,9 @@
     <Content Include="Uploads\Recruitment.pdf" />
     <Content Include="Views\RightFirstTime\TimecardSignOff.cshtml" />
     <Content Include="Views\Planning\FlexStatus.cshtml" />
-    <Content Include="Views\Reports\EditedShifts.cshtml" />
+    <Content Include="Views\Reports\EditedClocks.cshtml" />
     <Content Include="Views\Partials\_INeedHelpModal.cshtml" />
-    <Content Include="Views\Reports\PunchExceptions.cshtml" />
+    <Content Include="Views\Reports\ClockingBehaviours.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DixonsCarphone.WorkforceManagement.Business\DixonsCarphone.WorkforceManagement.Business.csproj">
