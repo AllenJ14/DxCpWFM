@@ -12,7 +12,7 @@ namespace DixonsCarphone.WorkforceManagement.Business.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class DashBoardData
+    public partial class DashBoardData_v2
     {
         public int DashBoardDataId { get; set; }
         public string Year { get; set; }
@@ -34,11 +34,9 @@ namespace DixonsCarphone.WorkforceManagement.Business.Entities
         public Nullable<double> OriginalTarget { get; set; }
         public Nullable<double> FinalTarget { get; set; }
         public Nullable<double> HolidayTaken { get; set; }
-        public Nullable<double> LTS { get; set; }
         public Nullable<double> FTLeakage { get; set; }
         public Nullable<short> LeakageCount { get; set; }
         public Nullable<double> AllApprovedHours { get; set; }
-        public Nullable<double> PayrollCorrections { get; set; }
         public Nullable<double> SOH { get; set; }
         public Nullable<bool> OverTargetFlag { get; set; }
         public Nullable<bool> OverContractFlag { get; set; }
@@ -54,33 +52,10 @@ namespace DixonsCarphone.WorkforceManagement.Business.Entities
         public Nullable<bool> GSOverTargetFlag { get; set; }
         public Nullable<bool> GSOverContractFlag { get; set; }
         public string StoreFlag { get; set; }
-        public Nullable<short> StoreCount { get; set; }
-        public Nullable<short> FTHeadcountSAS { get; set; }
-        public Nullable<short> FTHeadcountSIS { get; set; }
         public Nullable<double> ContractBaseTarget { get; set; }
-        public Nullable<bool> PaidForHoursNotWorkedCompliance { get; set; }
-        public Nullable<double> SATSOH { get; set; }
-        public Nullable<double> SATTarget { get; set; }
-        public Nullable<double> ServiceLV1SOH { get; set; }
-        public Nullable<double> ServiceLV1Target { get; set; }
-        public Nullable<double> ServiceLV2SOH { get; set; }
-        public Nullable<double> ServiceLV2Target { get; set; }
-        public Nullable<double> SATContractHours { get; set; }
-        public Nullable<double> ServiceLV1ContractHours { get; set; }
-        public Nullable<double> ServiceLV2ContractHours { get; set; }
-        public Nullable<bool> C25PercOver { get; set; }
-        public Nullable<bool> C25PercUnder { get; set; }
-        public Nullable<bool> PlusMinus10Perc { get; set; }
-        public Nullable<double> Awol { get; set; }
-        public Nullable<double> Suspension { get; set; }
-        public Nullable<double> Sickness { get; set; }
-        public Nullable<double> GSTraining { get; set; }
-        public Nullable<double> SATTraining { get; set; }
-        public Nullable<double> L1Training { get; set; }
-        public Nullable<double> L2Training { get; set; }
-        public Nullable<double> SATHoliday { get; set; }
-        public Nullable<double> L1Holiday { get; set; }
-        public Nullable<double> L2Holiday { get; set; }
         public Nullable<double> IgniteCredits { get; set; }
+        public Nullable<double> PunchCompliance { get; set; }
+        public Nullable<short> ShortShifts { get; set; }
+        public Nullable<double> PayEscalations { get; set; }
     }
 }

@@ -9,33 +9,311 @@
         &nbsp;
     </div>
 
-    @Html.Partial("~/Views/Partials/_PageBlurb.cshtml", (BaseViewModel)Model)
+    @Html.Partial("~/Views/Partials/_PageBlurb.cshtml", Model)
 
     <div class="row">
         <div class="col-lg-12 col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading text-center">
-                    <strong>WFM Compliance</strong>
+                    <strong>Right First Time Pay</strong>
                 </div>
                 <div class="panel-body">
-                    <p>The WFM compliance score is a measure of how well aligned your store is with current best practices. Good compliance helps ensure that staffing costs are well controlled whilst also avoiding any payroll issues for you and your team.</p>
-                    @if ((bool)HttpContext.Current.Session["_ROIFlag"])
-                    {
-                        <p>There are currently 4 metrics that contribute to your overall compliance score, as shown below. For each of these metrics where there is an issue you will lose <strong>2</strong> points out of a possible maximum of <strong>8</strong>.</p>
-                    }
-                    else
-                    {
-                        <p>There are currently 5 metrics that contribute to your overall compliance score, as shown below. For each of these metrics where there is an issue you will lose <strong>2</strong> points out of a possible maximum of <strong>10</strong>.</p>
-                    }
-
-                    <p>Shown below is your overall compliance score along with a breakdown of all the areas and where there is a compliance issue. Click on the metric heading for full details and an explanation of the risk associated with poor compliance in this area.</p>
-                    <strong>Note:</strong>The compliance scores for the previous week are not published until <u>3PM Monday</u> to allow for sign off and data validation, before this time the schedule information will continue to be shown.
+                    <img align="right" style="min-width:100px;" src="~/Images/RFTP.png" />
+                    <h4>Welcome to your Right First Time Pay overview</h4>
+                    <p>This will provide the detail of performance across the 3 metrics to delivering Right First Time Pay. These are to be delivered <u>every week</u> by <u>every store</u>.</p>
+                    <p>
+                        Please see below a reminder of the weekly control &amp; tolerance levels:
+                        <ul>
+                            <li>Clocking compliance - 90%+</li>
+                            <li>Timecard Sign Off - 100% (Extended <strong>3PM Monday</strong> deadline)</li>
+                            <li>Editing of clocks - No more than 1 reduced clock per store per week</li>
+                        </ul>
+                    </p>
+                    <strong>Note:</strong>The non negotiable approach will commence from week 36 of the 17/18 financial year.
                 </div>
             </div>
         </div>
     </div>
 
-    @Html.Partial("~/Views/Partials/_Compliance.cshtml", Model)
+    @Html.Partial("~/Views/Shared/_WeekPicker.cshtml", new WeekPickerViewModel { Action = "GetCompliance", Controller = "Reports", WeeksOfYear = Model.WeeksOfYear, SelectedDate = Model.SelectedDate })
+
+    @*Branch View*@
+    <div class="row">
+        &nbsp;
+    </div>
+
+    @if (Model.MessageType == MessageType.Warning)
+    {
+        <div class="alert alert-danger text-center"><strong>Reporting for the selected period has not yet been finalised, check back later.</strong></div>
+    }
+    else if (Model._dashboardView != null)
+    {
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading text-center">
+                        <strong>Overview</strong>
+                    </div>
+                    <!-- .panel-heading -->
+                    <div class="panel-body">
+                        <div class="panel-group" id="accordion">
+                            <div class="panel panel-default @(Model.Timecard.TimecardDetail.Count() ==0 ? "panel-success" : "panel-danger")">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <strong>
+                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTimecard">Timecard Non Compliance - @(Model.Timecard.TimecardDetail.Count() == 0 ? "No timecard issues!" : "(" + Model.Timecard.HeadlineFigure + ")")</a>
+                                        </strong>
+                                    </h4>
+                                </div>
+                                <div id="collapseTimecard" class="panel-collapse collapse">
+                                    @if (Model.Timecard.TimecardDetail.Count() > 0)
+                                    {
+                                        <div class="panel-body">
+                                            <p>
+                                                <ul>
+                                                    <li>If we don't have as signed off timecard we cannot process pay for the colleague.</li>
+                                                    <li>This needs to be 100% every week - <u>No missed / incomplete / zero hour timecards</u>.</li>
+                                                </ul>
+                                            </p>
+                                            <table class="table table-bordered-blue table-condensed">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="col-md-1 text-center">Employee Name</th>
+                                                        <th class="col-md-1 text-center">Not Submitted / Zero Hours</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var item in Model.Timecard.TimecardDetail)
+                                                    {
+                                                        <tr>
+                                                            <td class="text-center">@item.empName</td>
+                                                            <td class="text-center">@item.type</td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                            <div class="panel @(Model._dashboardView.ShortShifts == 0 ? "panel-success" : "panel-danger")">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <strong>
+                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseShift">Edited Clocks - @(Model._dashboardView.ShortShifts == 0 ? "No shift edit issues!" : "(" + Model._dashboardView.ShortShifts + ")")</a>
+                                        </strong>
+                                    </h4>
+                                </div>
+                                <div id="collapseShift" class="panel-collapse collapse">
+                                    @if (Model._dashboardView.ShortShifts > 0)
+                                    {
+                                        <div class="panel-body">
+                                            <p>
+                                                <ul>
+                                                    <li>If you're editing the clocked hours there's a control issue in the store – colleagues need to be clocking when they start and finish work. (All clocked hour now auto-approved).</li>
+                                                    <li>We're only concerned if you're editing a clock to reduce the length of the worked time – it's fine to extend the worked time if there's a reason.</li>
+                                                </ul>
+                                            </p>
+                                            <table class="table table-bordered-blue table-condensed">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-center">Employee Name</th>
+                                                        <th class="text-center">Clocks Edited</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var item in Model.SS)
+                                                    {
+                                                        <tr>
+                                                            <td>@item.PersonName</td>
+                                                            <td class="text-center">@item.ShortShifts</td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+
+                                            <div class="text-center"><a href="@Url.Action("EditedClocks", "Reports",new { selectedDate = Model.WeeksOfYear.Where(x => x.Selected == true).First().Value })" class="btn btn-primary" role="button">Edited Shifts</a></div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                            <div class="panel @(Model._dashboardView.PunchCompliance >= 0.9 ? "panel-success" : "panel-danger")">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <strong>
+                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapsePunch">Clocking Compliance - @(Model._dashboardView.PunchCompliance >= 0.9 ? "No Clocking issues!" : "(" + string.Format("{0:0}%", Model._dashboardView.PunchCompliance * 100) + ")")</a>
+                                        </strong>
+                                    </h4>
+                                </div>
+                                <div id="collapsePunch" class="panel-collapse collapse">
+                                    @if (Model._dashboardView.PunchCompliance < 0.9)
+                                    {
+                                        <div class="panel-body">
+                                            <p>
+                                                <ul>
+                                                    <li>We simply need colleagues to clock in and out when they start and finish work</li>
+                                                    <li>If we don't know when our team have worked we can't ensure we're getting their pay right</li>
+                                                </ul>
+                                            </p>
+                                            <table class="table table-bordered-blue table-condensed">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-center col-md-1" style="vertical-align:middle">Name</th>
+                                                        <th class="text-center col-md-1" style="vertical-align:middle">Clocking Compliance</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var item in Model.Punch.Where(x => x.PunchComp < 90))
+                                                    {
+                                                        <tr>
+                                                            <td>@item.PersonName</td>
+                                                            <td class="text-center">@(string.Format("{0:0.0}%", item.PunchComp))</td>
+                                                        </tr>
+                                                    }
+                                            </table>
+                                            <div class="text-center"><a href="@Url.Action("ClockingCompliance", "Reports",new { selectedDate = Model.WeeksOfYear.Where(x => x.Selected == true).First().Value})" class="btn btn-primary" role="button">Clocking Compliance</a></div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- .panel-body -->
+        </div>
+    }
+    else if (HttpContext.Current.Session["_RegionNumber"] != null)
+    {
+        @*Region view*@
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading text-center">
+                    <strong>Overview</strong>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-bordered-blue table-condensed col-md-6">
+                        <thead>
+                            <tr>
+                                <th class="text-center col-md-2" style="vertical-align:middle">Branch Name</th>
+                                <th class="text-center col-md-1" style="vertical-align:middle">Zero Hour/Missing Timecard</th>
+                                <th class="text-center col-md-1" style="vertical-align:middle">Edited Clocks</th>
+                                <th class="text-center col-md-1" style="vertical-align:middle">Clocking Compliance</th>
+                                <th class="text-center col-md-1" style="vertical-align:middle">Compliant</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model._dashboardViewCollection)
+                            {
+                                <tr>
+                                    <td>@(item.BranchNumber + " - " + item.StoreName)</td>
+                                    <td class="text-center">@string.Format("{0}/{1}", item.ZeroHour > 0 ? item.ZeroHour.ToString() : "-", item.TotalHeadCount - item.TimeCardsCompleted > 0 ? (item.TotalHeadCount - item.TimeCardsCompleted).ToString() : "-")</td>
+                                    <td class="text-center">@item.ShortShifts</td>
+                                    <td class="text-center">@string.Format("{0:0.0}%", item.PunchCompliance * 100)</td>
+                                    <td class="text-center @(item.ComplianceScore > 0 ? "danger" : "")">@(item.ComplianceScore > 0 ? 'N' : 'Y')</td>
+                                </tr>
+                            }
+                            <tr>
+                                <td><strong>Region Total</strong></td>
+                                <td class="text-center"><strong>@(Model._dashboardViewCollection.Sum(x => x.ZeroHour))/@(Model._dashboardViewCollection.Sum(x => x.TotalHeadCount) - Model._dashboardViewCollection.Sum(x => x.TimeCardsCompleted))</strong></td>
+                                <td class="text-center"><strong>@Model._dashboardViewCollection.Sum(x => x.ShortShifts)</strong></td>
+                                <td class="text-center"><strong>@(string.Format("{0:0.0}%", Model._dashboardViewCollection.Average(x => x.PunchCompliance) * 100))</strong></td>
+                                <td class="text-center"><strong>@Model._dashboardViewCollection.Where(x => x.ComplianceScore == 0).Count()</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+    else if (HttpContext.Current.Session["_DivisionName"] != null)
+    {
+        var subtotal = Model._dashboardViewCollectionChannel.Where(x => x.Region == null).Single();
+        @*Rolled up view*@
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading text-center">
+                    <strong>Overview</strong>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-bordered-blue table-condensed">
+                        <thead>
+                            <tr>
+                                <th class="text-center col-md-2" style="vertical-align:middle">Name</th>
+                                <th class="text-center col-md-1" style="vertical-align:middle">Zero Hour/Missing Timecard</th>
+                                <th class="text-center col-md-1" style="vertical-align:middle">Edited Shifts</th>
+                                <th class="text-center col-md-1" style="vertical-align:middle">Clocking Compliance</th>
+                                <th class="text-center col-md-1" style="vertical-align:middle">Compliant</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model._dashboardViewCollectionChannel.Where(x => x.Region != null))
+                            {
+                                <tr>
+                                    <td>Region @item.Region</td>
+                                    <td class="text-center">@string.Format("{0}/{1}", item.ZeroHour > 0 ? item.ZeroHour.ToString() : "-", item.TotalHeadcount - item.TimeCardsCompleted > 0 ? (item.TotalHeadcount - item.TimeCardsCompleted).ToString() : "-")</td>
+                                    <td class="text-center">@item.ShortShifts</td>
+                                    <td class="text-center">@string.Format("{0:0.0}%", item.PunchCompliance * 100)</td>
+                                    <td class="text-center">@string.Format("{0}/{1}", item.ComplianceScore, item.BranchNumber)</td>
+                                </tr>
+                            }
+                            <tr>
+                                <td><strong>Division Total</strong></td>
+                                <td class="text-center"><strong>@string.Format("{0}/{1}", subtotal.ZeroHour > 0 ? subtotal.ZeroHour.ToString() : "-", subtotal.TotalHeadcount - subtotal.TimeCardsCompleted > 0 ? (subtotal.TotalHeadcount - subtotal.TimeCardsCompleted).ToString() : "-")</strong></td>
+                                <td class="text-center"><strong>@subtotal.ShortShifts</strong></td>
+                                <td class="text-center"><strong>@string.Format("{0:0.0}%", subtotal.PunchCompliance * 100)</strong></td>
+                                <td class="text-center"><strong>@string.Format("{0}/{1}", subtotal.ComplianceScore, subtotal.BranchNumber)</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+    else if (HttpContext.Current.Session["_ChannelName"] != null)
+    {
+        var subtotal = Model._dashboardViewCollectionChannel.Where(x => x.Division == null).Single();
+        @*Rolled up view*@
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading text-center">
+                    <strong>Overview</strong>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-bordered-blue table-condensed">
+                        <thead>
+                            <tr>
+                                <th class="text-center col-md-2" style="vertical-align:middle">Name</th>
+                                <th class="text-center col-md-1" style="vertical-align:middle">Zero Hour/Missing Timecard</th>
+                                <th class="text-center col-md-1" style="vertical-align:middle">Edited Shifts</th>
+                                <th class="text-center col-md-1" style="vertical-align:middle">Punch Compliance</th>
+                                <th class="text-center col-md-1" style="vertical-align:middle">Compliant</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model._dashboardViewCollectionChannel.Where(x => x.Division != null))
+                            {
+                                <tr>
+                                    <td>@item.Division</td>
+                                    <td class="text-center">@string.Format("{0}/{1}", item.ZeroHour > 0 ? item.ZeroHour.ToString() : "-", item.TotalHeadcount - item.TimeCardsCompleted > 0 ? (item.TotalHeadcount - item.TimeCardsCompleted).ToString() : "-")</td>
+                                    <td class="text-center">@item.ShortShifts</td>
+                                    <td class="text-center">@string.Format("{0:0.0}%", item.PunchCompliance * 100)</td>
+                                    <td class="text-center">@string.Format("{0}/{1}", item.ComplianceScore, item.BranchNumber)</td>
+                                </tr>
+                            }
+                            <tr>
+                                <td><strong>Channel Total</strong></td>
+                                <td class="text-center"><strong>@string.Format("{0}/{1}", subtotal.ZeroHour > 0 ? subtotal.ZeroHour.ToString() : "-", subtotal.TotalHeadcount - subtotal.TimeCardsCompleted > 0 ? (subtotal.TotalHeadcount - subtotal.TimeCardsCompleted).ToString() : "-")</strong></td>
+                                <td class="text-center"><strong>@subtotal.ShortShifts</strong></td>
+                                <td class="text-center"><strong>@string.Format("{0:0.0}%", subtotal.PunchCompliance * 100)</strong></td>
+                                <td class="text-center"><strong>@string.Format("{0}/{1}", subtotal.ComplianceScore, subtotal.BranchNumber)</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
 
 </section>
 @section myScripts {
@@ -43,7 +321,7 @@
         function dateChanged(ev) {
             if ($('#SelectedDate').val() != '') {
                 $('#complianceDateForm').submit();
-            } 
+            }
         }
     </script>
 }

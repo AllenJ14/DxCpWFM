@@ -1,4 +1,6 @@
-﻿namespace DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
+﻿using System;
+
+namespace DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
 {
     public class HyperFindResultView
     {
@@ -6,6 +8,11 @@
         public string PersonNumber { get; set; }
 
         public PersonDataView PersonData { get; set; }
+
+        public string parsedPerson { get
+            {
+                return int.Parse(PersonNumber.Replace("UK", "")).ToString();
+            } }
     }
 
     public class PersonDataView
@@ -25,7 +32,7 @@
         public int EmployeeStandardHours { get; set; }
         public int FullTimeStandardHours { get; set; }
         public string AccrualProfileName { get; set; }
-        public string ManagerSignoffThruDateTime { get; set; }
+        public DateTime ManagerSignoffThruDateTime { get; set; }
         public string PayrollLockoutThruDateTime { get; set; }
         public bool FingerRequiredFlag { get; set; }
         public decimal BaseWageHourly { get; set; }

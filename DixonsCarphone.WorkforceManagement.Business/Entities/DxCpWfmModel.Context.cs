@@ -50,7 +50,6 @@ namespace DixonsCarphone.WorkforceManagement.Business.Entities
         public virtual DbSet<DailyDeployment> DailyDeployments { get; set; }
         public virtual DbSet<EmpComplianceDetail> EmpComplianceDetails { get; set; }
         public virtual DbSet<UserAccess> UserAccesses { get; set; }
-        public virtual DbSet<DashBoardData> DashBoardDatas { get; set; }
         public virtual DbSet<IncorrectBranchLog> IncorrectBranchLogs { get; set; }
         public virtual DbSet<CPW_Clocking_Data> CPW_Clocking_Data { get; set; }
         public virtual DbSet<SiteFeedback> SiteFeedbacks { get; set; }
@@ -79,6 +78,8 @@ namespace DixonsCarphone.WorkforceManagement.Business.Entities
         public virtual DbSet<PayCalendarRef> PayCalendarRefs { get; set; }
         public virtual DbSet<ColleaguePayData> ColleaguePayDatas { get; set; }
         public virtual DbSet<ShortShift> ShortShifts { get; set; }
+        public virtual DbSet<DashBoardData_v2> DashBoardData_v2 { get; set; }
+        public virtual DbSet<KronosEmployeeSummary> KronosEmployeeSummaries { get; set; }
     
         public virtual ObjectResult<udsp_GetPandL_Result> udsp_GetPandL(Nullable<int> storeNumber, string periodYear, Nullable<short> periodMonth, Nullable<short> qtdStartMonth, Nullable<short> ytdStartMonth)
         {
@@ -350,32 +351,6 @@ namespace DixonsCarphone.WorkforceManagement.Business.Entities
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<HolidayPlanningEmp>("sp_DivisionHolidayPlanningEmp", mergeOption, divisionParameter);
         }
     
-        public virtual ObjectResult<sp_AllChannelDashboardData_Result> sp_AllChannelDashboardData(string channel, Nullable<int> beginWeek)
-        {
-            var channelParameter = channel != null ?
-                new ObjectParameter("Channel", channel) :
-                new ObjectParameter("Channel", typeof(string));
-    
-            var beginWeekParameter = beginWeek.HasValue ?
-                new ObjectParameter("BeginWeek", beginWeek) :
-                new ObjectParameter("BeginWeek", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_AllChannelDashboardData_Result>("sp_AllChannelDashboardData", channelParameter, beginWeekParameter);
-        }
-    
-        public virtual ObjectResult<sp_AllDivisionDashboardData_Result> sp_AllDivisionDashboardData(string division, Nullable<int> beginWeek)
-        {
-            var divisionParameter = division != null ?
-                new ObjectParameter("Division", division) :
-                new ObjectParameter("Division", typeof(string));
-    
-            var beginWeekParameter = beginWeek.HasValue ?
-                new ObjectParameter("BeginWeek", beginWeek) :
-                new ObjectParameter("BeginWeek", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_AllDivisionDashboardData_Result>("sp_AllDivisionDashboardData", divisionParameter, beginWeekParameter);
-        }
-    
         public virtual ObjectResult<sp_ChannelComplianceDetail_Result> sp_ChannelComplianceDetail(string channelName, Nullable<int> weeknumber)
         {
             var channelNameParameter = channelName != null ?
@@ -387,23 +362,6 @@ namespace DixonsCarphone.WorkforceManagement.Business.Entities
                 new ObjectParameter("weeknumber", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_ChannelComplianceDetail_Result>("sp_ChannelComplianceDetail", channelNameParameter, weeknumberParameter);
-        }
-    
-        public virtual ObjectResult<sp_ChannelDashboardData_Result> sp_ChannelDashboardData(string channel, Nullable<int> beginWeek, Nullable<int> endWeek)
-        {
-            var channelParameter = channel != null ?
-                new ObjectParameter("Channel", channel) :
-                new ObjectParameter("Channel", typeof(string));
-    
-            var beginWeekParameter = beginWeek.HasValue ?
-                new ObjectParameter("BeginWeek", beginWeek) :
-                new ObjectParameter("BeginWeek", typeof(int));
-    
-            var endWeekParameter = endWeek.HasValue ?
-                new ObjectParameter("EndWeek", endWeek) :
-                new ObjectParameter("EndWeek", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_ChannelDashboardData_Result>("sp_ChannelDashboardData", channelParameter, beginWeekParameter, endWeekParameter);
         }
     
         public virtual ObjectResult<sp_DivisionComplianceDetail_Result> sp_DivisionComplianceDetail(string divisionName, Nullable<int> weeknumber)
@@ -419,23 +377,6 @@ namespace DixonsCarphone.WorkforceManagement.Business.Entities
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_DivisionComplianceDetail_Result>("sp_DivisionComplianceDetail", divisionNameParameter, weeknumberParameter);
         }
     
-        public virtual ObjectResult<sp_DivisionDashboardData_Result> sp_DivisionDashboardData(string division, Nullable<int> beginWeek, Nullable<int> endWeek)
-        {
-            var divisionParameter = division != null ?
-                new ObjectParameter("Division", division) :
-                new ObjectParameter("Division", typeof(string));
-    
-            var beginWeekParameter = beginWeek.HasValue ?
-                new ObjectParameter("BeginWeek", beginWeek) :
-                new ObjectParameter("BeginWeek", typeof(int));
-    
-            var endWeekParameter = endWeek.HasValue ?
-                new ObjectParameter("EndWeek", endWeek) :
-                new ObjectParameter("EndWeek", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_DivisionDashboardData_Result>("sp_DivisionDashboardData", divisionParameter, beginWeekParameter, endWeekParameter);
-        }
-    
         public virtual ObjectResult<sp_RegionComplianceDetail_Result> sp_RegionComplianceDetail(Nullable<int> regionNumber, Nullable<int> weeknumber)
         {
             var regionNumberParameter = regionNumber.HasValue ?
@@ -447,23 +388,6 @@ namespace DixonsCarphone.WorkforceManagement.Business.Entities
                 new ObjectParameter("weeknumber", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_RegionComplianceDetail_Result>("sp_RegionComplianceDetail", regionNumberParameter, weeknumberParameter);
-        }
-    
-        public virtual ObjectResult<sp_RegionDashboardData_Result> sp_RegionDashboardData(string region, Nullable<int> beginWeek, Nullable<int> endWeek)
-        {
-            var regionParameter = region != null ?
-                new ObjectParameter("Region", region) :
-                new ObjectParameter("Region", typeof(string));
-    
-            var beginWeekParameter = beginWeek.HasValue ?
-                new ObjectParameter("BeginWeek", beginWeek) :
-                new ObjectParameter("BeginWeek", typeof(int));
-    
-            var endWeekParameter = endWeek.HasValue ?
-                new ObjectParameter("EndWeek", endWeek) :
-                new ObjectParameter("EndWeek", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_RegionDashboardData_Result>("sp_RegionDashboardData", regionParameter, beginWeekParameter, endWeekParameter);
         }
     
         public virtual ObjectResult<udsp_GetPandLRegionSummary_Result> udsp_GetPandLRegionSummary(string regionNumber, string periodYear, Nullable<short> periodMonth, Nullable<short> qtdStartMonth, Nullable<short> ytdStartMonth)
@@ -788,6 +712,167 @@ namespace DixonsCarphone.WorkforceManagement.Business.Entities
                 new ObjectParameter("RegionNo", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_PeakFlexRegion_Result>("sp_PeakFlexRegion", regionNoParameter);
+        }
+    
+        public virtual ObjectResult<sp_AllChannelDashboardData_v2_Result> sp_AllChannelDashboardData_v2(string channel, Nullable<int> beginWeek)
+        {
+            var channelParameter = channel != null ?
+                new ObjectParameter("Channel", channel) :
+                new ObjectParameter("Channel", typeof(string));
+    
+            var beginWeekParameter = beginWeek.HasValue ?
+                new ObjectParameter("BeginWeek", beginWeek) :
+                new ObjectParameter("BeginWeek", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_AllChannelDashboardData_v2_Result>("sp_AllChannelDashboardData_v2", channelParameter, beginWeekParameter);
+        }
+    
+        public virtual ObjectResult<sp_AllDivisionDashboardData_v2_Result> sp_AllDivisionDashboardData_v2(string division, Nullable<int> beginWeek)
+        {
+            var divisionParameter = division != null ?
+                new ObjectParameter("Division", division) :
+                new ObjectParameter("Division", typeof(string));
+    
+            var beginWeekParameter = beginWeek.HasValue ?
+                new ObjectParameter("BeginWeek", beginWeek) :
+                new ObjectParameter("BeginWeek", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_AllDivisionDashboardData_v2_Result>("sp_AllDivisionDashboardData_v2", divisionParameter, beginWeekParameter);
+        }
+    
+        public virtual ObjectResult<sp_ChannelDashboardData_v2_Result> sp_ChannelDashboardData_v2(string channel, Nullable<int> beginWeek, Nullable<int> endWeek)
+        {
+            var channelParameter = channel != null ?
+                new ObjectParameter("Channel", channel) :
+                new ObjectParameter("Channel", typeof(string));
+    
+            var beginWeekParameter = beginWeek.HasValue ?
+                new ObjectParameter("BeginWeek", beginWeek) :
+                new ObjectParameter("BeginWeek", typeof(int));
+    
+            var endWeekParameter = endWeek.HasValue ?
+                new ObjectParameter("EndWeek", endWeek) :
+                new ObjectParameter("EndWeek", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_ChannelDashboardData_v2_Result>("sp_ChannelDashboardData_v2", channelParameter, beginWeekParameter, endWeekParameter);
+        }
+    
+        public virtual ObjectResult<sp_DivisionDashboardData_v2_Result> sp_DivisionDashboardData_v2(string division, Nullable<int> beginWeek, Nullable<int> endWeek)
+        {
+            var divisionParameter = division != null ?
+                new ObjectParameter("Division", division) :
+                new ObjectParameter("Division", typeof(string));
+    
+            var beginWeekParameter = beginWeek.HasValue ?
+                new ObjectParameter("BeginWeek", beginWeek) :
+                new ObjectParameter("BeginWeek", typeof(int));
+    
+            var endWeekParameter = endWeek.HasValue ?
+                new ObjectParameter("EndWeek", endWeek) :
+                new ObjectParameter("EndWeek", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_DivisionDashboardData_v2_Result>("sp_DivisionDashboardData_v2", divisionParameter, beginWeekParameter, endWeekParameter);
+        }
+    
+        public virtual ObjectResult<sp_RegionDashboardData_v2_Result> sp_RegionDashboardData_v2(string region, Nullable<int> beginWeek, Nullable<int> endWeek)
+        {
+            var regionParameter = region != null ?
+                new ObjectParameter("Region", region) :
+                new ObjectParameter("Region", typeof(string));
+    
+            var beginWeekParameter = beginWeek.HasValue ?
+                new ObjectParameter("BeginWeek", beginWeek) :
+                new ObjectParameter("BeginWeek", typeof(int));
+    
+            var endWeekParameter = endWeek.HasValue ?
+                new ObjectParameter("EndWeek", endWeek) :
+                new ObjectParameter("EndWeek", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_RegionDashboardData_v2_Result>("sp_RegionDashboardData_v2", regionParameter, beginWeekParameter, endWeekParameter);
+        }
+    
+        public virtual ObjectResult<sp_RegionShortShifts_Result> sp_RegionShortShifts(string regionNo, Nullable<int> weekNumber)
+        {
+            var regionNoParameter = regionNo != null ?
+                new ObjectParameter("RegionNo", regionNo) :
+                new ObjectParameter("RegionNo", typeof(string));
+    
+            var weekNumberParameter = weekNumber.HasValue ?
+                new ObjectParameter("WeekNumber", weekNumber) :
+                new ObjectParameter("WeekNumber", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_RegionShortShifts_Result>("sp_RegionShortShifts", regionNoParameter, weekNumberParameter);
+        }
+    
+        public virtual ObjectResult<sp_RegionShortShifts_Result> sp_ChannelShortShifts(string channel, Nullable<int> weekNumber)
+        {
+            var channelParameter = channel != null ?
+                new ObjectParameter("Channel", channel) :
+                new ObjectParameter("Channel", typeof(string));
+    
+            var weekNumberParameter = weekNumber.HasValue ?
+                new ObjectParameter("WeekNumber", weekNumber) :
+                new ObjectParameter("WeekNumber", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_RegionShortShifts_Result>("sp_ChannelShortShifts", channelParameter, weekNumberParameter);
+        }
+    
+        public virtual ObjectResult<sp_RegionShortShifts_Result> sp_DivisionShortShifts(string division, Nullable<int> weekNumber)
+        {
+            var divisionParameter = division != null ?
+                new ObjectParameter("Division", division) :
+                new ObjectParameter("Division", typeof(string));
+    
+            var weekNumberParameter = weekNumber.HasValue ?
+                new ObjectParameter("WeekNumber", weekNumber) :
+                new ObjectParameter("WeekNumber", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_RegionShortShifts_Result>("sp_DivisionShortShifts", divisionParameter, weekNumberParameter);
+        }
+    
+        public virtual ObjectResult<sp_RegionPunchTrend_Result> sp_RegionPunchTrend(string region)
+        {
+            var regionParameter = region != null ?
+                new ObjectParameter("Region", region) :
+                new ObjectParameter("Region", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_RegionPunchTrend_Result>("sp_RegionPunchTrend", regionParameter);
+        }
+    
+        public virtual ObjectResult<sp_DivisionPunchTrend_Result> sp_DivisionPunchTrend(string division)
+        {
+            var divisionParameter = division != null ?
+                new ObjectParameter("Division", division) :
+                new ObjectParameter("Division", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_DivisionPunchTrend_Result>("sp_DivisionPunchTrend", divisionParameter);
+        }
+    
+        public virtual ObjectResult<sp_RegionPunchExceptions_Result> sp_RegionPunchExceptions(string region)
+        {
+            var regionParameter = region != null ?
+                new ObjectParameter("Region", region) :
+                new ObjectParameter("Region", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_RegionPunchExceptions_Result>("sp_RegionPunchExceptions", regionParameter);
+        }
+    
+        public virtual ObjectResult<sp_DivisionPunchExceptions_Result> sp_DivisionPunchExceptions(string division)
+        {
+            var divisionParameter = division != null ?
+                new ObjectParameter("division", division) :
+                new ObjectParameter("division", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_DivisionPunchExceptions_Result>("sp_DivisionPunchExceptions", divisionParameter);
+        }
+    
+        public virtual ObjectResult<sp_CheckHelpTickets_Result> sp_CheckHelpTickets(Nullable<short> branchNum)
+        {
+            var branchNumParameter = branchNum.HasValue ?
+                new ObjectParameter("BranchNum", branchNum) :
+                new ObjectParameter("BranchNum", typeof(short));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_CheckHelpTickets_Result>("sp_CheckHelpTickets", branchNumParameter);
         }
     }
 }

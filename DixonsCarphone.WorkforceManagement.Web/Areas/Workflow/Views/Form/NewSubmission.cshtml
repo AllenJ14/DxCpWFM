@@ -26,22 +26,42 @@
 
         if (q.ReturnType == "api")
         {
-            <div class="form-group @grp @grpWidth">
+            <div class="form-group @grp @grpWidth" id="@qCounter">
                 <label for="@q.QuestionId">@q.Question</label>
                 <input type="hidden" name="q.Index" value="@qCounter" />
                 <input type="hidden" name="@string.Format("q[{0}].QuestionID", qCounter)" value="@q.QuestionId" required />
                 <select name="@string.Format("q[{0}].Answer", qCounter)" class="form-control @q.apiIdent" required>
                     <option>Loading...</option>
-                </select>                
+                </select>
             </div>
         }
         else
         {
-            <div class="form-group @grp @grpWidth">
+            <div class="form-group @grp @grpWidth" id="@qCounter">
                 <label for="@q.QuestionId">@q.Question</label>
                 <input type="hidden" name="q.Index" value="@qCounter" />
                 <input type="hidden" name="@string.Format("q[{0}].QuestionID", qCounter)" value="@q.QuestionId" required />
-                <input type="@q.ReturnType" class="form-control @q.apiIdent" placeholder="" name="@string.Format("q[{0}].Answer", qCounter)" required />
+                @if (q.ReturnType == "textarea")
+                {
+                    <textarea class="form-control @q.apiIdent" style="resize:vertical;" placeholder="" name="@string.Format("q[{0}].Answer", qCounter)" rows="2"></textarea>
+                }
+                else if (q.ReturnType == "radio")
+                {
+                    string[] options = q.apiIdent.Split(',');
+                    foreach (var item in options)
+                    {
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="@string.Format("q[{0}].Answer", qCounter)" value="@item" />
+                                <strong>@item</strong>
+                            </label>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <input type="@q.ReturnType" class="form-control @q.apiIdent" placeholder="" name="@string.Format("q[{0}].Answer", qCounter)" required />
+                }
                 @if (q.apiIdent == "branchValidate")
                 {
                     <div id="_branchValidate">&emsp;</div>
@@ -50,12 +70,14 @@
         }
         qCounter++;
     }
+
     <div id="addGrpContainer" class="text-center">
-        <span id="addGrp" class="glyphicon glyphicon-plus-sign text-success pull-left" style="cursor:pointer; margin-left:15px;"></span>
+        @if (Model.QuestionList.Where(x => x.GrpLimit != null).Count() > 0)
+        {
+            <span id="addGrp" class="glyphicon glyphicon-plus-sign text-success pull-left" style="cursor:pointer; margin-left:15px;"></span>
+        }
         <button type="submit" class="btn btn-default" style="margin-top:15px">Submit</button>
     </div>
-
-
 </form>
 
 @if (ticketType == 1)
@@ -99,10 +121,18 @@
 }
 
 @section myScripts{ 
-<script id="wfMaster" src="~/Content/Workflow/WorkflowMaster.min.js" data-grpLimit="@Model.QuestionList.Where(x => x.GrpLimit != null).FirstOrDefault().GrpLimit" data-qCount="@Model.QuestionList.Count()" today="@DateTime.Now.ToString("yyyy-MM-dd")" min="@DateTime.Now.AddDays(-14).ToString("yyyy-MM-dd")"></script>
+<script id="wfMaster" src="~/Content/Workflow/WorkflowMaster.min.js" data-grpLimit="@(Model.QuestionList.Where(x => x.GrpLimit != null).FirstOrDefault() != null ? Model.QuestionList.Where(x => x.GrpLimit != null).First().GrpLimit : 0)" data-qCount="@Model.QuestionList.Count()" data-defaultemp="@ViewBag.defaultEmp"></script>
 @if (ticketType == 1)
 {
-    <script id="wf1" src="~/Content/Workflow/WorkflowCrossRegion.min.js"></script>
+    <script id="wf1" src="~/Content/Workflow/WorkflowCrossRegion.min.js" today="@DateTime.Now.ToString("yyyy-MM-dd")" min="@DateTime.Now.AddDays(-14).ToString("yyyy-MM-dd")"></script>
+}
+else if (ticketType == 4)
+{
+    <script id="wf4" src="~/Content/Workflow/WorkflowHelpTransfer.min.js" today="@DateTime.Now.ToString("yyyy-MM-dd")"></script>
+}
+else if(ticketType == 5)
+{
+    <script id="wf5" src="~/Content/Workflow/WorkflowHelpUnknown.min.js"></script>
 }
 }
 

@@ -18,5 +18,7 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
         Task<bool> LogOff();
 
         Task<List<Timesheet>> GetTimesheetForStore(DateTime date, string[] personList);
+
+        Task<List<PunchStatus>> GetPunchStatus(List<string> employeeList);
     }
 }

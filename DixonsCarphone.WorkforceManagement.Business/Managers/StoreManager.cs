@@ -101,6 +101,17 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             }
         }
 
+        //Get punch detail for person
+        public List<CPW_Clocking_Data> GetEmployeePunch(string empNumber, int startWeek, int endWeek)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                var crit = int.Parse(empNumber.Replace("UK", ""));
+                var result = dbContext.CPW_Clocking_Data.AsNoTracking().Where(x => x.EMP_NUM == crit && x.FNCL_WK_NUM >= startWeek && x.FNCL_WK_NUM <= endWeek).ToList();
+                return result;
+            }
+        }
+
         //Get punch detail for region
         public async Task<List<sp_RegionPunchCompliance_Result>> GetRegionPunch(string regionNo, int weekNum)
         {
@@ -108,6 +119,24 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             {
                 var data = await Task.Run(() => dbContext.sp_RegionPunchCompliance(regionNo, weekNum));
                 return data.ToList();
+            }
+        }
+
+        //get punch trend for region
+        public async Task<List<sp_RegionPunchTrend_Result>> GetRegionPunchTrend(string regionNo)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                return await Task.Run(() => dbContext.sp_RegionPunchTrend(regionNo).ToList());
+            }
+        }
+
+        //get punch exceptions for region
+        public async Task<List<sp_RegionPunchExceptions_Result>> GetRegionPunchExceptions(string regionNo)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                return await Task.Run(() => dbContext.sp_RegionPunchExceptions(regionNo).ToList());
             }
         }
 
@@ -128,6 +157,24 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             {
                 var data = await Task.Run(() => dbContext.sp_DivisionPunchCompliance(Division, weekNum));
                 return data.ToList();
+            }
+        }
+
+        //get punch trend for region
+        public async Task<List<sp_DivisionPunchTrend_Result>> GetDivisionPunchTrend(string division)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                return await Task.Run(() => dbContext.sp_DivisionPunchTrend(division).ToList());
+            }
+        }
+
+        //get punch exceptions for region
+        public async Task<List<sp_DivisionPunchExceptions_Result>> GetDivisionPunchExceptions(string division)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                return await Task.Run(() => dbContext.sp_DivisionPunchExceptions(division).ToList());
             }
         }
 
@@ -1029,6 +1076,38 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             }
         }
 
+        public async Task<List<ShortShift>> GetShortShiftsBranch(int storeNumber, int weekNumber)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                return await dbContext.ShortShifts.Where(x => x.WeekNumber == weekNumber && x.HomeBranch == storeNumber).ToListAsync();
+            }
+        }
+        
+        public async Task<List<sp_RegionShortShifts_Result>> GetShortShiftsRegion(string regionNumber, int weekNumber)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                return await Task.Run(() => dbContext.sp_RegionShortShifts(regionNumber, weekNumber).ToList());
+            }
+        }
+
+        public async Task<List<sp_RegionShortShifts_Result>> GetShortShiftsDivision(string division, int weekNumber)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                return await Task.Run(() => dbContext.sp_DivisionShortShifts(division, weekNumber).ToList());
+            }
+        }
+
+        public async Task<List<sp_RegionShortShifts_Result>> GetShortShiftsChannel(string channel, int weekNumber)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                return await Task.Run(() => dbContext.sp_ChannelShortShifts(channel, weekNumber).ToList());
+            }
+        }
+
         public List<PayCalendarDate> GetPayCalendarDates(string _chain, string _period)
         {
             using (var dbContext = new DxCpWfmContext())
@@ -1057,6 +1136,39 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             }
         }
 
+        public bool FTPTCheck(string empNum)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                return dbContext.KronosEmployeeSummaries.Where(x => x.PersonNumber == empNum).Select(x => x.EmployeeStandardHours).FirstOrDefault() != 45;
+            }
+        }
+
+        public async Task<List<sp_CheckHelpTickets_Result>> GetHelpTickets(int branchNum)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                return await Task.Run(() => dbContext.sp_CheckHelpTickets((short)branchNum).ToList());
+            }
+        }
+
+        public async Task<List<KronosEmployeeSummary>> GetActiveColleagues(string Region)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                int crit = int.Parse(Region);
+                return await dbContext.KronosEmployeeSummaries.Where(x => x.Region == crit).AsNoTracking().ToListAsync();
+            }
+        }
+
+        public async Task<List<KronosEmployeeSummary>> GetActiveColleaguesDivision(string Division)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                return await dbContext.KronosEmployeeSummaries.Where(x => x.Division == Division).AsNoTracking().ToListAsync();
+            }
+        }
+        
         private AccountEntryView MapToAccountEntryView(AccountEntryHeader data)
         {
             var toRtn = new AccountEntryView

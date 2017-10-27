@@ -1,6 +1,7 @@
 ﻿$(function () {
     var $form = $('#formContainer');
     var $exception = $('#exception');
+    var $script = $('#wf1');
     var confirmed = false;
 
     $('#crReminder').modal('show');
@@ -21,6 +22,11 @@
         $exception.val(0);
         $('#crException').modal('toggle');
     })
+
+    $('input[type=date]').attr({
+        value: $script.attr('today'),
+        min: $script.attr('min')
+    });
 
     $form.submit(function (event) {
         var valid = true;

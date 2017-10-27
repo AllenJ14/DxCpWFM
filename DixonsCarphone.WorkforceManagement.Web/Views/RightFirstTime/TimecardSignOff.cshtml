@@ -1,41 +1,167 @@
-﻿@model DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels.TimecardSignOffVm
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
+@model TimecardSignOffVm
 
 @{
     ViewBag.Title = "Timecard Sign Off";
+
+    Func<short, string> RAG = (a) =>
+    {
+        var rtn = "";
+
+        if (a == 2)
+        {
+            rtn = "warning";
+        }
+        else if (a == 3)
+        {
+            rtn = "danger";
+        }
+
+        return rtn;
+    };
 }
 
 <div class="row">
     &emsp;
 </div>
 
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <div class="panel-title"><strong>Timecard Sign Off</strong></div>
+@if (Model.MessageType == MessageType.Error)
+{
+    @Html.Partial("~/Views/Shared/_Messages.cshtml", Model)
+}
+else if (Model.hf == null || Model.hf.Count() == 0)
+{
+    <div class="alert alert-danger text-center">
+        <strong>Oops...</strong>
+        <p>Looks like something went wrong, please try again.</p>
+        <a class="btn btn-sm btn-info" href="#">Retry</a>
     </div>
-    <div class="panel-body">
-        <strong style="font-size:large;">Week Commencing @Model.weekStart.ToShortDateString()</strong>
-        <table class="table table-bordered" style="margin-top:15px;">
-            <tr>
-                <th class="text-center">Name</th>
-                <th class="text-center col-xs-1">Timecard Signed Off</th>
-                @*<th class="text-center col-xs-1">Zero Hour</th>*@
-                <th class="text-center">Edited Clocks</th>
-                <th class="text-center">I Need Help</th>
-            </tr>
-            @foreach (var item in Model.hf.OrderBy(x => x.FullName))
-            {
-                //var data = Model.ts.Where(x => x.Employee.PersonIdentity.PersonNumber == item.PersonNumber).FirstOrDefault();
+}
+else if (HttpContext.Current.Session["_RegionNumber"] != null)
+{
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <strong>Timecard Sign Off</strong>
+            </div>
+        </div>
+        <div class="panel-body">
+            @*@Html.Partial("~/Views/Shared/_WeekPicker.cshtml", new WeekPickerViewModel { Action = "TimecardSignOff", Controller = "RightFirstTime", WeeksOfYear = Model.WeeksOfYear, SelectedDate = Model.SelectedDate })*@
+            <strong style="font-size:large;">Week Commencing @Model.weekStart.ToShortDateString()</strong>
+            <p>
+                <span class="glyphicon glyphicon-time"></span> All information is shown as live from STAR <u><strong>today</strong></u>.
+            </p>
+            <p>
+                Here the timecard view makes it very easy and provides a real time view of how many timecards per store vs total are signed off, enabling each store % region to deliver 100% by the 3PM deadline.
+            </p>
+            <p>
+                Provided also is full visibility of each stores planning, with guidance showing if a timecard approver is scheduled in store as well as clocked in store to complete timecards. The schedule and clocked ing data is
+                real time for today.
+            </p>
+            <p>
+                If you have outstanding timecards and no STAR user scheduled or clocked in, by exception, your TPC can support on request.
+            </p>
+            <table class="table table-bordered-blue table-condensed" style="margin-top:15px;">
+                <thead>
+                    <tr>
+                        <th class="text-center">Branch Name</th>
+                        <th class="text-center col-xs-2">Timecards Completed</th>
+                        <th class="text-center col-xs-2">Star User Scheduled</th>
+                        <th class="text-center col-xs-2">Star User Clocked</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.rso)
+                    {
+                        <tr>
+                            <td>@string.Format("{0} - {1}", item.BranchNumber, item.BranchName)</td>
+                            <td class="text-center @(item.RAG > 0 ? "danger" : "")">@string.Format("{0}/{1}", item.SignedOff, item.Headcount)</td>
+                            <td class="text-center @(!item.KronosScheduled ? RAG(item.RAG) : "")">@(item.KronosScheduled ? "Y" : "N")</td>
+                            <td class="text-center @(!item.KronosPunched ? RAG(item.RAG) : "")">@(item.KronosPunched ? "Y" : "N")</td>
+                        </tr>
+                    }
+                    <tr>
+                        <td><strong>Region Total</strong></td>
+                        <td class="text-center"><strong>@string.Format("{0}/{1}", Model.rso.Sum(x => x.SignedOff), Model.rso.Sum(x => x.Headcount))</strong></td>
+                        <td class="text-center"><strong>@string.Format("{0}/{1}", Model.rso.Where(x => x.KronosScheduled).Count(), Model.rso.Count())</strong></td>
+                        <td class="text-center"><strong>@string.Format("{0}/{1}", Model.rso.Where(x => x.KronosPunched).Count(), Model.rso.Count())</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+}
+else
+{
+    @Html.Partial("~/Views/Partials/_INeedHelpModal.cshtml")
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="panel-title text-center"><strong>Timecard Sign Off</strong></div>
+        </div>
+        <div class="panel-body">
+            @*@Html.Partial("~/Views/Shared/_WeekPicker.cshtml", new WeekPickerViewModel { Action = "TimecardSignOff", Controller = "RightFirstTime", WeeksOfYear = Model.WeeksOfYear, SelectedDate = Model.SelectedDate })*@
+            <strong style="font-size:large;">Week Commencing @Model.weekStart.ToShortDateString()</strong>
+            <p>
+                <span class="glyphicon glyphicon-time"></span> Timecard Sign off information is shown as live from STAR. Edited clocks count is updated at 8AM each day.
+            </p>
+            <p>
+                If you're unsure of how to sign off a particular timecard us the "I Need Help" button. This will take you through a series of questions to provide guidance on the correct action to take.
+                (Please only use this when required)
+            </p>
+            <p>
+                If the issue is out of your control you will be prompted to log a ticket with the relevant details in order for the timecard to be completed on your behalf.
+                <u>Please be sure to complete all sections of the ticket accurately.</u>
+            </p>
+            <p>
+                <strong>Please note: </strong>Sign off deadline is each Monday by 3PM<br />
+                <strong>Accountability reminder: </strong>The GM has overall accountability for all timecards being signed off and seond users to be scheduled to sign off in a GM's absence
+            </p>
+            <div class="alert alert-info" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <strong>Zero Hour Timecards</strong> - No timecard should ever be signed off completely blank. If you are unsure what paycode to use please use the "I Need Help" button.
+            </div>
+            <table class="table table-bordered-blue table-condensed" style="margin-top:15px;">
                 <tr>
-                    <td>@item.FullName</td>
-                    <td class="text-center"><strong>@(item.PersonData.Person.ManagerSignoffThruDateTime == Model.weekStart.AddDays(6).ToShortDateString() ? "✔" : "X")</strong></td>
-                    @*<td class="text-center"><strong>@(data.ManagerSignoffDateTime.Contains(Model.weekStart.AddDays(6).ToShortDateString()) ? "✔" : "X")</strong></td>*@
-                    @*<td class="text-center">@(data.PeriodTotalData.PeriodTotals.Totals.Total.Count() == 0 ? "Yes" : "")</td>*@
-                    <td></td>
-                    <td></td>
+                    <th class="text-center">Name</th>
+                    <th class="text-center col-xs-2">Timecard Signed Off</th>
+                    @*<th class="text-center col-xs-1">Zero Hour</th>*@
+                    <th class="text-center col-xs-2">Edited Clocks</th>
+                    <th class="text-center">I Need Help</th>
                 </tr>
-            }
-        </table>
+                @foreach (var item in Model.hf.Where(x => x.PersonData.Person.ManagerSignoffThruDateTime.Year != 1901).OrderBy(x => x.FullName))
+                {
+                    //var data = Model.ts.Where(x => x.Employee.PersonIdentity.PersonNumber == item.PersonNumber).FirstOrDefault();
+                    var ss = Model.ss.Where(x => x.PersonNum == item.PersonNumber).Count();
+                    var help = Model.HelpTcks.Where(x => x.EmpNum == item.parsedPerson).FirstOrDefault();
+                    <tr>
+                        <td>@item.FullName</td>
+                        <td class="text-center"><strong>@(item.PersonData.Person.ManagerSignoffThruDateTime >= Model.weekStart.AddDays(6) ? "✔" : "X")</strong></td>
+                        @*<td class="text-center"><strong>@(data.ManagerSignoffDateTime.Contains(Model.weekStart.AddDays(6).ToShortDateString()) ? "✔" : "X")</strong></td>*@
+                        @*<td class="text-center">@(data.PeriodTotalData.PeriodTotals.Totals.Total.Count() == 0 ? "Yes" : "")</td>*@
+                        <td class="text-center @(ss > 0 ? "danger" : "")">@(ss > 0 ? ss.ToString() : "")</td>
+                        @if (help != null)
+                        {
+                            <td class="text-center"><button type="button" class="btn btn-sm @(help.Status == "Completed" ? "btn-success" : "btn-warning")">@(help.Status == "Completed" ? "Resolved" : "Raised")</button></td>
+                        }
+                        else if (item.PersonData.Person.ManagerSignoffThruDateTime < Model.weekStart.AddDays(6))
+                        {
+                            <td class="text-center"><button type="button" class="btn btn-sm btn-info helpModal" data-empnum="@item.PersonNumber">Help</button></td>
+                        }
+                        else
+                        {
+                            <td><button class="btn btn-sm" style="visibility:hidden;">a</button></td>
+                        }
+                    </tr>
+                }
+            </table>
+        </div>
     </div>
-</div>
+}
 
-
+@section myScripts{
+    <script id="tc1" src="~/Content/Custom/TCSignOff.js"></script>
+}

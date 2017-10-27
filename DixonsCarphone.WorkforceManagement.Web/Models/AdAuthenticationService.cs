@@ -124,11 +124,11 @@ namespace DixonsCarphone.WorkforceManagement.Web.Models
                     string empNum = entry.Properties["employeeNumber"].Value.ToString();
                     if (!(bool)HttpContext.Current.Session["_ROIFlag"])
                     {
-                        HttpContext.Current.Session["_EmpNum"] = "UK" + empNum.PadLeft(6, '0');
+                        HttpContext.Current.Session["_EmpNum"] = empNum == "" ? "e" : "UK" + empNum.PadLeft(6, '0');
                     }
                     else
                     {
-                        HttpContext.Current.Session["_EmpNum"] = empNum;
+                        HttpContext.Current.Session["_EmpNum"] = empNum == "" ? "e" : empNum;
                     }
                 }
                 catch (Exception e)
@@ -139,7 +139,6 @@ namespace DixonsCarphone.WorkforceManagement.Web.Models
             else
             {
                 HttpContext.Current.Session["_EmpNum"] = "e";
-                string test1 = entry.Properties["workforceID"].Value.ToString();
                 try
                 {
                     int authCheck = storeManager.CheckCPWCAuth(entry.Properties["workforceID"].Value.ToString());

@@ -234,6 +234,7 @@
     <Content Include="Areas\Workflow\Views\Workflow\ViewTicket.cshtml" />
     <Content Include="Areas\Workflow\Views\_ViewStart.cshtml" />
     <Content Include="CacheDependencyFiles\TextFile1.txt" />
+    <Content Include="Content\Custom\TCSignOff.js" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\New\bootstrap.css" />
     <Content Include="Content\New\bootstrap.js" />
@@ -267,6 +268,14 @@
     <Content Include="Content\Workflow\WorkflowCrossRegion.min.js">
       <DependentUpon>WorkflowCrossRegion.js</DependentUpon>
     </Content>
+    <Content Include="Content\Workflow\WorkflowHelpTransfer.js" />
+    <Content Include="Content\Workflow\WorkflowHelpTransfer.min.js">
+      <DependentUpon>WorkflowHelpTransfer.js</DependentUpon>
+    </Content>
+    <Content Include="Content\Workflow\WorkflowHelpUnknown.js" />
+    <Content Include="Content\Workflow\WorkflowHelpUnknown.min.js">
+      <DependentUpon>WorkflowHelpUnknown.js</DependentUpon>
+    </Content>
     <Content Include="Content\Workflow\WorkflowMaster.js" />
     <Content Include="Content\Workflow\WorkflowMaster.min.js">
       <DependentUpon>WorkflowMaster.js</DependentUpon>
@@ -282,6 +291,10 @@
     <Content Include="Content\Workflow\WorkflowViewTicketCR.js" />
     <Content Include="Content\Workflow\WorkflowViewTicketCR.min.js">
       <DependentUpon>WorkflowViewTicketCR.js</DependentUpon>
+    </Content>
+    <Content Include="Content\Workflow\WorkflowViewTicketHT.js" />
+    <Content Include="Content\Workflow\WorkflowViewTicketHT.min.js">
+      <DependentUpon>WorkflowViewTicketHT.js</DependentUpon>
     </Content>
     <Content Include="Error\404.html" />
     <Content Include="Error\Default.html" />
@@ -367,6 +380,7 @@
     <Content Include="Images\GaugeBG.png" />
     <Content Include="Images\Logo.png" />
     <Content Include="Images\LogoSmall.png" />
+    <Content Include="Images\RFTP.png" />
     <Content Include="Images\WFMHeaderTapp.png" />
     <Content Include="Images\WFMHeader_V6.gif" />
     <Content Include="oldfavicon.ico" />
@@ -590,7 +604,7 @@
     <Content Include="Views\STARHandbook\EscalationsSupport3.cshtml" />
     <Content Include="Views\STARHandbook\EscalationsSupport4.cshtml" />
     <Content Include="Views\Partials\_ChangeStoreOpeningTimesAdmin.cshtml" />
-    <Content Include="Views\Reports\PunchCompliance.cshtml" />
+    <Content Include="Views\Reports\ClockingCompliance.cshtml" />
     <Content Include="Views\Partials\_PunchComp.cshtml" />
     <Content Include="Views\Planning\Schedule.cshtml" />
     <Content Include="Views\Partials\_Schedule.cshtml" />
@@ -626,6 +640,10 @@
     <Content Include="Uploads\Recruitment.pdf" />
     <Content Include="Views\RightFirstTime\TimecardSignOff.cshtml" />
     <Content Include="Views\Planning\FlexStatus.cshtml" />
+    <Content Include="Views\Reports\EditedClocks.cshtml" />
+    <Content Include="Views\Partials\_INeedHelpModal.cshtml" />
+    <Content Include="Views\Reports\ClockingBehaviours.cshtml" />
+    <Content Include="Views\RightFirstTime\Guide.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DixonsCarphone.WorkforceManagement.Business\DixonsCarphone.WorkforceManagement.Business.csproj">

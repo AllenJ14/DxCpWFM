@@ -45,6 +45,11 @@ namespace DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
         {
             WeeksOfYear = Helpers.GetFinancialWeeks(lastDate, weekNumbers);
         }
+
+        public void GetDatesOfYear(DateTime lastDate, List<int?> weekNumbers)
+        {
+            WeeksOfYear = Helpers.GetFinancialDates(lastDate, weekNumbers);
+        }
     }
 
     public enum MessageType

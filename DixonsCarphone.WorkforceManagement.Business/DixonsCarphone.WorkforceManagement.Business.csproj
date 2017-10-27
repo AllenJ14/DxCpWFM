@@ -112,7 +112,7 @@
     <Compile Include="Entities\DailyFootfall.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\DashBoardData.cs">
+    <Compile Include="Entities\DashBoardData_v2.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\DxCpIEReportingModel.Context.cs">
@@ -196,6 +196,9 @@
     <Compile Include="Entities\IpRef.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\KronosEmployeeSummary.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\OpeningTimesComment.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
@@ -232,10 +235,10 @@
     <Compile Include="Entities\SiteFeedback.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\sp_AllChannelDashboardData_Result.cs">
+    <Compile Include="Entities\sp_AllChannelDashboardData_v2_Result.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\sp_AllDivisionDashboardData_Result.cs">
+    <Compile Include="Entities\sp_AllDivisionDashboardData_v2_Result.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\sp_BranchContractStatus_Result.cs">
@@ -250,10 +253,16 @@
     <Compile Include="Entities\sp_ChannelComplianceDetail_Result.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\sp_ChannelDashboardData_Result.cs">
+    <Compile Include="Entities\sp_ChannelDashboardData_v2_Result.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\sp_ChannelPunchCompliance_Result.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\sp_ChannelShortShifts_Result.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\sp_CheckHelpTickets_Result.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\sp_DivisionBMWorking_Result.cs">
@@ -262,7 +271,7 @@
     <Compile Include="Entities\sp_DivisionComplianceDetail_Result.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\sp_DivisionDashboardData_Result.cs">
+    <Compile Include="Entities\sp_DivisionDashboardData_v2_Result.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\sp_DivisionFutureDeployment_Result.cs">
@@ -275,6 +284,15 @@
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\sp_DivisionPunchCompliance_Result.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\sp_DivisionPunchExceptions_Result.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\sp_DivisionPunchTrend_Result.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\sp_DivisionShortShifts_Result.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\sp_EscalationOptions_Result.cs">
@@ -322,7 +340,7 @@
     <Compile Include="Entities\sp_RegionContractStatus_Result.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\sp_RegionDashboardData_Result.cs">
+    <Compile Include="Entities\sp_RegionDashboardData_v2_Result.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\sp_RegionFutureDeployment_Result.cs">
@@ -335,6 +353,15 @@
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\sp_RegionPunchCompliance_Result.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\sp_RegionPunchExceptions_Result.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\sp_RegionPunchTrend_Result.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\sp_RegionShortShifts_Result.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\StaffType.cs">
@@ -412,6 +439,7 @@
     <Compile Include="Kronos\KronosApi.cs" />
     <Compile Include="Kronos\Person.cs" />
     <Compile Include="Kronos\PersonData.cs" />
+    <Compile Include="Kronos\PunchStatus.cs" />
     <Compile Include="Kronos\ScheduleItems.cs" />
     <Compile Include="Kronos\ShiftSegment.cs" />
     <Compile Include="Kronos\Timesheet.cs" />

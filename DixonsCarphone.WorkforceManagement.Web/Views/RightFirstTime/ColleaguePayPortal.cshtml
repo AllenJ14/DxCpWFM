@@ -13,64 +13,76 @@
         <strong>Colleague Pay Portal</strong>
     </div>
     <div class="panel-body">
-        <div class="col-xs-12">
-            <div class="col-xs-12 col-sm-6 col-lg-4" style="padding-left:0px;">
-                <strong>Select Pay Period:</strong>
-                @Html.DropDownList("PayPeriod", Model.menu, "--- Select Period ---", new { @class = "form-control" })
-            </div>
-        </div>
-        <div id="loading" class="col-xs-12" style="margin-top:15px; padding:0px 30px; display:none;">
-            <div class="row text-center">
-                <strong>Loading data... Please wait.</strong>
-                <div class="progress progress-striped active page-progress-bar">
-                    <div class="progress-bar" style="width: 100%;"></div>
+        @if (HttpContext.Current.Session["_PTFlag"].ToString() == "FT")
+        {
+            <div class="alert alert-info text-center"><strong>This view is currently only available for colleagues on the part time payroll</strong></div>
+        }
+        else
+        {
+            <div class="col-xs-12">
+                <div class="col-xs-12 col-sm-6 col-lg-4" style="padding-left:0px;">
+                    <strong>Select Pay Period:</strong>
+                    @Html.DropDownList("PayPeriod", Model.menu, "--- Select Period ---", new { @class = "form-control" })
                 </div>
             </div>
-        </div>
-        <div id="errorContainer" class="col-xs-12" style="margin-top:15px;padding:0px 30px;display:none;">
-            <div class="row text-center">
-                <strong>Oops...</strong>
-                <p>Something went wrong, please try again</p>
-                <button class="btn btn-sm btn-info" id="retry">Retry</button>
+            <div id="loading" class="col-xs-12" style="margin-top:15px; padding:0px 30px; display:none;">
+                <div class="row text-center">
+                    <strong>Loading data... Please wait.</strong>
+                    <div class="progress progress-striped active page-progress-bar">
+                        <div class="progress-bar" style="width: 100%;"></div>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div style="display:none; margin-top:20px;" id="container" class="col-xs-12">
-            
-        </div>
-    </div>    
+            <div id="errorContainer" class="col-xs-12" style="margin-top:15px;padding:0px 30px;display:none;">
+                <div class="row text-center">
+                    <strong>Oops...</strong>
+                    <p>Something went wrong, please try again</p>
+                    <button class="btn btn-sm btn-info" id="retry">Retry</button>
+                </div>
+            </div>
+            <div style="display:none; margin-top:20px;" id="container" class="col-xs-12">
+
+            </div>
+        }        
+    </div>
 </div>
 
 @section myScripts{
-<script>
-    $(function () {
-        var $menu = $('#PayPeriod');
-        var $cont = $('#container');
-        var $loading = $('#loading');
-        var $retry = $('#retry');
-        var $error = $('#errorContainer');
+    <script>
+        $(function () {
+            var $menu = $('#PayPeriod');
+            var $cont = $('#container');
+            var $loading = $('#loading');
+            var $retry = $('#retry');
+            var $error = $('#errorContainer');
 
-        var dataPull = function () {
-            if ($menu.val() !== '') {
-                $cont.slideUp(300, function () {
-                    $loading.toggle();
-                });
-                $error.hide();
-                $.get('/APITest/_PayDates', { period: $menu.val() }, function (result) {
-                    setTimeout(function () {
-                        $cont.html(result);
+            var dataPull = function () {
+                if ($menu.val() !== '') {
+                    $cont.slideUp(300, function () {
                         $loading.toggle();
-                        $cont.slideDown(300);
-                    }, 250);
-                }).fail(function () {
-                    $loading.toggle();
-                    $error.show();
-                });
-            }
-        };
+                    });
+                    $error.hide();
+                    $.get('/APITest/_PayDates', { period: $menu.val() }, function (result) {
+                        setTimeout(function () {
+                            $cont.html(result);
+                            $loading.toggle();
+                            $cont.slideDown(300);
+                        }, 250);
+                    }).fail(function () {
+                        $loading.toggle();
+                        $error.show();
+                    });
+                }
+            };
 
-        $menu.change(dataPull);
-        $error.click(dataPull);
+            $menu.change(dataPull);
+            $error.click(dataPull);
 
-    });
-</script>    
+            $cont.popover({
+                selector: '[data-toggle="popover"]',
+                trigger: 'focus'
+            });
+                        
+        });
+    </script>
 }

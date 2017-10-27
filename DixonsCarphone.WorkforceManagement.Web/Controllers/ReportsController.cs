@@ -59,7 +59,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             {
                 var data = await _dashBoardManager.GetAllChannelDashboardData(System.Web.HttpContext.Current.Session["_ChannelName"].ToString(), weekOfYr);
                 vm._dashboardViewCollectionChannel = mapper.Map<List<DashboardViewChannel>>(data);
-                if (data.Sum(x => x.FinalTarget) == 0)
+                if (data.Sum(x => x.PunchCompliance) == 0)
                 {
                     vm.MessageType = MessageType.Warning;
                 }
@@ -68,7 +68,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             {
                 var data = await _dashBoardManager.GetAllDivisionDashboardData(System.Web.HttpContext.Current.Session["_DivisionName"].ToString(), weekOfYr);
                 vm._dashboardViewCollectionChannel = mapper.Map<List<DashboardViewChannel>>(data);
-                if (data.Sum(x => x.FinalTarget) == 0)
+                if (data.Sum(x => x.PunchCompliance) == 0)
                 {
                     vm.MessageType = MessageType.Warning;
                 }
@@ -77,7 +77,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             {
                 var data = await _dashBoardManager.GetAllRegionDashBoardData((int)System.Web.HttpContext.Current.Session["_RegionNumber"], weekOfYr, weekOfYr);
                 vm._dashboardViewCollection = mapper.Map<List<DashBoardView>>(data);
-                if (data.Sum(x => x.FinalTarget) == 0)
+                if (data.Sum(x => x.PunchCompliance) == 0)
                 {
                     vm.MessageType = MessageType.Warning;
                 }
@@ -86,7 +86,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             {
                 var data = mapper.Map<DashBoardView>(await _dashBoardManager.GetStoreDashBoardData(StoreNumber, weekOfYr));
                 var detailData = mapper.Map<List<EmpComplianceDetailView>>(await _storeManager.GetComplianceDetail(StoreNumber, weekOfYr));
-                if (data.FinalTarget != null)
+                if (data.PunchCompliance != null)
                 {
                     vm.populateClass(detailData, data);
                 }
@@ -94,11 +94,21 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
                 {
                     vm.MessageType = MessageType.Warning;
                 }
+
+                if (data.PunchCompliance < 0.9)
+                {
+                    vm.populatePunch(mapper.Map<List<PunchCompView>>(await _storeManager.GetStorePunch(StoreNumber, weekOfYr)));
+                }           
+                if(data.ShortShifts > 0)
+                {
+                    vm.populateSS(mapper.Map<List<ShortShiftView>>(await _storeManager.GetShortShiftsBranch(StoreNumber, weekOfYr)));
+                }
+                
             }
 
-            var weekNumbers = await _storeManager.GetWeekNumbers(DateTime.Now.GetFirstDayOfWeek().AddDays(-56), DateTime.Now.GetFirstDayOfWeek().AddDays(28));
+            var weekNumbers = await _storeManager.GetWeekNumbers(DateTime.Now.GetFirstDayOfWeek().AddDays(-56), DateTime.Now.AddDays(-7).GetFirstDayOfWeek());
 
-            vm.GetWeeksOfYear(DateTime.Now.GetFirstDayOfWeek().AddDays(28), weekNumbers);
+            vm.GetWeeksOfYear(DateTime.Now.GetFirstDayOfWeek().AddDays(-7), weekNumbers);
             vm.PageBlurb = ConfigurationManager.AppSettings["ComplianceBlurb"];
 
             vm.WeeksOfYear.ForEach(x => x.Selected = x.Value == weekOfYr.ToString());
@@ -509,7 +519,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             return File("/Uploads/" + f, "application/pdf");
         }
 
-        public async Task<ActionResult> PunchCompliance(string selectedDate = "Last Week")
+        public async Task<ActionResult> ClockingCompliance(string selectedDate = "Last Week")
         {
             PunchCompVM vm = new PunchCompVM();
             var weekOfYr = GetWeekNumber(selectedDate);
@@ -542,7 +552,73 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             vm.GetWeeksOfYear(DateTime.Now.GetFirstDayOfWeek().AddDays(-7), weekNumbers);
             vm.WeeksOfYear.ForEach(x => x.Selected = x.Value == weekOfYr.ToString());
 
-            return View("PunchCompliance", vm);
+            return View("ClockingCompliance", vm);
+        }
+
+        [UserFilter(AccessLevel = "Admin,TPC,RM,DD,RD")]
+        public async Task<ActionResult> ClockingBehaviours()
+        {
+            PunchExceptionsVm vm = new PunchExceptionsVm();
+
+            if (System.Web.HttpContext.Current.Session["_ChannelName"] != null)
+            {
+                vm.Message = "This page is not available in the currently selected view, please select a store from the top right menu or go back.";
+                vm.MessageType = MessageType.Error;
+            }
+            else if (System.Web.HttpContext.Current.Session["_DivisionName"] != null)
+            {
+                vm.level = 2;
+                vm.Exceptions = mapper.Map<List<PunchExceptionsView>>(await _storeManager.GetDivisionPunchExceptions(System.Web.HttpContext.Current.Session["_DivisionName"].ToString()));
+                vm.Trend = mapper.Map<List<PunchTrendView>>(await _storeManager.GetDivisionPunchTrend(System.Web.HttpContext.Current.Session["_DivisionName"].ToString()));
+            }
+            else if (System.Web.HttpContext.Current.Session["_RegionNumber"] != null)
+            {
+                vm.level = 1;
+                vm.Exceptions = mapper.Map<List<PunchExceptionsView>>(await _storeManager.GetRegionPunchExceptions(System.Web.HttpContext.Current.Session["_RegionNumber"].ToString()));
+                vm.Trend = mapper.Map<List<PunchTrendView>>(await _storeManager.GetRegionPunchTrend(System.Web.HttpContext.Current.Session["_RegionNumber"].ToString()));
+            }
+            else
+            {
+                vm.level = 1;
+                vm.Exceptions = mapper.Map<List<PunchExceptionsView>>(await _storeManager.GetRegionPunchExceptions(_store.RegionNo));
+                vm.Trend = mapper.Map<List<PunchTrendView>>(await _storeManager.GetRegionPunchTrend(_store.RegionNo));
+            }
+
+            return View(vm);
+        }
+
+        public async Task<ActionResult> EditedClocks(string selectedDate = "Last Week")
+        {
+            ShortShiftVm vm = new ShortShiftVm();
+            var weekOfYr = GetWeekNumber(selectedDate);
+
+            if (System.Web.HttpContext.Current.Session["_ChannelName"] != null)
+            {
+                vm.Message = "This page is not available in the currently selected view, please select a store from the top right menu or go back.";
+                vm.MessageType = MessageType.Error;
+            }
+            else if (System.Web.HttpContext.Current.Session["_DivisionName"] != null)
+            {
+                vm.type = 2;
+                vm.RegionShortShifts = mapper.Map<List<RegionShortShiftView>>(await _storeManager.GetShortShiftsDivision(System.Web.HttpContext.Current.Session["_DivisionName"].ToString(), weekOfYr));
+            }
+            else if (System.Web.HttpContext.Current.Session["_RegionNumber"] != null)
+            {
+                vm.type = 1;
+                vm.RegionShortShifts = mapper.Map<List<RegionShortShiftView>>(await _storeManager.GetShortShiftsRegion(System.Web.HttpContext.Current.Session["_RegionNumber"].ToString(), weekOfYr));
+            }
+            else
+            {
+                vm.type = 0;
+                vm.ShortShifts = mapper.Map<List<ShortShiftView>>(await _storeManager.GetShortShiftsBranch(StoreNumber, weekOfYr));
+            }
+
+            var weekNumbers = await _storeManager.GetWeekNumbers(DateTime.Now.GetFirstDayOfWeek().AddDays(-56), DateTime.Now.GetFirstDayOfWeek().AddDays(-7));
+
+            vm.GetWeeksOfYear(DateTime.Now.GetFirstDayOfWeek().AddDays(-7), weekNumbers);
+            vm.WeeksOfYear.ForEach(x => x.Selected = x.Value == weekOfYr.ToString());
+
+            return View(vm);
         }
 
         [UserFilter(AccessLevel = "Admin,TPC,RM,DD,RD")]

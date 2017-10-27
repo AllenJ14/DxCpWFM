@@ -40,7 +40,6 @@
         <EntityTypeShape EntityType="DixonsCarphone.WorkforceManagement.Business.DailyDeployment" Width="1.5" PointX="0.75" PointY="8.75" />
         <EntityTypeShape EntityType="DixonsCarphone.WorkforceManagement.Business.EmpComplianceDetail" Width="1.5" PointX="5.375" PointY="11.75" />
         <EntityTypeShape EntityType="DixonsCarphone.WorkforceManagement.Business.UserAccess" Width="1.5" PointX="7.375" PointY="11.75" />
-        <EntityTypeShape EntityType="DixonsCarphone.WorkforceManagement.Business.DashBoardData" Width="1.5" PointX="10.375" PointY="14.75" />
         <EntityTypeShape EntityType="DixonsCarphone.WorkforceManagement.Business.IncorrectBranchLog" Width="1.5" PointX="7.375" PointY="14.75" />
         <EntityTypeShape EntityType="DixonsCarphone.WorkforceManagement.Business.CPW_Clocking_Data" Width="1.5" PointX="3.375" PointY="15.75" />
         <EntityTypeShape EntityType="DixonsCarphone.WorkforceManagement.Business.SiteFeedback" Width="1.5" PointX="15.375" PointY="7.75" />
@@ -78,6 +77,8 @@
         <AssociationConnector Association="DixonsCarphone.WorkforceManagement.Business.FK_PayCalendarDates_PayCalendarRef" />
         <EntityTypeShape EntityType="DixonsCarphone.WorkforceManagement.Business.ColleaguePayData" Width="1.5" PointX="5.375" PointY="21.75" />
         <EntityTypeShape EntityType="DixonsCarphone.WorkforceManagement.Business.ShortShift" Width="1.5" PointX="7.375" PointY="21.75" />
+        <EntityTypeShape EntityType="DixonsCarphone.WorkforceManagement.Business.DashBoardData_v2" Width="1.5" PointX="12.375" PointY="22.75" />
+        <EntityTypeShape EntityType="DixonsCarphone.WorkforceManagement.Business.KronosEmployeeSummary" Width="1.5" PointX="9.375" PointY="18.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

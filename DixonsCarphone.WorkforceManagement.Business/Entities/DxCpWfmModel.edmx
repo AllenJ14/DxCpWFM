@@ -329,7 +329,7 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
           <Property Name="WeekNumber" Type="int" />
           <Property Name="InvoiceGroupYearName" Type="nvarchar" MaxLength="10" />
         </EntityType>
-        <EntityType Name="DashBoardData">
+        <EntityType Name="DashBoardData_v2">
           <Key>
             <PropertyRef Name="DashBoardDataId" />
           </Key>
@@ -353,11 +353,9 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
           <Property Name="OriginalTarget" Type="float" />
           <Property Name="FinalTarget" Type="float" />
           <Property Name="HolidayTaken" Type="float" />
-          <Property Name="LTS" Type="float" />
           <Property Name="FTLeakage" Type="float" />
           <Property Name="LeakageCount" Type="smallint" />
           <Property Name="AllApprovedHours" Type="float" />
-          <Property Name="PayrollCorrections" Type="float" />
           <Property Name="SOH" Type="float" />
           <Property Name="OverTargetFlag" Type="bit" />
           <Property Name="OverContractFlag" Type="bit" />
@@ -373,34 +371,11 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
           <Property Name="GSOverTargetFlag" Type="bit" />
           <Property Name="GSOverContractFlag" Type="bit" />
           <Property Name="StoreFlag" Type="nvarchar" MaxLength="50" />
-          <Property Name="StoreCount" Type="smallint" />
-          <Property Name="FTHeadcountSAS" Type="smallint" />
-          <Property Name="FTHeadcountSIS" Type="smallint" />
           <Property Name="ContractBaseTarget" Type="float" />
-          <Property Name="PaidForHoursNotWorkedCompliance" Type="bit" />
-          <Property Name="SATSOH" Type="float" />
-          <Property Name="SATTarget" Type="float" />
-          <Property Name="ServiceLV1SOH" Type="float" />
-          <Property Name="ServiceLV1Target" Type="float" />
-          <Property Name="ServiceLV2SOH" Type="float" />
-          <Property Name="ServiceLV2Target" Type="float" />
-          <Property Name="SATContractHours" Type="float" />
-          <Property Name="ServiceLV1ContractHours" Type="float" />
-          <Property Name="ServiceLV2ContractHours" Type="float" />
-          <Property Name="25PercOver" Type="bit" />
-          <Property Name="25PercUnder" Type="bit" />
-          <Property Name="PlusMinus10Perc" Type="bit" />
-          <Property Name="Awol" Type="float" />
-          <Property Name="Suspension" Type="float" />
-          <Property Name="Sickness" Type="float" />
-          <Property Name="GSTraining" Type="float" />
-          <Property Name="SATTraining" Type="float" />
-          <Property Name="L1Training" Type="float" />
-          <Property Name="L2Training" Type="float" />
-          <Property Name="SATHoliday" Type="float" />
-          <Property Name="L1Holiday" Type="float" />
-          <Property Name="L2Holiday" Type="float" />
           <Property Name="IgniteCredits" Type="float" />
+          <Property Name="PunchCompliance" Type="float" />
+          <Property Name="ShortShifts" Type="smallint" />
+          <Property Name="PayEscalations" Type="float" />
         </EntityType>
         <EntityType Name="EmpComplianceDetail">
           <Key>
@@ -500,6 +475,26 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
           <Property Name="EntryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="storeNumber" Type="int" Nullable="false" />
           <Property Name="IpRange" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'CarphoneWfm.dbo.KronosEmployeeSummary' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="KronosEmployeeSummary">
+          <Key>
+            <PropertyRef Name="KronosUser" />
+            <PropertyRef Name="Scheduled" />
+          </Key>
+          <Property Name="HomeBranch" Type="smallint" />
+          <Property Name="Region" Type="smallint" />
+          <Property Name="Division" Type="varchar" MaxLength="25" />
+          <Property Name="Channel" Type="nvarchar" MaxLength="10" />
+          <Property Name="PersonNumber" Type="varchar" MaxLength="10" />
+          <Property Name="EmployeeStandardHours" Type="decimal" Precision="3" Scale="1" />
+          <Property Name="SignedOffThrough" Type="date" />
+          <Property Name="JobRole" Type="nvarchar" MaxLength="50" />
+          <Property Name="PersonName" Type="nvarchar" MaxLength="100" />
+          <Property Name="KronosUser" Type="bit" Nullable="false" />
+          <Property Name="BranchName" Type="varchar" MaxLength="100" />
+          <Property Name="Scheduled" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="OpeningTimesComments">
           <Key>
@@ -731,7 +726,7 @@ warning 6002: The table/view 'CarphoneWfm.dbo.CPW_Clocking_Data' does not have a
           <Property Name="EntryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TicketId" Type="int" Nullable="false" />
           <Property Name="QuestionId" Type="int" Nullable="false" />
-          <Property Name="Answer" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Answer" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="TicketAudit">
           <Key>
@@ -1099,11 +1094,11 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
         <Function Name="PublishedBudgetsRegion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Region" Type="nvarchar" Mode="In" />
         </Function>
-        <Function Name="sp_AllChannelDashboardData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="sp_AllChannelDashboardData_v2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Channel" Type="nvarchar" Mode="In" />
           <Parameter Name="BeginWeek" Type="int" Mode="In" />
         </Function>
-        <Function Name="sp_AllDivisionDashboardData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="sp_AllDivisionDashboardData_v2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Division" Type="nvarchar" Mode="In" />
           <Parameter Name="BeginWeek" Type="int" Mode="In" />
         </Function>
@@ -1121,7 +1116,7 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Parameter Name="ChannelName" Type="nvarchar" Mode="In" />
           <Parameter Name="weeknumber" Type="int" Mode="In" />
         </Function>
-        <Function Name="sp_ChannelDashboardData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="sp_ChannelDashboardData_v2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Channel" Type="nvarchar" Mode="In" />
           <Parameter Name="BeginWeek" Type="int" Mode="In" />
           <Parameter Name="EndWeek" Type="int" Mode="In" />
@@ -1130,6 +1125,10 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Parameter Name="ChannelName" Type="nvarchar" Mode="In" />
           <Parameter Name="weekNumber" Type="int" Mode="In" />
         </Function>
+        <Function Name="sp_ChannelShortShifts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Channel" Type="nvarchar" Mode="In" />
+          <Parameter Name="WeekNumber" Type="int" Mode="In" />
+        </Function>
         <Function Name="sp_DivisionBMWorking" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Division" Type="varchar" Mode="In" />
         </Function>
@@ -1137,7 +1136,7 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Parameter Name="DivisionName" Type="nvarchar" Mode="In" />
           <Parameter Name="weeknumber" Type="int" Mode="In" />
         </Function>
-        <Function Name="sp_DivisionDashboardData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="sp_DivisionDashboardData_v2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Division" Type="nvarchar" Mode="In" />
           <Parameter Name="BeginWeek" Type="int" Mode="In" />
           <Parameter Name="EndWeek" Type="int" Mode="In" />
@@ -1154,6 +1153,16 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
         <Function Name="sp_DivisionPunchCompliance" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="DivisionName" Type="nvarchar" Mode="In" />
           <Parameter Name="weekNumber" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_DivisionPunchExceptions" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="division" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_DivisionPunchTrend" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Division" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_DivisionShortShifts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Division" Type="nvarchar" Mode="In" />
+          <Parameter Name="WeekNumber" Type="int" Mode="In" />
         </Function>
         <Function Name="sp_GetDivisionFootfall" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="DivisionName" Type="nvarchar" Mode="In" />
@@ -1183,7 +1192,7 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Parameter Name="Region" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="sp_RegionContractStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="sp_RegionDashboardData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="sp_RegionDashboardData_v2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Region" Type="nvarchar" Mode="In" />
           <Parameter Name="BeginWeek" Type="int" Mode="In" />
           <Parameter Name="EndWeek" Type="int" Mode="In" />
@@ -1200,6 +1209,16 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
         <Function Name="sp_RegionPunchCompliance" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="regionNumber" Type="nvarchar" Mode="In" />
           <Parameter Name="weekNumber" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_RegionPunchExceptions" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Region" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_RegionPunchTrend" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Region" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_RegionShortShifts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="RegionNo" Type="nvarchar" Mode="In" />
+          <Parameter Name="WeekNumber" Type="int" Mode="In" />
         </Function>
         <Function Name="udsp_GetPandL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="StoreNumber" Type="int" Mode="In" />
@@ -1259,6 +1278,9 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Parameter Name="TicketId" Type="int" Mode="In" />
           <Parameter Name="Username" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="sp_CheckHelpTickets" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="tck">
+          <Parameter Name="BranchNum" Type="smallint" Mode="In" />
+        </Function>
         <Function Name="sp_ChkInteractLvl" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="tck">
           <Parameter Name="level" Type="int" Mode="In" />
           <Parameter Name="TicketTypeId" Type="int" Mode="In" />
@@ -1309,7 +1331,7 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <EntitySet Name="CPCW_Managers" EntityType="Self.CPCW_Managers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DailyDeployment" EntityType="Self.DailyDeployment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DailyFootfall" EntityType="Self.DailyFootfall" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="DashBoardData" EntityType="Self.DashBoardData" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DashBoardData_v2" EntityType="Self.DashBoardData_v2" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmpComplianceDetail" EntityType="Self.EmpComplianceDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FileUploadRecord" EntityType="Self.FileUploadRecord" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HolidayPlanningEmp" EntityType="Self.HolidayPlanningEmp" Schema="dbo" store:Type="Tables" />
@@ -1390,6 +1412,22 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
     [CPW_Clocking_Data].[Overide_ClockType_OUT] AS [Overide_ClockType_OUT], 
     [CPW_Clocking_Data].[Overide_PUNCHTIME_OUT] AS [Overide_PUNCHTIME_OUT]
     FROM [dbo].[CPW_Clocking_Data] AS [CPW_Clocking_Data]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="KronosEmployeeSummary" EntityType="Self.KronosEmployeeSummary" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [KronosEmployeeSummary].[HomeBranch] AS [HomeBranch], 
+    [KronosEmployeeSummary].[Region] AS [Region], 
+    [KronosEmployeeSummary].[Division] AS [Division], 
+    [KronosEmployeeSummary].[Channel] AS [Channel], 
+    [KronosEmployeeSummary].[PersonNumber] AS [PersonNumber], 
+    [KronosEmployeeSummary].[EmployeeStandardHours] AS [EmployeeStandardHours], 
+    [KronosEmployeeSummary].[SignedOffThrough] AS [SignedOffThrough], 
+    [KronosEmployeeSummary].[JobRole] AS [JobRole], 
+    [KronosEmployeeSummary].[PersonName] AS [PersonName], 
+    [KronosEmployeeSummary].[KronosUser] AS [KronosUser], 
+    [KronosEmployeeSummary].[BranchName] AS [BranchName], 
+    [KronosEmployeeSummary].[Scheduled] AS [Scheduled]
+    FROM [dbo].[KronosEmployeeSummary] AS [KronosEmployeeSummary]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="TicketEscalations" EntityType="Self.TicketEscalations" store:Type="Tables" store:Schema="tck">
             <DefiningQuery>SELECT 
@@ -1742,7 +1780,6 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
             <Parameter Name="QtdStartMonth" Mode="In" Type="Int16" />
             <Parameter Name="YtdStartMonth" Mode="In" Type="Int16" />
           </FunctionImport>
-          <EntitySet Name="DashBoardDatas" EntityType="DixonsCarphone.WorkforceManagement.Business.DashBoardData" />
           <EntitySet Name="IncorrectBranchLogs" EntityType="DixonsCarphone.WorkforceManagement.Business.IncorrectBranchLog" />
           <EntitySet Name="CPW_Clocking_Data" EntityType="DixonsCarphone.WorkforceManagement.Business.CPW_Clocking_Data" />
           <FunctionImport Name="sp_BranchPunchCompliance" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_BranchPunchCompliance_Result)">
@@ -1790,40 +1827,17 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <FunctionImport Name="sp_DivisionHolidayPlanningEmp" EntitySet="HolidayPlanningEmps" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.HolidayPlanningEmp)">
           <Parameter Name="Division" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="sp_AllChannelDashboardData" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_AllChannelDashboardData_Result)">
-            <Parameter Name="Channel" Mode="In" Type="String" />
-            <Parameter Name="BeginWeek" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_AllDivisionDashboardData" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_AllDivisionDashboardData_Result)">
-            <Parameter Name="Division" Mode="In" Type="String" />
-            <Parameter Name="BeginWeek" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="sp_ChannelComplianceDetail" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_ChannelComplianceDetail_Result)">
             <Parameter Name="ChannelName" Mode="In" Type="String" />
             <Parameter Name="weeknumber" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_ChannelDashboardData" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_ChannelDashboardData_Result)">
-            <Parameter Name="Channel" Mode="In" Type="String" />
-            <Parameter Name="BeginWeek" Mode="In" Type="Int32" />
-            <Parameter Name="EndWeek" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_DivisionComplianceDetail" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_DivisionComplianceDetail_Result)">
             <Parameter Name="DivisionName" Mode="In" Type="String" />
             <Parameter Name="weeknumber" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="sp_DivisionDashboardData" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_DivisionDashboardData_Result)">
-            <Parameter Name="Division" Mode="In" Type="String" />
-            <Parameter Name="BeginWeek" Mode="In" Type="Int32" />
-            <Parameter Name="EndWeek" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="sp_RegionComplianceDetail" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_RegionComplianceDetail_Result)">
             <Parameter Name="regionNumber" Mode="In" Type="Int32" />
             <Parameter Name="weeknumber" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_RegionDashboardData" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_RegionDashboardData_Result)">
-            <Parameter Name="Region" Mode="In" Type="String" />
-            <Parameter Name="BeginWeek" Mode="In" Type="Int32" />
-            <Parameter Name="EndWeek" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="udsp_GetPandLRegionSummary" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.udsp_GetPandLRegionSummary_Result)">
             <Parameter Name="RegionNumber" Mode="In" Type="String" />
@@ -1977,6 +1991,58 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Parameter Name="RegionNo" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="ShortShifts" EntityType="DixonsCarphone.WorkforceManagement.Business.ShortShift" />
+          <EntitySet Name="DashBoardData_v2" EntityType="DixonsCarphone.WorkforceManagement.Business.DashBoardData_v2" />
+          <FunctionImport Name="sp_AllChannelDashboardData_v2" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_AllChannelDashboardData_v2_Result)">
+            <Parameter Name="Channel" Mode="In" Type="String" />
+            <Parameter Name="BeginWeek" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_AllDivisionDashboardData_v2" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_AllDivisionDashboardData_v2_Result)">
+            <Parameter Name="Division" Mode="In" Type="String" />
+            <Parameter Name="BeginWeek" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ChannelDashboardData_v2" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_ChannelDashboardData_v2_Result)">
+            <Parameter Name="Channel" Mode="In" Type="String" />
+            <Parameter Name="BeginWeek" Mode="In" Type="Int32" />
+            <Parameter Name="EndWeek" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_DivisionDashboardData_v2" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_DivisionDashboardData_v2_Result)">
+            <Parameter Name="Division" Mode="In" Type="String" />
+            <Parameter Name="BeginWeek" Mode="In" Type="Int32" />
+            <Parameter Name="EndWeek" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_RegionDashboardData_v2" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_RegionDashboardData_v2_Result)">
+            <Parameter Name="Region" Mode="In" Type="String" />
+            <Parameter Name="BeginWeek" Mode="In" Type="Int32" />
+            <Parameter Name="EndWeek" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="KronosEmployeeSummaries" EntityType="DixonsCarphone.WorkforceManagement.Business.KronosEmployeeSummary" />
+          <FunctionImport Name="sp_RegionShortShifts" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_RegionShortShifts_Result)">
+            <Parameter Name="RegionNo" Mode="In" Type="String" />
+            <Parameter Name="WeekNumber" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ChannelShortShifts" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_RegionShortShifts_Result)">
+            <Parameter Name="Channel" Mode="In" Type="String" />
+            <Parameter Name="WeekNumber" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_DivisionShortShifts" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_RegionShortShifts_Result)">
+            <Parameter Name="Division" Mode="In" Type="String" />
+            <Parameter Name="WeekNumber" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_RegionPunchTrend" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_RegionPunchTrend_Result)">
+          <Parameter Name="Region" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_DivisionPunchTrend" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_DivisionPunchTrend_Result)">
+          <Parameter Name="Division" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_RegionPunchExceptions" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_RegionPunchExceptions_Result)">
+          <Parameter Name="Region" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_DivisionPunchExceptions" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_DivisionPunchExceptions_Result)">
+          <Parameter Name="division" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_CheckHelpTickets" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_CheckHelpTickets_Result)">
+            <Parameter Name="BranchNum" Mode="In" Type="Int16" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="BestPracticeCategoryType">
           <Key>
@@ -2470,79 +2536,6 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Property Type="Decimal" Name="BreakdownActualAmount" Nullable="true" Precision="38" Scale="3" />
           <Property Type="Decimal" Name="BreakdownBudgetAmount" Nullable="true" Precision="38" Scale="3" />
         </ComplexType>
-        <EntityType Name="DashBoardData">
-          <Key>
-            <PropertyRef Name="DashBoardDataId" />
-          </Key>
-          <Property Name="DashBoardDataId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Year" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="Quarter" Type="Byte" />
-          <Property Name="Period" Type="Byte" />
-          <Property Name="WeekNumber" Type="Int32" />
-          <Property Name="BranchNumber" Type="Int16" />
-          <Property Name="UkBranchNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="StoreName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="Division" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="Region" Type="Int16" />
-          <Property Name="RegionName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="TotalHeadCount" Type="Int16" />
-          <Property Name="TimeCardsCompleted" Type="Int16" />
-          <Property Name="ZeroHour" Type="Int16" />
-          <Property Name="ContractHours" Type="Double" />
-          <Property Name="FTContractHours" Type="Double" />
-          <Property Name="PTContractHours" Type="Double" />
-          <Property Name="OriginalTarget" Type="Double" />
-          <Property Name="FinalTarget" Type="Double" />
-          <Property Name="HolidayTaken" Type="Double" />
-          <Property Name="LTS" Type="Double" />
-          <Property Name="FTLeakage" Type="Double" />
-          <Property Name="LeakageCount" Type="Int16" />
-          <Property Name="AllApprovedHours" Type="Double" />
-          <Property Name="PayrollCorrections" Type="Double" />
-          <Property Name="SOH" Type="Double" />
-          <Property Name="OverTargetFlag" Type="Boolean" />
-          <Property Name="OverContractFlag" Type="Boolean" />
-          <Property Name="ComplianceScore" Type="Int16" />
-          <Property Name="SOHUtilization" Type="Int16" />
-          <Property Name="UtilizationZeroFlag" Type="Boolean" />
-          <Property Name="GSContract" Type="Double" />
-          <Property Name="GSTarget" Type="Double" />
-          <Property Name="GSHolidayTaken" Type="Double" />
-          <Property Name="GSFTLeakage" Type="Double" />
-          <Property Name="GSAllApprovedHours" Type="Double" />
-          <Property Name="GSSOHSpend" Type="Double" />
-          <Property Name="GSOverTargetFlag" Type="Boolean" />
-          <Property Name="GSOverContractFlag" Type="Boolean" />
-          <Property Name="StoreFlag" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="StoreCount" Type="Int16" />
-          <Property Name="FTHeadcountSAS" Type="Int16" />
-          <Property Name="FTHeadcountSIS" Type="Int16" />
-          <Property Name="ContractBaseTarget" Type="Double" />
-          <Property Name="PaidForHoursNotWorkedCompliance" Type="Boolean" />
-          <Property Name="SATSOH" Type="Double" />
-          <Property Name="SATTarget" Type="Double" />
-          <Property Name="ServiceLV1SOH" Type="Double" />
-          <Property Name="ServiceLV1Target" Type="Double" />
-          <Property Name="ServiceLV2SOH" Type="Double" />
-          <Property Name="ServiceLV2Target" Type="Double" />
-          <Property Name="SATContractHours" Type="Double" />
-          <Property Name="ServiceLV1ContractHours" Type="Double" />
-          <Property Name="ServiceLV2ContractHours" Type="Double" />
-          <Property Name="C25PercOver" Type="Boolean" />
-          <Property Name="C25PercUnder" Type="Boolean" />
-          <Property Name="PlusMinus10Perc" Type="Boolean" />
-          <Property Name="Awol" Type="Double" />
-          <Property Name="Suspension" Type="Double" />
-          <Property Name="Sickness" Type="Double" />
-          <Property Name="GSTraining" Type="Double" />
-          <Property Name="SATTraining" Type="Double" />
-          <Property Name="L1Training" Type="Double" />
-          <Property Name="L2Training" Type="Double" />
-          <Property Name="SATHoliday" Type="Double" />
-          <Property Name="L1Holiday" Type="Double" />
-          <Property Name="L2Holiday" Type="Double" />
-          <Property Name="IgniteCredits" Type="Double" />
-        </EntityType>
         <EntityType Name="IncorrectBranchLog">
           <Key>
             <PropertyRef Name="ID" />
@@ -2816,146 +2809,6 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Property Type="Int32" Name="Taken" Nullable="true" />
           <Property Type="Int32" Name="Scheduled" Nullable="true" />
         </ComplexType>
-        <ComplexType Name="sp_AllChannelDashboardData_Result">
-          <Property Type="Int64" Name="DashboardDataId" Nullable="true" />
-          <Property Type="String" Name="Year" Nullable="true" MaxLength="10" />
-          <Property Type="Byte" Name="Quarter" Nullable="true" />
-          <Property Type="Byte" Name="Period" Nullable="true" />
-          <Property Type="Int32" Name="WeekNumber" Nullable="true" />
-          <Property Type="Int32" Name="BranchNumber" Nullable="true" />
-          <Property Type="Int32" Name="UkBranchNumber" Nullable="true" />
-          <Property Type="Int32" Name="StoreName" Nullable="true" />
-          <Property Type="String" Name="Division" Nullable="true" MaxLength="255" />
-          <Property Type="Int16" Name="Region" Nullable="true" />
-          <Property Type="Int32" Name="RegionName" Nullable="true" />
-          <Property Type="Int32" Name="TotalHeadcount" Nullable="true" />
-          <Property Type="Int32" Name="TimeCardsCompleted" Nullable="true" />
-          <Property Type="Int32" Name="ZeroHour" Nullable="true" />
-          <Property Type="Double" Name="ContractHours" Nullable="true" />
-          <Property Type="Double" Name="FTContractHours" Nullable="true" />
-          <Property Type="Double" Name="PTContractHours" Nullable="true" />
-          <Property Type="Double" Name="OriginalTarget" Nullable="true" />
-          <Property Type="Double" Name="FinalTarget" Nullable="true" />
-          <Property Type="Double" Name="HolidayTaken" Nullable="true" />
-          <Property Type="Double" Name="LTS" Nullable="true" />
-          <Property Type="Double" Name="FTLeakage" Nullable="true" />
-          <Property Type="Int32" Name="LeakageCount" Nullable="true" />
-          <Property Type="Double" Name="AllApprovedHours" Nullable="true" />
-          <Property Type="Double" Name="PayrollCorrections" Nullable="true" />
-          <Property Type="Double" Name="SOH" Nullable="true" />
-          <Property Type="Int32" Name="OverTargetFlag" Nullable="true" />
-          <Property Type="Int32" Name="OverContractFlag" Nullable="true" />
-          <Property Type="Int32" Name="ComplianceScore" Nullable="true" />
-          <Property Type="Int32" Name="SOHUtilization" Nullable="true" />
-          <Property Type="Int32" Name="UtilizationZeroFlag" Nullable="true" />
-          <Property Type="Double" Name="GSContract" Nullable="true" />
-          <Property Type="Double" Name="GSTarget" Nullable="true" />
-          <Property Type="Double" Name="GSHolidayTaken" Nullable="true" />
-          <Property Type="Double" Name="GSFTLeakage" Nullable="true" />
-          <Property Type="Double" Name="GSAllApprovedHours" Nullable="true" />
-          <Property Type="Double" Name="GSSOHSpend" Nullable="true" />
-          <Property Type="Int32" Name="GSOverTargetFlag" Nullable="true" />
-          <Property Type="Int32" Name="GSOverContractFlag" Nullable="true" />
-          <Property Type="String" Name="StoreFlag" Nullable="true" MaxLength="50" />
-          <Property Type="Int32" Name="StoreCount" Nullable="true" />
-          <Property Type="Int32" Name="FTHeadcountSAS" Nullable="true" />
-          <Property Type="Int32" Name="FTHeadcountSIS" Nullable="true" />
-          <Property Type="Double" Name="ContractBaseTarget" Nullable="true" />
-          <Property Type="Int32" Name="PaidForHoursNotWorkedCompliance" Nullable="true" />
-          <Property Type="Double" Name="SATSOH" Nullable="true" />
-          <Property Type="Double" Name="SATTarget" Nullable="true" />
-          <Property Type="Double" Name="ServiceLV1SOH" Nullable="true" />
-          <Property Type="Double" Name="ServiceLV1Target" Nullable="true" />
-          <Property Type="Double" Name="ServiceLV2SOH" Nullable="true" />
-          <Property Type="Double" Name="ServiceLV2Target" Nullable="true" />
-          <Property Type="Double" Name="SATContractHours" Nullable="true" />
-          <Property Type="Double" Name="ServiceLV1ContractHours" Nullable="true" />
-          <Property Type="Double" Name="ServiceLV2ContractHours" Nullable="true" />
-          <Property Type="Int32" Name="C25PercOver" Nullable="true" />
-          <Property Type="Int32" Name="C25PercUnder" Nullable="true" />
-          <Property Type="Int32" Name="PlusMinus10Perc" Nullable="true" />
-          <Property Type="Double" Name="Awol" Nullable="true" />
-          <Property Type="Double" Name="Suspension" Nullable="true" />
-          <Property Type="Double" Name="Sickness" Nullable="true" />
-          <Property Type="Double" Name="GSTraining" Nullable="true" />
-          <Property Type="Double" Name="SATTraining" Nullable="true" />
-          <Property Type="Double" Name="L1Training" Nullable="true" />
-          <Property Type="Double" Name="L2Training" Nullable="true" />
-          <Property Type="Double" Name="SATHoliday" Nullable="true" />
-          <Property Type="Double" Name="L1Holiday" Nullable="true" />
-          <Property Type="Double" Name="L2Holiday" Nullable="true" />
-          <Property Type="Double" Name="IgniteCredits" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="sp_AllDivisionDashboardData_Result">
-          <Property Type="Int64" Name="DashboardDataId" Nullable="true" />
-          <Property Type="String" Name="Year" Nullable="true" MaxLength="10" />
-          <Property Type="Byte" Name="Quarter" Nullable="true" />
-          <Property Type="Byte" Name="Period" Nullable="true" />
-          <Property Type="Int32" Name="WeekNumber" Nullable="true" />
-          <Property Type="Int32" Name="BranchNumber" Nullable="true" />
-          <Property Type="Int32" Name="UkBranchNumber" Nullable="true" />
-          <Property Type="Int32" Name="StoreName" Nullable="true" />
-          <Property Type="Int32" Name="Division" Nullable="true" />
-          <Property Type="Int16" Name="Region" Nullable="true" />
-          <Property Type="Int32" Name="RegionName" Nullable="true" />
-          <Property Type="Int32" Name="TotalHeadcount" Nullable="true" />
-          <Property Type="Int32" Name="TimeCardsCompleted" Nullable="true" />
-          <Property Type="Int32" Name="ZeroHour" Nullable="true" />
-          <Property Type="Double" Name="ContractHours" Nullable="true" />
-          <Property Type="Double" Name="FTContractHours" Nullable="true" />
-          <Property Type="Double" Name="PTContractHours" Nullable="true" />
-          <Property Type="Double" Name="OriginalTarget" Nullable="true" />
-          <Property Type="Double" Name="FinalTarget" Nullable="true" />
-          <Property Type="Double" Name="HolidayTaken" Nullable="true" />
-          <Property Type="Double" Name="LTS" Nullable="true" />
-          <Property Type="Double" Name="FTLeakage" Nullable="true" />
-          <Property Type="Int32" Name="LeakageCount" Nullable="true" />
-          <Property Type="Double" Name="AllApprovedHours" Nullable="true" />
-          <Property Type="Double" Name="PayrollCorrections" Nullable="true" />
-          <Property Type="Double" Name="SOH" Nullable="true" />
-          <Property Type="Int32" Name="OverTargetFlag" Nullable="true" />
-          <Property Type="Int32" Name="OverContractFlag" Nullable="true" />
-          <Property Type="Int32" Name="ComplianceScore" Nullable="true" />
-          <Property Type="Int32" Name="SOHUtilization" Nullable="true" />
-          <Property Type="Int32" Name="UtilizationZeroFlag" Nullable="true" />
-          <Property Type="Double" Name="GSContract" Nullable="true" />
-          <Property Type="Double" Name="GSTarget" Nullable="true" />
-          <Property Type="Double" Name="GSHolidayTaken" Nullable="true" />
-          <Property Type="Double" Name="GSFTLeakage" Nullable="true" />
-          <Property Type="Double" Name="GSAllApprovedHours" Nullable="true" />
-          <Property Type="Double" Name="GSSOHSpend" Nullable="true" />
-          <Property Type="Int32" Name="GSOverTargetFlag" Nullable="true" />
-          <Property Type="Int32" Name="GSOverContractFlag" Nullable="true" />
-          <Property Type="String" Name="StoreFlag" Nullable="true" MaxLength="50" />
-          <Property Type="Int32" Name="StoreCount" Nullable="true" />
-          <Property Type="Int32" Name="FTHeadcountSAS" Nullable="true" />
-          <Property Type="Int32" Name="FTHeadcountSIS" Nullable="true" />
-          <Property Type="Double" Name="ContractBaseTarget" Nullable="true" />
-          <Property Type="Int32" Name="PaidForHoursNotWorkedCompliance" Nullable="true" />
-          <Property Type="Double" Name="SATSOH" Nullable="true" />
-          <Property Type="Double" Name="SATTarget" Nullable="true" />
-          <Property Type="Double" Name="ServiceLV1SOH" Nullable="true" />
-          <Property Type="Double" Name="ServiceLV1Target" Nullable="true" />
-          <Property Type="Double" Name="ServiceLV2SOH" Nullable="true" />
-          <Property Type="Double" Name="ServiceLV2Target" Nullable="true" />
-          <Property Type="Double" Name="SATContractHours" Nullable="true" />
-          <Property Type="Double" Name="ServiceLV1ContractHours" Nullable="true" />
-          <Property Type="Double" Name="ServiceLV2ContractHours" Nullable="true" />
-          <Property Type="Int32" Name="C25PercOver" Nullable="true" />
-          <Property Type="Int32" Name="C25PercUnder" Nullable="true" />
-          <Property Type="Int32" Name="PlusMinus10Perc" Nullable="true" />
-          <Property Type="Double" Name="Awol" Nullable="true" />
-          <Property Type="Double" Name="Suspension" Nullable="true" />
-          <Property Type="Double" Name="Sickness" Nullable="true" />
-          <Property Type="Double" Name="GSTraining" Nullable="true" />
-          <Property Type="Double" Name="SATTraining" Nullable="true" />
-          <Property Type="Double" Name="L1Training" Nullable="true" />
-          <Property Type="Double" Name="L2Training" Nullable="true" />
-          <Property Type="Double" Name="SATHoliday" Nullable="true" />
-          <Property Type="Double" Name="L1Holiday" Nullable="true" />
-          <Property Type="Double" Name="L2Holiday" Nullable="true" />
-          <Property Type="Double" Name="IgniteCredits" Nullable="true" />
-        </ComplexType>
         <ComplexType Name="sp_ChannelComplianceDetail_Result">
           <Property Type="String" Name="Name" Nullable="true" MaxLength="255" />
           <Property Type="Double" Name="SOHSpend" Nullable="true" />
@@ -2965,76 +2818,6 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Property Type="Int32" Name="LeakageCount" Nullable="true" />
           <Property Type="Int32" Name="ZeroHour" Nullable="true" />
           <Property Type="Int32" Name="MissingTimecard" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="sp_ChannelDashboardData_Result">
-          <Property Type="Int64" Name="DashboardDataId" Nullable="true" />
-          <Property Type="String" Name="Year" Nullable="true" MaxLength="10" />
-          <Property Type="Byte" Name="Quarter" Nullable="true" />
-          <Property Type="Byte" Name="Period" Nullable="true" />
-          <Property Type="Int32" Name="WeekNumber" Nullable="true" />
-          <Property Type="Int32" Name="BranchNumber" Nullable="true" />
-          <Property Type="Int32" Name="UkBranchNumber" Nullable="true" />
-          <Property Type="Int32" Name="StoreName" Nullable="true" />
-          <Property Type="Int32" Name="Division" Nullable="true" />
-          <Property Type="Int32" Name="Region" Nullable="true" />
-          <Property Type="Int32" Name="RegionName" Nullable="true" />
-          <Property Type="Int32" Name="TotalHeadcount" Nullable="true" />
-          <Property Type="Int32" Name="TimeCardsCompleted" Nullable="true" />
-          <Property Type="Int32" Name="ZeroHour" Nullable="true" />
-          <Property Type="Double" Name="ContractHours" Nullable="true" />
-          <Property Type="Double" Name="FTContractHours" Nullable="true" />
-          <Property Type="Double" Name="PTContractHours" Nullable="true" />
-          <Property Type="Double" Name="OriginalTarget" Nullable="true" />
-          <Property Type="Double" Name="FinalTarget" Nullable="true" />
-          <Property Type="Double" Name="HolidayTaken" Nullable="true" />
-          <Property Type="Double" Name="LTS" Nullable="true" />
-          <Property Type="Double" Name="FTLeakage" Nullable="true" />
-          <Property Type="Int32" Name="LeakageCount" Nullable="true" />
-          <Property Type="Double" Name="AllApprovedHours" Nullable="true" />
-          <Property Type="Double" Name="PayrollCorrections" Nullable="true" />
-          <Property Type="Double" Name="SOH" Nullable="true" />
-          <Property Type="Int32" Name="OverTargetFlag" Nullable="true" />
-          <Property Type="Int32" Name="OverContractFlag" Nullable="true" />
-          <Property Type="Int32" Name="ComplianceScore" Nullable="true" />
-          <Property Type="Int32" Name="SOHUtilization" Nullable="true" />
-          <Property Type="Int32" Name="UtilizationZeroFlag" Nullable="true" />
-          <Property Type="Double" Name="GSContract" Nullable="true" />
-          <Property Type="Double" Name="GSTarget" Nullable="true" />
-          <Property Type="Double" Name="GSHolidayTaken" Nullable="true" />
-          <Property Type="Double" Name="GSFTLeakage" Nullable="true" />
-          <Property Type="Double" Name="GSAllApprovedHours" Nullable="true" />
-          <Property Type="Double" Name="GSSOHSpend" Nullable="true" />
-          <Property Type="Int32" Name="GSOverTargetFlag" Nullable="true" />
-          <Property Type="Int32" Name="GSOverContractFlag" Nullable="true" />
-          <Property Type="String" Name="StoreFlag" Nullable="true" MaxLength="50" />
-          <Property Type="Int32" Name="StoreCount" Nullable="true" />
-          <Property Type="Int32" Name="FTHeadcountSAS" Nullable="true" />
-          <Property Type="Int32" Name="FTHeadcountSIS" Nullable="true" />
-          <Property Type="Double" Name="ContractBaseTarget" Nullable="true" />
-          <Property Type="Int32" Name="PaidForHoursNotWorkedCompliance" Nullable="true" />
-          <Property Type="Double" Name="SATSOH" Nullable="true" />
-          <Property Type="Double" Name="SATTarget" Nullable="true" />
-          <Property Type="Double" Name="ServiceLV1SOH" Nullable="true" />
-          <Property Type="Double" Name="ServiceLV1Target" Nullable="true" />
-          <Property Type="Double" Name="ServiceLV2SOH" Nullable="true" />
-          <Property Type="Double" Name="ServiceLV2Target" Nullable="true" />
-          <Property Type="Double" Name="SATContractHours" Nullable="true" />
-          <Property Type="Double" Name="ServiceLV1ContractHours" Nullable="true" />
-          <Property Type="Double" Name="ServiceLV2ContractHours" Nullable="true" />
-          <Property Type="Int32" Name="C25PercOver" Nullable="true" />
-          <Property Type="Int32" Name="C25PercUnder" Nullable="true" />
-          <Property Type="Int32" Name="PlusMinus10Perc" Nullable="true" />
-          <Property Type="Double" Name="Awol" Nullable="true" />
-          <Property Type="Double" Name="Suspension" Nullable="true" />
-          <Property Type="Double" Name="Sickness" Nullable="true" />
-          <Property Type="Double" Name="GSTraining" Nullable="true" />
-          <Property Type="Double" Name="SATTraining" Nullable="true" />
-          <Property Type="Double" Name="L1Training" Nullable="true" />
-          <Property Type="Double" Name="L2Training" Nullable="true" />
-          <Property Type="Double" Name="SATHoliday" Nullable="true" />
-          <Property Type="Double" Name="L1Holiday" Nullable="true" />
-          <Property Type="Double" Name="L2Holiday" Nullable="true" />
-          <Property Type="Double" Name="IgniteCredits" Nullable="true" />
         </ComplexType>
         <ComplexType Name="sp_DivisionComplianceDetail_Result">
           <Property Type="Int16" Name="Name" Nullable="true" />
@@ -3046,76 +2829,6 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Property Type="Int32" Name="ZeroHour" Nullable="true" />
           <Property Type="Int32" Name="MissingTimecard" Nullable="true" />
         </ComplexType>
-        <ComplexType Name="sp_DivisionDashboardData_Result">
-          <Property Type="Int64" Name="DashboardDataId" Nullable="true" />
-          <Property Type="String" Name="Year" Nullable="true" MaxLength="10" />
-          <Property Type="Byte" Name="Quarter" Nullable="true" />
-          <Property Type="Byte" Name="Period" Nullable="true" />
-          <Property Type="Int32" Name="WeekNumber" Nullable="true" />
-          <Property Type="Int32" Name="BranchNumber" Nullable="true" />
-          <Property Type="Int32" Name="UkBranchNumber" Nullable="true" />
-          <Property Type="Int32" Name="StoreName" Nullable="true" />
-          <Property Type="String" Name="Division" Nullable="true" MaxLength="255" />
-          <Property Type="Int32" Name="Region" Nullable="true" />
-          <Property Type="Int32" Name="RegionName" Nullable="true" />
-          <Property Type="Int32" Name="TotalHeadcount" Nullable="true" />
-          <Property Type="Int32" Name="TimeCardsCompleted" Nullable="true" />
-          <Property Type="Int32" Name="ZeroHour" Nullable="true" />
-          <Property Type="Double" Name="ContractHours" Nullable="true" />
-          <Property Type="Double" Name="FTContractHours" Nullable="true" />
-          <Property Type="Double" Name="PTContractHours" Nullable="true" />
-          <Property Type="Double" Name="OriginalTarget" Nullable="true" />
-          <Property Type="Double" Name="FinalTarget" Nullable="true" />
-          <Property Type="Double" Name="HolidayTaken" Nullable="true" />
-          <Property Type="Double" Name="LTS" Nullable="true" />
-          <Property Type="Double" Name="FTLeakage" Nullable="true" />
-          <Property Type="Int32" Name="LeakageCount" Nullable="true" />
-          <Property Type="Double" Name="AllApprovedHours" Nullable="true" />
-          <Property Type="Double" Name="PayrollCorrections" Nullable="true" />
-          <Property Type="Double" Name="SOH" Nullable="true" />
-          <Property Type="Int32" Name="OverTargetFlag" Nullable="true" />
-          <Property Type="Int32" Name="OverContractFlag" Nullable="true" />
-          <Property Type="Int32" Name="ComplianceScore" Nullable="true" />
-          <Property Type="Int32" Name="SOHUtilization" Nullable="true" />
-          <Property Type="Int32" Name="UtilizationZeroFlag" Nullable="true" />
-          <Property Type="Double" Name="GSContract" Nullable="true" />
-          <Property Type="Double" Name="GSTarget" Nullable="true" />
-          <Property Type="Double" Name="GSHolidayTaken" Nullable="true" />
-          <Property Type="Double" Name="GSFTLeakage" Nullable="true" />
-          <Property Type="Double" Name="GSAllApprovedHours" Nullable="true" />
-          <Property Type="Double" Name="GSSOHSpend" Nullable="true" />
-          <Property Type="Int32" Name="GSOverTargetFlag" Nullable="true" />
-          <Property Type="Int32" Name="GSOverContractFlag" Nullable="true" />
-          <Property Type="String" Name="StoreFlag" Nullable="true" MaxLength="50" />
-          <Property Type="Int32" Name="StoreCount" Nullable="true" />
-          <Property Type="Int32" Name="FTHeadcountSAS" Nullable="true" />
-          <Property Type="Int32" Name="FTHeadcountSIS" Nullable="true" />
-          <Property Type="Double" Name="ContractBaseTarget" Nullable="true" />
-          <Property Type="Int32" Name="PaidForHoursNotWorkedCompliance" Nullable="true" />
-          <Property Type="Double" Name="SATSOH" Nullable="true" />
-          <Property Type="Double" Name="SATTarget" Nullable="true" />
-          <Property Type="Double" Name="ServiceLV1SOH" Nullable="true" />
-          <Property Type="Double" Name="ServiceLV1Target" Nullable="true" />
-          <Property Type="Double" Name="ServiceLV2SOH" Nullable="true" />
-          <Property Type="Double" Name="ServiceLV2Target" Nullable="true" />
-          <Property Type="Double" Name="SATContractHours" Nullable="true" />
-          <Property Type="Double" Name="ServiceLV1ContractHours" Nullable="true" />
-          <Property Type="Double" Name="ServiceLV2ContractHours" Nullable="true" />
-          <Property Type="Int32" Name="C25PercOver" Nullable="true" />
-          <Property Type="Int32" Name="C25PercUnder" Nullable="true" />
-          <Property Type="Int32" Name="PlusMinus10Perc" Nullable="true" />
-          <Property Type="Double" Name="Awol" Nullable="true" />
-          <Property Type="Double" Name="Suspension" Nullable="true" />
-          <Property Type="Double" Name="Sickness" Nullable="true" />
-          <Property Type="Double" Name="GSTraining" Nullable="true" />
-          <Property Type="Double" Name="SATTraining" Nullable="true" />
-          <Property Type="Double" Name="L1Training" Nullable="true" />
-          <Property Type="Double" Name="L2Training" Nullable="true" />
-          <Property Type="Double" Name="SATHoliday" Nullable="true" />
-          <Property Type="Double" Name="L1Holiday" Nullable="true" />
-          <Property Type="Double" Name="L2Holiday" Nullable="true" />
-          <Property Type="Double" Name="IgniteCredits" Nullable="true" />
-        </ComplexType>
         <ComplexType Name="sp_RegionComplianceDetail_Result">
           <Property Type="String" Name="Name" Nullable="true" MaxLength="288" />
           <Property Type="Double" Name="SOHSpend" Nullable="true" />
@@ -3125,76 +2838,6 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Property Type="Int32" Name="LeakageCount" Nullable="true" />
           <Property Type="Int32" Name="ZeroHour" Nullable="true" />
           <Property Type="Int32" Name="MissingTimecard" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="sp_RegionDashboardData_Result">
-          <Property Type="Int64" Name="DashboardDataId" Nullable="true" />
-          <Property Type="String" Name="Year" Nullable="true" MaxLength="10" />
-          <Property Type="Byte" Name="Quarter" Nullable="true" />
-          <Property Type="Byte" Name="Period" Nullable="true" />
-          <Property Type="Int32" Name="WeekNumber" Nullable="true" />
-          <Property Type="Int32" Name="BranchNumber" Nullable="true" />
-          <Property Type="Int32" Name="UkBranchNumber" Nullable="true" />
-          <Property Type="Int32" Name="StoreName" Nullable="true" />
-          <Property Type="String" Name="Division" Nullable="true" MaxLength="255" />
-          <Property Type="Int16" Name="Region" Nullable="true" />
-          <Property Type="String" Name="RegionName" Nullable="true" MaxLength="255" />
-          <Property Type="Int32" Name="TotalHeadcount" Nullable="true" />
-          <Property Type="Int32" Name="TimeCardsCompleted" Nullable="true" />
-          <Property Type="Int32" Name="ZeroHour" Nullable="true" />
-          <Property Type="Double" Name="ContractHours" Nullable="true" />
-          <Property Type="Double" Name="FTContractHours" Nullable="true" />
-          <Property Type="Double" Name="PTContractHours" Nullable="true" />
-          <Property Type="Double" Name="OriginalTarget" Nullable="true" />
-          <Property Type="Double" Name="FinalTarget" Nullable="true" />
-          <Property Type="Double" Name="HolidayTaken" Nullable="true" />
-          <Property Type="Double" Name="LTS" Nullable="true" />
-          <Property Type="Double" Name="FTLeakage" Nullable="true" />
-          <Property Type="Int32" Name="LeakageCount" Nullable="true" />
-          <Property Type="Double" Name="AllApprovedHours" Nullable="true" />
-          <Property Type="Double" Name="PayrollCorrections" Nullable="true" />
-          <Property Type="Double" Name="SOH" Nullable="true" />
-          <Property Type="Int32" Name="OverTargetFlag" Nullable="true" />
-          <Property Type="Int32" Name="OverContractFlag" Nullable="true" />
-          <Property Type="Int32" Name="ComplianceScore" Nullable="true" />
-          <Property Type="Int32" Name="SOHUtilization" Nullable="true" />
-          <Property Type="Int32" Name="UtilizationZeroFlag" Nullable="true" />
-          <Property Type="Double" Name="GSContract" Nullable="true" />
-          <Property Type="Double" Name="GSTarget" Nullable="true" />
-          <Property Type="Double" Name="GSHolidayTaken" Nullable="true" />
-          <Property Type="Double" Name="GSFTLeakage" Nullable="true" />
-          <Property Type="Double" Name="GSAllApprovedHours" Nullable="true" />
-          <Property Type="Double" Name="GSSOHSpend" Nullable="true" />
-          <Property Type="Int32" Name="GSOverTargetFlag" Nullable="true" />
-          <Property Type="Int32" Name="GSOverContractFlag" Nullable="true" />
-          <Property Type="String" Name="StoreFlag" Nullable="true" MaxLength="50" />
-          <Property Type="Int32" Name="StoreCount" Nullable="true" />
-          <Property Type="Int32" Name="FTHeadcountSAS" Nullable="true" />
-          <Property Type="Int32" Name="FTHeadcountSIS" Nullable="true" />
-          <Property Type="Double" Name="ContractBaseTarget" Nullable="true" />
-          <Property Type="Int32" Name="PaidForHoursNotWorkedCompliance" Nullable="true" />
-          <Property Type="Double" Name="SATSOH" Nullable="true" />
-          <Property Type="Double" Name="SATTarget" Nullable="true" />
-          <Property Type="Double" Name="ServiceLV1SOH" Nullable="true" />
-          <Property Type="Double" Name="ServiceLV1Target" Nullable="true" />
-          <Property Type="Double" Name="ServiceLV2SOH" Nullable="true" />
-          <Property Type="Double" Name="ServiceLV2Target" Nullable="true" />
-          <Property Type="Double" Name="SATContractHours" Nullable="true" />
-          <Property Type="Double" Name="ServiceLV1ContractHours" Nullable="true" />
-          <Property Type="Double" Name="ServiceLV2ContractHours" Nullable="true" />
-          <Property Type="Int32" Name="C25PercOver" Nullable="true" />
-          <Property Type="Int32" Name="C25PercUnder" Nullable="true" />
-          <Property Type="Int32" Name="PlusMinus10Perc" Nullable="true" />
-          <Property Type="Double" Name="Awol" Nullable="true" />
-          <Property Type="Double" Name="Suspension" Nullable="true" />
-          <Property Type="Double" Name="Sickness" Nullable="true" />
-          <Property Type="Double" Name="GSTraining" Nullable="true" />
-          <Property Type="Double" Name="SATTraining" Nullable="true" />
-          <Property Type="Double" Name="L1Training" Nullable="true" />
-          <Property Type="Double" Name="L2Training" Nullable="true" />
-          <Property Type="Double" Name="SATHoliday" Nullable="true" />
-          <Property Type="Double" Name="L1Holiday" Nullable="true" />
-          <Property Type="Double" Name="L2Holiday" Nullable="true" />
-          <Property Type="Double" Name="IgniteCredits" Nullable="true" />
         </ComplexType>
         <ComplexType Name="udsp_GetPandLRegionSummary_Result">
           <Property Type="Int32" Name="Heirarchy" Nullable="false" />
@@ -3227,7 +2870,7 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Property Name="EntryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TicketId" Type="Int32" Nullable="false" />
           <Property Name="QuestionId" Type="Int32" Nullable="false" />
-          <Property Name="Answer" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Answer" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="TicketStub" Relationship="DixonsCarphone.WorkforceManagement.Business.FK_TicketAnswers_TicketStub" FromRole="TicketAnswer" ToRole="TicketStub" />
           <NavigationProperty Name="TicketTemplate" Relationship="DixonsCarphone.WorkforceManagement.Business.FK_TicketAnswers_TicketTemplate" FromRole="TicketAnswer" ToRole="TicketTemplate" />
         </EntityType>
@@ -3741,6 +3384,351 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Property Name="PersonName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="PunchDate" Type="DateTime" Nullable="false" Precision="0" />
         </EntityType>
+        <EntityType Name="DashBoardData_v2">
+          <Key>
+            <PropertyRef Name="DashBoardDataId" />
+          </Key>
+          <Property Name="DashBoardDataId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Year" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Quarter" Type="Byte" />
+          <Property Name="Period" Type="Byte" />
+          <Property Name="WeekNumber" Type="Int32" />
+          <Property Name="BranchNumber" Type="Int16" />
+          <Property Name="UkBranchNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="StoreName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Division" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Region" Type="Int16" />
+          <Property Name="RegionName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="TotalHeadCount" Type="Int16" />
+          <Property Name="TimeCardsCompleted" Type="Int16" />
+          <Property Name="ZeroHour" Type="Int16" />
+          <Property Name="ContractHours" Type="Double" />
+          <Property Name="FTContractHours" Type="Double" />
+          <Property Name="PTContractHours" Type="Double" />
+          <Property Name="OriginalTarget" Type="Double" />
+          <Property Name="FinalTarget" Type="Double" />
+          <Property Name="HolidayTaken" Type="Double" />
+          <Property Name="FTLeakage" Type="Double" />
+          <Property Name="LeakageCount" Type="Int16" />
+          <Property Name="AllApprovedHours" Type="Double" />
+          <Property Name="SOH" Type="Double" />
+          <Property Name="OverTargetFlag" Type="Boolean" />
+          <Property Name="OverContractFlag" Type="Boolean" />
+          <Property Name="ComplianceScore" Type="Int16" />
+          <Property Name="SOHUtilization" Type="Int16" />
+          <Property Name="UtilizationZeroFlag" Type="Boolean" />
+          <Property Name="GSContract" Type="Double" />
+          <Property Name="GSTarget" Type="Double" />
+          <Property Name="GSHolidayTaken" Type="Double" />
+          <Property Name="GSFTLeakage" Type="Double" />
+          <Property Name="GSAllApprovedHours" Type="Double" />
+          <Property Name="GSSOHSpend" Type="Double" />
+          <Property Name="GSOverTargetFlag" Type="Boolean" />
+          <Property Name="GSOverContractFlag" Type="Boolean" />
+          <Property Name="StoreFlag" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ContractBaseTarget" Type="Double" />
+          <Property Name="IgniteCredits" Type="Double" />
+          <Property Name="PunchCompliance" Type="Double" />
+          <Property Name="ShortShifts" Type="Int16" />
+          <Property Name="PayEscalations" Type="Double" />
+        </EntityType>
+        <ComplexType Name="sp_AllChannelDashboardData_v2_Result">
+          <Property Type="Int64" Name="DashboardDataId" Nullable="true" />
+          <Property Type="String" Name="Year" Nullable="true" MaxLength="10" />
+          <Property Type="Byte" Name="Quarter" Nullable="true" />
+          <Property Type="Byte" Name="Period" Nullable="true" />
+          <Property Type="Int32" Name="WeekNumber" Nullable="true" />
+          <Property Type="Int32" Name="BranchNumber" Nullable="true" />
+          <Property Type="Int32" Name="UkBranchNumber" Nullable="true" />
+          <Property Type="Int32" Name="StoreName" Nullable="true" />
+          <Property Type="String" Name="Division" Nullable="true" MaxLength="255" />
+          <Property Type="Int16" Name="Region" Nullable="true" />
+          <Property Type="Int32" Name="RegionName" Nullable="true" />
+          <Property Type="Int32" Name="TotalHeadcount" Nullable="true" />
+          <Property Type="Int32" Name="TimeCardsCompleted" Nullable="true" />
+          <Property Type="Int32" Name="ZeroHour" Nullable="true" />
+          <Property Type="Double" Name="ContractHours" Nullable="true" />
+          <Property Type="Double" Name="FTContractHours" Nullable="true" />
+          <Property Type="Double" Name="PTContractHours" Nullable="true" />
+          <Property Type="Double" Name="OriginalTarget" Nullable="true" />
+          <Property Type="Double" Name="FinalTarget" Nullable="true" />
+          <Property Type="Double" Name="HolidayTaken" Nullable="true" />
+          <Property Type="Double" Name="FTLeakage" Nullable="true" />
+          <Property Type="Int32" Name="LeakageCount" Nullable="true" />
+          <Property Type="Double" Name="AllApprovedHours" Nullable="true" />
+          <Property Type="Double" Name="SOH" Nullable="true" />
+          <Property Type="Int32" Name="OverTargetFlag" Nullable="true" />
+          <Property Type="Int32" Name="OverContractFlag" Nullable="true" />
+          <Property Type="Int32" Name="ComplianceScore" Nullable="true" />
+          <Property Type="Int32" Name="SOHUtilization" Nullable="true" />
+          <Property Type="Int32" Name="UtilizationZeroFlag" Nullable="true" />
+          <Property Type="Double" Name="GSContract" Nullable="true" />
+          <Property Type="Double" Name="GSTarget" Nullable="true" />
+          <Property Type="Double" Name="GSHolidayTaken" Nullable="true" />
+          <Property Type="Double" Name="GSFTLeakage" Nullable="true" />
+          <Property Type="Double" Name="GSAllApprovedHours" Nullable="true" />
+          <Property Type="Double" Name="GSSOHSpend" Nullable="true" />
+          <Property Type="Int32" Name="GSOverTargetFlag" Nullable="true" />
+          <Property Type="Int32" Name="GSOverContractFlag" Nullable="true" />
+          <Property Type="String" Name="StoreFlag" Nullable="true" MaxLength="50" />
+          <Property Type="Double" Name="ContractBaseTarget" Nullable="true" />
+          <Property Type="Double" Name="IgniteCredits" Nullable="true" />
+          <Property Type="Double" Name="PunchCompliance" Nullable="true" />
+          <Property Type="Int32" Name="ShortShifts" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_AllDivisionDashboardData_v2_Result">
+          <Property Type="Int64" Name="DashboardDataId" Nullable="true" />
+          <Property Type="String" Name="Year" Nullable="true" MaxLength="10" />
+          <Property Type="Byte" Name="Quarter" Nullable="true" />
+          <Property Type="Byte" Name="Period" Nullable="true" />
+          <Property Type="Int32" Name="WeekNumber" Nullable="true" />
+          <Property Type="Int32" Name="BranchNumber" Nullable="true" />
+          <Property Type="Int32" Name="UkBranchNumber" Nullable="true" />
+          <Property Type="Int32" Name="StoreName" Nullable="true" />
+          <Property Type="Int32" Name="Division" Nullable="true" />
+          <Property Type="Int16" Name="Region" Nullable="true" />
+          <Property Type="Int32" Name="RegionName" Nullable="true" />
+          <Property Type="Int32" Name="TotalHeadcount" Nullable="true" />
+          <Property Type="Int32" Name="TimeCardsCompleted" Nullable="true" />
+          <Property Type="Int32" Name="ZeroHour" Nullable="true" />
+          <Property Type="Double" Name="ContractHours" Nullable="true" />
+          <Property Type="Double" Name="FTContractHours" Nullable="true" />
+          <Property Type="Double" Name="PTContractHours" Nullable="true" />
+          <Property Type="Double" Name="OriginalTarget" Nullable="true" />
+          <Property Type="Double" Name="FinalTarget" Nullable="true" />
+          <Property Type="Double" Name="HolidayTaken" Nullable="true" />
+          <Property Type="Double" Name="FTLeakage" Nullable="true" />
+          <Property Type="Int32" Name="LeakageCount" Nullable="true" />
+          <Property Type="Double" Name="AllApprovedHours" Nullable="true" />
+          <Property Type="Double" Name="SOH" Nullable="true" />
+          <Property Type="Int32" Name="OverTargetFlag" Nullable="true" />
+          <Property Type="Int32" Name="OverContractFlag" Nullable="true" />
+          <Property Type="Int32" Name="ComplianceScore" Nullable="true" />
+          <Property Type="Int32" Name="SOHUtilization" Nullable="true" />
+          <Property Type="Int32" Name="UtilizationZeroFlag" Nullable="true" />
+          <Property Type="Double" Name="GSContract" Nullable="true" />
+          <Property Type="Double" Name="GSTarget" Nullable="true" />
+          <Property Type="Double" Name="GSHolidayTaken" Nullable="true" />
+          <Property Type="Double" Name="GSFTLeakage" Nullable="true" />
+          <Property Type="Double" Name="GSAllApprovedHours" Nullable="true" />
+          <Property Type="Double" Name="GSSOHSpend" Nullable="true" />
+          <Property Type="Int32" Name="GSOverTargetFlag" Nullable="true" />
+          <Property Type="Int32" Name="GSOverContractFlag" Nullable="true" />
+          <Property Type="String" Name="StoreFlag" Nullable="true" MaxLength="50" />
+          <Property Type="Double" Name="ContractBaseTarget" Nullable="true" />
+          <Property Type="Double" Name="IgniteCredits" Nullable="true" />
+          <Property Type="Double" Name="PunchCompliance" Nullable="true" />
+          <Property Type="Int32" Name="ShortShifts" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_ChannelDashboardData_v2_Result">
+          <Property Type="Int64" Name="DashboardDataId" Nullable="true" />
+          <Property Type="String" Name="Year" Nullable="true" MaxLength="10" />
+          <Property Type="Byte" Name="Quarter" Nullable="true" />
+          <Property Type="Byte" Name="Period" Nullable="true" />
+          <Property Type="Int32" Name="WeekNumber" Nullable="true" />
+          <Property Type="Int32" Name="BranchNumber" Nullable="true" />
+          <Property Type="Int32" Name="UkBranchNumber" Nullable="true" />
+          <Property Type="Int32" Name="StoreName" Nullable="true" />
+          <Property Type="Int32" Name="Division" Nullable="true" />
+          <Property Type="Int32" Name="Region" Nullable="true" />
+          <Property Type="Int32" Name="RegionName" Nullable="true" />
+          <Property Type="Int32" Name="TotalHeadcount" Nullable="true" />
+          <Property Type="Int32" Name="TimeCardsCompleted" Nullable="true" />
+          <Property Type="Int32" Name="ZeroHour" Nullable="true" />
+          <Property Type="Double" Name="ContractHours" Nullable="true" />
+          <Property Type="Double" Name="FTContractHours" Nullable="true" />
+          <Property Type="Double" Name="PTContractHours" Nullable="true" />
+          <Property Type="Double" Name="OriginalTarget" Nullable="true" />
+          <Property Type="Double" Name="FinalTarget" Nullable="true" />
+          <Property Type="Double" Name="HolidayTaken" Nullable="true" />
+          <Property Type="Double" Name="FTLeakage" Nullable="true" />
+          <Property Type="Int32" Name="LeakageCount" Nullable="true" />
+          <Property Type="Double" Name="AllApprovedHours" Nullable="true" />
+          <Property Type="Double" Name="SOH" Nullable="true" />
+          <Property Type="Int32" Name="OverTargetFlag" Nullable="true" />
+          <Property Type="Int32" Name="OverContractFlag" Nullable="true" />
+          <Property Type="Int32" Name="ComplianceScore" Nullable="true" />
+          <Property Type="Int32" Name="SOHUtilization" Nullable="true" />
+          <Property Type="Int32" Name="UtilizationZeroFlag" Nullable="true" />
+          <Property Type="Double" Name="GSContract" Nullable="true" />
+          <Property Type="Double" Name="GSTarget" Nullable="true" />
+          <Property Type="Double" Name="GSHolidayTaken" Nullable="true" />
+          <Property Type="Double" Name="GSFTLeakage" Nullable="true" />
+          <Property Type="Double" Name="GSAllApprovedHours" Nullable="true" />
+          <Property Type="Double" Name="GSSOHSpend" Nullable="true" />
+          <Property Type="Int32" Name="GSOverTargetFlag" Nullable="true" />
+          <Property Type="Int32" Name="GSOverContractFlag" Nullable="true" />
+          <Property Type="String" Name="StoreFlag" Nullable="true" MaxLength="50" />
+          <Property Type="Double" Name="ContractBaseTarget" Nullable="true" />
+          <Property Type="Double" Name="IgniteCredits" Nullable="true" />
+          <Property Type="Double" Name="PunchCompliance" Nullable="true" />
+          <Property Type="Int32" Name="ShortShifts" Nullable="true" />
+          <Property Type="Double" Name="PayEscalations" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_DivisionDashboardData_v2_Result">
+          <Property Type="Int64" Name="DashboardDataId" Nullable="true" />
+          <Property Type="String" Name="Year" Nullable="true" MaxLength="10" />
+          <Property Type="Byte" Name="Quarter" Nullable="true" />
+          <Property Type="Byte" Name="Period" Nullable="true" />
+          <Property Type="Int32" Name="WeekNumber" Nullable="true" />
+          <Property Type="Int32" Name="BranchNumber" Nullable="true" />
+          <Property Type="Int32" Name="UkBranchNumber" Nullable="true" />
+          <Property Type="Int32" Name="StoreName" Nullable="true" />
+          <Property Type="String" Name="Division" Nullable="true" MaxLength="255" />
+          <Property Type="Int32" Name="Region" Nullable="true" />
+          <Property Type="Int32" Name="RegionName" Nullable="true" />
+          <Property Type="Int32" Name="TotalHeadcount" Nullable="true" />
+          <Property Type="Int32" Name="TimeCardsCompleted" Nullable="true" />
+          <Property Type="Int32" Name="ZeroHour" Nullable="true" />
+          <Property Type="Double" Name="ContractHours" Nullable="true" />
+          <Property Type="Double" Name="FTContractHours" Nullable="true" />
+          <Property Type="Double" Name="PTContractHours" Nullable="true" />
+          <Property Type="Double" Name="OriginalTarget" Nullable="true" />
+          <Property Type="Double" Name="FinalTarget" Nullable="true" />
+          <Property Type="Double" Name="HolidayTaken" Nullable="true" />
+          <Property Type="Double" Name="FTLeakage" Nullable="true" />
+          <Property Type="Int32" Name="LeakageCount" Nullable="true" />
+          <Property Type="Double" Name="AllApprovedHours" Nullable="true" />
+          <Property Type="Double" Name="SOH" Nullable="true" />
+          <Property Type="Int32" Name="OverTargetFlag" Nullable="true" />
+          <Property Type="Int32" Name="OverContractFlag" Nullable="true" />
+          <Property Type="Int32" Name="ComplianceScore" Nullable="true" />
+          <Property Type="Int32" Name="SOHUtilization" Nullable="true" />
+          <Property Type="Int32" Name="UtilizationZeroFlag" Nullable="true" />
+          <Property Type="Double" Name="GSContract" Nullable="true" />
+          <Property Type="Double" Name="GSTarget" Nullable="true" />
+          <Property Type="Double" Name="GSHolidayTaken" Nullable="true" />
+          <Property Type="Double" Name="GSFTLeakage" Nullable="true" />
+          <Property Type="Double" Name="GSAllApprovedHours" Nullable="true" />
+          <Property Type="Double" Name="GSSOHSpend" Nullable="true" />
+          <Property Type="Int32" Name="GSOverTargetFlag" Nullable="true" />
+          <Property Type="Int32" Name="GSOverContractFlag" Nullable="true" />
+          <Property Type="String" Name="StoreFlag" Nullable="true" MaxLength="50" />
+          <Property Type="Double" Name="ContractBaseTarget" Nullable="true" />
+          <Property Type="Double" Name="IgniteCredits" Nullable="true" />
+          <Property Type="Double" Name="PunchCompliance" Nullable="true" />
+          <Property Type="Int32" Name="ShortShifts" Nullable="true" />
+          <Property Type="Double" Name="PayEscalations" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_RegionDashboardData_v2_Result">
+          <Property Type="Int64" Name="DashboardDataId" Nullable="true" />
+          <Property Type="String" Name="Year" Nullable="true" MaxLength="10" />
+          <Property Type="Byte" Name="Quarter" Nullable="true" />
+          <Property Type="Byte" Name="Period" Nullable="true" />
+          <Property Type="Int32" Name="WeekNumber" Nullable="true" />
+          <Property Type="Int32" Name="BranchNumber" Nullable="true" />
+          <Property Type="Int32" Name="UkBranchNumber" Nullable="true" />
+          <Property Type="Int32" Name="StoreName" Nullable="true" />
+          <Property Type="String" Name="Division" Nullable="true" MaxLength="255" />
+          <Property Type="Int16" Name="Region" Nullable="true" />
+          <Property Type="String" Name="RegionName" Nullable="true" MaxLength="255" />
+          <Property Type="Int32" Name="TotalHeadcount" Nullable="true" />
+          <Property Type="Int32" Name="TimeCardsCompleted" Nullable="true" />
+          <Property Type="Int32" Name="ZeroHour" Nullable="true" />
+          <Property Type="Double" Name="ContractHours" Nullable="true" />
+          <Property Type="Double" Name="FTContractHours" Nullable="true" />
+          <Property Type="Double" Name="PTContractHours" Nullable="true" />
+          <Property Type="Double" Name="OriginalTarget" Nullable="true" />
+          <Property Type="Double" Name="FinalTarget" Nullable="true" />
+          <Property Type="Double" Name="HolidayTaken" Nullable="true" />
+          <Property Type="Double" Name="FTLeakage" Nullable="true" />
+          <Property Type="Int32" Name="LeakageCount" Nullable="true" />
+          <Property Type="Double" Name="AllApprovedHours" Nullable="true" />
+          <Property Type="Double" Name="SOH" Nullable="true" />
+          <Property Type="Int32" Name="OverTargetFlag" Nullable="true" />
+          <Property Type="Int32" Name="OverContractFlag" Nullable="true" />
+          <Property Type="Int32" Name="ComplianceScore" Nullable="true" />
+          <Property Type="Int32" Name="SOHUtilization" Nullable="true" />
+          <Property Type="Int32" Name="UtilizationZeroFlag" Nullable="true" />
+          <Property Type="Double" Name="GSContract" Nullable="true" />
+          <Property Type="Double" Name="GSTarget" Nullable="true" />
+          <Property Type="Double" Name="GSHolidayTaken" Nullable="true" />
+          <Property Type="Double" Name="GSFTLeakage" Nullable="true" />
+          <Property Type="Double" Name="GSAllApprovedHours" Nullable="true" />
+          <Property Type="Double" Name="GSSOHSpend" Nullable="true" />
+          <Property Type="Int32" Name="GSOverTargetFlag" Nullable="true" />
+          <Property Type="Int32" Name="GSOverContractFlag" Nullable="true" />
+          <Property Type="String" Name="StoreFlag" Nullable="true" MaxLength="50" />
+          <Property Type="Double" Name="ContractBaseTarget" Nullable="true" />
+          <Property Type="Double" Name="IgniteCredits" Nullable="true" />
+          <Property Type="Double" Name="PunchCompliance" Nullable="true" />
+          <Property Type="Int32" Name="ShortShifts" Nullable="true" />
+          <Property Type="Double" Name="PayEscalations" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="KronosEmployeeSummary">
+          <Key>
+            <PropertyRef Name="KronosUser" />
+            <PropertyRef Name="Scheduled" />
+          </Key>
+          <Property Name="HomeBranch" Type="Int16" />
+          <Property Name="Region" Type="Int16" />
+          <Property Name="Division" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Channel" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="PersonNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="EmployeeStandardHours" Type="Decimal" Precision="3" Scale="1" />
+          <Property Name="SignedOffThrough" Type="DateTime" Precision="0" />
+          <Property Name="JobRole" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PersonName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="KronosUser" Type="Boolean" Nullable="false" />
+          <Property Name="BranchName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Scheduled" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <ComplexType Name="sp_RegionShortShifts_Result">
+          <Property Type="String" Name="Channel" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="Division" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="RegionNo" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="BranchName" Nullable="true" MaxLength="533" />
+          <Property Type="Int32" Name="CountS" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_ChannelShortShifts_Result">
+          <Property Type="String" Name="Channel" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="Division" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Column1" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="BranchName" Nullable="false" MaxLength="1" />
+          <Property Type="Int32" Name="CountS" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_DivisionShortShifts_Result">
+          <Property Type="String" Name="Channel" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="Division" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="RegionNo" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="BranchName" Nullable="false" MaxLength="1" />
+          <Property Type="Int32" Name="CountS" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_RegionPunchTrend_Result">
+          <Property Type="String" Name="RegionNo" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="CST_CNTR_ID" Nullable="true" />
+          <Property Type="String" Name="StoreName" Nullable="true" MaxLength="500" />
+          <Property Type="Int32" Name="WeekNumber" Nullable="true" />
+          <Property Type="Decimal" Name="Compliance" Nullable="true" Precision="26" Scale="14" />
+        </ComplexType>
+        <ComplexType Name="sp_DivisionPunchTrend_Result">
+          <Property Type="String" Name="RegionNo" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="CST_CNTR_ID" Nullable="false" />
+          <Property Type="String" Name="StoreName" Nullable="false" MaxLength="1" />
+          <Property Type="Int32" Name="WeekNumber" Nullable="true" />
+          <Property Type="Decimal" Name="Compliance" Nullable="true" Precision="26" Scale="14" />
+        </ComplexType>
+        <ComplexType Name="sp_RegionPunchExceptions_Result">
+          <Property Type="String" Name="RegionNo" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="CST_CNTR_ID" Nullable="false" />
+          <Property Type="String" Name="StoreName" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="FORENAME" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="WeekNumber" Nullable="true" />
+          <Property Type="Decimal" Name="Compliance" Nullable="true" Precision="25" Scale="14" />
+        </ComplexType>
+        <ComplexType Name="sp_DivisionPunchExceptions_Result">
+          <Property Type="String" Name="RegionNo" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="CST_CNTR_ID" Nullable="false" />
+          <Property Type="String" Name="StoreName" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="FORENAME" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="WeekNumber" Nullable="true" />
+          <Property Type="Decimal" Name="Compliance" Nullable="true" Precision="25" Scale="14" />
+        </ComplexType>
+        <ComplexType Name="sp_CheckHelpTickets_Result">
+          <Property Type="Int32" Name="TicketId" Nullable="false" />
+          <Property Type="String" Name="Status" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="EmpNum" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4258,80 +4246,6 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <EntitySetMapping Name="DashBoardDatas">
-            <EntityTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.DashBoardData">
-              <MappingFragment StoreEntitySet="DashBoardData">
-                <ScalarProperty Name="IgniteCredits" ColumnName="IgniteCredits" />
-                <ScalarProperty Name="L2Holiday" ColumnName="L2Holiday" />
-                <ScalarProperty Name="L1Holiday" ColumnName="L1Holiday" />
-                <ScalarProperty Name="SATHoliday" ColumnName="SATHoliday" />
-                <ScalarProperty Name="L2Training" ColumnName="L2Training" />
-                <ScalarProperty Name="L1Training" ColumnName="L1Training" />
-                <ScalarProperty Name="SATTraining" ColumnName="SATTraining" />
-                <ScalarProperty Name="GSTraining" ColumnName="GSTraining" />
-                <ScalarProperty Name="Sickness" ColumnName="Sickness" />
-                <ScalarProperty Name="Suspension" ColumnName="Suspension" />
-                <ScalarProperty Name="Awol" ColumnName="Awol" />
-                <ScalarProperty Name="PlusMinus10Perc" ColumnName="PlusMinus10Perc" />
-                <ScalarProperty Name="C25PercUnder" ColumnName="25PercUnder" />
-                <ScalarProperty Name="C25PercOver" ColumnName="25PercOver" />
-                <ScalarProperty Name="ServiceLV2ContractHours" ColumnName="ServiceLV2ContractHours" />
-                <ScalarProperty Name="ServiceLV1ContractHours" ColumnName="ServiceLV1ContractHours" />
-                <ScalarProperty Name="SATContractHours" ColumnName="SATContractHours" />
-                <ScalarProperty Name="ServiceLV2Target" ColumnName="ServiceLV2Target" />
-                <ScalarProperty Name="ServiceLV2SOH" ColumnName="ServiceLV2SOH" />
-                <ScalarProperty Name="ServiceLV1Target" ColumnName="ServiceLV1Target" />
-                <ScalarProperty Name="ServiceLV1SOH" ColumnName="ServiceLV1SOH" />
-                <ScalarProperty Name="SATTarget" ColumnName="SATTarget" />
-                <ScalarProperty Name="SATSOH" ColumnName="SATSOH" />
-                <ScalarProperty Name="PaidForHoursNotWorkedCompliance" ColumnName="PaidForHoursNotWorkedCompliance" />
-                <ScalarProperty Name="ContractBaseTarget" ColumnName="ContractBaseTarget" />
-                <ScalarProperty Name="FTHeadcountSIS" ColumnName="FTHeadcountSIS" />
-                <ScalarProperty Name="FTHeadcountSAS" ColumnName="FTHeadcountSAS" />
-                <ScalarProperty Name="StoreCount" ColumnName="StoreCount" />
-                <ScalarProperty Name="StoreFlag" ColumnName="StoreFlag" />
-                <ScalarProperty Name="GSOverContractFlag" ColumnName="GSOverContractFlag" />
-                <ScalarProperty Name="GSOverTargetFlag" ColumnName="GSOverTargetFlag" />
-                <ScalarProperty Name="GSSOHSpend" ColumnName="GSSOHSpend" />
-                <ScalarProperty Name="GSAllApprovedHours" ColumnName="GSAllApprovedHours" />
-                <ScalarProperty Name="GSFTLeakage" ColumnName="GSFTLeakage" />
-                <ScalarProperty Name="GSHolidayTaken" ColumnName="GSHolidayTaken" />
-                <ScalarProperty Name="GSTarget" ColumnName="GSTarget" />
-                <ScalarProperty Name="GSContract" ColumnName="GSContract" />
-                <ScalarProperty Name="UtilizationZeroFlag" ColumnName="UtilizationZeroFlag" />
-                <ScalarProperty Name="SOHUtilization" ColumnName="SOHUtilization" />
-                <ScalarProperty Name="ComplianceScore" ColumnName="ComplianceScore" />
-                <ScalarProperty Name="OverContractFlag" ColumnName="OverContractFlag" />
-                <ScalarProperty Name="OverTargetFlag" ColumnName="OverTargetFlag" />
-                <ScalarProperty Name="SOH" ColumnName="SOH" />
-                <ScalarProperty Name="PayrollCorrections" ColumnName="PayrollCorrections" />
-                <ScalarProperty Name="AllApprovedHours" ColumnName="AllApprovedHours" />
-                <ScalarProperty Name="LeakageCount" ColumnName="LeakageCount" />
-                <ScalarProperty Name="FTLeakage" ColumnName="FTLeakage" />
-                <ScalarProperty Name="LTS" ColumnName="LTS" />
-                <ScalarProperty Name="HolidayTaken" ColumnName="HolidayTaken" />
-                <ScalarProperty Name="FinalTarget" ColumnName="FinalTarget" />
-                <ScalarProperty Name="OriginalTarget" ColumnName="OriginalTarget" />
-                <ScalarProperty Name="PTContractHours" ColumnName="PTContractHours" />
-                <ScalarProperty Name="FTContractHours" ColumnName="FTContractHours" />
-                <ScalarProperty Name="ContractHours" ColumnName="ContractHours" />
-                <ScalarProperty Name="ZeroHour" ColumnName="ZeroHour" />
-                <ScalarProperty Name="TimeCardsCompleted" ColumnName="TimeCardsCompleted" />
-                <ScalarProperty Name="TotalHeadCount" ColumnName="TotalHeadCount" />
-                <ScalarProperty Name="RegionName" ColumnName="RegionName" />
-                <ScalarProperty Name="Region" ColumnName="Region" />
-                <ScalarProperty Name="Division" ColumnName="Division" />
-                <ScalarProperty Name="StoreName" ColumnName="StoreName" />
-                <ScalarProperty Name="UkBranchNumber" ColumnName="UkBranchNumber" />
-                <ScalarProperty Name="BranchNumber" ColumnName="BranchNumber" />
-                <ScalarProperty Name="WeekNumber" ColumnName="WeekNumber" />
-                <ScalarProperty Name="Period" ColumnName="Period" />
-                <ScalarProperty Name="Quarter" ColumnName="Quarter" />
-                <ScalarProperty Name="Year" ColumnName="Year" />
-                <ScalarProperty Name="DashBoardDataId" ColumnName="DashBoardDataId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="IncorrectBranchLogs">
             <EntityTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.IncorrectBranchLog">
               <MappingFragment StoreEntitySet="IncorrectBranchLog">
@@ -4605,154 +4519,6 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_DivisionHolidayPlanningEmp" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_DivisionHolidayPlanningEmp">
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_AllChannelDashboardData" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_AllChannelDashboardData">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.sp_AllChannelDashboardData_Result">
-                <ScalarProperty Name="DashboardDataId" ColumnName="DashboardDataId" />
-                <ScalarProperty Name="Year" ColumnName="Year" />
-                <ScalarProperty Name="Quarter" ColumnName="Quarter" />
-                <ScalarProperty Name="Period" ColumnName="Period" />
-                <ScalarProperty Name="WeekNumber" ColumnName="WeekNumber" />
-                <ScalarProperty Name="BranchNumber" ColumnName="BranchNumber" />
-                <ScalarProperty Name="UkBranchNumber" ColumnName="UkBranchNumber" />
-                <ScalarProperty Name="StoreName" ColumnName="StoreName" />
-                <ScalarProperty Name="Division" ColumnName="Division" />
-                <ScalarProperty Name="Region" ColumnName="Region" />
-                <ScalarProperty Name="RegionName" ColumnName="RegionName" />
-                <ScalarProperty Name="TotalHeadcount" ColumnName="TotalHeadcount" />
-                <ScalarProperty Name="TimeCardsCompleted" ColumnName="TimeCardsCompleted" />
-                <ScalarProperty Name="ZeroHour" ColumnName="ZeroHour" />
-                <ScalarProperty Name="ContractHours" ColumnName="ContractHours" />
-                <ScalarProperty Name="FTContractHours" ColumnName="FTContractHours" />
-                <ScalarProperty Name="PTContractHours" ColumnName="PTContractHours" />
-                <ScalarProperty Name="OriginalTarget" ColumnName="OriginalTarget" />
-                <ScalarProperty Name="FinalTarget" ColumnName="FinalTarget" />
-                <ScalarProperty Name="HolidayTaken" ColumnName="HolidayTaken" />
-                <ScalarProperty Name="LTS" ColumnName="LTS" />
-                <ScalarProperty Name="FTLeakage" ColumnName="FTLeakage" />
-                <ScalarProperty Name="LeakageCount" ColumnName="LeakageCount" />
-                <ScalarProperty Name="AllApprovedHours" ColumnName="AllApprovedHours" />
-                <ScalarProperty Name="PayrollCorrections" ColumnName="PayrollCorrections" />
-                <ScalarProperty Name="SOH" ColumnName="SOH" />
-                <ScalarProperty Name="OverTargetFlag" ColumnName="OverTargetFlag" />
-                <ScalarProperty Name="OverContractFlag" ColumnName="OverContractFlag" />
-                <ScalarProperty Name="ComplianceScore" ColumnName="ComplianceScore" />
-                <ScalarProperty Name="SOHUtilization" ColumnName="SOHUtilization" />
-                <ScalarProperty Name="UtilizationZeroFlag" ColumnName="UtilizationZeroFlag" />
-                <ScalarProperty Name="GSContract" ColumnName="GSContract" />
-                <ScalarProperty Name="GSTarget" ColumnName="GSTarget" />
-                <ScalarProperty Name="GSHolidayTaken" ColumnName="GSHolidayTaken" />
-                <ScalarProperty Name="GSFTLeakage" ColumnName="GSFTLeakage" />
-                <ScalarProperty Name="GSAllApprovedHours" ColumnName="GSAllApprovedHours" />
-                <ScalarProperty Name="GSSOHSpend" ColumnName="GSSOHSpend" />
-                <ScalarProperty Name="GSOverTargetFlag" ColumnName="GSOverTargetFlag" />
-                <ScalarProperty Name="GSOverContractFlag" ColumnName="GSOverContractFlag" />
-                <ScalarProperty Name="StoreFlag" ColumnName="StoreFlag" />
-                <ScalarProperty Name="StoreCount" ColumnName="StoreCount" />
-                <ScalarProperty Name="FTHeadcountSAS" ColumnName="FTHeadcountSAS" />
-                <ScalarProperty Name="FTHeadcountSIS" ColumnName="FTHeadcountSIS" />
-                <ScalarProperty Name="ContractBaseTarget" ColumnName="ContractBaseTarget" />
-                <ScalarProperty Name="PaidForHoursNotWorkedCompliance" ColumnName="PaidForHoursNotWorkedCompliance" />
-                <ScalarProperty Name="SATSOH" ColumnName="SATSOH" />
-                <ScalarProperty Name="SATTarget" ColumnName="SATTarget" />
-                <ScalarProperty Name="ServiceLV1SOH" ColumnName="ServiceLV1SOH" />
-                <ScalarProperty Name="ServiceLV1Target" ColumnName="ServiceLV1Target" />
-                <ScalarProperty Name="ServiceLV2SOH" ColumnName="ServiceLV2SOH" />
-                <ScalarProperty Name="ServiceLV2Target" ColumnName="ServiceLV2Target" />
-                <ScalarProperty Name="SATContractHours" ColumnName="SATContractHours" />
-                <ScalarProperty Name="ServiceLV1ContractHours" ColumnName="ServiceLV1ContractHours" />
-                <ScalarProperty Name="ServiceLV2ContractHours" ColumnName="ServiceLV2ContractHours" />
-                <ScalarProperty Name="C25PercOver" ColumnName="25PercOver" />
-                <ScalarProperty Name="C25PercUnder" ColumnName="25PercUnder" />
-                <ScalarProperty Name="PlusMinus10Perc" ColumnName="PlusMinus10Perc" />
-                <ScalarProperty Name="Awol" ColumnName="Awol" />
-                <ScalarProperty Name="Suspension" ColumnName="Suspension" />
-                <ScalarProperty Name="Sickness" ColumnName="Sickness" />
-                <ScalarProperty Name="GSTraining" ColumnName="GSTraining" />
-                <ScalarProperty Name="SATTraining" ColumnName="SATTraining" />
-                <ScalarProperty Name="L1Training" ColumnName="L1Training" />
-                <ScalarProperty Name="L2Training" ColumnName="L2Training" />
-                <ScalarProperty Name="SATHoliday" ColumnName="SATHoliday" />
-                <ScalarProperty Name="L1Holiday" ColumnName="L1Holiday" />
-                <ScalarProperty Name="L2Holiday" ColumnName="L2Holiday" />
-                <ScalarProperty Name="IgniteCredits" ColumnName="IgniteCredits" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_AllDivisionDashboardData" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_AllDivisionDashboardData">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.sp_AllDivisionDashboardData_Result">
-                <ScalarProperty Name="DashboardDataId" ColumnName="DashboardDataId" />
-                <ScalarProperty Name="Year" ColumnName="Year" />
-                <ScalarProperty Name="Quarter" ColumnName="Quarter" />
-                <ScalarProperty Name="Period" ColumnName="Period" />
-                <ScalarProperty Name="WeekNumber" ColumnName="WeekNumber" />
-                <ScalarProperty Name="BranchNumber" ColumnName="BranchNumber" />
-                <ScalarProperty Name="UkBranchNumber" ColumnName="UkBranchNumber" />
-                <ScalarProperty Name="StoreName" ColumnName="StoreName" />
-                <ScalarProperty Name="Division" ColumnName="Division" />
-                <ScalarProperty Name="Region" ColumnName="Region" />
-                <ScalarProperty Name="RegionName" ColumnName="RegionName" />
-                <ScalarProperty Name="TotalHeadcount" ColumnName="TotalHeadcount" />
-                <ScalarProperty Name="TimeCardsCompleted" ColumnName="TimeCardsCompleted" />
-                <ScalarProperty Name="ZeroHour" ColumnName="ZeroHour" />
-                <ScalarProperty Name="ContractHours" ColumnName="ContractHours" />
-                <ScalarProperty Name="FTContractHours" ColumnName="FTContractHours" />
-                <ScalarProperty Name="PTContractHours" ColumnName="PTContractHours" />
-                <ScalarProperty Name="OriginalTarget" ColumnName="OriginalTarget" />
-                <ScalarProperty Name="FinalTarget" ColumnName="FinalTarget" />
-                <ScalarProperty Name="HolidayTaken" ColumnName="HolidayTaken" />
-                <ScalarProperty Name="LTS" ColumnName="LTS" />
-                <ScalarProperty Name="FTLeakage" ColumnName="FTLeakage" />
-                <ScalarProperty Name="LeakageCount" ColumnName="LeakageCount" />
-                <ScalarProperty Name="AllApprovedHours" ColumnName="AllApprovedHours" />
-                <ScalarProperty Name="PayrollCorrections" ColumnName="PayrollCorrections" />
-                <ScalarProperty Name="SOH" ColumnName="SOH" />
-                <ScalarProperty Name="OverTargetFlag" ColumnName="OverTargetFlag" />
-                <ScalarProperty Name="OverContractFlag" ColumnName="OverContractFlag" />
-                <ScalarProperty Name="ComplianceScore" ColumnName="ComplianceScore" />
-                <ScalarProperty Name="SOHUtilization" ColumnName="SOHUtilization" />
-                <ScalarProperty Name="UtilizationZeroFlag" ColumnName="UtilizationZeroFlag" />
-                <ScalarProperty Name="GSContract" ColumnName="GSContract" />
-                <ScalarProperty Name="GSTarget" ColumnName="GSTarget" />
-                <ScalarProperty Name="GSHolidayTaken" ColumnName="GSHolidayTaken" />
-                <ScalarProperty Name="GSFTLeakage" ColumnName="GSFTLeakage" />
-                <ScalarProperty Name="GSAllApprovedHours" ColumnName="GSAllApprovedHours" />
-                <ScalarProperty Name="GSSOHSpend" ColumnName="GSSOHSpend" />
-                <ScalarProperty Name="GSOverTargetFlag" ColumnName="GSOverTargetFlag" />
-                <ScalarProperty Name="GSOverContractFlag" ColumnName="GSOverContractFlag" />
-                <ScalarProperty Name="StoreFlag" ColumnName="StoreFlag" />
-                <ScalarProperty Name="StoreCount" ColumnName="StoreCount" />
-                <ScalarProperty Name="FTHeadcountSAS" ColumnName="FTHeadcountSAS" />
-                <ScalarProperty Name="FTHeadcountSIS" ColumnName="FTHeadcountSIS" />
-                <ScalarProperty Name="ContractBaseTarget" ColumnName="ContractBaseTarget" />
-                <ScalarProperty Name="PaidForHoursNotWorkedCompliance" ColumnName="PaidForHoursNotWorkedCompliance" />
-                <ScalarProperty Name="SATSOH" ColumnName="SATSOH" />
-                <ScalarProperty Name="SATTarget" ColumnName="SATTarget" />
-                <ScalarProperty Name="ServiceLV1SOH" ColumnName="ServiceLV1SOH" />
-                <ScalarProperty Name="ServiceLV1Target" ColumnName="ServiceLV1Target" />
-                <ScalarProperty Name="ServiceLV2SOH" ColumnName="ServiceLV2SOH" />
-                <ScalarProperty Name="ServiceLV2Target" ColumnName="ServiceLV2Target" />
-                <ScalarProperty Name="SATContractHours" ColumnName="SATContractHours" />
-                <ScalarProperty Name="ServiceLV1ContractHours" ColumnName="ServiceLV1ContractHours" />
-                <ScalarProperty Name="ServiceLV2ContractHours" ColumnName="ServiceLV2ContractHours" />
-                <ScalarProperty Name="C25PercOver" ColumnName="25PercOver" />
-                <ScalarProperty Name="C25PercUnder" ColumnName="25PercUnder" />
-                <ScalarProperty Name="PlusMinus10Perc" ColumnName="PlusMinus10Perc" />
-                <ScalarProperty Name="Awol" ColumnName="Awol" />
-                <ScalarProperty Name="Suspension" ColumnName="Suspension" />
-                <ScalarProperty Name="Sickness" ColumnName="Sickness" />
-                <ScalarProperty Name="GSTraining" ColumnName="GSTraining" />
-                <ScalarProperty Name="SATTraining" ColumnName="SATTraining" />
-                <ScalarProperty Name="L1Training" ColumnName="L1Training" />
-                <ScalarProperty Name="L2Training" ColumnName="L2Training" />
-                <ScalarProperty Name="SATHoliday" ColumnName="SATHoliday" />
-                <ScalarProperty Name="L1Holiday" ColumnName="L1Holiday" />
-                <ScalarProperty Name="L2Holiday" ColumnName="L2Holiday" />
-                <ScalarProperty Name="IgniteCredits" ColumnName="IgniteCredits" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_ChannelComplianceDetail" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_ChannelComplianceDetail">
             <ResultMapping>
               <ComplexTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.sp_ChannelComplianceDetail_Result">
@@ -4764,80 +4530,6 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
                 <ScalarProperty Name="LeakageCount" ColumnName="LeakageCount" />
                 <ScalarProperty Name="ZeroHour" ColumnName="ZeroHour" />
                 <ScalarProperty Name="MissingTimecard" ColumnName="MissingTimecard" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_ChannelDashboardData" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_ChannelDashboardData">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.sp_ChannelDashboardData_Result">
-                <ScalarProperty Name="DashboardDataId" ColumnName="DashboardDataId" />
-                <ScalarProperty Name="Year" ColumnName="Year" />
-                <ScalarProperty Name="Quarter" ColumnName="Quarter" />
-                <ScalarProperty Name="Period" ColumnName="Period" />
-                <ScalarProperty Name="WeekNumber" ColumnName="WeekNumber" />
-                <ScalarProperty Name="BranchNumber" ColumnName="BranchNumber" />
-                <ScalarProperty Name="UkBranchNumber" ColumnName="UkBranchNumber" />
-                <ScalarProperty Name="StoreName" ColumnName="StoreName" />
-                <ScalarProperty Name="Division" ColumnName="Division" />
-                <ScalarProperty Name="Region" ColumnName="Region" />
-                <ScalarProperty Name="RegionName" ColumnName="RegionName" />
-                <ScalarProperty Name="TotalHeadcount" ColumnName="TotalHeadcount" />
-                <ScalarProperty Name="TimeCardsCompleted" ColumnName="TimeCardsCompleted" />
-                <ScalarProperty Name="ZeroHour" ColumnName="ZeroHour" />
-                <ScalarProperty Name="ContractHours" ColumnName="ContractHours" />
-                <ScalarProperty Name="FTContractHours" ColumnName="FTContractHours" />
-                <ScalarProperty Name="PTContractHours" ColumnName="PTContractHours" />
-                <ScalarProperty Name="OriginalTarget" ColumnName="OriginalTarget" />
-                <ScalarProperty Name="FinalTarget" ColumnName="FinalTarget" />
-                <ScalarProperty Name="HolidayTaken" ColumnName="HolidayTaken" />
-                <ScalarProperty Name="LTS" ColumnName="LTS" />
-                <ScalarProperty Name="FTLeakage" ColumnName="FTLeakage" />
-                <ScalarProperty Name="LeakageCount" ColumnName="LeakageCount" />
-                <ScalarProperty Name="AllApprovedHours" ColumnName="AllApprovedHours" />
-                <ScalarProperty Name="PayrollCorrections" ColumnName="PayrollCorrections" />
-                <ScalarProperty Name="SOH" ColumnName="SOH" />
-                <ScalarProperty Name="OverTargetFlag" ColumnName="OverTargetFlag" />
-                <ScalarProperty Name="OverContractFlag" ColumnName="OverContractFlag" />
-                <ScalarProperty Name="ComplianceScore" ColumnName="ComplianceScore" />
-                <ScalarProperty Name="SOHUtilization" ColumnName="SOHUtilization" />
-                <ScalarProperty Name="UtilizationZeroFlag" ColumnName="UtilizationZeroFlag" />
-                <ScalarProperty Name="GSContract" ColumnName="GSContract" />
-                <ScalarProperty Name="GSTarget" ColumnName="GSTarget" />
-                <ScalarProperty Name="GSHolidayTaken" ColumnName="GSHolidayTaken" />
-                <ScalarProperty Name="GSFTLeakage" ColumnName="GSFTLeakage" />
-                <ScalarProperty Name="GSAllApprovedHours" ColumnName="GSAllApprovedHours" />
-                <ScalarProperty Name="GSSOHSpend" ColumnName="GSSOHSpend" />
-                <ScalarProperty Name="GSOverTargetFlag" ColumnName="GSOverTargetFlag" />
-                <ScalarProperty Name="GSOverContractFlag" ColumnName="GSOverContractFlag" />
-                <ScalarProperty Name="StoreFlag" ColumnName="StoreFlag" />
-                <ScalarProperty Name="StoreCount" ColumnName="StoreCount" />
-                <ScalarProperty Name="FTHeadcountSAS" ColumnName="FTHeadcountSAS" />
-                <ScalarProperty Name="FTHeadcountSIS" ColumnName="FTHeadcountSIS" />
-                <ScalarProperty Name="ContractBaseTarget" ColumnName="ContractBaseTarget" />
-                <ScalarProperty Name="PaidForHoursNotWorkedCompliance" ColumnName="PaidForHoursNotWorkedCompliance" />
-                <ScalarProperty Name="SATSOH" ColumnName="SATSOH" />
-                <ScalarProperty Name="SATTarget" ColumnName="SATTarget" />
-                <ScalarProperty Name="ServiceLV1SOH" ColumnName="ServiceLV1SOH" />
-                <ScalarProperty Name="ServiceLV1Target" ColumnName="ServiceLV1Target" />
-                <ScalarProperty Name="ServiceLV2SOH" ColumnName="ServiceLV2SOH" />
-                <ScalarProperty Name="ServiceLV2Target" ColumnName="ServiceLV2Target" />
-                <ScalarProperty Name="SATContractHours" ColumnName="SATContractHours" />
-                <ScalarProperty Name="ServiceLV1ContractHours" ColumnName="ServiceLV1ContractHours" />
-                <ScalarProperty Name="ServiceLV2ContractHours" ColumnName="ServiceLV2ContractHours" />
-                <ScalarProperty Name="C25PercOver" ColumnName="25PercOver" />
-                <ScalarProperty Name="C25PercUnder" ColumnName="25PercUnder" />
-                <ScalarProperty Name="PlusMinus10Perc" ColumnName="PlusMinus10Perc" />
-                <ScalarProperty Name="Awol" ColumnName="Awol" />
-                <ScalarProperty Name="Suspension" ColumnName="Suspension" />
-                <ScalarProperty Name="Sickness" ColumnName="Sickness" />
-                <ScalarProperty Name="GSTraining" ColumnName="GSTraining" />
-                <ScalarProperty Name="SATTraining" ColumnName="SATTraining" />
-                <ScalarProperty Name="L1Training" ColumnName="L1Training" />
-                <ScalarProperty Name="L2Training" ColumnName="L2Training" />
-                <ScalarProperty Name="SATHoliday" ColumnName="SATHoliday" />
-                <ScalarProperty Name="L1Holiday" ColumnName="L1Holiday" />
-                <ScalarProperty Name="L2Holiday" ColumnName="L2Holiday" />
-                <ScalarProperty Name="IgniteCredits" ColumnName="IgniteCredits" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -4855,80 +4547,6 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_DivisionDashboardData" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_DivisionDashboardData">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.sp_DivisionDashboardData_Result">
-                <ScalarProperty Name="DashboardDataId" ColumnName="DashboardDataId" />
-                <ScalarProperty Name="Year" ColumnName="Year" />
-                <ScalarProperty Name="Quarter" ColumnName="Quarter" />
-                <ScalarProperty Name="Period" ColumnName="Period" />
-                <ScalarProperty Name="WeekNumber" ColumnName="WeekNumber" />
-                <ScalarProperty Name="BranchNumber" ColumnName="BranchNumber" />
-                <ScalarProperty Name="UkBranchNumber" ColumnName="UkBranchNumber" />
-                <ScalarProperty Name="StoreName" ColumnName="StoreName" />
-                <ScalarProperty Name="Division" ColumnName="Division" />
-                <ScalarProperty Name="Region" ColumnName="Region" />
-                <ScalarProperty Name="RegionName" ColumnName="RegionName" />
-                <ScalarProperty Name="TotalHeadcount" ColumnName="TotalHeadcount" />
-                <ScalarProperty Name="TimeCardsCompleted" ColumnName="TimeCardsCompleted" />
-                <ScalarProperty Name="ZeroHour" ColumnName="ZeroHour" />
-                <ScalarProperty Name="ContractHours" ColumnName="ContractHours" />
-                <ScalarProperty Name="FTContractHours" ColumnName="FTContractHours" />
-                <ScalarProperty Name="PTContractHours" ColumnName="PTContractHours" />
-                <ScalarProperty Name="OriginalTarget" ColumnName="OriginalTarget" />
-                <ScalarProperty Name="FinalTarget" ColumnName="FinalTarget" />
-                <ScalarProperty Name="HolidayTaken" ColumnName="HolidayTaken" />
-                <ScalarProperty Name="LTS" ColumnName="LTS" />
-                <ScalarProperty Name="FTLeakage" ColumnName="FTLeakage" />
-                <ScalarProperty Name="LeakageCount" ColumnName="LeakageCount" />
-                <ScalarProperty Name="AllApprovedHours" ColumnName="AllApprovedHours" />
-                <ScalarProperty Name="PayrollCorrections" ColumnName="PayrollCorrections" />
-                <ScalarProperty Name="SOH" ColumnName="SOH" />
-                <ScalarProperty Name="OverTargetFlag" ColumnName="OverTargetFlag" />
-                <ScalarProperty Name="OverContractFlag" ColumnName="OverContractFlag" />
-                <ScalarProperty Name="ComplianceScore" ColumnName="ComplianceScore" />
-                <ScalarProperty Name="SOHUtilization" ColumnName="SOHUtilization" />
-                <ScalarProperty Name="UtilizationZeroFlag" ColumnName="UtilizationZeroFlag" />
-                <ScalarProperty Name="GSContract" ColumnName="GSContract" />
-                <ScalarProperty Name="GSTarget" ColumnName="GSTarget" />
-                <ScalarProperty Name="GSHolidayTaken" ColumnName="GSHolidayTaken" />
-                <ScalarProperty Name="GSFTLeakage" ColumnName="GSFTLeakage" />
-                <ScalarProperty Name="GSAllApprovedHours" ColumnName="GSAllApprovedHours" />
-                <ScalarProperty Name="GSSOHSpend" ColumnName="GSSOHSpend" />
-                <ScalarProperty Name="GSOverTargetFlag" ColumnName="GSOverTargetFlag" />
-                <ScalarProperty Name="GSOverContractFlag" ColumnName="GSOverContractFlag" />
-                <ScalarProperty Name="StoreFlag" ColumnName="StoreFlag" />
-                <ScalarProperty Name="StoreCount" ColumnName="StoreCount" />
-                <ScalarProperty Name="FTHeadcountSAS" ColumnName="FTHeadcountSAS" />
-                <ScalarProperty Name="FTHeadcountSIS" ColumnName="FTHeadcountSIS" />
-                <ScalarProperty Name="ContractBaseTarget" ColumnName="ContractBaseTarget" />
-                <ScalarProperty Name="PaidForHoursNotWorkedCompliance" ColumnName="PaidForHoursNotWorkedCompliance" />
-                <ScalarProperty Name="SATSOH" ColumnName="SATSOH" />
-                <ScalarProperty Name="SATTarget" ColumnName="SATTarget" />
-                <ScalarProperty Name="ServiceLV1SOH" ColumnName="ServiceLV1SOH" />
-                <ScalarProperty Name="ServiceLV1Target" ColumnName="ServiceLV1Target" />
-                <ScalarProperty Name="ServiceLV2SOH" ColumnName="ServiceLV2SOH" />
-                <ScalarProperty Name="ServiceLV2Target" ColumnName="ServiceLV2Target" />
-                <ScalarProperty Name="SATContractHours" ColumnName="SATContractHours" />
-                <ScalarProperty Name="ServiceLV1ContractHours" ColumnName="ServiceLV1ContractHours" />
-                <ScalarProperty Name="ServiceLV2ContractHours" ColumnName="ServiceLV2ContractHours" />
-                <ScalarProperty Name="C25PercOver" ColumnName="25PercOver" />
-                <ScalarProperty Name="C25PercUnder" ColumnName="25PercUnder" />
-                <ScalarProperty Name="PlusMinus10Perc" ColumnName="PlusMinus10Perc" />
-                <ScalarProperty Name="Awol" ColumnName="Awol" />
-                <ScalarProperty Name="Suspension" ColumnName="Suspension" />
-                <ScalarProperty Name="Sickness" ColumnName="Sickness" />
-                <ScalarProperty Name="GSTraining" ColumnName="GSTraining" />
-                <ScalarProperty Name="SATTraining" ColumnName="SATTraining" />
-                <ScalarProperty Name="L1Training" ColumnName="L1Training" />
-                <ScalarProperty Name="L2Training" ColumnName="L2Training" />
-                <ScalarProperty Name="SATHoliday" ColumnName="SATHoliday" />
-                <ScalarProperty Name="L1Holiday" ColumnName="L1Holiday" />
-                <ScalarProperty Name="L2Holiday" ColumnName="L2Holiday" />
-                <ScalarProperty Name="IgniteCredits" ColumnName="IgniteCredits" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_RegionComplianceDetail" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_RegionComplianceDetail">
             <ResultMapping>
               <ComplexTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.sp_RegionComplianceDetail_Result">
@@ -4940,80 +4558,6 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
                 <ScalarProperty Name="LeakageCount" ColumnName="LeakageCount" />
                 <ScalarProperty Name="ZeroHour" ColumnName="ZeroHour" />
                 <ScalarProperty Name="MissingTimecard" ColumnName="MissingTimecard" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_RegionDashboardData" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_RegionDashboardData">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.sp_RegionDashboardData_Result">
-                <ScalarProperty Name="DashboardDataId" ColumnName="DashboardDataId" />
-                <ScalarProperty Name="Year" ColumnName="Year" />
-                <ScalarProperty Name="Quarter" ColumnName="Quarter" />
-                <ScalarProperty Name="Period" ColumnName="Period" />
-                <ScalarProperty Name="WeekNumber" ColumnName="WeekNumber" />
-                <ScalarProperty Name="BranchNumber" ColumnName="BranchNumber" />
-                <ScalarProperty Name="UkBranchNumber" ColumnName="UkBranchNumber" />
-                <ScalarProperty Name="StoreName" ColumnName="StoreName" />
-                <ScalarProperty Name="Division" ColumnName="Division" />
-                <ScalarProperty Name="Region" ColumnName="Region" />
-                <ScalarProperty Name="RegionName" ColumnName="RegionName" />
-                <ScalarProperty Name="TotalHeadcount" ColumnName="TotalHeadcount" />
-                <ScalarProperty Name="TimeCardsCompleted" ColumnName="TimeCardsCompleted" />
-                <ScalarProperty Name="ZeroHour" ColumnName="ZeroHour" />
-                <ScalarProperty Name="ContractHours" ColumnName="ContractHours" />
-                <ScalarProperty Name="FTContractHours" ColumnName="FTContractHours" />
-                <ScalarProperty Name="PTContractHours" ColumnName="PTContractHours" />
-                <ScalarProperty Name="OriginalTarget" ColumnName="OriginalTarget" />
-                <ScalarProperty Name="FinalTarget" ColumnName="FinalTarget" />
-                <ScalarProperty Name="HolidayTaken" ColumnName="HolidayTaken" />
-                <ScalarProperty Name="LTS" ColumnName="LTS" />
-                <ScalarProperty Name="FTLeakage" ColumnName="FTLeakage" />
-                <ScalarProperty Name="LeakageCount" ColumnName="LeakageCount" />
-                <ScalarProperty Name="AllApprovedHours" ColumnName="AllApprovedHours" />
-                <ScalarProperty Name="PayrollCorrections" ColumnName="PayrollCorrections" />
-                <ScalarProperty Name="SOH" ColumnName="SOH" />
-                <ScalarProperty Name="OverTargetFlag" ColumnName="OverTargetFlag" />
-                <ScalarProperty Name="OverContractFlag" ColumnName="OverContractFlag" />
-                <ScalarProperty Name="ComplianceScore" ColumnName="ComplianceScore" />
-                <ScalarProperty Name="SOHUtilization" ColumnName="SOHUtilization" />
-                <ScalarProperty Name="UtilizationZeroFlag" ColumnName="UtilizationZeroFlag" />
-                <ScalarProperty Name="GSContract" ColumnName="GSContract" />
-                <ScalarProperty Name="GSTarget" ColumnName="GSTarget" />
-                <ScalarProperty Name="GSHolidayTaken" ColumnName="GSHolidayTaken" />
-                <ScalarProperty Name="GSFTLeakage" ColumnName="GSFTLeakage" />
-                <ScalarProperty Name="GSAllApprovedHours" ColumnName="GSAllApprovedHours" />
-                <ScalarProperty Name="GSSOHSpend" ColumnName="GSSOHSpend" />
-                <ScalarProperty Name="GSOverTargetFlag" ColumnName="GSOverTargetFlag" />
-                <ScalarProperty Name="GSOverContractFlag" ColumnName="GSOverContractFlag" />
-                <ScalarProperty Name="StoreFlag" ColumnName="StoreFlag" />
-                <ScalarProperty Name="StoreCount" ColumnName="StoreCount" />
-                <ScalarProperty Name="FTHeadcountSAS" ColumnName="FTHeadcountSAS" />
-                <ScalarProperty Name="FTHeadcountSIS" ColumnName="FTHeadcountSIS" />
-                <ScalarProperty Name="ContractBaseTarget" ColumnName="ContractBaseTarget" />
-                <ScalarProperty Name="PaidForHoursNotWorkedCompliance" ColumnName="PaidForHoursNotWorkedCompliance" />
-                <ScalarProperty Name="SATSOH" ColumnName="SATSOH" />
-                <ScalarProperty Name="SATTarget" ColumnName="SATTarget" />
-                <ScalarProperty Name="ServiceLV1SOH" ColumnName="ServiceLV1SOH" />
-                <ScalarProperty Name="ServiceLV1Target" ColumnName="ServiceLV1Target" />
-                <ScalarProperty Name="ServiceLV2SOH" ColumnName="ServiceLV2SOH" />
-                <ScalarProperty Name="ServiceLV2Target" ColumnName="ServiceLV2Target" />
-                <ScalarProperty Name="SATContractHours" ColumnName="SATContractHours" />
-                <ScalarProperty Name="ServiceLV1ContractHours" ColumnName="ServiceLV1ContractHours" />
-                <ScalarProperty Name="ServiceLV2ContractHours" ColumnName="ServiceLV2ContractHours" />
-                <ScalarProperty Name="C25PercOver" ColumnName="25PercOver" />
-                <ScalarProperty Name="C25PercUnder" ColumnName="25PercUnder" />
-                <ScalarProperty Name="PlusMinus10Perc" ColumnName="PlusMinus10Perc" />
-                <ScalarProperty Name="Awol" ColumnName="Awol" />
-                <ScalarProperty Name="Suspension" ColumnName="Suspension" />
-                <ScalarProperty Name="Sickness" ColumnName="Sickness" />
-                <ScalarProperty Name="GSTraining" ColumnName="GSTraining" />
-                <ScalarProperty Name="SATTraining" ColumnName="SATTraining" />
-                <ScalarProperty Name="L1Training" ColumnName="L1Training" />
-                <ScalarProperty Name="L2Training" ColumnName="L2Training" />
-                <ScalarProperty Name="SATHoliday" ColumnName="SATHoliday" />
-                <ScalarProperty Name="L1Holiday" ColumnName="L1Holiday" />
-                <ScalarProperty Name="L2Holiday" ColumnName="L2Holiday" />
-                <ScalarProperty Name="IgniteCredits" ColumnName="IgniteCredits" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -5526,6 +5070,404 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="DashBoardData_v2">
+            <EntityTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.DashBoardData_v2">
+              <MappingFragment StoreEntitySet="DashBoardData_v2">
+                <ScalarProperty Name="PayEscalations" ColumnName="PayEscalations" />
+                <ScalarProperty Name="ShortShifts" ColumnName="ShortShifts" />
+                <ScalarProperty Name="PunchCompliance" ColumnName="PunchCompliance" />
+                <ScalarProperty Name="IgniteCredits" ColumnName="IgniteCredits" />
+                <ScalarProperty Name="ContractBaseTarget" ColumnName="ContractBaseTarget" />
+                <ScalarProperty Name="StoreFlag" ColumnName="StoreFlag" />
+                <ScalarProperty Name="GSOverContractFlag" ColumnName="GSOverContractFlag" />
+                <ScalarProperty Name="GSOverTargetFlag" ColumnName="GSOverTargetFlag" />
+                <ScalarProperty Name="GSSOHSpend" ColumnName="GSSOHSpend" />
+                <ScalarProperty Name="GSAllApprovedHours" ColumnName="GSAllApprovedHours" />
+                <ScalarProperty Name="GSFTLeakage" ColumnName="GSFTLeakage" />
+                <ScalarProperty Name="GSHolidayTaken" ColumnName="GSHolidayTaken" />
+                <ScalarProperty Name="GSTarget" ColumnName="GSTarget" />
+                <ScalarProperty Name="GSContract" ColumnName="GSContract" />
+                <ScalarProperty Name="UtilizationZeroFlag" ColumnName="UtilizationZeroFlag" />
+                <ScalarProperty Name="SOHUtilization" ColumnName="SOHUtilization" />
+                <ScalarProperty Name="ComplianceScore" ColumnName="ComplianceScore" />
+                <ScalarProperty Name="OverContractFlag" ColumnName="OverContractFlag" />
+                <ScalarProperty Name="OverTargetFlag" ColumnName="OverTargetFlag" />
+                <ScalarProperty Name="SOH" ColumnName="SOH" />
+                <ScalarProperty Name="AllApprovedHours" ColumnName="AllApprovedHours" />
+                <ScalarProperty Name="LeakageCount" ColumnName="LeakageCount" />
+                <ScalarProperty Name="FTLeakage" ColumnName="FTLeakage" />
+                <ScalarProperty Name="HolidayTaken" ColumnName="HolidayTaken" />
+                <ScalarProperty Name="FinalTarget" ColumnName="FinalTarget" />
+                <ScalarProperty Name="OriginalTarget" ColumnName="OriginalTarget" />
+                <ScalarProperty Name="PTContractHours" ColumnName="PTContractHours" />
+                <ScalarProperty Name="FTContractHours" ColumnName="FTContractHours" />
+                <ScalarProperty Name="ContractHours" ColumnName="ContractHours" />
+                <ScalarProperty Name="ZeroHour" ColumnName="ZeroHour" />
+                <ScalarProperty Name="TimeCardsCompleted" ColumnName="TimeCardsCompleted" />
+                <ScalarProperty Name="TotalHeadCount" ColumnName="TotalHeadCount" />
+                <ScalarProperty Name="RegionName" ColumnName="RegionName" />
+                <ScalarProperty Name="Region" ColumnName="Region" />
+                <ScalarProperty Name="Division" ColumnName="Division" />
+                <ScalarProperty Name="StoreName" ColumnName="StoreName" />
+                <ScalarProperty Name="UkBranchNumber" ColumnName="UkBranchNumber" />
+                <ScalarProperty Name="BranchNumber" ColumnName="BranchNumber" />
+                <ScalarProperty Name="WeekNumber" ColumnName="WeekNumber" />
+                <ScalarProperty Name="Period" ColumnName="Period" />
+                <ScalarProperty Name="Quarter" ColumnName="Quarter" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="DashBoardDataId" ColumnName="DashBoardDataId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_AllChannelDashboardData_v2" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_AllChannelDashboardData_v2">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.sp_AllChannelDashboardData_v2_Result">
+                <ScalarProperty Name="DashboardDataId" ColumnName="DashboardDataId" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Quarter" ColumnName="Quarter" />
+                <ScalarProperty Name="Period" ColumnName="Period" />
+                <ScalarProperty Name="WeekNumber" ColumnName="WeekNumber" />
+                <ScalarProperty Name="BranchNumber" ColumnName="BranchNumber" />
+                <ScalarProperty Name="UkBranchNumber" ColumnName="UkBranchNumber" />
+                <ScalarProperty Name="StoreName" ColumnName="StoreName" />
+                <ScalarProperty Name="Division" ColumnName="Division" />
+                <ScalarProperty Name="Region" ColumnName="Region" />
+                <ScalarProperty Name="RegionName" ColumnName="RegionName" />
+                <ScalarProperty Name="TotalHeadcount" ColumnName="TotalHeadcount" />
+                <ScalarProperty Name="TimeCardsCompleted" ColumnName="TimeCardsCompleted" />
+                <ScalarProperty Name="ZeroHour" ColumnName="ZeroHour" />
+                <ScalarProperty Name="ContractHours" ColumnName="ContractHours" />
+                <ScalarProperty Name="FTContractHours" ColumnName="FTContractHours" />
+                <ScalarProperty Name="PTContractHours" ColumnName="PTContractHours" />
+                <ScalarProperty Name="OriginalTarget" ColumnName="OriginalTarget" />
+                <ScalarProperty Name="FinalTarget" ColumnName="FinalTarget" />
+                <ScalarProperty Name="HolidayTaken" ColumnName="HolidayTaken" />
+                <ScalarProperty Name="FTLeakage" ColumnName="FTLeakage" />
+                <ScalarProperty Name="LeakageCount" ColumnName="LeakageCount" />
+                <ScalarProperty Name="AllApprovedHours" ColumnName="AllApprovedHours" />
+                <ScalarProperty Name="SOH" ColumnName="SOH" />
+                <ScalarProperty Name="OverTargetFlag" ColumnName="OverTargetFlag" />
+                <ScalarProperty Name="OverContractFlag" ColumnName="OverContractFlag" />
+                <ScalarProperty Name="ComplianceScore" ColumnName="ComplianceScore" />
+                <ScalarProperty Name="SOHUtilization" ColumnName="SOHUtilization" />
+                <ScalarProperty Name="UtilizationZeroFlag" ColumnName="UtilizationZeroFlag" />
+                <ScalarProperty Name="GSContract" ColumnName="GSContract" />
+                <ScalarProperty Name="GSTarget" ColumnName="GSTarget" />
+                <ScalarProperty Name="GSHolidayTaken" ColumnName="GSHolidayTaken" />
+                <ScalarProperty Name="GSFTLeakage" ColumnName="GSFTLeakage" />
+                <ScalarProperty Name="GSAllApprovedHours" ColumnName="GSAllApprovedHours" />
+                <ScalarProperty Name="GSSOHSpend" ColumnName="GSSOHSpend" />
+                <ScalarProperty Name="GSOverTargetFlag" ColumnName="GSOverTargetFlag" />
+                <ScalarProperty Name="GSOverContractFlag" ColumnName="GSOverContractFlag" />
+                <ScalarProperty Name="StoreFlag" ColumnName="StoreFlag" />
+                <ScalarProperty Name="ContractBaseTarget" ColumnName="ContractBaseTarget" />
+                <ScalarProperty Name="IgniteCredits" ColumnName="IgniteCredits" />
+                <ScalarProperty Name="PunchCompliance" ColumnName="PunchCompliance" />
+                <ScalarProperty Name="ShortShifts" ColumnName="ShortShifts" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_AllDivisionDashboardData_v2" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_AllDivisionDashboardData_v2">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.sp_AllDivisionDashboardData_v2_Result">
+                <ScalarProperty Name="DashboardDataId" ColumnName="DashboardDataId" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Quarter" ColumnName="Quarter" />
+                <ScalarProperty Name="Period" ColumnName="Period" />
+                <ScalarProperty Name="WeekNumber" ColumnName="WeekNumber" />
+                <ScalarProperty Name="BranchNumber" ColumnName="BranchNumber" />
+                <ScalarProperty Name="UkBranchNumber" ColumnName="UkBranchNumber" />
+                <ScalarProperty Name="StoreName" ColumnName="StoreName" />
+                <ScalarProperty Name="Division" ColumnName="Division" />
+                <ScalarProperty Name="Region" ColumnName="Region" />
+                <ScalarProperty Name="RegionName" ColumnName="RegionName" />
+                <ScalarProperty Name="TotalHeadcount" ColumnName="TotalHeadcount" />
+                <ScalarProperty Name="TimeCardsCompleted" ColumnName="TimeCardsCompleted" />
+                <ScalarProperty Name="ZeroHour" ColumnName="ZeroHour" />
+                <ScalarProperty Name="ContractHours" ColumnName="ContractHours" />
+                <ScalarProperty Name="FTContractHours" ColumnName="FTContractHours" />
+                <ScalarProperty Name="PTContractHours" ColumnName="PTContractHours" />
+                <ScalarProperty Name="OriginalTarget" ColumnName="OriginalTarget" />
+                <ScalarProperty Name="FinalTarget" ColumnName="FinalTarget" />
+                <ScalarProperty Name="HolidayTaken" ColumnName="HolidayTaken" />
+                <ScalarProperty Name="FTLeakage" ColumnName="FTLeakage" />
+                <ScalarProperty Name="LeakageCount" ColumnName="LeakageCount" />
+                <ScalarProperty Name="AllApprovedHours" ColumnName="AllApprovedHours" />
+                <ScalarProperty Name="SOH" ColumnName="SOH" />
+                <ScalarProperty Name="OverTargetFlag" ColumnName="OverTargetFlag" />
+                <ScalarProperty Name="OverContractFlag" ColumnName="OverContractFlag" />
+                <ScalarProperty Name="ComplianceScore" ColumnName="ComplianceScore" />
+                <ScalarProperty Name="SOHUtilization" ColumnName="SOHUtilization" />
+                <ScalarProperty Name="UtilizationZeroFlag" ColumnName="UtilizationZeroFlag" />
+                <ScalarProperty Name="GSContract" ColumnName="GSContract" />
+                <ScalarProperty Name="GSTarget" ColumnName="GSTarget" />
+                <ScalarProperty Name="GSHolidayTaken" ColumnName="GSHolidayTaken" />
+                <ScalarProperty Name="GSFTLeakage" ColumnName="GSFTLeakage" />
+                <ScalarProperty Name="GSAllApprovedHours" ColumnName="GSAllApprovedHours" />
+                <ScalarProperty Name="GSSOHSpend" ColumnName="GSSOHSpend" />
+                <ScalarProperty Name="GSOverTargetFlag" ColumnName="GSOverTargetFlag" />
+                <ScalarProperty Name="GSOverContractFlag" ColumnName="GSOverContractFlag" />
+                <ScalarProperty Name="StoreFlag" ColumnName="StoreFlag" />
+                <ScalarProperty Name="ContractBaseTarget" ColumnName="ContractBaseTarget" />
+                <ScalarProperty Name="IgniteCredits" ColumnName="IgniteCredits" />
+                <ScalarProperty Name="PunchCompliance" ColumnName="PunchCompliance" />
+                <ScalarProperty Name="ShortShifts" ColumnName="ShortShifts" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_ChannelDashboardData_v2" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_ChannelDashboardData_v2">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.sp_ChannelDashboardData_v2_Result">
+                <ScalarProperty Name="DashboardDataId" ColumnName="DashboardDataId" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Quarter" ColumnName="Quarter" />
+                <ScalarProperty Name="Period" ColumnName="Period" />
+                <ScalarProperty Name="WeekNumber" ColumnName="WeekNumber" />
+                <ScalarProperty Name="BranchNumber" ColumnName="BranchNumber" />
+                <ScalarProperty Name="UkBranchNumber" ColumnName="UkBranchNumber" />
+                <ScalarProperty Name="StoreName" ColumnName="StoreName" />
+                <ScalarProperty Name="Division" ColumnName="Division" />
+                <ScalarProperty Name="Region" ColumnName="Region" />
+                <ScalarProperty Name="RegionName" ColumnName="RegionName" />
+                <ScalarProperty Name="TotalHeadcount" ColumnName="TotalHeadcount" />
+                <ScalarProperty Name="TimeCardsCompleted" ColumnName="TimeCardsCompleted" />
+                <ScalarProperty Name="ZeroHour" ColumnName="ZeroHour" />
+                <ScalarProperty Name="ContractHours" ColumnName="ContractHours" />
+                <ScalarProperty Name="FTContractHours" ColumnName="FTContractHours" />
+                <ScalarProperty Name="PTContractHours" ColumnName="PTContractHours" />
+                <ScalarProperty Name="OriginalTarget" ColumnName="OriginalTarget" />
+                <ScalarProperty Name="FinalTarget" ColumnName="FinalTarget" />
+                <ScalarProperty Name="HolidayTaken" ColumnName="HolidayTaken" />
+                <ScalarProperty Name="FTLeakage" ColumnName="FTLeakage" />
+                <ScalarProperty Name="LeakageCount" ColumnName="LeakageCount" />
+                <ScalarProperty Name="AllApprovedHours" ColumnName="AllApprovedHours" />
+                <ScalarProperty Name="SOH" ColumnName="SOH" />
+                <ScalarProperty Name="OverTargetFlag" ColumnName="OverTargetFlag" />
+                <ScalarProperty Name="OverContractFlag" ColumnName="OverContractFlag" />
+                <ScalarProperty Name="ComplianceScore" ColumnName="ComplianceScore" />
+                <ScalarProperty Name="SOHUtilization" ColumnName="SOHUtilization" />
+                <ScalarProperty Name="UtilizationZeroFlag" ColumnName="UtilizationZeroFlag" />
+                <ScalarProperty Name="GSContract" ColumnName="GSContract" />
+                <ScalarProperty Name="GSTarget" ColumnName="GSTarget" />
+                <ScalarProperty Name="GSHolidayTaken" ColumnName="GSHolidayTaken" />
+                <ScalarProperty Name="GSFTLeakage" ColumnName="GSFTLeakage" />
+                <ScalarProperty Name="GSAllApprovedHours" ColumnName="GSAllApprovedHours" />
+                <ScalarProperty Name="GSSOHSpend" ColumnName="GSSOHSpend" />
+                <ScalarProperty Name="GSOverTargetFlag" ColumnName="GSOverTargetFlag" />
+                <ScalarProperty Name="GSOverContractFlag" ColumnName="GSOverContractFlag" />
+                <ScalarProperty Name="StoreFlag" ColumnName="StoreFlag" />
+                <ScalarProperty Name="ContractBaseTarget" ColumnName="ContractBaseTarget" />
+                <ScalarProperty Name="IgniteCredits" ColumnName="IgniteCredits" />
+                <ScalarProperty Name="PunchCompliance" ColumnName="PunchCompliance" />
+                <ScalarProperty Name="ShortShifts" ColumnName="ShortShifts" />
+                <ScalarProperty Name="PayEscalations" ColumnName="PayEscalations" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_DivisionDashboardData_v2" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_DivisionDashboardData_v2">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.sp_DivisionDashboardData_v2_Result">
+                <ScalarProperty Name="DashboardDataId" ColumnName="DashboardDataId" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Quarter" ColumnName="Quarter" />
+                <ScalarProperty Name="Period" ColumnName="Period" />
+                <ScalarProperty Name="WeekNumber" ColumnName="WeekNumber" />
+                <ScalarProperty Name="BranchNumber" ColumnName="BranchNumber" />
+                <ScalarProperty Name="UkBranchNumber" ColumnName="UkBranchNumber" />
+                <ScalarProperty Name="StoreName" ColumnName="StoreName" />
+                <ScalarProperty Name="Division" ColumnName="Division" />
+                <ScalarProperty Name="Region" ColumnName="Region" />
+                <ScalarProperty Name="RegionName" ColumnName="RegionName" />
+                <ScalarProperty Name="TotalHeadcount" ColumnName="TotalHeadcount" />
+                <ScalarProperty Name="TimeCardsCompleted" ColumnName="TimeCardsCompleted" />
+                <ScalarProperty Name="ZeroHour" ColumnName="ZeroHour" />
+                <ScalarProperty Name="ContractHours" ColumnName="ContractHours" />
+                <ScalarProperty Name="FTContractHours" ColumnName="FTContractHours" />
+                <ScalarProperty Name="PTContractHours" ColumnName="PTContractHours" />
+                <ScalarProperty Name="OriginalTarget" ColumnName="OriginalTarget" />
+                <ScalarProperty Name="FinalTarget" ColumnName="FinalTarget" />
+                <ScalarProperty Name="HolidayTaken" ColumnName="HolidayTaken" />
+                <ScalarProperty Name="FTLeakage" ColumnName="FTLeakage" />
+                <ScalarProperty Name="LeakageCount" ColumnName="LeakageCount" />
+                <ScalarProperty Name="AllApprovedHours" ColumnName="AllApprovedHours" />
+                <ScalarProperty Name="SOH" ColumnName="SOH" />
+                <ScalarProperty Name="OverTargetFlag" ColumnName="OverTargetFlag" />
+                <ScalarProperty Name="OverContractFlag" ColumnName="OverContractFlag" />
+                <ScalarProperty Name="ComplianceScore" ColumnName="ComplianceScore" />
+                <ScalarProperty Name="SOHUtilization" ColumnName="SOHUtilization" />
+                <ScalarProperty Name="UtilizationZeroFlag" ColumnName="UtilizationZeroFlag" />
+                <ScalarProperty Name="GSContract" ColumnName="GSContract" />
+                <ScalarProperty Name="GSTarget" ColumnName="GSTarget" />
+                <ScalarProperty Name="GSHolidayTaken" ColumnName="GSHolidayTaken" />
+                <ScalarProperty Name="GSFTLeakage" ColumnName="GSFTLeakage" />
+                <ScalarProperty Name="GSAllApprovedHours" ColumnName="GSAllApprovedHours" />
+                <ScalarProperty Name="GSSOHSpend" ColumnName="GSSOHSpend" />
+                <ScalarProperty Name="GSOverTargetFlag" ColumnName="GSOverTargetFlag" />
+                <ScalarProperty Name="GSOverContractFlag" ColumnName="GSOverContractFlag" />
+                <ScalarProperty Name="StoreFlag" ColumnName="StoreFlag" />
+                <ScalarProperty Name="ContractBaseTarget" ColumnName="ContractBaseTarget" />
+                <ScalarProperty Name="IgniteCredits" ColumnName="IgniteCredits" />
+                <ScalarProperty Name="PunchCompliance" ColumnName="PunchCompliance" />
+                <ScalarProperty Name="ShortShifts" ColumnName="ShortShifts" />
+                <ScalarProperty Name="PayEscalations" ColumnName="PayEscalations" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_RegionDashboardData_v2" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_RegionDashboardData_v2">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.sp_RegionDashboardData_v2_Result">
+                <ScalarProperty Name="DashboardDataId" ColumnName="DashboardDataId" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Quarter" ColumnName="Quarter" />
+                <ScalarProperty Name="Period" ColumnName="Period" />
+                <ScalarProperty Name="WeekNumber" ColumnName="WeekNumber" />
+                <ScalarProperty Name="BranchNumber" ColumnName="BranchNumber" />
+                <ScalarProperty Name="UkBranchNumber" ColumnName="UkBranchNumber" />
+                <ScalarProperty Name="StoreName" ColumnName="StoreName" />
+                <ScalarProperty Name="Division" ColumnName="Division" />
+                <ScalarProperty Name="Region" ColumnName="Region" />
+                <ScalarProperty Name="RegionName" ColumnName="RegionName" />
+                <ScalarProperty Name="TotalHeadcount" ColumnName="TotalHeadcount" />
+                <ScalarProperty Name="TimeCardsCompleted" ColumnName="TimeCardsCompleted" />
+                <ScalarProperty Name="ZeroHour" ColumnName="ZeroHour" />
+                <ScalarProperty Name="ContractHours" ColumnName="ContractHours" />
+                <ScalarProperty Name="FTContractHours" ColumnName="FTContractHours" />
+                <ScalarProperty Name="PTContractHours" ColumnName="PTContractHours" />
+                <ScalarProperty Name="OriginalTarget" ColumnName="OriginalTarget" />
+                <ScalarProperty Name="FinalTarget" ColumnName="FinalTarget" />
+                <ScalarProperty Name="HolidayTaken" ColumnName="HolidayTaken" />
+                <ScalarProperty Name="FTLeakage" ColumnName="FTLeakage" />
+                <ScalarProperty Name="LeakageCount" ColumnName="LeakageCount" />
+                <ScalarProperty Name="AllApprovedHours" ColumnName="AllApprovedHours" />
+                <ScalarProperty Name="SOH" ColumnName="SOH" />
+                <ScalarProperty Name="OverTargetFlag" ColumnName="OverTargetFlag" />
+                <ScalarProperty Name="OverContractFlag" ColumnName="OverContractFlag" />
+                <ScalarProperty Name="ComplianceScore" ColumnName="ComplianceScore" />
+                <ScalarProperty Name="SOHUtilization" ColumnName="SOHUtilization" />
+                <ScalarProperty Name="UtilizationZeroFlag" ColumnName="UtilizationZeroFlag" />
+                <ScalarProperty Name="GSContract" ColumnName="GSContract" />
+                <ScalarProperty Name="GSTarget" ColumnName="GSTarget" />
+                <ScalarProperty Name="GSHolidayTaken" ColumnName="GSHolidayTaken" />
+                <ScalarProperty Name="GSFTLeakage" ColumnName="GSFTLeakage" />
+                <ScalarProperty Name="GSAllApprovedHours" ColumnName="GSAllApprovedHours" />
+                <ScalarProperty Name="GSSOHSpend" ColumnName="GSSOHSpend" />
+                <ScalarProperty Name="GSOverTargetFlag" ColumnName="GSOverTargetFlag" />
+                <ScalarProperty Name="GSOverContractFlag" ColumnName="GSOverContractFlag" />
+                <ScalarProperty Name="StoreFlag" ColumnName="StoreFlag" />
+                <ScalarProperty Name="ContractBaseTarget" ColumnName="ContractBaseTarget" />
+                <ScalarProperty Name="IgniteCredits" ColumnName="IgniteCredits" />
+                <ScalarProperty Name="PunchCompliance" ColumnName="PunchCompliance" />
+                <ScalarProperty Name="ShortShifts" ColumnName="ShortShifts" />
+                <ScalarProperty Name="PayEscalations" ColumnName="PayEscalations" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="KronosEmployeeSummaries">
+            <EntityTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.KronosEmployeeSummary">
+              <MappingFragment StoreEntitySet="KronosEmployeeSummary">
+                <ScalarProperty Name="Scheduled" ColumnName="Scheduled" />
+                <ScalarProperty Name="BranchName" ColumnName="BranchName" />
+                <ScalarProperty Name="KronosUser" ColumnName="KronosUser" />
+                <ScalarProperty Name="PersonName" ColumnName="PersonName" />
+                <ScalarProperty Name="JobRole" ColumnName="JobRole" />
+                <ScalarProperty Name="SignedOffThrough" ColumnName="SignedOffThrough" />
+                <ScalarProperty Name="EmployeeStandardHours" ColumnName="EmployeeStandardHours" />
+                <ScalarProperty Name="PersonNumber" ColumnName="PersonNumber" />
+                <ScalarProperty Name="Channel" ColumnName="Channel" />
+                <ScalarProperty Name="Division" ColumnName="Division" />
+                <ScalarProperty Name="Region" ColumnName="Region" />
+                <ScalarProperty Name="HomeBranch" ColumnName="HomeBranch" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_RegionShortShifts" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_RegionShortShifts">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.sp_RegionShortShifts_Result">
+                <ScalarProperty Name="Channel" ColumnName="Channel" />
+                <ScalarProperty Name="Division" ColumnName="Division" />
+                <ScalarProperty Name="RegionNo" ColumnName="RegionNo" />
+                <ScalarProperty Name="BranchName" ColumnName="BranchName" />
+                <ScalarProperty Name="CountS" ColumnName="CountS" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_ChannelShortShifts" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_ChannelShortShifts">
+          <ResultMapping>
+              <ComplexTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.sp_RegionShortShifts_Result">
+                <ScalarProperty Name="Channel" ColumnName="Channel" />
+                <ScalarProperty Name="Division" ColumnName="Division" />
+                <ScalarProperty Name="RegionNo" ColumnName="RegionNo" />
+                <ScalarProperty Name="BranchName" ColumnName="BranchName" />
+                <ScalarProperty Name="CountS" ColumnName="CountS" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_DivisionShortShifts" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_DivisionShortShifts">
+          <ResultMapping>
+              <ComplexTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.sp_RegionShortShifts_Result">
+                <ScalarProperty Name="Channel" ColumnName="Channel" />
+                <ScalarProperty Name="Division" ColumnName="Division" />
+                <ScalarProperty Name="RegionNo" ColumnName="RegionNo" />
+                <ScalarProperty Name="BranchName" ColumnName="BranchName" />
+                <ScalarProperty Name="CountS" ColumnName="CountS" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_RegionPunchTrend" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_RegionPunchTrend">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.sp_RegionPunchTrend_Result">
+                <ScalarProperty Name="RegionNo" ColumnName="RegionNo" />
+                <ScalarProperty Name="CST_CNTR_ID" ColumnName="CST_CNTR_ID" />
+                <ScalarProperty Name="StoreName" ColumnName="StoreName" />
+                <ScalarProperty Name="WeekNumber" ColumnName="WeekNumber" />
+                <ScalarProperty Name="Compliance" ColumnName="Compliance" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_DivisionPunchTrend" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_DivisionPunchTrend">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.sp_DivisionPunchTrend_Result">
+                <ScalarProperty Name="RegionNo" ColumnName="RegionNo" />
+                <ScalarProperty Name="CST_CNTR_ID" ColumnName="CST_CNTR_ID" />
+                <ScalarProperty Name="StoreName" ColumnName="StoreName" />
+                <ScalarProperty Name="WeekNumber" ColumnName="WeekNumber" />
+                <ScalarProperty Name="Compliance" ColumnName="Compliance" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_RegionPunchExceptions" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_RegionPunchExceptions">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.sp_RegionPunchExceptions_Result">
+                <ScalarProperty Name="RegionNo" ColumnName="RegionNo" />
+                <ScalarProperty Name="CST_CNTR_ID" ColumnName="CST_CNTR_ID" />
+                <ScalarProperty Name="StoreName" ColumnName="StoreName" />
+                <ScalarProperty Name="FORENAME" ColumnName="FORENAME" />
+                <ScalarProperty Name="WeekNumber" ColumnName="WeekNumber" />
+                <ScalarProperty Name="Compliance" ColumnName="Compliance" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_DivisionPunchExceptions" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_DivisionPunchExceptions">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.sp_DivisionPunchExceptions_Result">
+                <ScalarProperty Name="RegionNo" ColumnName="RegionNo" />
+                <ScalarProperty Name="CST_CNTR_ID" ColumnName="CST_CNTR_ID" />
+                <ScalarProperty Name="StoreName" ColumnName="StoreName" />
+                <ScalarProperty Name="FORENAME" ColumnName="FORENAME" />
+                <ScalarProperty Name="WeekNumber" ColumnName="WeekNumber" />
+                <ScalarProperty Name="Compliance" ColumnName="Compliance" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_CheckHelpTickets" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_CheckHelpTickets">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.sp_CheckHelpTickets_Result">
+                <ScalarProperty Name="TicketId" ColumnName="TicketId" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="EmpNum" ColumnName="EmpNum" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

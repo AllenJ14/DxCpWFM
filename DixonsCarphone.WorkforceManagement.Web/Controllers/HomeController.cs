@@ -86,28 +86,28 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             var weekNumbers = await _storeManager.GetWeekNumbers(DateTime.Now.GetFirstDayOfWeek().AddDays(-7), DateTime.Now.GetFirstDayOfWeek().AddDays(14));
 
             // retrieve dashboard records for relevant weeks
-            List<DashBoardData> current;
-            List<DashBoardData> lastWeek;
-            List<DashBoardData> nextWeek;
-            List<DashBoardData> weekAfter;
+            List<DashBoardData_v2> current;
+            List<DashBoardData_v2> lastWeek;
+            List<DashBoardData_v2> nextWeek;
+            List<DashBoardData_v2> weekAfter;
 
             // retrieve dashboard records for relevant weeks
-            List<DashBoardData> allData;
+            List<DashBoardData_v2> allData;
 
             if(System.Web.HttpContext.Current.Session["_ChannelName"] != null)
             {
                 var result = await _dashBoardManager.GetChannelDashboardData(System.Web.HttpContext.Current.Session["_ChannelName"].ToString(), (int)weekNumbers[3], (int)weekNumbers[0]);
-                allData = mapper.Map<List<DashBoardData>>(result);
+                allData = mapper.Map<List<DashBoardData_v2>>(result);
             }
             else if(System.Web.HttpContext.Current.Session["_DivisionName"] != null)
             {
                 var result = await _dashBoardManager.GetDivisionDashboardData(System.Web.HttpContext.Current.Session["_DivisionName"].ToString(), (int)weekNumbers[3], (int)weekNumbers[0]);
-                allData = mapper.Map<List<DashBoardData>>(result);
+                allData = mapper.Map<List<DashBoardData_v2>>(result);
             }
             else if(System.Web.HttpContext.Current.Session["_RegionNumber"] != null)
             {
                 var result = await _dashBoardManager.GetRegionDashboardData(System.Web.HttpContext.Current.Session["_RegionNumber"].ToString(), (int)weekNumbers[3], (int)weekNumbers[0]);
-                allData =  mapper.Map<List<DashBoardData>>(result);
+                allData =  mapper.Map<List<DashBoardData_v2>>(result);
             }
             else
             {
@@ -145,7 +145,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
                 dict.Add("Last Week", new List<ScoresAndUtilizationViewModel>
                 {
                     new ScoresAndUtilizationViewModel { Score = lastWeek[0]?.SOHUtilization.GetValueOrDefault(), Title = "Deployment", Total = 10, ScoreType = ScoreType.Deployment },
-                    new ScoresAndUtilizationViewModel { Score = lastWeek[0]?.ComplianceScore.GetValueOrDefault(-1), Title = "Compliance", Total = 10, ScoreType = ScoreType.Compliance },
+                    new ScoresAndUtilizationViewModel { Score = lastWeek[0]?.ComplianceScore.GetValueOrDefault(-1), Title = "Compliant", Total = lastWeek[0].BranchNumber, ScoreType = ScoreType.Compliance },
                     //new ScoresAndUtilizationViewModel { Score = kronosHyperLastWeek.GroupBy(x => x.PersonNumber).Select(x => x.FirstOrDefault()).ToList().Count, Title = "Scheduled Colleagues", Total = 10, ScoreType = ScoreType.ColleaguesUnderContract }, //TO DO - DB Column
                     //new ScoresAndUtilizationViewModel { Score = lastWkNonScheduled?.Count,
                     //    Title = "Non-Scheduled", Total = 10, ScoreType = ScoreType.ColleaguesUnderContract }, 
@@ -156,7 +156,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
                 dict.Add("Last Week", new List<ScoresAndUtilizationViewModel>
                 {
                     new ScoresAndUtilizationViewModel { Score = -1, Title = "Deployment", Total = 10, ScoreType = ScoreType.Deployment },
-                    new ScoresAndUtilizationViewModel { Score = -1, Title = "Compliance", Total = 10, ScoreType = ScoreType.Compliance },
+                    new ScoresAndUtilizationViewModel { Score = -1, Title = "Compliant", Total = 10, ScoreType = ScoreType.Compliance },
                     //new ScoresAndUtilizationViewModel { Score = kronosHyperLastWeek.GroupBy(x => x.PersonNumber).Select(x => x.FirstOrDefault()).ToList().Count, Title = "Scheduled Colleagues", Total = 10, ScoreType = ScoreType.ColleaguesUnderContract }, //TO DO - DB Column
                     //new ScoresAndUtilizationViewModel { Score = lastWkNonScheduled?.Count,
                     //    Title = "Non-Scheduled", Total = 10, ScoreType = ScoreType.ColleaguesUnderContract }, 
@@ -168,7 +168,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
                 dict.Add("This Week", new List<ScoresAndUtilizationViewModel>
                 {
                     new ScoresAndUtilizationViewModel { Score = current[0]?.SOHUtilization.GetValueOrDefault(), Title = "Deployment", Total = 10, ScoreType = ScoreType.Deployment },
-                    new ScoresAndUtilizationViewModel { Score = current[0]?.ComplianceScore.GetValueOrDefault(), Title = "Compliance", Total = 10, ScoreType = ScoreType.Compliance },
+                    //new ScoresAndUtilizationViewModel { Score = current[0]?.ComplianceScore.GetValueOrDefault(), Title = "Compliance", Total = 10, ScoreType = ScoreType.Compliance },
                     //new ScoresAndUtilizationViewModel { Score = kronosHyperLastWeek.GroupBy(x => x.PersonNumber).Select(x => x.FirstOrDefault()).ToList().Count, Title = "Scheduled Colleagues", Total = 10, ScoreType = ScoreType.ColleaguesUnderContract }, //TO DO - DB Column
                     //new ScoresAndUtilizationViewModel { Score = lastWkNonScheduled?.Count,
                     //    Title = "Non-Scheduled", Total = 10, ScoreType = ScoreType.ColleaguesUnderContract }, 
@@ -179,7 +179,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
                 dict.Add("This Week", new List<ScoresAndUtilizationViewModel>
                 {
                     new ScoresAndUtilizationViewModel { Score = -1, Title = "Deployment", Total = 10, ScoreType = ScoreType.Deployment },
-                    new ScoresAndUtilizationViewModel { Score = -1, Title = "Compliance", Total = 10, ScoreType = ScoreType.Compliance },
+                    //new ScoresAndUtilizationViewModel { Score = -1, Title = "Compliance", Total = 10, ScoreType = ScoreType.Compliance },
                     //new ScoresAndUtilizationViewModel { Score = kronosHyperLastWeek.GroupBy(x => x.PersonNumber).Select(x => x.FirstOrDefault()).ToList().Count, Title = "Scheduled Colleagues", Total = 10, ScoreType = ScoreType.ColleaguesUnderContract }, //TO DO - DB Column
                     //new ScoresAndUtilizationViewModel { Score = lastWkNonScheduled?.Count,
                     //    Title = "Non-Scheduled", Total = 10, ScoreType = ScoreType.ColleaguesUnderContract }, 
@@ -191,7 +191,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
                 dict.Add("Next Week", new List<ScoresAndUtilizationViewModel>
                 {
                     new ScoresAndUtilizationViewModel { Score = nextWeek[0]?.SOHUtilization.GetValueOrDefault(), Title = "Deployment", Total = 10, ScoreType = ScoreType.Deployment },
-                    new ScoresAndUtilizationViewModel { Score = nextWeek[0]?.ComplianceScore.GetValueOrDefault(), Title = "Compliance", Total = 10, ScoreType = ScoreType.Compliance },
+                    //new ScoresAndUtilizationViewModel { Score = nextWeek[0]?.ComplianceScore.GetValueOrDefault(), Title = "Compliance", Total = 10, ScoreType = ScoreType.Compliance },
                     //new ScoresAndUtilizationViewModel { Score = kronosHyperNextWeek.GroupBy(x => x.PersonNumber).Select(x => x.FirstOrDefault()).ToList().Count, Title = "Scheduled Colleagues", Total = 10, ScoreType = ScoreType.ColleaguesUnderContract }, //TO DO - DB Column
                     //new ScoresAndUtilizationViewModel { Score = nextWkNonScheduled?.Count,
                     //    Title = "Non-Scheduled", Total = 10, ScoreType = ScoreType.ColleaguesUnderContract }, 
@@ -202,7 +202,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
                 dict.Add("Next Week", new List<ScoresAndUtilizationViewModel>
                 {
                     new ScoresAndUtilizationViewModel { Score = -1, Title = "Deployment", Total = 10, ScoreType = ScoreType.Deployment },
-                    new ScoresAndUtilizationViewModel { Score = -1, Title = "Compliance", Total = 10, ScoreType = ScoreType.Compliance },
+                    //new ScoresAndUtilizationViewModel { Score = -1, Title = "Compliance", Total = 10, ScoreType = ScoreType.Compliance },
                     //new ScoresAndUtilizationViewModel { Score = kronosHyperLastWeek.GroupBy(x => x.PersonNumber).Select(x => x.FirstOrDefault()).ToList().Count, Title = "Scheduled Colleagues", Total = 10, ScoreType = ScoreType.ColleaguesUnderContract }, //TO DO - DB Column
                     //new ScoresAndUtilizationViewModel { Score = lastWkNonScheduled?.Count,
                     //    Title = "Non-Scheduled", Total = 10, ScoreType = ScoreType.ColleaguesUnderContract }, 
@@ -214,7 +214,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
                 dict.Add("Week After", new List<ScoresAndUtilizationViewModel>
                 {
                     new ScoresAndUtilizationViewModel { Score = weekAfter[0]?.SOHUtilization.GetValueOrDefault(), Title = "Deployment", Total = 10, ScoreType = ScoreType.Deployment },
-                    new ScoresAndUtilizationViewModel { Score = weekAfter[0]?.ComplianceScore.GetValueOrDefault(), Title = "Compliance", Total = 10, ScoreType = ScoreType.Compliance },
+                    //new ScoresAndUtilizationViewModel { Score = weekAfter[0]?.ComplianceScore.GetValueOrDefault(), Title = "Compliance", Total = 10, ScoreType = ScoreType.Compliance },
                     //new ScoresAndUtilizationViewModel { Score = kronosHyperWeekAfter.GroupBy(x => x.PersonNumber).Select(x => x.FirstOrDefault()).ToList().Count, Title = "Scheduled Colleagues", Total = 10, ScoreType = ScoreType.ColleaguesUnderContract }, //TO DO - DB Column
                     //new ScoresAndUtilizationViewModel { Score = wkAfterNonScheduled?.Count,
                     //    Title = "Non-Scheduled", Total = 10, ScoreType = ScoreType.ColleaguesUnderContract }, 
@@ -225,7 +225,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
                 dict.Add("Week After", new List<ScoresAndUtilizationViewModel>
                 {
                     new ScoresAndUtilizationViewModel { Score = -1, Title = "Deployment", Total = 10, ScoreType = ScoreType.Deployment },
-                    new ScoresAndUtilizationViewModel { Score = -1, Title = "Compliance", Total = 10, ScoreType = ScoreType.Compliance },
+                    //new ScoresAndUtilizationViewModel { Score = -1, Title = "Compliance", Total = 10, ScoreType = ScoreType.Compliance },
                     //new ScoresAndUtilizationViewModel { Score = kronosHyperLastWeek.GroupBy(x => x.PersonNumber).Select(x => x.FirstOrDefault()).ToList().Count, Title = "Scheduled Colleagues", Total = 10, ScoreType = ScoreType.ColleaguesUnderContract }, //TO DO - DB Column
                     //new ScoresAndUtilizationViewModel { Score = lastWkNonScheduled?.Count,
                     //    Title = "Non-Scheduled", Total = 10, ScoreType = ScoreType.ColleaguesUnderContract }, 

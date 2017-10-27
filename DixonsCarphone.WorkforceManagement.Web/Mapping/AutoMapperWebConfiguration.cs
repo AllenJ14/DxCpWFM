@@ -72,6 +72,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Mapping
             CreateMap<sp_GetClosedFormsByUser_Result, TicketSummaryView>();
             CreateMap<sp_GetClosedFormsByTPC_Result, TicketSummaryView>();
             CreateMap<sp_GetClosedFormsByGroup_Result, TicketSummaryView>();
+            CreateMap<sp_CheckHelpTickets_Result, HelpTckSummaryView>();
         }
     }
 
@@ -106,22 +107,22 @@ namespace DixonsCarphone.WorkforceManagement.Web.Mapping
     {
         public RegionDashboardProfile()
         {
-            CreateMap<DashBoardData, sp_RegionDashboardData_Result>();
-            CreateMap<sp_RegionDashboardData_Result, DashBoardData>();
-            CreateMap<sp_RegionDashboardData_Result, DashBoardView>();
-            CreateMap<sp_DivisionDashboardData_Result, DashBoardData>();
-            CreateMap<sp_DivisionDashboardData_Result, DashBoardView>();
-            CreateMap<DashBoardData, sp_DivisionDashboardData_Result>();
-            CreateMap<sp_ChannelDashboardData_Result, DashBoardData>();
-            CreateMap<DashBoardData, sp_ChannelDashboardData_Result>();
-            CreateMap<DashBoardView, sp_AllChannelDashboardData_Result>();
-            CreateMap<sp_AllChannelDashboardData_Result, DashBoardView>();
-            CreateMap<DashBoardView, sp_AllDivisionDashboardData_Result>();
-            CreateMap<sp_AllDivisionDashboardData_Result, DashBoardView>();
-            CreateMap<DashboardViewChannel, sp_AllChannelDashboardData_Result>();
-            CreateMap<sp_AllChannelDashboardData_Result, DashboardViewChannel>();
-            CreateMap<DashboardViewChannel, sp_AllDivisionDashboardData_Result>();
-            CreateMap<sp_AllDivisionDashboardData_Result, DashboardViewChannel>();
+            CreateMap<DashBoardData_v2, sp_RegionDashboardData_v2_Result>();
+            CreateMap<sp_RegionDashboardData_v2_Result, DashBoardData_v2>();
+            CreateMap<sp_RegionDashboardData_v2_Result, DashBoardView>();
+            CreateMap<sp_DivisionDashboardData_v2_Result, DashBoardData_v2>();
+            CreateMap<sp_DivisionDashboardData_v2_Result, DashBoardView>();
+            CreateMap<DashBoardData_v2, sp_DivisionDashboardData_v2_Result>();
+            CreateMap<sp_ChannelDashboardData_v2_Result, DashBoardData_v2>();
+            CreateMap<DashBoardData_v2, sp_ChannelDashboardData_v2_Result>();
+            CreateMap<DashBoardView, sp_AllChannelDashboardData_v2_Result>();
+            CreateMap<sp_AllChannelDashboardData_v2_Result, DashBoardView>();
+            CreateMap<DashBoardView, sp_AllDivisionDashboardData_v2_Result>();
+            CreateMap<sp_AllDivisionDashboardData_v2_Result, DashBoardView>();
+            CreateMap<DashboardViewChannel, sp_AllChannelDashboardData_v2_Result>();
+            CreateMap<sp_AllChannelDashboardData_v2_Result, DashboardViewChannel>();
+            CreateMap<DashboardViewChannel, sp_AllDivisionDashboardData_v2_Result>();
+            CreateMap<sp_AllDivisionDashboardData_v2_Result, DashboardViewChannel>();
             CreateMap<PublishedBudgetsBranch_Result, PublishedBudgetBranch>();
             CreateMap<PublishedBudgetBranch, PublishedBudgetsBranch_Result>();
             CreateMap<PublishedBudgetsRegion_Result, PublishedBudgetBranch>();
@@ -217,6 +218,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Mapping
             CreateMap<HyperFindResult, HyperFindResultView>();
             CreateMap<PersonData, PersonDataView>();
             CreateMap<Person, PersonView>();
+            CreateMap<KronosEmployeeSummary, KronosEmpSummaryView>();
         }
     }
 
@@ -224,20 +226,26 @@ namespace DixonsCarphone.WorkforceManagement.Web.Mapping
     {
         public DashBoardProfile()
         {
-            CreateMap<DashBoardView, DashBoardData>();
-            CreateMap<DashBoardData, DashBoardView>();
+            CreateMap<DashBoardView, DashBoardData_v2>();
+            CreateMap<DashBoardData_v2, DashBoardView>();
             CreateMap<DailyDeploymentView, DailyDeployment>();
             CreateMap<DailyDeployment, DailyDeploymentView>();
             CreateMap<EmpComplianceDetail, EmpComplianceDetailView>();
             CreateMap<EmpComplianceDetailView, EmpComplianceDetail>();
             CreateMap<PunchCompView, CPW_Clocking_Data>();
             CreateMap<CPW_Clocking_Data, PunchCompView>();
+            CreateMap<sp_RegionPunchExceptions_Result, PunchExceptionsView>();
+            CreateMap<sp_DivisionPunchExceptions_Result, PunchExceptionsView>();
+            CreateMap<sp_RegionPunchTrend_Result, PunchTrendView>();
+            CreateMap<sp_DivisionPunchTrend_Result, PunchTrendView>();
             CreateMap<sp_RegionPunchCompliance_Result, RegionPunchComplianceItem>();
             CreateMap<RegionPunchComplianceItem, sp_RegionPunchCompliance_Result>();
             CreateMap<sp_DivisionPunchCompliance_Result, RegionPunchComplianceItem>();
             CreateMap<RegionPunchComplianceItem, sp_DivisionPunchCompliance_Result>();
             CreateMap<sp_ChannelPunchCompliance_Result, RegionPunchComplianceItem>();
             CreateMap<RegionPunchComplianceItem, sp_ChannelPunchCompliance_Result>();
+            CreateMap<ShortShift, ShortShiftView>();
+            CreateMap<sp_RegionShortShifts_Result, RegionShortShiftView>();
         }
     }
 

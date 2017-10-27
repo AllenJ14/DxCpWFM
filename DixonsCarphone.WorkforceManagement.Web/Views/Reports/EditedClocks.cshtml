@@ -1,0 +1,147 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels;
+@model ShortShiftVm
+
+@{
+    ViewBag.Title = "Edited Shifts";
+}
+
+<div class="row">
+    &nbsp;
+</div>
+
+<div class="row">
+    <div class="col-lg-12 col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading text-center">
+                <strong>Edited Clocks (Shortened Duration)</strong>
+            </div>
+            <div class="panel-body">
+                <p>
+                    These are shifts in which a colleague's shift has been shortened by making edits to what was originally clocked by the colleague.
+                </p>
+                <p>
+                    A possible cause here could be a colleague with a poor understanding of the expectation of when to clock in and clock out for their shifts.
+                    Any conversations regarding this cause are recommended to be documented. Another cause could be a colleague not following clocking expectations, this should be managed via our conduct management process.
+                    (Please see <a href="https://cpw-how2.com/CtrlWebIsapi.dll/?__id=webDiagram.show&map=Standard+Operating+Platform+-+Human+Resources&dgm=BDB66E1421294DFE81B3BBFC4E7AC9E0&one=841">How2</a>)
+                </p>
+                <p>
+                    <strong><u>Note:</u></strong> Tolerance is 1 per store per week as we understand mistakes can happen. Any more than 1 will result in non compliance for the store.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    &nbsp;
+</div>
+
+@Html.Partial("~/Views/Shared/_WeekPicker.cshtml", new WeekPickerViewModel { Action = "EditedClocks", Controller = "Reports", WeeksOfYear = Model.WeeksOfYear, SelectedDate = Model.SelectedDate })
+
+<div class="row">
+    &nbsp;
+</div>
+
+@if (Model.type == 1 && Model.RegionShortShifts != null)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <table class="table table-bordered-blue table-condensed">
+                        <thead>
+                            <tr>
+                                <th class="text-center">Branch</th>
+                                <th class="text-center">Clocks Edited</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.RegionShortShifts)
+                            {
+                                <tr>
+                                    <td>@item.BranchName</td>
+                                    <td class="text-center @(item.CountS > 1 ? "danger" : "")">@item.CountS</td>
+                                </tr>
+                            }
+                            <tr>
+                                <td><strong>Region Total</strong></td>
+                                <td class="text-center"><strong>@Model.RegionShortShifts.Sum(x => x.CountS)</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else if (Model.type == 2 && Model.RegionShortShifts != null)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <table class="table table-bordered-blue table-condensed">
+                        <thead>
+                            <tr>
+                                <th class="text-center">Region</th>
+                                <th class="text-center">Clocks Edited</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.RegionShortShifts)
+                            {
+                                <tr>
+                                    <td>@item.RegionNo</td>
+                                    <td class="text-center @(item.CountS > 1 ? "danger" : "")">@item.CountS</td>
+                                </tr>
+                            }
+                            <tr>
+                                <td><strong>Division Total</strong></td>
+                                <td class="text-center"><strong>@Model.RegionShortShifts.Sum(x => x.CountS)</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else if (Model.ShortShifts.Count() == 0)
+{
+    <div class="alert alert-info text-center"><strong>No edited clocks!</strong></div>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <table class="table table-bordered-blue table-condensed">
+                        <thead>
+                            <tr>
+                                <th class="text-center">Person Name</th>
+                                <th class="text-center">Shift Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.ShortShifts.OrderBy(x => x.PersonName).GroupBy(x => x.PersonName).Select(x => x.Key))
+                            {
+                                var data = Model.ShortShifts.Where(x => x.PersonName == item).OrderBy(x => x.PunchDate).ToList();
+                                <tr>
+                                    <td rowspan="@(data.Count())">@item</td>
+                                    <td class="text-center">@data.First().PunchDate.ToShortDateString()</td>
+                                </tr>
+                                for (int i = 1; i < data.Count(); i++)
+                                {
+                                    <tr>
+                                        <td class="text-center">@data[i].PunchDate.ToShortDateString()</td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+}
