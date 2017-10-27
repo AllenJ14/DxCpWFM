@@ -70,10 +70,9 @@
                                     {
                                         <div class="panel-body">
                                             <p>
-                                                <h5>What is the risk?</h5>
                                                 <ul>
-                                                    <li>Payroll Risk – Colleagues not paid for hours they have worked, Inaccurate SOH Reporting</li>
-                                                    <li>Financial risk – Colleagues paid for hours they have not worked (FT).</li>
+                                                    <li>If we don't have as signed off timecard we cannot process pay for the colleague.</li>
+                                                    <li>This needs to be 100% every week - <u>No missed / incomplete / zero hour timecards</u>.</li>
                                                 </ul>
                                             </p>
                                             <table class="table table-bordered-blue table-condensed">
@@ -109,7 +108,12 @@
                                     @if (Model._dashboardView.ShortShifts > 0)
                                     {
                                         <div class="panel-body">
-                                            <strong class="text-danger"><u>Needs blurb</u></strong>
+                                            <p>
+                                                <ul>
+                                                    <li>If you're editing the clocked hours there's a control issue in the store – colleagues need to be clocking when they start and finish work. (All clocked hour now auto-approved).</li>
+                                                    <li>We're only concerned if you're editing a clock to reduce the length of the worked time – it's fine to extend the worked time if there's a reason.</li>
+                                                </ul>
+                                            </p>
                                             <table class="table table-bordered-blue table-condensed">
                                                 <thead>
                                                     <tr>
@@ -145,7 +149,12 @@
                                     @if (Model._dashboardView.PunchCompliance < 0.9)
                                     {
                                         <div class="panel-body">
-                                            <strong class="text-danger"><u>Needs blurb</u></strong>
+                                            <p>
+                                                <ul>
+                                                    <li>We simply need colleagues to clock in and out when they start and finish work</li>
+                                                    <li>If we don't know when our team have worked we can't ensure we're getting their pay right</li>
+                                                </ul>
+                                            </p>
                                             <table class="table table-bordered-blue table-condensed">
                                                 <thead>
                                                     <tr>
