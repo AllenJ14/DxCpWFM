@@ -82,5 +82,17 @@
     "inputFiles": [
       "Content/Workflow/WorkflowHelpUnknown.js"
     ]
+  },
+  {
+    "outputFileName": "Content/Custom/CPayPortal.min.js",
+    "inputFiles": [
+      "Content/Custom/CPayPortal.js"
+    ]
+  },
+  {
+    "outputFileName": "Content/Custom/TCSignOff.min.js",
+    "inputFiles": [
+      "Content/Custom/TCSignOff.js"
+    ]
   }
 ]

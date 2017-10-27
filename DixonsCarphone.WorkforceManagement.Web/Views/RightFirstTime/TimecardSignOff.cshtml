@@ -29,14 +29,6 @@
 {
     @Html.Partial("~/Views/Shared/_Messages.cshtml", Model)
 }
-else if (Model.hf == null || Model.hf.Count() == 0)
-{
-    <div class="alert alert-danger text-center">
-        <strong>Oops...</strong>
-        <p>Looks like something went wrong, please try again.</p>
-        <a class="btn btn-sm btn-info" href="#">Retry</a>
-    </div>
-}
 else if (HttpContext.Current.Session["_RegionNumber"] != null)
 {
     <div class="panel panel-default">
@@ -61,36 +53,47 @@ else if (HttpContext.Current.Session["_RegionNumber"] != null)
             <p>
                 If you have outstanding timecards and no STAR user scheduled or clocked in, by exception, your TPC can support on request.
             </p>
-            <table class="table table-bordered-blue table-condensed" style="margin-top:15px;">
-                <thead>
-                    <tr>
-                        <th class="text-center">Branch Name</th>
-                        <th class="text-center col-xs-2">Timecards Completed</th>
-                        <th class="text-center col-xs-2">Star User Scheduled</th>
-                        <th class="text-center col-xs-2">Star User Clocked</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.rso)
-                    {
+            @if (Model.hf == null || Model.hf.Count() == 0)
+            {
+                <hr />
+                <div class="alert alert-danger text-center col-xs-4 col-xs-offset-4">
+                    <strong>Oops...</strong>
+                    <p>Looks like something went wrong, please try again.</p>
+                    <a class="btn btn-sm btn-default" href="./TimecardSignOff">Retry</a>
+                </div>
+            }
+            else
+            {
+                <table class="table table-bordered-blue table-condensed" style="margin-top:15px;">
+                    <thead>
                         <tr>
-                            <td>@string.Format("{0} - {1}", item.BranchNumber, item.BranchName)</td>
-                            <td class="text-center @(item.RAG > 0 ? "danger" : "")">@string.Format("{0}/{1}", item.SignedOff, item.Headcount)</td>
-                            <td class="text-center @(!item.KronosScheduled ? RAG(item.RAG) : "")">@(item.KronosScheduled ? "Y" : "N")</td>
-                            <td class="text-center @(!item.KronosPunched ? RAG(item.RAG) : "")">@(item.KronosPunched ? "Y" : "N")</td>
+                            <th class="text-center">Branch Name</th>
+                            <th class="text-center col-xs-2">Timecards Completed</th>
+                            <th class="text-center col-xs-2">Star User Scheduled</th>
+                            <th class="text-center col-xs-2">Star User Clocked</th>
                         </tr>
-                    }
-                    <tr>
-                        <td><strong>Region Total</strong></td>
-                        <td class="text-center"><strong>@string.Format("{0}/{1}", Model.rso.Sum(x => x.SignedOff), Model.rso.Sum(x => x.Headcount))</strong></td>
-                        <td class="text-center"><strong>@string.Format("{0}/{1}", Model.rso.Where(x => x.KronosScheduled).Count(), Model.rso.Count())</strong></td>
-                        <td class="text-center"><strong>@string.Format("{0}/{1}", Model.rso.Where(x => x.KronosPunched).Count(), Model.rso.Count())</strong></td>
-                    </tr>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.rso)
+                    {
+                            <tr>
+                                <td>@string.Format("{0} - {1}", item.BranchNumber, item.BranchName)</td>
+                                <td class="text-center @(item.RAG > 0 ? "danger" : "")">@string.Format("{0}/{1}", item.SignedOff, item.Headcount)</td>
+                                <td class="text-center @(!item.KronosScheduled ? RAG(item.RAG) : "")">@(item.KronosScheduled ? "Y" : "N")</td>
+                                <td class="text-center @(!item.KronosPunched ? RAG(item.RAG) : "")">@(item.KronosPunched ? "Y" : "N")</td>
+                            </tr>
+                        }
+                        <tr>
+                            <td><strong>Region Total</strong></td>
+                            <td class="text-center"><strong>@string.Format("{0}/{1}", Model.rso.Sum(x => x.SignedOff), Model.rso.Sum(x => x.Headcount))</strong></td>
+                            <td class="text-center"><strong>@string.Format("{0}/{1}", Model.rso.Where(x => x.KronosScheduled).Count(), Model.rso.Count())</strong></td>
+                            <td class="text-center"><strong>@string.Format("{0}/{1}", Model.rso.Where(x => x.KronosPunched).Count(), Model.rso.Count())</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            }
         </div>
     </div>
-
 }
 else
 {
@@ -124,44 +127,56 @@ else
                 </button>
                 <strong>Zero Hour Timecards</strong> - No timecard should ever be signed off completely blank. If you are unsure what paycode to use please use the "I Need Help" button.
             </div>
-            <table class="table table-bordered-blue table-condensed" style="margin-top:15px;">
-                <tr>
-                    <th class="text-center">Name</th>
-                    <th class="text-center col-xs-2">Timecard Signed Off</th>
-                    @*<th class="text-center col-xs-1">Zero Hour</th>*@
-                    <th class="text-center col-xs-2">Edited Clocks</th>
-                    <th class="text-center">I Need Help</th>
-                </tr>
-                @foreach (var item in Model.hf.Where(x => x.PersonData.Person.ManagerSignoffThruDateTime.Year != 1901).OrderBy(x => x.FullName))
-                {
-                    //var data = Model.ts.Where(x => x.Employee.PersonIdentity.PersonNumber == item.PersonNumber).FirstOrDefault();
-                    var ss = Model.ss.Where(x => x.PersonNum == item.PersonNumber).Count();
-                    var help = Model.HelpTcks.Where(x => x.EmpNum == item.parsedPerson).FirstOrDefault();
+            @if (Model.hf == null || Model.hf.Count() == 0)
+            {
+                <hr />
+                <div class="alert alert-danger text-center col-xs-4 col-xs-offset-4">
+                    <strong>Oops...</strong>
+                    <p>Looks like something went wrong, please try again.</p>
+                    <a class="btn btn-sm btn-default" href="./TimecardSignOff">Retry</a>
+                </div>
+            }
+            else
+            {
+                <table class="table table-bordered-blue table-condensed" style="margin-top:15px;">
                     <tr>
-                        <td>@item.FullName</td>
-                        <td class="text-center"><strong>@(item.PersonData.Person.ManagerSignoffThruDateTime >= Model.weekStart.AddDays(6) ? "✔" : "X")</strong></td>
-                        @*<td class="text-center"><strong>@(data.ManagerSignoffDateTime.Contains(Model.weekStart.AddDays(6).ToShortDateString()) ? "✔" : "X")</strong></td>*@
-                        @*<td class="text-center">@(data.PeriodTotalData.PeriodTotals.Totals.Total.Count() == 0 ? "Yes" : "")</td>*@
-                        <td class="text-center @(ss > 0 ? "danger" : "")">@(ss > 0 ? ss.ToString() : "")</td>
-                        @if (help != null)
-                        {
-                            <td class="text-center"><button type="button" class="btn btn-sm @(help.Status == "Completed" ? "btn-success" : "btn-warning")">@(help.Status == "Completed" ? "Resolved" : "Raised")</button></td>
-                        }
-                        else if (item.PersonData.Person.ManagerSignoffThruDateTime < Model.weekStart.AddDays(6))
-                        {
-                            <td class="text-center"><button type="button" class="btn btn-sm btn-info helpModal" data-empnum="@item.PersonNumber">Help</button></td>
-                        }
-                        else
-                        {
-                            <td><button class="btn btn-sm" style="visibility:hidden;">a</button></td>
-                        }
+                        <th class="text-center">Name</th>
+                        <th class="text-center col-xs-2">Timecard Signed Off</th>
+                        @*<th class="text-center col-xs-1">Zero Hour</th>*@
+                        <th class="text-center col-xs-2">Edited Clocks</th>
+                        <th class="text-center">I Need Help</th>
                     </tr>
-                }
-            </table>
+                    @foreach (var item in Model.hf.Where(x => x.PersonData.Person.ManagerSignoffThruDateTime.Year != 1901).OrderBy(x => x.FullName))
+                    {
+                        //var data = Model.ts.Where(x => x.Employee.PersonIdentity.PersonNumber == item.PersonNumber).FirstOrDefault();
+                        var ss = Model.ss.Where(x => x.PersonNum == item.PersonNumber).Count();
+                        var help = Model.HelpTcks.Where(x => x.EmpNum == item.parsedPerson).FirstOrDefault();
+                        <tr>
+                            <td>@item.FullName</td>
+                            <td class="text-center"><strong>@(item.PersonData.Person.ManagerSignoffThruDateTime >= Model.weekStart.AddDays(6) ? "✔" : "X")</strong></td>
+                            @*<td class="text-center"><strong>@(data.ManagerSignoffDateTime.Contains(Model.weekStart.AddDays(6).ToShortDateString()) ? "✔" : "X")</strong></td>*@
+                            @*<td class="text-center">@(data.PeriodTotalData.PeriodTotals.Totals.Total.Count() == 0 ? "Yes" : "")</td>*@
+                            <td class="text-center @(ss > 0 ? "danger" : "")">@(ss > 0 ? ss.ToString() : "")</td>
+                            @if (help != null)
+                        {
+                                <td class="text-center"><button type="button" class="btn btn-sm @(help.Status == "Completed" ? "btn-success" : "btn-warning")">@(help.Status == "Completed" ? "Resolved" : "Raised")</button></td>
+                            }
+                            else if (item.PersonData.Person.ManagerSignoffThruDateTime < Model.weekStart.AddDays(6))
+                            {
+                                <td class="text-center"><button type="button" class="btn btn-sm btn-info helpModal" data-empnum="@item.PersonNumber">Help</button></td>
+                            }
+                            else
+                            {
+                                <td><button class="btn btn-sm" style="visibility:hidden;">a</button></td>
+                            }
+                        </tr>
+                    }
+                </table>
+            }            
         </div>
     </div>
 }
 
 @section myScripts{
-    <script id="tc1" src="~/Content/Custom/TCSignOff.js"></script>
+    <script id="tc1" src="~/Content/Custom/TCSignOff.min.js"></script>
 }

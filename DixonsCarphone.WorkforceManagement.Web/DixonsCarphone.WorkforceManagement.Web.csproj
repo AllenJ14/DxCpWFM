@@ -234,7 +234,14 @@
     <Content Include="Areas\Workflow\Views\Workflow\ViewTicket.cshtml" />
     <Content Include="Areas\Workflow\Views\_ViewStart.cshtml" />
     <Content Include="CacheDependencyFiles\TextFile1.txt" />
+    <Content Include="Content\Custom\CPayPortal.js" />
+    <Content Include="Content\Custom\CPayPortal.min.js">
+      <DependentUpon>CPayPortal.js</DependentUpon>
+    </Content>
     <Content Include="Content\Custom\TCSignOff.js" />
+    <Content Include="Content\Custom\TCSignOff.min.js">
+      <DependentUpon>TCSignOff.js</DependentUpon>
+    </Content>
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\New\bootstrap.css" />
     <Content Include="Content\New\bootstrap.js" />
