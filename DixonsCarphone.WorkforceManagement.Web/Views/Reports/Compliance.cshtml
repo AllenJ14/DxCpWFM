@@ -18,8 +18,18 @@
                     <strong>Right First Time Pay</strong>
                 </div>
                 <div class="panel-body">
-                    <strong class="text-danger"><u>Needs to be rewritten</u></strong><br />
-                    <strong>Note:</strong>The previous week is not published until <u>Tuesday AM</u> to allow for sign off and data validation.
+                    <img align="right" style="min-width:100px;" src="~/Images/RFTP.png" />
+                    <h4>Welcome to your Right First Time Pay overview</h4>
+                    <p>This will provide the detail of performance across the 3 metrics to delivering Right First Time Pay. These are to be delivered <u>every week</u> by <u>every store</u>.</p>
+                    <p>
+                        Please see below a reminder of the weekly control &amp; tolerance levels:
+                        <ul>
+                            <li>Clocking compliance - 90%+</li>
+                            <li>Timecard Sign Off - 100% (Extended <strong>3PM Monday</strong> deadline)</li>
+                            <li>Editing of clocks - No more than 1 reduced clock per store per week</li>
+                        </ul>
+                    </p>
+                    <strong>Note:</strong>The non negotiable approach will commence from week 36 of the 17/18 financial year.
                 </div>
             </div>
         </div>
@@ -127,7 +137,7 @@
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
                                         <strong>
-                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapsePunch">Clocking Compliance - @(Model._dashboardView.PunchCompliance >= 0.9 ? "No Clocking issues!" : "(" + string.Format("{0:0}%", Model._dashboardView.PunchCompliance * 100) + ")"))</a>
+                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapsePunch">Clocking Compliance - @(Model._dashboardView.PunchCompliance >= 0.9 ? "No Clocking issues!" : "(" + string.Format("{0:0}%", Model._dashboardView.PunchCompliance * 100) + ")")</a>
                                         </strong>
                                     </h4>
                                 </div>
@@ -198,8 +208,8 @@
                                 <td><strong>Region Total</strong></td>
                                 <td class="text-center"><strong>@(Model._dashboardViewCollection.Sum(x => x.ZeroHour))/@(Model._dashboardViewCollection.Sum(x => x.TotalHeadCount) - Model._dashboardViewCollection.Sum(x => x.TimeCardsCompleted))</strong></td>
                                 <td class="text-center"><strong>@Model._dashboardViewCollection.Sum(x => x.ShortShifts)</strong></td>
-                                <td class="text-center"><strong>@(string.Format("{0:0.0}%",Model._dashboardViewCollection.Average(x => x.PunchCompliance)*100))</strong></td>
-                                <td class="text-center"><strong>@Model._dashboardViewCollection.Where(x => x.ComplianceScore > 0).Count()</strong></td>
+                                <td class="text-center"><strong>@(string.Format("{0:0.0}%", Model._dashboardViewCollection.Average(x => x.PunchCompliance) * 100))</strong></td>
+                                <td class="text-center"><strong>@Model._dashboardViewCollection.Where(x => x.ComplianceScore == 0).Count()</strong></td>
                             </tr>
                         </tbody>
                     </table>
@@ -242,7 +252,7 @@
                                 <td><strong>Division Total</strong></td>
                                 <td class="text-center"><strong>@string.Format("{0}/{1}", subtotal.ZeroHour > 0 ? subtotal.ZeroHour.ToString() : "-", subtotal.TotalHeadcount - subtotal.TimeCardsCompleted > 0 ? (subtotal.TotalHeadcount - subtotal.TimeCardsCompleted).ToString() : "-")</strong></td>
                                 <td class="text-center"><strong>@subtotal.ShortShifts</strong></td>
-                                <td class="text-center"><strong>@string.Format("{0:0.0}%", subtotal.PunchCompliance*100)</strong></td>
+                                <td class="text-center"><strong>@string.Format("{0:0.0}%", subtotal.PunchCompliance * 100)</strong></td>
                                 <td class="text-center"><strong>@string.Format("{0}/{1}", subtotal.ComplianceScore, subtotal.BranchNumber)</strong></td>
                             </tr>
                         </tbody>

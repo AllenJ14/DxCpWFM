@@ -380,6 +380,7 @@
     <Content Include="Images\GaugeBG.png" />
     <Content Include="Images\Logo.png" />
     <Content Include="Images\LogoSmall.png" />
+    <Content Include="Images\RFTP.png" />
     <Content Include="Images\WFMHeaderTapp.png" />
     <Content Include="Images\WFMHeader_V6.gif" />
     <Content Include="oldfavicon.ico" />
@@ -642,6 +643,7 @@
     <Content Include="Views\Reports\EditedClocks.cshtml" />
     <Content Include="Views\Partials\_INeedHelpModal.cshtml" />
     <Content Include="Views\Reports\ClockingBehaviours.cshtml" />
+    <Content Include="Views\RightFirstTime\Guide.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DixonsCarphone.WorkforceManagement.Business\DixonsCarphone.WorkforceManagement.Business.csproj">

@@ -235,9 +235,9 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             using (var dbContext = new DxCpWfmContext())
             {
 #if DEBUG
-                return await dbContext.TicketTypes.ToListAsync();
+                return await dbContext.TicketTypes.Where(x => !x.Title.StartsWith("Help")).ToListAsync();
 #else
-                return await dbContext.TicketTypes.Where(x => (bool)x.Live).ToListAsync();
+                return await dbContext.TicketTypes.Where(x => (bool)x.Live && !x.Title.StartsWith("Help")).ToListAsync();
 #endif
             }
         }
