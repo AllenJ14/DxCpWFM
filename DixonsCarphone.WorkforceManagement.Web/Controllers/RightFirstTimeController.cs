@@ -74,7 +74,8 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             }
             else if (System.Web.HttpContext.Current.Session["_RegionNumber"] != null)
             {
-                vm.hf = mapper.Map<List<HyperFindResultView>>(await _KronosManager.GetKronosHyperFind("UK - Region CPW" + System.Web.HttpContext.Current.Session["_RegionNumber"].ToString(), vm.weekStart.ToShortDateString(), vm.weekStart.AddDays(6).ToShortDateString()));
+                string hfQuery = _store.Channel == "ROI" ? "IE Region " : "UK - Region CPW";
+                vm.hf = mapper.Map<List<HyperFindResultView>>(await _KronosManager.GetKronosHyperFind(hfQuery + System.Web.HttpContext.Current.Session["_RegionNumber"].ToString(), vm.weekStart.ToShortDateString(), vm.weekStart.AddDays(6).ToShortDateString()));
                 var employeeList = await _storeManager.GetActiveColleagues(System.Web.HttpContext.Current.Session["_RegionNumber"].ToString());
                 var combined = vm.hf.Where(x => x.PersonData.Person.ManagerSignoffThruDateTime.Year != 1901).Join(employeeList, kronos => kronos.PersonNumber, db => db.PersonNumber, (kronos, db) => new { PersonNumber = kronos.PersonNumber, BranchNumber = db.HomeBranch, BranchName = db.BranchName, signedOff = kronos.PersonData.Person.ManagerSignoffThruDateTime, PersonName = db.PersonName });
                 var punched = await _KronosManager.GetPunchStatus(employeeList.Where(x => x.KronosUser).Select(x => x.PersonNumber).ToList());
