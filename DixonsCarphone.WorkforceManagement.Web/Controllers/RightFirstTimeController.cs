@@ -17,14 +17,6 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
         public RightFirstTimeController()
         {
             _KronosManager = new KronosManager();
-            if (!(bool)System.Web.HttpContext.Current.Session["_ROIFlag"])
-            {
-                System.Web.HttpContext.Current.Session["_PTFlag"] = _storeManager.FTPTCheck(System.Web.HttpContext.Current.Session["_EmpNum"].ToString()) ? "PT" : "FT";
-            }
-            else
-            {
-                System.Web.HttpContext.Current.Session["_PTFlag"] = "";
-            }
         }
 
         public ActionResult Guide()
@@ -36,6 +28,18 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
         public async Task<ActionResult> ColleaguePayPortal()
         {
             ColleaguePortalVm vm = new ColleaguePortalVm();
+
+            if(System.Web.HttpContext.Current.Session["_PTFlag"] == null)
+            {
+                if (!(bool)System.Web.HttpContext.Current.Session["_ROIFlag"])
+                {
+                    System.Web.HttpContext.Current.Session["_PTFlag"] = _storeManager.FTPTCheck(System.Web.HttpContext.Current.Session["_EmpNum"].ToString()) ? "PT" : "FT";
+                }
+                else
+                {
+                    System.Web.HttpContext.Current.Session["_PTFlag"] = "";
+                }
+            }
 
             vm.rawMenu = mapper.Map<List<PayCalendarRefView>>(await _storeManager.GetPayCalendarRef((_store.Channel == "ROI" ? "ROI" : "CPW") + System.Web.HttpContext.Current.Session["_PTFlag"].ToString()));
             
