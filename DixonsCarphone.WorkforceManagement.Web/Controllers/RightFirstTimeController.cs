@@ -89,10 +89,13 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
                 foreach(var item in employeeList.GroupBy(x => x.HomeBranch).Select(c => c.Key).OrderBy(x => x).ToList())
                 {
                     var data = combined.Where(x => x.BranchNumber == item);
-                    bool userScheduled = employeeList.Where(x => x.HomeBranch == item && x.Scheduled && x.KronosUser).Count() > 0;
-                    bool userPunched = punchCombined.Where(x => x.BranchNumber == item && x.punched == "In").Count() > 0;
+                    if(data != null)
+                    {
+                        bool userScheduled = employeeList.Where(x => x.HomeBranch == item && x.Scheduled && x.KronosUser).Count() > 0;
+                        bool userPunched = punchCombined.Where(x => x.BranchNumber == item && x.punched == "In").Count() > 0;
 
-                    vm.rso.Add(new RegionSignOff { BranchNumber = item, BranchName = data.First().BranchName, Headcount = data.Count(), SignedOff = data.Where(x => x.signedOff.Date >= vm.weekStart).Count() , KronosScheduled = userScheduled, KronosPunched = userPunched });
+                        vm.rso.Add(new RegionSignOff { BranchNumber = item, BranchName = data.First().BranchName, Headcount = data.Count(), SignedOff = data.Where(x => x.signedOff.Date >= vm.weekStart).Count(), KronosScheduled = userScheduled, KronosPunched = userPunched });
+                    }                    
                 }
             }
             else
