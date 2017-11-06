@@ -1,0 +1,89 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
+@model PeriodDashVm
+@{
+    ViewBag.Title = "WFM Overview";
+    bool a = true;
+    bool b = true;
+}
+
+<div class="row">
+    &emsp;
+</div>
+
+@if (Model.collection.Count() == 0)
+{
+    <div class="alert alert-danger text-center"><strong>Reporting for the selected period has not yet been finalised, check back later.</strong></div>
+}
+else
+{
+    <div class="panel panel-default">
+        <div class="panel-heading text-center">
+            <strong>WFM Overview</strong>
+        </div>
+        <div class="panel-body">
+            <div class="row" style="margin-bottom:10px;">
+                <div class="col-sm-4 col-sm-offset-4 col-xs-12">
+                    @Html.Partial("~/Views/Shared/_WeekPicker.cshtml", new WeekPickerViewModel { Action = "DashOverview", Controller = "Reports", WeeksOfYear = Model.WeeksOfYear, SelectedDate = Model.selectedDate })
+                </div>
+            </div>
+            <div>
+                <ul class="nav nav-pills" role="tablist" id="dTabs" style="margin:0 auto;display:table;">
+                    @foreach (var item in Model.WeekNumbers.Where(x => x != null))
+                    {
+                        <li role="presentation" class="@(a ? "active" : "")"><a href="#@item" aria-controls="home" role="tab" data-toggle="tab">@string.Format("Wk {0}", item.ToString().Substring(4))</a></li>
+                        a = false;
+                    }
+                    <li role="presentation"><a href="#period" aria-controls="home" role="tab" data-toggle="tab">@string.Format("Period {0}", Model.Period)</a></li>
+                </ul>
+                <div class="tab-content">
+                    @foreach (var item in Model.WeekNumbers)
+                    {
+                        var data = Model.collection.Where(x => x.WeekNumber == item).OrderByDescending(x => x.StoreFlag).ThenBy(x => x.Division).ThenBy(x => x.Region).ToList();
+                        <div role="tabpanel" id="@(item != null ? item.ToString(): "period")" class="tab-pane fade @(b ? "in active" : "")">
+                            <div class="container-fluid" style="margin-top:10px;">
+                                <table class="table table-bordered-blue table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center col-xs-2" rowspan="2"></th>
+                                            <th class="text-center col-xs-6" colspan="3">SOH Spend</th>
+                                            <th class="text-center col-xs-2" rowspan="2">% Timecards Signed Off</th>
+                                            <th class="text-center col-xs-2" rowspan="2">RFTP Non-Compliant</th>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-center">Budget</th>
+                                            <th class="text-center">Actual</th>
+                                            <th class="text-center">Var</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var row in data)
+                                        {
+                                            <tr>
+                                                <td>@(row.Region != null ? row.Region.ToString() : (row.Division != null ? row.Division : row.StoreFlag))</td>
+                                                <td class="text-center">@row.FinalTarget</td>
+                                                <td class="text-center">@row.SOH</td>
+                                                <td class="text-center">@row.VarToTar</td>
+                                                <td class="text-center">@(row.TCSignOff)%</td>
+                                                <td class="text-center">@(string.Format("{0}/{1}", row.AllStores, row.CountNonComp))</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        b = false;
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section myScripts{
+    <script>
+        $('#dTabs a').click(function (e) {
+            e.preventDefault()
+            $(this).tab('show')
+        })
+    </script>
+}

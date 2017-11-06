@@ -1184,6 +1184,11 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
         <Function Name="sp_PeakFlexRegion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="RegionNo" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="sp_PeriodDashOverview" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Channel" Type="nvarchar" Mode="In" />
+          <Parameter Name="Year" Type="nvarchar" Mode="In" />
+          <Parameter Name="Period" Type="tinyint" Mode="In" />
+        </Function>
         <Function Name="sp_RegionComplianceDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="regionNumber" Type="int" Mode="In" />
           <Parameter Name="weeknumber" Type="int" Mode="In" />
@@ -2041,7 +2046,12 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Parameter Name="division" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_CheckHelpTickets" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_CheckHelpTickets_Result)">
-            <Parameter Name="BranchNum" Mode="In" Type="Int16" />
+          <Parameter Name="BranchNum" Mode="In" Type="Int16" />
+          </FunctionImport>
+          <FunctionImport Name="sp_PeriodDashOverview" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_PeriodDashOverview_Result)">
+            <Parameter Name="Channel" Mode="In" Type="String" />
+            <Parameter Name="Year" Mode="In" Type="String" />
+            <Parameter Name="Period" Mode="In" Type="Byte" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="BestPracticeCategoryType">
@@ -3728,6 +3738,20 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Property Type="Int32" Name="TicketId" Nullable="false" />
           <Property Type="String" Name="Status" Nullable="false" MaxLength="15" />
           <Property Type="String" Name="EmpNum" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_PeriodDashOverview_Result">
+          <Property Type="String" Name="StoreFlag" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Division" Nullable="true" MaxLength="255" />
+          <Property Type="Int16" Name="Region" Nullable="true" />
+          <Property Type="String" Name="Year" Nullable="true" MaxLength="10" />
+          <Property Type="Byte" Name="Period" Nullable="true" />
+          <Property Type="Int32" Name="WeekNumber" Nullable="true" />
+          <Property Type="Double" Name="SOH" Nullable="true" />
+          <Property Type="Double" Name="FinalTarget" Nullable="true" />
+          <Property Type="Double" Name="VarToTar" Nullable="true" />
+          <Property Type="Double" Name="TCSignOff" Nullable="true" />
+          <Property Type="Int32" Name="CountNonComp" Nullable="true" />
+          <Property Type="Int32" Name="AllStores" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -5465,6 +5489,24 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
                 <ScalarProperty Name="TicketId" ColumnName="TicketId" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="EmpNum" ColumnName="EmpNum" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_PeriodDashOverview" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_PeriodDashOverview">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.sp_PeriodDashOverview_Result">
+                <ScalarProperty Name="StoreFlag" ColumnName="StoreFlag" />
+                <ScalarProperty Name="Division" ColumnName="Division" />
+                <ScalarProperty Name="Region" ColumnName="Region" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Period" ColumnName="Period" />
+                <ScalarProperty Name="WeekNumber" ColumnName="WeekNumber" />
+                <ScalarProperty Name="SOH" ColumnName="SOH" />
+                <ScalarProperty Name="FinalTarget" ColumnName="FinalTarget" />
+                <ScalarProperty Name="VarToTar" ColumnName="VarToTar" />
+                <ScalarProperty Name="TCSignOff" ColumnName="TCSignOff" />
+                <ScalarProperty Name="CountNonComp" ColumnName="CountNonComp" />
+                <ScalarProperty Name="AllStores" ColumnName="AllStores" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

@@ -651,6 +651,21 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             return View(vm);
         }
 
+        [UserFilter(AccessLevel = "Admin,TPC,RM,DD,RD,BM")]
+        public async Task<ActionResult> DashOverview(string crit = "e_0")
+        {
+            string[] input = crit.Split('_');
+            byte period = byte.Parse(input[1]);
+            PeriodDashVm vm = new PeriodDashVm();
+
+            vm.collection = mapper.Map<List<PeriodDashView>>(await _storeManager.GetDashOverview(input[0], period, _store.Channel));
+
+            vm.selectedDate = string.Format("{0}_{1}", vm.collection.FirstOrDefault().Year, vm.collection.FirstOrDefault().Period);
+            vm.WeeksOfYear.ForEach(x => x.Selected = x.Value == vm.selectedDate);
+
+            return View(vm);
+        }
+
         private int GetWeekNumber(string selectedDate)
         {
             int weekOfYr;
@@ -662,7 +677,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
 
             return weekOfYr;
         }
-        
+
         private static DateTime GetScheduledWeekDate(string scheduledWeek)
         {
             DateTime dt = DateTime.Now;

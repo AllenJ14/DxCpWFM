@@ -1,17 +1,12 @@
-﻿using System;
-using System.Web;
+﻿using DixonsCarphone.WorkforceManagement.Business.Entities;
+using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels;
+using DixonsCarphone.WorkforceManagement.ViewModels.Model;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DixonsCarphone.WorkforceManagement.Business.Entities;
 using System.Data.Entity;
 using System.Globalization;
-using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels;
-using DixonsCarphone.WorkforceManagement.Business.Helpers;
-using DixonsCarphone.WorkforceManagement.ViewModels.Model;
-using DixonsCarphone.WorkforceManagement.ViewModels;
-using System.Configuration;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace DixonsCarphone.WorkforceManagement.Business.Managers
 {
@@ -545,6 +540,15 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             using (var dbContext = new DxCpWfmContext())
             {
                 return await Task.Run(() => dbContext.sp_GetDivisionFootfall(divisionName, (short?)weeknumber, year).ToList());
+            }
+        }
+
+        //Period Dash overview
+        public async Task<List<sp_PeriodDashOverview_Result>> GetDashOverview(string year, byte period, string channel)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                return await Task.Run(() => dbContext.sp_PeriodDashOverview(channel, year, period).ToList());
             }
         }
 

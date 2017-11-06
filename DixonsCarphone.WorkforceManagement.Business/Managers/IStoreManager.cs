@@ -194,5 +194,7 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
         List<CPW_Clocking_Data> GetEmployeePunch(string empNumber, int startWeek, int endWeek);
 
         Task<List<sp_CheckHelpTickets_Result>> GetHelpTickets(int branchNum);
+
+        Task<List<sp_PeriodDashOverview_Result>> GetDashOverview(string year, byte period, string channel);
     }
 }

@@ -127,6 +127,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Mapping
             CreateMap<PublishedBudgetBranch, PublishedBudgetsBranch_Result>();
             CreateMap<PublishedBudgetsRegion_Result, PublishedBudgetBranch>();
             CreateMap<PublishedBudgetBranch, PublishedBudgetsRegion_Result>();
+            CreateMap<sp_PeriodDashOverview_Result, PeriodDashView>();
         }
     }
 

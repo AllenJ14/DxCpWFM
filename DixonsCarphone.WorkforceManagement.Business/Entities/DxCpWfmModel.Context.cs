@@ -874,5 +874,22 @@ namespace DixonsCarphone.WorkforceManagement.Business.Entities
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_CheckHelpTickets_Result>("sp_CheckHelpTickets", branchNumParameter);
         }
+    
+        public virtual ObjectResult<sp_PeriodDashOverview_Result> sp_PeriodDashOverview(string channel, string year, Nullable<byte> period)
+        {
+            var channelParameter = channel != null ?
+                new ObjectParameter("Channel", channel) :
+                new ObjectParameter("Channel", typeof(string));
+    
+            var yearParameter = year != null ?
+                new ObjectParameter("Year", year) :
+                new ObjectParameter("Year", typeof(string));
+    
+            var periodParameter = period.HasValue ?
+                new ObjectParameter("Period", period) :
+                new ObjectParameter("Period", typeof(byte));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_PeriodDashOverview_Result>("sp_PeriodDashOverview", channelParameter, yearParameter, periodParameter);
+        }
     }
 }
