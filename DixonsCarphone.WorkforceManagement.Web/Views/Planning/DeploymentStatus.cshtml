@@ -189,7 +189,7 @@ else
             @foreach (var item in Model.BranchListAll)
             {
                 { x = 0; }
-                var data = Model.collection.Where(c => c.Area == item.ToString());
+                var data = Model.collection.Where(c => c.Area == item.ToString()).OrderBy(c => c.WeekNumber);
                 <tr>
                     <td>@item.ToString()</td>
                     @foreach (var values in data)

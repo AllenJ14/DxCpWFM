@@ -16,5 +16,10 @@ namespace DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
         public Nullable<double> TCSignOff { get; set; }
         public Nullable<int> CountNonComp { get; set; }
         public Nullable<int> AllStores { get; set; }
+
+        public int lvl { get
+            {
+                return Region != null ? 1 : (Division != null ? 2 : 3);
+            } }
     }
 }

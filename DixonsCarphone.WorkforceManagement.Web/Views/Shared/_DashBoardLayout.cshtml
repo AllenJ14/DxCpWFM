@@ -122,7 +122,19 @@
                             {
                                 <li>@Html.ActionLink("Admin", "Index", "Admin", new { area = "Admin" }, null)</li>
                             }
-                            <li class="current-menu-item">@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
+                            <li class="current-menu-item">
+                                <a href="@Url.Action("Index", "Home", new { area = "" })">
+                                    <i class="glyphicon glyphicon-home"></i> <span>Home</span>
+                                </a>
+                            </li>
+                            @if (accessLvl == "RM" || accessLvl == "DD" || accessLvl == "Admin" || accessLvl == "TPC")
+                            {
+                                <li>
+                                    <a href="@Url.Action("DashOverview", "Reports", new { area = "" })">
+                                        <i class="glyphicon glyphicon-dashboard"></i> <span>WFM Overview</span>
+                                    </a>
+                                </li>
+                            }
                             <li>
                                 <a href="#">
                                     <i class="glyphicon glyphicon-check"></i> <span>Right First Time Pay</span>
@@ -136,7 +148,7 @@
                                     <li class="active"><a href="@Url.Action("ClockingCompliance", "Reports", new { area = "" })">Clocking Compliance</a></li>
                                     @if (accessLvl == "RM" || accessLvl == "DD" || accessLvl == "Admin" || accessLvl == "TPC")
                                     {
-                                    <li class="active"><a href="@Url.Action("ClockingBehaviours", "Reports", new { area = "" })">Clocking Behaviours<span class="label label-danger pull-right">New!</span></a></li>
+                                        <li class="active"><a href="@Url.Action("ClockingBehaviours", "Reports", new { area = "" })">Clocking Behaviours<span class="label label-danger pull-right">New!</span></a></li>
                                     }
                                     <li class="active"><a href="@Url.Action("EditedClocks", "Reports", new { area = "" })">Edited Clocks<span class="label label-danger pull-right">New!</span></a></li>
                                     <li class="active"><a href="@Url.Action("ColleaguePayPortal", "RightFirstTime", new { area = "" })">Colleague Portal<span class="label label-danger pull-right">New!</span></a></li>

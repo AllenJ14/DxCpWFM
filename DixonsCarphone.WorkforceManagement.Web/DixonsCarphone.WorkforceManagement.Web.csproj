@@ -308,6 +308,7 @@
     <Content Include="Error\Default.html" />
     <Content Include="Error\503.html" />
     <Content Include="Images\ADC95AB0513840DAADA5E205ED39351B.png" />
+    <Content Include="Images\Animated-Flag-Ireland.gif" />
     <Content Include="Images\CMS_Uploads\401.png" />
     <Content Include="Images\CMS_Uploads\AbsenceException1.png" />
     <Content Include="Images\CMS_Uploads\AddAnAbsence1.png" />
@@ -653,6 +654,9 @@
     <Content Include="Views\Reports\ClockingBehaviours.cshtml" />
     <Content Include="Views\RightFirstTime\Guide.cshtml" />
     <Content Include="Views\Reports\DashOverview.cshtml" />
+    <Content Include="Uploads\RFTPHow.pdf" />
+    <Content Include="Uploads\RFTPWhat.pdf" />
+    <Content Include="Uploads\RFTPWhy.pdf" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DixonsCarphone.WorkforceManagement.Business\DixonsCarphone.WorkforceManagement.Business.csproj">

@@ -57,7 +57,7 @@
                                 var d = Model.Trend.Where(x => x.CST_CNTR_ID == item && x.WeekNumber == week).FirstOrDefault();
                                 if (d != null)
                                 {
-                                    <td class="text-center @(d.Compliance < 0.95M ? "danger" : "")">@string.Format("{0:0.0}%", d.Compliance * 100)</td>
+                                    <td class="text-center @(d.Compliance < 0.9M ? "danger" : "")">@string.Format("{0:0.0}%", d.Compliance * 100)</td>
                                 }
                                 else
                                 {
@@ -104,7 +104,7 @@
                                 var data = Model.Exceptions.Where(x => x.FORENAME == emp && x.WeekNumber == week).FirstOrDefault();
                                 if (data != null)
                                 {
-                                    <td class="text-center @(data.Compliance < 0.95M ? "danger" : "")">@string.Format("{0:0.0}%", Math.Round((double)data.Compliance * 100, 1).ToString())</td>
+                                    <td class="text-center @(data.Compliance < 0.9M ? "danger" : "")">@string.Format("{0:0.0}%", Math.Round((double)data.Compliance * 100, 1).ToString())</td>
                                 }
                                 else
                                 {
@@ -143,7 +143,7 @@ else if (Model.level == 2)
                         <td><strong>Division Total</strong></td>
                         @foreach (var week in Model.WeekNumber)
                         {
-                            <td class="text-center @(Model.Trend.Where(x => x.RegionNo == null && x.WeekNumber == week).First().Compliance < 0.95M ? "danger" : "")"><strong>@string.Format("{0:0.0}%", Model.Trend.Where(x => x.RegionNo == null && x.WeekNumber == week).First().Compliance * 100)</strong></td>
+                            <td class="text-center @(Model.Trend.Where(x => x.RegionNo == null && x.WeekNumber == week).First().Compliance < 0.9M ? "danger" : "")"><strong>@string.Format("{0:0.0}%", Model.Trend.Where(x => x.RegionNo == null && x.WeekNumber == week).First().Compliance * 100)</strong></td>
                         }
                     </tr>
                     @foreach (var item in Model.DivisionRowList)
@@ -152,7 +152,7 @@ else if (Model.level == 2)
                             <td>@item</td>
                             @foreach (var week in Model.WeekNumber)
                             {
-                                <td class="text-center @(Model.Trend.Where(x => x.RegionNo == item && x.WeekNumber == week).First().Compliance < 0.95M ? "danger" : "")">@string.Format("{0:0.0}%", Model.Trend.Where(x => x.RegionNo == item && x.WeekNumber == week).First().Compliance * 100)</td>
+                                <td class="text-center @(Model.Trend.Where(x => x.RegionNo == item && x.WeekNumber == week).First().Compliance < 0.9M ? "danger" : "")">@string.Format("{0:0.0}%", Model.Trend.Where(x => x.RegionNo == item && x.WeekNumber == week).First().Compliance * 100)</td>
                             }
                         </tr>
                     }
@@ -194,7 +194,7 @@ else if (Model.level == 2)
                                 var data = Model.Exceptions.Where(x => x.FORENAME == emp && x.WeekNumber == week).FirstOrDefault();
                                 if (data != null)
                                 {
-                                    <td class="text-center @(data.Compliance < 0.95M ? "danger" : "")">@string.Format("{0:0.0}%", Math.Round((double)data.Compliance * 100, 1).ToString())</td>
+                                    <td class="text-center @(data.Compliance < 0.9M ? "danger" : "")">@string.Format("{0:0.0}%", Math.Round((double)data.Compliance * 100, 1).ToString())</td>
                                 }
                                 else
                                 {

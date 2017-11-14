@@ -10,26 +10,33 @@
     &emsp;
 </div>
 
-@if (Model.collection.Count() == 0)
-{
-    <div class="alert alert-danger text-center"><strong>Reporting for the selected period has not yet been finalised, check back later.</strong></div>
-}
-else
-{
-    <div class="panel panel-default">
-        <div class="panel-heading text-center">
-            <strong>WFM Overview</strong>
+<div class="panel panel-default">
+    <div class="panel-heading text-center">
+        <strong>WFM Overview</strong>
+    </div>
+    <div class="panel-body">
+        <div class="alert alert-info text-center">
+            <strong>Note: </strong>Figures for the previous week are published Tuesday AM <i><small>(Wednesday following BH)</small></i>
         </div>
-        <div class="panel-body">
-            <div class="row" style="margin-bottom:10px;">
-                <div class="col-sm-4 col-sm-offset-4 col-xs-12">
-                    @Html.Partial("~/Views/Shared/_WeekPicker.cshtml", new WeekPickerViewModel { Action = "DashOverview", Controller = "Reports", WeeksOfYear = Model.WeeksOfYear, SelectedDate = Model.selectedDate })
-                </div>
+        <div class="row" style="margin-bottom:10px;">
+            <div class="col-sm-4 col-sm-offset-4 col-xs-12">
+                @using (Html.BeginForm("DashOverview", "Reports", new { crit = Model.selectedDate }, FormMethod.Get, new { @class = "form-horizontal" }))
+                {
+                    @Html.DropDownList("crit", Model.WeeksOfYear, new { onchange = "this.form.submit();", @class = "form-control" })
+                }
+                @*@Html.Partial("~/Views/Shared/_WeekPicker.cshtml", new WeekPickerViewModel { Action = "DashOverview", Controller = "Reports", WeeksOfYear = Model.WeeksOfYear, SelectedDate = Model.selectedDate })*@
             </div>
+        </div>
+        @if (Model.collection.Count() == 0)
+        {
+            <div class="alert alert-danger text-center"><strong>Reporting for the selected period has not yet been finalised, check back later.</strong></div>
+        }
+        else
+        {
             <div>
                 <ul class="nav nav-pills" role="tablist" id="dTabs" style="margin:0 auto;display:table;">
                     @foreach (var item in Model.WeekNumbers.Where(x => x != null))
-                    {
+                {
                         <li role="presentation" class="@(a ? "active" : "")"><a href="#@item" aria-controls="home" role="tab" data-toggle="tab">@string.Format("Wk {0}", item.ToString().Substring(4))</a></li>
                         a = false;
                     }
@@ -37,8 +44,8 @@ else
                 </ul>
                 <div class="tab-content">
                     @foreach (var item in Model.WeekNumbers)
-                    {
-                        var data = Model.collection.Where(x => x.WeekNumber == item).OrderByDescending(x => x.StoreFlag).ThenBy(x => x.Division).ThenBy(x => x.Region).ToList();
+                {
+                    var data = Model.collection.Where(x => x.WeekNumber == item).OrderByDescending(x => x.StoreFlag).ThenBy(x => x.Division).ThenBy(x => x.Region).ToList();
                         <div role="tabpanel" id="@(item != null ? item.ToString(): "period")" class="tab-pane fade @(b ? "in active" : "")">
                             <div class="container-fluid" style="margin-top:10px;">
                                 <table class="table table-bordered-blue table-condensed">
@@ -58,14 +65,28 @@ else
                                     <tbody>
                                         @foreach (var row in data)
                                         {
-                                            <tr>
-                                                <td>@(row.Region != null ? row.Region.ToString() : (row.Division != null ? row.Division : row.StoreFlag))</td>
-                                                <td class="text-center">@row.FinalTarget</td>
-                                                <td class="text-center">@row.SOH</td>
-                                                <td class="text-center">@row.VarToTar</td>
-                                                <td class="text-center">@(row.TCSignOff)%</td>
-                                                <td class="text-center">@(string.Format("{0}/{1}", row.AllStores, row.CountNonComp))</td>
-                                            </tr>
+                                            if (row.lvl == 1)
+                                            {
+                                                <tr style="background-color:@(row.lvl == 1 ? "" : (row.lvl == 2 ? "#d5e9ff" : "#93c6ff"))">
+                                                    <td>@(row.lvl == 1 ? row.Region.ToString() : (row.lvl == 2 ? row.Division : row.StoreFlag))</td>
+                                                    <td class="text-center">@string.Format("{0:#,#}", row.FinalTarget)</td>
+                                                    <td class="text-center">@string.Format("{0:#,#}", row.SOH)</td>
+                                                    <td class="text-center">@string.Format("{0:#,#}", row.VarToTar) <small>@string.Format("({0:0}%)", ((decimal)row.VarToTar / (decimal)row.FinalTarget) * 100)</small></td>
+                                                    <td class="text-center">@(row.TCSignOff)%</td>
+                                                    <td class="text-center">@(string.Format("{0} / {1}", row.CountNonComp, row.AllStores))</td>
+                                                </tr>
+                                            }
+                                            else
+                                            {
+                                                <tr style="background-color:@(row.lvl == 1 ? "" : (row.lvl == 2 ? "#d5e9ff" : "#93c6ff"))">
+                                                    <td><strong>@(row.lvl == 1 ? row.Region.ToString() : (row.lvl == 2 ? row.Division : row.StoreFlag))</strong></td>
+                                                    <td class="text-center"><strong>@string.Format("{0:#,#}", row.FinalTarget)</strong></td>
+                                                    <td class="text-center"><strong>@string.Format("{0:#,#}", row.SOH)</strong></td>
+                                                    <td class="text-center"><strong>@string.Format("{0:#,#}", row.VarToTar) <small>@string.Format("({0:0}%)", ((decimal)row.VarToTar / (decimal)row.FinalTarget) * 100)</small></strong></td>
+                                                    <td class="text-center"><strong>@(row.TCSignOff)%</strong></td>
+                                                    <td class="text-center"><strong>@(string.Format("{0} / {1}", row.CountNonComp, row.AllStores))</strong></td>
+                                                </tr>
+                                            }
                                         }
                                     </tbody>
                                 </table>
@@ -75,9 +96,9 @@ else
                     }
                 </div>
             </div>
-        </div>
+        }        
     </div>
-}
+</div>
 
 @section myScripts{
     <script>

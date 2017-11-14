@@ -660,8 +660,11 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
 
             vm.collection = mapper.Map<List<PeriodDashView>>(await _storeManager.GetDashOverview(input[0], period, _store.Channel));
 
-            vm.selectedDate = string.Format("{0}_{1}", vm.collection.FirstOrDefault().Year, vm.collection.FirstOrDefault().Period);
-            vm.WeeksOfYear.ForEach(x => x.Selected = x.Value == vm.selectedDate);
+            if (vm.collection.Count() > 0)
+            {
+                vm.selectedDate = string.Format("{0}_{1}", vm.collection.FirstOrDefault().Year, vm.collection.FirstOrDefault().Period);
+                vm.WeeksOfYear.ForEach(x => x.Selected = x.Value == vm.selectedDate);
+            }            
 
             return View(vm);
         }

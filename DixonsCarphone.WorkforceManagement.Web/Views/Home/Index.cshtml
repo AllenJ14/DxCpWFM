@@ -63,11 +63,11 @@
 
     @Html.Partial("~/Views/Partials/_PageBlurb.cshtml", (BaseViewModel)Model)
     @*<div class="alert alert-danger text-center">
-        <strong>
-            We have been made aware of an issue that affected the "My Budgets" page on Monday 11th September resulting in some stores seeing a budget 45 hours higher than was intended. The issue was quickly identified and fixed the same day, all numbers now shown on
-            this page have been checked and are displaying correctly. Please ensure you are working to these budgets, we apologise for any inconvenience.
-        </strong>
-    </div>*@
+            <strong>
+                We have been made aware of an issue that affected the "My Budgets" page on Monday 11th September resulting in some stores seeing a budget 45 hours higher than was intended. The issue was quickly identified and fixed the same day, all numbers now shown on
+                this page have been checked and are displaying correctly. Please ensure you are working to these budgets, we apologise for any inconvenience.
+            </strong>
+        </div>*@
     <div class="row">
         @Html.Partial("~/Views/Partials/_ScoresAndUtilization.cshtml", Model.Scores)
     </div>
@@ -127,7 +127,7 @@
                 <p>Right First Time Pay has now launched. You'll noticed we've updated the Workforce Management site to reflect the 3 WFM controls that will now be used. You'll also find access to the new reports and tools that make it easier for you to ensure we're always getting our teams pay right first time.</p>
                 <p>All Branch Managers should have been briefed on Right First Time Pay now. The briefing pack used in you Regional Team Meetings is available here, however if you have not been briefed you should speak to your Regional Manager as soon as possible.</p>
                 <p>Remember you now have until 3pm on Monday to ensure all timecards are signed off (even your own BM timecard) – use the new Timecard Signoff report to check you're getting this right.<p />
-            </div>            
+            </div>
         </div>
     </div>
 
@@ -155,8 +155,8 @@
         </div>
     }
 
-    
-    @if(!wfAccess.Contains(HttpContext.Current.Session["_AccessLevel"].ToString()))
+
+    @if (!wfAccess.Contains(HttpContext.Current.Session["_AccessLevel"].ToString()))
     {
         <div class="panel panel-default">
             <div class="panel-body">
@@ -241,7 +241,7 @@
                 </div>
             </div>
         </div>
-    }        
+    }
 
 </section>
 
