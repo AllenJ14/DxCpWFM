@@ -5,152 +5,151 @@
 
 <div class="panel panel-default">
     <div class="panel-heading text-center"><h4 class="panel-title"><strong>Submit Change</strong></h4></div>
+    <div class="panel-body">
+        @using (Html.BeginForm("ChangeTimes", "Planning", null, FormMethod.Post, new { @class = "form-horizontal", id = "changeTimeDateForm" }))
+        {
+            @Html.AntiForgeryToken()
+            
+            <div class="alert alert-info text-center"><strong>Do not use this form for submitting peak trading hours. Please go back and review the time shown at the bottom of the page.</strong></div>
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-@using (Html.BeginForm("ChangeTimes", "Planning", null, FormMethod.Post, new { @class = "form-horizontal", id = "changeTimeDateForm" }))
-{ 
-    @Html.AntiForgeryToken()
-
-    <row>
-        &emsp;
-    </row>
-
-    <div class="form-horizontal">
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-        <div class="col-md-6">
-            <table class="table table-bordered table-condensed text-center">
-                <thead>
-                    <tr>
-                        <th class="col-md-4"></th>
-                        <th class="col-md-4 text-center"><strong>Open</strong></th>
-                        <th class="col-md-4 text-center"><strong>Close</strong></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="text-center">
-                        <td>
-                            <strong>Sunday</strong>
-                        </td>
-                        <td>
-                            @Html.DropDownListFor(model => model.NewSunOpening, Model.Times, new { htmlAttributes = new { @class = "form-control" } })
-                        </td>
-                        <td>
-                            @Html.DropDownListFor(model => model.NewSunClosing, Model.Times, new { htmlAttributes = new { @class = "form-control" } })
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <strong>Monday</strong>
-                        </td>
-                        <td>
-                            @Html.DropDownListFor(model => model.NewMonOpening, Model.Times, new { htmlAttributes = new { @class = "form-control" } })
-                        </td>
-                        <td>
-                            @Html.DropDownListFor(model => model.NewMonClosing, Model.Times, new { htmlAttributes = new { @class = "form-control" } })
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <strong>Tuesday</strong>
-                        </td>
-                        <td>
-                            @Html.DropDownListFor(model => model.NewTuesOpening, Model.Times, new { htmlAttributes = new { @class = "form-control" } })
-                        </td>
-                        <td>
-                            @Html.DropDownListFor(model => model.NewTuesClosing, Model.Times, new { htmlAttributes = new { @class = "form-control" } })
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <strong>Wednesday</strong>
-                        </td>
-                        <td>
-                            @Html.DropDownListFor(model => model.NewWedOpening, Model.Times, new { htmlAttributes = new { @class = "form-control" } })
-                        </td>
-                        <td>
-                            @Html.DropDownListFor(model => model.NewWedClosing, Model.Times, new { htmlAttributes = new { @class = "form-control" } })
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <strong>Thursday</strong>
-                        </td>
-                        <td>
-                            @Html.DropDownListFor(model => model.NewThursOpening, Model.Times, new { htmlAttributes = new { @class = "form-control" } })
-                        </td>
-                        <td>
-                            @Html.DropDownListFor(model => model.NewThursClosing, Model.Times, new { htmlAttributes = new { @class = "form-control" } })
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <strong>Friday</strong>
-                        </td>
-                        <td>
-                            @Html.DropDownListFor(model => model.NewFriOpening, Model.Times, new { htmlAttributes = new { @class = "form-control" } })
-                        </td>
-                        <td>
-                            @Html.DropDownListFor(model => model.NewFriClosing, Model.Times, new { htmlAttributes = new { @class = "form-control" } })
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <strong>Saturday</strong>
-                        </td>
-                        <td>
-                            @Html.DropDownListFor(model => model.NewSatOpening, Model.Times, new { htmlAttributes = new { @class = "form-control" } })
-                        </td>
-                        <td>
-                            @Html.DropDownListFor(model => model.NewSatClosing, Model.Times, new { htmlAttributes = new { @class = "form-control" } })
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div class="col-md-6">
-
-            <div class="form-group col-md-12">
-                <label for="OpeningTime_ReasonForChange" class="control-label input-lg">Reason for change:</label>
-                <div class="input-lg">
-                    @Html.EditorFor(model => model.ReasonForChange)
+                <div class="col-md-6">
+                    <table class="table table-bordered table-condensed text-center">
+                        <thead>
+                            <tr>
+                                <th class="col-md-4"></th>
+                                <th class="col-md-4 text-center"><strong>Open</strong></th>
+                                <th class="col-md-4 text-center"><strong>Close</strong></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="text-center">
+                                <td>
+                                    <strong>Sunday</strong>
+                                </td>
+                                <td>
+                                    @Html.DropDownListFor(model => model.NewSunOpening, Model.Times, new { htmlAttributes = new { @class = "form-control" } })
+                                </td>
+                                <td>
+                                    @Html.DropDownListFor(model => model.NewSunClosing, Model.Times, new { htmlAttributes = new { @class = "form-control" } })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Monday</strong>
+                                </td>
+                                <td>
+                                    @Html.DropDownListFor(model => model.NewMonOpening, Model.Times, new { htmlAttributes = new { @class = "form-control" } })
+                                </td>
+                                <td>
+                                    @Html.DropDownListFor(model => model.NewMonClosing, Model.Times, new { htmlAttributes = new { @class = "form-control" } })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Tuesday</strong>
+                                </td>
+                                <td>
+                                    @Html.DropDownListFor(model => model.NewTuesOpening, Model.Times, new { htmlAttributes = new { @class = "form-control" } })
+                                </td>
+                                <td>
+                                    @Html.DropDownListFor(model => model.NewTuesClosing, Model.Times, new { htmlAttributes = new { @class = "form-control" } })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Wednesday</strong>
+                                </td>
+                                <td>
+                                    @Html.DropDownListFor(model => model.NewWedOpening, Model.Times, new { htmlAttributes = new { @class = "form-control" } })
+                                </td>
+                                <td>
+                                    @Html.DropDownListFor(model => model.NewWedClosing, Model.Times, new { htmlAttributes = new { @class = "form-control" } })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Thursday</strong>
+                                </td>
+                                <td>
+                                    @Html.DropDownListFor(model => model.NewThursOpening, Model.Times, new { htmlAttributes = new { @class = "form-control" } })
+                                </td>
+                                <td>
+                                    @Html.DropDownListFor(model => model.NewThursClosing, Model.Times, new { htmlAttributes = new { @class = "form-control" } })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Friday</strong>
+                                </td>
+                                <td>
+                                    @Html.DropDownListFor(model => model.NewFriOpening, Model.Times, new { htmlAttributes = new { @class = "form-control" } })
+                                </td>
+                                <td>
+                                    @Html.DropDownListFor(model => model.NewFriClosing, Model.Times, new { htmlAttributes = new { @class = "form-control" } })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Saturday</strong>
+                                </td>
+                                <td>
+                                    @Html.DropDownListFor(model => model.NewSatOpening, Model.Times, new { htmlAttributes = new { @class = "form-control" } })
+                                </td>
+                                <td>
+                                    @Html.DropDownListFor(model => model.NewSatClosing, Model.Times, new { htmlAttributes = new { @class = "form-control" } })
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-            </div>
 
-            <div class="form-group col-md-12">
-                <label for="OpeningTime_EffectiveDate" class="control-label input-lg">Effective Date:</label>
-                <div class="input-lg">
-                    @Html.DropDownListFor(model => model.EffectiveDate, Model.AvailableWeeks, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.EffectiveDate, "", new { @class = "text-danger" })
+                <div class="col-md-6">
+
+                    <div class="form-group col-md-12">
+                        <label for="OpeningTime_ReasonForChange" class="control-label input-lg">Reason for change:</label>
+                        <div class="input-lg">
+                            @Html.EditorFor(model => model.ReasonForChange)
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label for="OpeningTime_EffectiveDate" class="control-label input-lg">Effective Date:</label>
+                        <div class="input-lg">
+                            @Html.DropDownListFor(model => model.EffectiveDate, Model.AvailableWeeks, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.EffectiveDate, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
 
-        @*<div class="form-group">
-                <label for="OpeningTime_TemporaryChange" class="col-sm-2 control-label">Temporary Change</label>
-                <div class="col-sm-10">
-                    <div class="checkbox">
-                        @Html.EditorFor(model => model.OpeningTime.TemporaryChange, new { htmlAttributes = new { @id = "tempChange", onclick="ShowHideDiv()" } } )
-                        @Html.ValidationMessageFor(model => model.OpeningTime.TemporaryChange, "", new { @class = "text-danger"})
+                @*<div class="form-group">
+                        <label for="OpeningTime_TemporaryChange" class="col-sm-2 control-label">Temporary Change</label>
+                        <div class="col-sm-10">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.OpeningTime.TemporaryChange, new { htmlAttributes = new { @id = "tempChange", onclick="ShowHideDiv()" } } )
+                                @Html.ValidationMessageFor(model => model.OpeningTime.TemporaryChange, "", new { @class = "text-danger"})
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id = "endDate" style="display: none">
+                        <label for="OpeningTime_EndDate" class="col-sm-2 control-label">End Date</label>
+                        <div class="col-sm-10 input-lg">
+                            @Html.DropDownListFor(model => model.OpeningTime.EndDate, Model.DateList, new { htmlAttributes = new { @class = "form-control input-lg" } })
+                            @Html.ValidationMessageFor(model => model.OpeningTime.EndDate, "", new { @class = "text-danger" })
+                        </div>
+                    </div>*@
+
+
+                <div class="form-group">
+                    <div class="col-md-offset-5 col-md-10">
+                        <input type="submit" value="Save" class="btn btn-default btn-primary btn-lg" />
                     </div>
                 </div>
             </div>
-
-            <div class="form-group" id = "endDate" style="display: none">
-                <label for="OpeningTime_EndDate" class="col-sm-2 control-label">End Date</label>
-                <div class="col-sm-10 input-lg">
-                    @Html.DropDownListFor(model => model.OpeningTime.EndDate, Model.DateList, new { htmlAttributes = new { @class = "form-control input-lg" } })
-                    @Html.ValidationMessageFor(model => model.OpeningTime.EndDate, "", new { @class = "text-danger" })
-                </div>
-            </div>*@
-
-        <div class="form-group">
-            <div class="col-md-offset-5 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default btn-primary btn-lg" />
-            </div>
-        </div>
+        }
     </div>
-}
 </div>
 
 

@@ -106,7 +106,7 @@ else if (Model.type == 2 && Model.RegionShortShifts != null)
         </div>
     </div>
 }
-else if (Model.ShortShifts.Count() == 0)
+else if (Model.ShortShifts == null || Model.ShortShifts.Count() == 0)
 {
     <div class="alert alert-info text-center"><strong>No edited clocks!</strong></div>
 }

@@ -119,6 +119,26 @@
         </div>
     </div>
 }
+@if (ticketType == 7)
+{
+    <div class="modal fade" id="crReminder" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h3 class="modal-title">Reminder</h3>
+                </div>
+                <div class="modal-body">
+                    <h4>Ensure all clocks have now been manually added into STAR.</h4>
+                    <h4>Please confirm this has been actioned</h4>
+                </div>
+                <div class="modal-footer text-center">
+                    <button class="btn btn-success" id="crDismiss" data-dismiss="modal">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
 
 @section myScripts{ 
 <script id="wfMaster" src="~/Content/Workflow/WorkflowMaster.min.js" data-grpLimit="@(Model.QuestionList.Where(x => x.GrpLimit != null).FirstOrDefault() != null ? Model.QuestionList.Where(x => x.GrpLimit != null).First().GrpLimit : 0)" data-qCount="@Model.QuestionList.Count()" data-defaultemp="@ViewBag.defaultEmp"></script>
@@ -133,6 +153,14 @@ else if (ticketType == 4)
 else if(ticketType == 5)
 {
     <script id="wf5" src="~/Content/Workflow/WorkflowHelpUnknown.min.js"></script>
+}
+else if(ticketType == 7)
+{
+    <script>
+        $(function () {
+            $('#crReminder').modal('show');
+        });
+    </script>
 }
 }
 

@@ -806,6 +806,8 @@ warning 6002: The table/view 'CarphoneWfm.tck.TicketEscalations' does not have a
           <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="FriendlyName" Type="nvarchar" MaxLength="50" />
+          <Property Name="CoverEmail" Type="nvarchar" MaxLength="50" />
+          <Property Name="CoverEndDate" Type="date" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'CarphoneWfm.dbo.footfall_raw' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1128,6 +1130,9 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
         <Function Name="sp_ChannelShortShifts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Channel" Type="nvarchar" Mode="In" />
           <Parameter Name="WeekNumber" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_CheckUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userName" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="sp_DivisionBMWorking" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Division" Type="varchar" Mode="In" />
@@ -2052,6 +2057,9 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
             <Parameter Name="Channel" Mode="In" Type="String" />
             <Parameter Name="Year" Mode="In" Type="String" />
             <Parameter Name="Period" Mode="In" Type="Byte" />
+          </FunctionImport>
+          <FunctionImport Name="sp_CheckUser" EntitySet="UserAccesses" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.UserAccess)">
+            <Parameter Name="userName" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="BestPracticeCategoryType">
@@ -3005,6 +3013,8 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Group" Relationship="DixonsCarphone.WorkforceManagement.Business.FK_UserGroups_Groups" FromRole="UserGroup" ToRole="Group" />
           <Property Name="FriendlyName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CoverEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CoverEndDate" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="TicketEscalation">
           <Key>
@@ -3752,6 +3762,12 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Property Type="Double" Name="TCSignOff" Nullable="true" />
           <Property Type="Int32" Name="CountNonComp" Nullable="true" />
           <Property Type="Int32" Name="AllStores" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_CheckUser_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="User" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="AccessLevel" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="Area" Nullable="true" MaxLength="50" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -4688,6 +4704,8 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <EntitySetMapping Name="UserGroups">
             <EntityTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.UserGroup">
               <MappingFragment StoreEntitySet="UserGroups">
+                <ScalarProperty Name="CoverEndDate" ColumnName="CoverEndDate" />
+                <ScalarProperty Name="CoverEmail" ColumnName="CoverEmail" />
                 <ScalarProperty Name="FriendlyName" ColumnName="FriendlyName" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
@@ -5509,6 +5527,8 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
                 <ScalarProperty Name="AllStores" ColumnName="AllStores" />
               </ComplexTypeMapping>
             </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_CheckUser" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_CheckUser">
           </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>

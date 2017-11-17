@@ -10,18 +10,12 @@
 namespace DixonsCarphone.WorkforceManagement.Business.Entities
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class UserGroup
+    public partial class sp_CheckUser_Result
     {
-        public int EntryId { get; set; }
-        public int GroupId { get; set; }
-        public string UserName { get; set; }
-        public string Email { get; set; }
-        public string FriendlyName { get; set; }
-        public string CoverEmail { get; set; }
-        public Nullable<System.DateTime> CoverEndDate { get; set; }
-    
-        public virtual Group Group { get; set; }
+        public int ID { get; set; }
+        public string User { get; set; }
+        public string AccessLevel { get; set; }
+        public string Area { get; set; }
     }
 }

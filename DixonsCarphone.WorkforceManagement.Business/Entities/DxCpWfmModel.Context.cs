@@ -891,5 +891,23 @@ namespace DixonsCarphone.WorkforceManagement.Business.Entities
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_PeriodDashOverview_Result>("sp_PeriodDashOverview", channelParameter, yearParameter, periodParameter);
         }
+    
+        public virtual ObjectResult<UserAccess> sp_CheckUser(string userName)
+        {
+            var userNameParameter = userName != null ?
+                new ObjectParameter("userName", userName) :
+                new ObjectParameter("userName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UserAccess>("sp_CheckUser", userNameParameter);
+        }
+    
+        public virtual ObjectResult<UserAccess> sp_CheckUser(string userName, MergeOption mergeOption)
+        {
+            var userNameParameter = userName != null ?
+                new ObjectParameter("userName", userName) :
+                new ObjectParameter("userName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UserAccess>("sp_CheckUser", mergeOption, userNameParameter);
+        }
     }
 }

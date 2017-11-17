@@ -92,6 +92,11 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
 
         }
 
+        public ActionResult Fallback()
+        {
+            return View();
+        }
+
         public ActionResult Availability(int articleNumber = 0)
         {
             if (articleNumber == 0)

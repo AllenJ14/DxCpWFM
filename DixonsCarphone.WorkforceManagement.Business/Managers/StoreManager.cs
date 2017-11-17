@@ -32,7 +32,11 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
         {
             using (var dbContext = new DxCpWfmContext())
             {
+#if DEBUG
                 return await dbContext.UserAccesses.Where(x => x.User == userName).ToListAsync();
+#else
+                return await Task.Run(() => dbContext.sp_CheckUser(userName).ToList());
+#endif
             }
         }
 

@@ -137,6 +137,13 @@ namespace DixonsCarphone.WorkforceManagement.Business.Kronos
                 }
                 else
                 {
+                    var doc = new XmlDocument();
+                    doc.LoadXml(xmlString);
+#if DEBUG
+                    doc.Save("C:\\__USER\\" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".xml");
+#else
+                    doc.Save("~/App_Data/APIError/" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".xml");
+#endif
                     return false;
                 }
             }
@@ -148,7 +155,8 @@ namespace DixonsCarphone.WorkforceManagement.Business.Kronos
         {
             var doc = new XmlDocument();
             doc.LoadXml(xmlString);
-            doc.Save("C:\\__USER\\data.xml");
+            doc.Save("C:\\__USER\\" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".xml");
+            return;
         }
 
     }
