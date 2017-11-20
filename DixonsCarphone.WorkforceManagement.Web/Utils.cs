@@ -17,7 +17,7 @@ namespace DixonsCarphone.WorkforceManagement.Web
     {
         public static async Task<List<ScheduledCollegues>> GetKronosData(DateTime startDate, DateTime endDate, string kronosStoreName, bool isOffice)
         {
-            IKronosManager _kronosManager = new KronosManager(isOffice);
+            IKronosManager _kronosManager = new KronosManager();
 
             if (!isOffice)
             {

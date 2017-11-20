@@ -9,10 +9,10 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
 {
     public class KronosManager : IKronosManager
     {
-        public KronosManager(bool isOffice = false)
-        {
-             Logon();
-        }
+        //public KronosManager(bool isOffice = false)
+        //{
+        //     Logon();
+        //}
 
         public async Task<List<HyperFindResult>> GetKronosHyperFind(string kronosStoreName, string startDate, string endDate)
         {
@@ -66,10 +66,9 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             return await KronosApi.Logoff();
         }
 
-        private void Logon()
+        public async Task<bool> LogOn()
         {
-            var t = Task.Run(() => KronosApi.Logon());
-            var result = t.Result;
+            return await KronosApi.Logon();
         }
     }
 }

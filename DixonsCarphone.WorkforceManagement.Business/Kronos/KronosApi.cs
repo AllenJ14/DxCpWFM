@@ -142,7 +142,7 @@ namespace DixonsCarphone.WorkforceManagement.Business.Kronos
 #if DEBUG
                     doc.Save("C:\\__USER\\" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".xml");
 #else
-                    doc.Save("~/App_Data/APIError/" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".xml");
+                    doc.Save(@"D:\Inetpub\WFM App\App_Data\APIError\" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".xml");
 #endif
                     return false;
                 }

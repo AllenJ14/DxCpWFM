@@ -167,7 +167,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\APIError\" />
     <Folder Include="App_Data\CMS_Uploads\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Workflow\Models\" />
@@ -224,6 +223,7 @@
     <Compile Include="Utils.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\APIError\empty.txt" />
     <Content Include="App_Data\ELMAH\empty.txt" />
     <Content Include="App_Readme\Elmah.txt" />
     <Content Include="Areas\Workflow\Views\Form\NewSubmission.cshtml" />

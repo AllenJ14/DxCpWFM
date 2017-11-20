@@ -68,7 +68,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
         }
         
         [HttpGet]
-        public PartialViewResult _PayDates(string period)
+        public async Task<PartialViewResult> _PayDates(string period)
         {
             ColleaguePayDataVm vm = new ColleaguePayDataVm();
 
@@ -78,8 +78,12 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
 
             if(payroll != "e")
             {
-                vm.tSheet = mapper.Map<List<TimesheetView>>(_KronosManager.GetTimesheet(dates.Select(x => x.WCDate).ToArray(), payroll));
-                vm.punch = mapper.Map<List<PunchCompView>>(_storeManager.GetEmployeePunch(payroll, dates.Min(x => x.Week), dates.Max(x => x.Week)));
+                if(await Task.Run(() => _KronosManager.LogOn()))
+                {
+                    vm.tSheet = mapper.Map<List<TimesheetView>>(_KronosManager.GetTimesheet(dates.Select(x => x.WCDate).ToArray(), payroll));
+                    vm.punch = mapper.Map<List<PunchCompView>>(_storeManager.GetEmployeePunch(payroll, dates.Min(x => x.Week), dates.Max(x => x.Week)));
+                    await Task.Run(() => _KronosManager.LogOff());
+                }                
             }
             else
             {

@@ -78,46 +78,55 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             }
             else if (System.Web.HttpContext.Current.Session["_RegionNumber"] != null)
             {
-                string hfQuery = _store.Channel == "ROI" ? "IE Region " : "UK - Region CPW";
-                vm.hf = mapper.Map<List<HyperFindResultView>>(await _KronosManager.GetKronosHyperFind(hfQuery + System.Web.HttpContext.Current.Session["_RegionNumber"].ToString(), vm.weekStart.ToShortDateString(), vm.weekStart.AddDays(6).ToShortDateString()));
-                var employeeList = await _storeManager.GetActiveColleagues(System.Web.HttpContext.Current.Session["_RegionNumber"].ToString());
-                var combined = vm.hf.Where(x => x.PersonData.Person.ManagerSignoffThruDateTime.Year != 1901).Join(employeeList, kronos => kronos.PersonNumber, db => db.PersonNumber, (kronos, db) => new { PersonNumber = kronos.PersonNumber, BranchNumber = db.HomeBranch, BranchName = db.BranchName, signedOff = kronos.PersonData.Person.ManagerSignoffThruDateTime, PersonName = db.PersonName });
-                var punched = await _KronosManager.GetPunchStatus(employeeList.Where(x => x.KronosUser).Select(x => x.PersonNumber).ToList());
-                var punchCombined = employeeList.Where(x => x.KronosUser).Join(punched, db => db.PersonNumber, kronos => kronos.Employee.PersonIdentity.PersonNumber, (db, kronos) => new { PersonNumer = db.PersonNumber, BranchNumber = db.HomeBranch, punched = kronos.Status });
-                
-                vm.rso = new List<RegionSignOff>();
-                foreach(var item in employeeList.GroupBy(x => x.HomeBranch).Select(c => c.Key).OrderBy(x => x).ToList())
+                if (await _KronosManager.LogOn())
                 {
-                    var data = combined.Where(x => x.BranchNumber == item);
-                    if(data != null)
-                    {
-                        bool userScheduled = employeeList.Where(x => x.HomeBranch == item && x.Scheduled && x.KronosUser).Count() > 0;
-                        bool userPunched = punchCombined.Where(x => x.BranchNumber == item && x.punched == "In").Count() > 0;
+                    string hfQuery = _store.Channel == "ROI" ? "IE Region " : "UK - Region CPW";
+                    vm.hf = mapper.Map<List<HyperFindResultView>>(await _KronosManager.GetKronosHyperFind(hfQuery + System.Web.HttpContext.Current.Session["_RegionNumber"].ToString(), vm.weekStart.ToShortDateString(), vm.weekStart.AddDays(6).ToShortDateString()));
+                    var employeeList = await _storeManager.GetActiveColleagues(System.Web.HttpContext.Current.Session["_RegionNumber"].ToString());
+                    var combined = vm.hf.Where(x => x.PersonData.Person.ManagerSignoffThruDateTime.Year != 1901).Join(employeeList, kronos => kronos.PersonNumber, db => db.PersonNumber, (kronos, db) => new { PersonNumber = kronos.PersonNumber, BranchNumber = db.HomeBranch, BranchName = db.BranchName, signedOff = kronos.PersonData.Person.ManagerSignoffThruDateTime, PersonName = db.PersonName });
+                    var punched = await _KronosManager.GetPunchStatus(employeeList.Where(x => x.KronosUser).Select(x => x.PersonNumber).ToList());
+                    var punchCombined = employeeList.Where(x => x.KronosUser).Join(punched, db => db.PersonNumber, kronos => kronos.Employee.PersonIdentity.PersonNumber, (db, kronos) => new { PersonNumer = db.PersonNumber, BranchNumber = db.HomeBranch, punched = kronos.Status });
 
-                        vm.rso.Add(new RegionSignOff { BranchNumber = item, BranchName = data.First().BranchName, Headcount = data.Count(), SignedOff = data.Where(x => x.signedOff.Date >= vm.weekStart).Count(), KronosScheduled = userScheduled, KronosPunched = userPunched });
-                    }                    
-                }
+                    vm.rso = new List<RegionSignOff>();
+                    foreach (var item in employeeList.GroupBy(x => x.HomeBranch).Select(c => c.Key).OrderBy(x => x).ToList())
+                    {
+                        var data = combined.Where(x => x.BranchNumber == item);
+                        if (data != null)
+                        {
+                            bool userScheduled = employeeList.Where(x => x.HomeBranch == item && x.Scheduled && x.KronosUser).Count() > 0;
+                            bool userPunched = punchCombined.Where(x => x.BranchNumber == item && x.punched == "In").Count() > 0;
+
+                            vm.rso.Add(new RegionSignOff { BranchNumber = item, BranchName = data.First().BranchName, Headcount = data.Count(), SignedOff = data.Where(x => x.signedOff.Date >= vm.weekStart).Count(), KronosScheduled = userScheduled, KronosPunched = userPunched });
+                        }
+                    }
+
+                    await _KronosManager.LogOff();
+                }                
             }
             else
             {
-                vm.hf = mapper.Map<List<HyperFindResultView>>(await _KronosManager.GetKronosHyperFind(_store.KronosStoreName, vm.weekStart.ToShortDateString(), vm.weekStart.AddDays(6).ToShortDateString()));
-                vm.ss = mapper.Map<List<ShortShiftView>>(await _storeManager.GetShortShiftsBranch(StoreNumber, weekOfYr));
-                vm.HelpTcks = mapper.Map<List<HelpTckSummaryView>>(await _storeManager.GetHelpTickets(StoreNumber));
-
-                short a = 1;
-                while((vm.hf == null || vm.hf.Count() == 0) && a<3)
+                if(await _KronosManager.LogOn())
                 {
                     vm.hf = mapper.Map<List<HyperFindResultView>>(await _KronosManager.GetKronosHyperFind(_store.KronosStoreName, vm.weekStart.ToShortDateString(), vm.weekStart.AddDays(6).ToShortDateString()));
-                    a++;
+                    vm.ss = mapper.Map<List<ShortShiftView>>(await _storeManager.GetShortShiftsBranch(StoreNumber, weekOfYr));
+                    vm.HelpTcks = mapper.Map<List<HelpTckSummaryView>>(await _storeManager.GetHelpTickets(StoreNumber));
+
+                    short a = 1;
+                    while ((vm.hf == null || vm.hf.Count() == 0) && a < 3)
+                    {
+                        vm.hf = mapper.Map<List<HyperFindResultView>>(await _KronosManager.GetKronosHyperFind(_store.KronosStoreName, vm.weekStart.ToShortDateString(), vm.weekStart.AddDays(6).ToShortDateString()));
+                        a++;
+                    }
+                    //vm.ts = mapper.Map<List<TimesheetView>>(await _KronosManager.GetTimesheetForStore(vm.weekStart, vm.hf.Select(x => x.PersonNumber).ToArray()));
+
+                    await _KronosManager.LogOff();
                 }
-                //vm.ts = mapper.Map<List<TimesheetView>>(await _KronosManager.GetTimesheetForStore(vm.weekStart, vm.hf.Select(x => x.PersonNumber).ToArray()));
             }
             //var weekNumbers = await _storeManager.GetWeekNumbers(DateTime.Now.GetFirstDayOfWeek().AddDays(-56), DateTime.Now.GetFirstDayOfWeek().AddDays(-7));
 
             //vm.GetDatesOfYear(DateTime.Now.GetFirstDayOfWeek().AddDays(-7), weekNumbers);
             //vm.WeeksOfYear.ForEach(x => x.Selected = x.Value == vm.weekStart.ToShortDateString());
-
-            await _KronosManager.LogOff();
+            
             return View(vm);
         }
 
