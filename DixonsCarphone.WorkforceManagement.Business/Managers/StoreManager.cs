@@ -661,6 +661,14 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             }
         }
 
+        public async Task<List<StoreOpeningTime>> GetSpecificStoreOpeningTime(int storeNumber, DateTime sDate)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                return await dbContext.StoreOpeningTimes.Where(x => x.StoreNumber == storeNumber && ((x.EffectiveDate == sDate && x.Status != "Cancelled") || x.Status == "Live")).ToListAsync();
+            }
+        }
+
         //Get all opening times that are pending
         public async Task<List<StoreHoursForApproval>> GetPendingStoreOpeningTimes()
         {

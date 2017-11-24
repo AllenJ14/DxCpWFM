@@ -5,11 +5,11 @@
 
 <div class="row">
     &nbsp;
-</div>    
+</div>
 
 @if (Model.ScheduleBMCollection != null && Model.ScheduleBMCollection.Count() > 0)
 {
-    if(ViewBag.historic != null)
+    if (ViewBag.historic != null)
     {
         <div class="alert alert-warning text-center">
             <strong>This schedule was last updated close of play Friday of the selected week</strong>
@@ -89,6 +89,88 @@ else if (Model.ScheduleCollection != null && Model.ScheduleCollection.Count() > 
             <strong>This schedule was last updated COP Friday of the selected week</strong>
         </div>
     }
+
+    <div style="width:90%;" class="table-responsive">
+        <table class="table table-bordered table-condensed-smtxt text-center">
+            <thead>
+                <tr class="active">
+                    <th style="width:20%" rowspan="2"></th>
+                    <th style="width:10%" colspan="2" class="text-center">Sunday</th>
+                    <th style="width:10%" colspan="2" class="text-center">Monday</th>
+                    <th style="width:10%" colspan="2" class="text-center">Tuesday</th>
+                    <th style="width:10%" colspan="2" class="text-center">Wednesday</th>
+                    <th style="width:10%" colspan="2" class="text-center">Thursday</th>
+                    <th style="width:10%" colspan="2" class="text-center">Friday</th>
+                    <th style="width:10%" colspan="2" class="text-center">Saturday</th>
+                </tr>
+                <tr class="active">
+                    <th class="text-center">Open</th>
+                    <th class="text-center">Close</th>
+                    <th class="text-center">Open</th>
+                    <th class="text-center">Close</th>
+                    <th class="text-center">Open</th>
+                    <th class="text-center">Close</th>
+                    <th class="text-center">Open</th>
+                    <th class="text-center">Close</th>
+                    <th class="text-center">Open</th>
+                    <th class="text-center">Close</th>
+                    <th class="text-center">Open</th>
+                    <th class="text-center">Close</th>
+                    <th class="text-center">Open</th>
+                    <th class="text-center">Close</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <strong>Opening Hours</strong>
+                    </td>
+                    <td>
+                        @(Model.openingTime.SundayOpen.ToString() == "00:00:00" ? "Closed" : Model.openingTime.SundayOpen.ToString("hh\\:mm"))
+                    </td>
+                    <td>
+                        @(Model.openingTime.SundayClose.ToString() == "00:00:00" ? "Closed" : Model.openingTime.SundayClose.ToString("hh\\:mm"))
+                    </td>
+                    <td>
+                        @(Model.openingTime.MondayOpen.ToString() == "00:00:00" ? "Closed" : Model.openingTime.MondayOpen.ToString("hh\\:mm"))
+                    </td>
+                    <td>
+                        @(Model.openingTime.MondayClose.ToString() == "00:00:00" ? "Closed" : Model.openingTime.MondayClose.ToString("hh\\:mm"))
+                    </td>
+                    <td>
+                        @(Model.openingTime.TuesdayOpen.ToString() == "00:00:00" ? "Closed" : Model.openingTime.TuesdayOpen.ToString("hh\\:mm"))
+                    </td>
+                    <td>
+                        @(Model.openingTime.TuesdayClose.ToString() == "00:00:00" ? "Closed" : Model.openingTime.TuesdayClose.ToString("hh\\:mm"))
+                    </td>
+                    <td>
+                        @(Model.openingTime.WednesdayOpen.ToString() == "00:00:00" ? "Closed" : Model.openingTime.WednesdayOpen.ToString("hh\\:mm"))
+                    </td>
+                    <td>
+                        @(Model.openingTime.WednesdayClose.ToString() == "00:00:00" ? "Closed" : Model.openingTime.WednesdayClose.ToString("hh\\:mm"))
+                    </td>
+                    <td>
+                        @(Model.openingTime.ThursdayOpen.ToString() == "00:00:00" ? "Closed" : Model.openingTime.ThursdayOpen.ToString("hh\\:mm"))
+                    </td>
+                    <td>
+                        @(Model.openingTime.ThursdayClose.ToString() == "00:00:00" ? "Closed" : Model.openingTime.ThursdayClose.ToString("hh\\:mm"))
+                    </td>
+                    <td>
+                        @(Model.openingTime.FridayOpen.ToString() == "00:00:00" ? "Closed" : Model.openingTime.FridayOpen.ToString("hh\\:mm"))
+                    </td>
+                    <td>
+                        @(Model.openingTime.FridayClose.ToString() == "00:00:00" ? "Closed" : Model.openingTime.FridayClose.ToString("hh\\:mm"))
+                    </td>
+                    <td>
+                        @(Model.openingTime.SaturdayOpen.ToString() == "00:00:00" ? "Closed" : Model.openingTime.SaturdayOpen.ToString("hh\\:mm"))
+                    </td>
+                    <td>
+                        @(Model.openingTime.SaturdayClose.ToString() == "00:00:00" ? "Closed" : Model.openingTime.SaturdayClose.ToString("hh\\:mm"))
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
     var colList = Model.ScheduleCollection.GroupBy(x => x.PersonNumber).Select(x => x.Key.Value).ToList();
     var sohTotal = Model.ScheduleCollection.GroupBy(x => x.PersonNumber).Select(x => x.FirstOrDefault()).ToList();

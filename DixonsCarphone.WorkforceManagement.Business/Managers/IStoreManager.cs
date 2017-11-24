@@ -21,6 +21,8 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
 
         Task<List<Store>> GetAllROIStores();
 
+        Task<List<StoreOpeningTime>> GetSpecificStoreOpeningTime(int storeNumber, DateTime sDate);
+
         Task<Store> GetStoreDetailsFullIP(string ip);
 
         Task SubmitNewIdStoreRecord(int storeNum, string ip);

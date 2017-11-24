@@ -270,6 +270,15 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
                 {
                     ViewBag.historic = true;
                 }
+                var oTimes = await _storeManager.GetSpecificStoreOpeningTime(StoreNumber, (DateTime)data.Min(x => x.StartDate));
+                if(oTimes.Where(x => x.Status != "Live").Count() > 0)
+                {
+                    vm.openingTime = mapper.Map<StoreOpeningTimeView>(oTimes.Where(x => x.Status != "Live").First());
+                }
+                else
+                {
+                    vm.openingTime = mapper.Map<StoreOpeningTimeView>(oTimes.Where(x => x.Status == "Live").First());
+                }
             }
 
             var weekNumbers = await _storeManager.GetWeekNumbers(DateTime.Now.AddDays(-28).GetFirstDayOfWeek(), DateTime.Now.GetFirstDayOfWeek().AddDays(42));
