@@ -91,6 +91,5 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
                 return result.OrderBy(x => x.WeekNumber).ToList();
             }
         }
-
     }
 }

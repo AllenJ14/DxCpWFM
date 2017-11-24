@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
@@ -6,6 +7,8 @@ namespace DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
     public class FutureDeploymentVm : BaseViewModel
     {
         public List<FutureDeploymentView> collection { get; set; }
+
+        public List<PeakHCView> peakHC { get; set; }
 
         public List<string> BranchList(string d)
             {
@@ -25,6 +28,11 @@ namespace DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
         public List<string> DivisionList { get
             {
                 return collection.GroupBy(x => x.division).OrderBy(x => x.Key).Select(x => x.Key).ToList();
+            } }
+
+        public List<DateTime> DateList { get
+            {
+                return peakHC.GroupBy(x => x.Date).OrderBy(x => x.Key).Select(x => x.Key).ToList();
             } }
     }
 }

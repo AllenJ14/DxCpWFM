@@ -37,6 +37,7 @@ namespace DixonsCarphone.WorkforceManagement.Business.Entities
         public Nullable<System.DateTime> DateModified { get; set; }
         public string KronosStoreName { get; set; }
         public string Channel { get; set; }
+        public Nullable<int> BaseStore { get; set; }
     
         public virtual StoreRegion StoreRegion { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

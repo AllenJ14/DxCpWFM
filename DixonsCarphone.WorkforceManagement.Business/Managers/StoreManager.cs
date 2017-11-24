@@ -1076,6 +1076,23 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             }
         }
 
+        public async Task<List<PeakHC>> GetRegionPeakHC(string region)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                var crit = int.Parse(region);
+                return await dbContext.PeakHCs.AsNoTracking().Where(x => x.Region == crit).ToListAsync();
+            }
+        }
+
+        public async Task<List<PeakHC>> GetDivisionPeakHC(string channel)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                return await dbContext.PeakHCs.AsNoTracking().Where(x => x.Channel == channel).ToListAsync();
+            }
+        }
+
         public async Task<List<PayCalendarRef>> GetPayCalendarRef(string _chain)
         {
             using (var dbContext = new DxCpWfmContext())

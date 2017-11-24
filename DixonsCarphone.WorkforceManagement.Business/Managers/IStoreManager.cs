@@ -196,5 +196,9 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
         Task<List<sp_CheckHelpTickets_Result>> GetHelpTickets(int branchNum);
 
         Task<List<sp_PeriodDashOverview_Result>> GetDashOverview(string year, byte period, string channel);
+
+        Task<List<PeakHC>> GetDivisionPeakHC(string channel);
+
+        Task<List<PeakHC>> GetRegionPeakHC(string region);
     }
 }

@@ -20,10 +20,12 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
     public class PlanningController : BaseController
     {
         IActivityManager _activityManager;
+        IDashBoardDataManager _dashManager;
 
         public PlanningController()
         {
             _activityManager = new ActivityManager();
+            _dashManager = new DashBoardDataManager();
         }
 
         // GET: Store OpeningTimes
@@ -336,15 +338,18 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             if (System.Web.HttpContext.Current.Session["_ChannelName"] != null)
             {
                 vm.collection = mapper.Map<List<FutureDeploymentView>>(await _storeManager.GetDivisionFutureDeployment(_store.Division));
+                vm.peakHC = mapper.Map<List<PeakHCView>>(await _storeManager.GetDivisionPeakHC(_store.Channel));
             }
             else if (System.Web.HttpContext.Current.Session["_DivisionName"] != null)
             {
                 vm.collection = mapper.Map<List<FutureDeploymentView>>(await _storeManager.GetDivisionFutureDeployment(System.Web.HttpContext.Current.Session["_DivisionName"].ToString()));
+                vm.peakHC = mapper.Map<List<PeakHCView>>(await _storeManager.GetDivisionPeakHC(_store.Channel));
             }
             else
             {
                 string crit = System.Web.HttpContext.Current.Session["_RegionNumber"] != null ? System.Web.HttpContext.Current.Session["_RegionNumber"].ToString() : _store.RegionNo;
                 vm.collection = mapper.Map<List<FutureDeploymentView>>(await _storeManager.GetRegionFutureDeployment(crit));
+                vm.peakHC = mapper.Map<List<PeakHCView>>(await _storeManager.GetRegionPeakHC(crit));
             }
 
             ViewBag.adv = adv.ToString().ToLower();

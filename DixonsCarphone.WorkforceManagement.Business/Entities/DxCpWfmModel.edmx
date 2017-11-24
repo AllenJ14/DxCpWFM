@@ -542,6 +542,25 @@ warning 6002: The table/view 'CarphoneWfm.dbo.KronosEmployeeSummary' does not ha
           <Property Name="Temps" Type="tinyint" />
           <Property Name="TempsOption" Type="tinyint" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'CarphoneWfm.dbo.PeakHC' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="PeakHC">
+          <Key>
+            <PropertyRef Name="Date" />
+            <PropertyRef Name="MaxHC" />
+            <PropertyRef Name="DeployedHC" />
+            <PropertyRef Name="Closed" />
+          </Key>
+          <Property Name="Channel" Type="nvarchar" MaxLength="10" />
+          <Property Name="Division" Type="varchar" MaxLength="25" />
+          <Property Name="Region" Type="smallint" />
+          <Property Name="Branch" Type="smallint" />
+          <Property Name="Store Name" Type="varchar" MaxLength="100" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="MaxHC" Type="int" Nullable="false" />
+          <Property Name="DeployedHC" Type="int" Nullable="false" />
+          <Property Name="Closed" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="PriorityType">
           <Key>
             <PropertyRef Name="PriorityTypeId" />
@@ -632,6 +651,7 @@ warning 6002: The table/view 'CarphoneWfm.dbo.KronosEmployeeSummary' does not ha
           <Property Name="DateModified" Type="datetime" />
           <Property Name="KronosStoreName" Type="nvarchar" MaxLength="250" />
           <Property Name="Channel" Type="nvarchar" MaxLength="10" />
+          <Property Name="BaseStore" Type="int" />
         </EntityType>
         <EntityType Name="StoreOpeningTimes">
           <Key>
@@ -1439,6 +1459,19 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
     [KronosEmployeeSummary].[Scheduled] AS [Scheduled]
     FROM [dbo].[KronosEmployeeSummary] AS [KronosEmployeeSummary]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="PeakHC" EntityType="Self.PeakHC" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [PeakHC].[Channel] AS [Channel], 
+    [PeakHC].[Division] AS [Division], 
+    [PeakHC].[Region] AS [Region], 
+    [PeakHC].[Branch] AS [Branch], 
+    [PeakHC].[Store Name] AS [Store Name], 
+    [PeakHC].[Date] AS [Date], 
+    [PeakHC].[MaxHC] AS [MaxHC], 
+    [PeakHC].[DeployedHC] AS [DeployedHC], 
+    [PeakHC].[Closed] AS [Closed]
+    FROM [dbo].[PeakHC] AS [PeakHC]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="TicketEscalations" EntityType="Self.TicketEscalations" store:Type="Tables" store:Schema="tck">
             <DefiningQuery>SELECT 
     [TicketEscalations].[EscalationId] AS [EscalationId], 
@@ -2059,8 +2092,9 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
             <Parameter Name="Period" Mode="In" Type="Byte" />
           </FunctionImport>
           <FunctionImport Name="sp_CheckUser" EntitySet="UserAccesses" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.UserAccess)">
-            <Parameter Name="userName" Mode="In" Type="String" />
+          <Parameter Name="userName" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="PeakHCs" EntityType="DixonsCarphone.WorkforceManagement.Business.PeakHC" />
         </EntityContainer>
         <EntityType Name="BestPracticeCategoryType">
           <Key>
@@ -2350,6 +2384,7 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <NavigationProperty Name="StoreRegion" Relationship="DixonsCarphone.WorkforceManagement.Business.FK_Store_Store" FromRole="Store" ToRole="StoreRegion" />
           <NavigationProperty Name="StoreOpeningTimes" Relationship="DixonsCarphone.WorkforceManagement.Business.FK_StoreOpeningTimes_Store" FromRole="Store" ToRole="StoreOpeningTime" />
           <Property Name="Channel" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="BaseStore" Type="Int32" />
         </EntityType>
         <EntityType Name="StoreOpeningTime">
           <Key>
@@ -3769,6 +3804,23 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Property Type="String" Name="AccessLevel" Nullable="false" MaxLength="20" />
           <Property Type="String" Name="Area" Nullable="true" MaxLength="50" />
         </ComplexType>
+        <EntityType Name="PeakHC">
+          <Key>
+            <PropertyRef Name="Date" />
+            <PropertyRef Name="MaxHC" />
+            <PropertyRef Name="DeployedHC" />
+            <PropertyRef Name="Closed" />
+          </Key>
+          <Property Name="Channel" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Division" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Region" Type="Int16" />
+          <Property Name="Branch" Type="Int16" />
+          <Property Name="Store_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="MaxHC" Type="Int32" Nullable="false" />
+          <Property Name="DeployedHC" Type="Int32" Nullable="false" />
+          <Property Name="Closed" Type="Int32" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4080,6 +4132,7 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <EntitySetMapping Name="Stores">
             <EntityTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.Store">
               <MappingFragment StoreEntitySet="Store">
+                <ScalarProperty Name="BaseStore" ColumnName="BaseStore" />
                 <ScalarProperty Name="Channel" ColumnName="Channel" />
                 <ScalarProperty Name="KronosStoreName" ColumnName="KronosStoreName" />
                 <ScalarProperty Name="DateModified" ColumnName="DateModified" />
@@ -5530,6 +5583,21 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_CheckUser" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_CheckUser">
           </FunctionImportMapping>
+          <EntitySetMapping Name="PeakHCs">
+            <EntityTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.PeakHC">
+              <MappingFragment StoreEntitySet="PeakHC">
+                <ScalarProperty Name="Closed" ColumnName="Closed" />
+                <ScalarProperty Name="DeployedHC" ColumnName="DeployedHC" />
+                <ScalarProperty Name="MaxHC" ColumnName="MaxHC" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Store_Name" ColumnName="Store Name" />
+                <ScalarProperty Name="Branch" ColumnName="Branch" />
+                <ScalarProperty Name="Region" ColumnName="Region" />
+                <ScalarProperty Name="Division" ColumnName="Division" />
+                <ScalarProperty Name="Channel" ColumnName="Channel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

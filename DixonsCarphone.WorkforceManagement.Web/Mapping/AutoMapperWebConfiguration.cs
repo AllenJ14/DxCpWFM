@@ -200,6 +200,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Mapping
             CreateMap<PeakData, PeakDataView>();
             CreateMap<sp_PeakFlexRegion_Result, PeakFlexRegionView>();
             CreateMap<sp_PeakFlexDivision_Result, PeakFlexDivisionView>();
+            CreateMap<PeakHC, PeakHCView>();
         }
     }
 

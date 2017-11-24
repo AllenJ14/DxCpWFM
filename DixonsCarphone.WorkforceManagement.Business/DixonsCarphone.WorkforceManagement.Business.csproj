@@ -211,6 +211,9 @@
     <Compile Include="Entities\PeakData.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\PeakHC.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\PriorityType.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>

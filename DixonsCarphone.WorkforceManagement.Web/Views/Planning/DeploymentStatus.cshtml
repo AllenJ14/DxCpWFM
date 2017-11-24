@@ -53,6 +53,9 @@
     <div id="advComment" class="panel-body text-center" style="display:none;">
         Red borders indicate the store aren't deploying enough hours and may be using too much holiday.
     </div>
+    <div class="panel-footer text-center">
+        <strong><u>Note</u>: This report is updated at 7AM each day</strong>
+    </div>
 </div>
 
 @if (Model.collection == null)
@@ -61,74 +64,158 @@
 }
 else if (HttpContext.Current.Session["_DivisionName"] != null)
 {
-
-    <div class="table-responsive">
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th class="text-center col-xs-2"></th>
-                    @foreach (var item in Model.WeekList)
-                    {
-                        <th class="text-center col-xs-1">Wk @item.ToString().Substring(4)</th>
-                    }
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><strong>Chain</strong></td>
-                    @foreach (var item in Model.collection.Where(c => c.SortOrder == null).OrderBy(c => c.WeekNumber))
-                    {
-                        <td class="text-center @(RAG(item)) tooltipHover" data-tooltip="@string.Format("#{0}_{1}", x, y)"><strong>@item.deployedPerc</strong></td>
-                        x += 1;
-                    }
-                    @{ y += 1; }
-                </tr>
-            </tbody>
-        </table>
+    <div class="row">
+        <div class="btn-group col-xs-6 col-xs-offset-3">
+            <button type="button" class="btn btn-default active col-xs-6" id="br">Deployment Summary</button>
+            <button type="button" class="btn btn-info col-xs-6" id="kd">Key Dates</button>
+        </div>
     </div>
+    <div class="row">
+        &emsp;
+    </div>
+    <div id="sTbl" class="panel panel-default">
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th class="text-center col-xs-2"></th>
+                            @foreach (var item in Model.WeekList)
+                            {
+                                <th class="text-center col-xs-1">Wk @item.ToString().Substring(4)</th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Chain</strong></td>
+                            @foreach (var item in Model.collection.Where(c => c.SortOrder == null).OrderBy(c => c.WeekNumber))
+                            {
+                                <td class="text-center @(RAG(item)) tooltipHover" data-tooltip="@string.Format("#{0}_{1}", x, y)"><strong>@item.deployedPerc</strong></td>
+                                x += 1;
+                            }
+                            @{ y += 1; }
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
-    foreach (var div in Model.DivisionList.Where(c => c != "NA"))
-    {
-        <div class="table-responsive" id="@(div)">
+            @foreach (var div in Model.DivisionList.Where(c => c != "NA"))
+            {
+                <div class="table-responsive" id="@(div)">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="text-center col-xs-2"><strong>@string.Format("DCPW0{0}", div)</strong></th>
+                                @foreach (var item in Model.WeekList)
+                                {
+                                    <th class="text-center col-xs-1">Wk @item.ToString().Substring(4)</th>
+                                }
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.BranchList(div))
+                    {
+                        { x = 0; }
+                        var data = Model.collection.Where(c => c.Area == item.ToString());
+                                <tr>
+                                    <td class="col-xs-2"><a href="@Url.Action("SetNewStore","Profiles", new { selectedStoreNumber = "Region " + item.ToString()})">@item.ToString()</a></td>
+                                    @foreach (var values in data.OrderBy(c => c.WeekNumber))
+                        {
+                                        <td class="text-center @(RAG(values)) tooltipHover" data-tooltip="@string.Format("#{0}_{1}", x, y)">@values.deployedPerc</td>
+                                        x += 1;
+                                    }
+                                </tr>
+                                y += 1;
+                            }
+                            <tr>
+                                <td><strong>Total</strong></td>
+                                @{ x = 0; }
+                                @foreach (var item in Model.collection.Where(c => c.SortOrder.ToString() == div).OrderBy(c => c.WeekNumber))
+                                {
+                                    <td class="text-center @(RAG(item)) tooltipHover" data-tooltip="@string.Format("#{0}_{1}", x, y)"><strong>@item.deployedPerc</strong></td>
+                                    x += 1;
+                                }
+                                @{ y += 1; }
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                                    }
+        </div>
+</div>
+
+<div id="kdTbl" class="panel panel-default" style="display:none;">
+    <div class="panel-body">
+        <div class="table-responsive">
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th class="text-center col-xs-2"><strong>@string.Format("DCPW0{0}",div)</strong></th>
-                        @foreach (var item in Model.WeekList)
+                        <th class="text-center col-xs-2"></th>
+                        @foreach (var item in Model.DateList)
                         {
-                            <th class="text-center col-xs-1">Wk @item.ToString().Substring(4)</th>
+                            <th class="text-center col-xs-1">@item.ToShortDateString()</th>
                         }
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model.BranchList(div))
-                    {
-                        { x = 0; }
-                        var data = Model.collection.Where(c => c.Area == item.ToString());
-                        <tr>
-                            <td class="col-xs-2"><a href="@Url.Action("SetNewStore","Profiles", new { selectedStoreNumber = "Region " + item.ToString()})">@item.ToString()</a></td>
-                            @foreach (var values in data.OrderBy(c => c.WeekNumber))
-                        {
-                                <td class="text-center @(RAG(values)) tooltipHover" data-tooltip="@string.Format("#{0}_{1}", x, y)">@values.deployedPerc</td>
-                                x += 1;
-                            }
-                        </tr>
-                        y += 1;
-                    }
                     <tr>
-                        <td><strong>Total</strong></td>
-                        @{ x = 0; }
-                        @foreach (var item in Model.collection.Where(c => c.SortOrder.ToString() == div).OrderBy(c => c.WeekNumber))
-                        {
-                            <td class="text-center @(RAG(item)) tooltipHover" data-tooltip="@string.Format("#{0}_{1}", x, y)"><strong>@item.deployedPerc</strong></td>
-                            x += 1;
-                        }
-                        @{ y += 1; }
+                        <td><strong>Chain</strong></td>
+                        @foreach (var item in Model.DateList)
+                            {
+                                var data = Model.peakHC.Where(c => c.Date == item && c.Closed != 1);
+                                <td class="text-center"><strong>@string.Format("{0:0}%",((double)data.Sum(c => c.DeployedHC)/data.Sum(c => c.MaxHC))*100)</strong></td>
+                            }
                     </tr>
                 </tbody>
             </table>
+            @foreach (var div in Model.DivisionList.Where(c => c != "NA"))
+            {
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="text-center col-xs-2"><strong>@string.Format("DCPW0{0}", div)</strong></th>
+                                @foreach (var item in Model.DateList)
+                                {
+                                    <th class="text-center col-xs-1">@item.ToShortDateString()</th>
+                                }
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.BranchList(div))
+                            {
+                                var data = Model.peakHC.Where(c => c.Region.ToString() == item && c.Closed != 1).GroupBy(c => new { c.Region, c.Date }).Select(c => new { Region = c.Key.Region, Date = c.Key.Date, MaxHC = c.Sum(d => d.MaxHC), DeplHC = c.Sum(d => d.DeployedHC) });
+                                <tr>
+                                    <td class="col-xs-2"><a href="@Url.Action("SetNewStore","Profiles", new { selectedStoreNumber = "Region " + item.ToString()})">@item.ToString()</a></td>
+                                    @foreach (var values in Model.DateList)
+                                    {
+                                        if (data.Where(c => c.Date == values).Count() > 0)
+                                        {
+                                            <td class="text-center">@string.Format("{0:0}%", ((double)data.Where(c => c.Date == values).First().DeplHC/data.Where(c => c.Date == values).First().MaxHC)*100)</td>
+                                        }
+                                        else
+                                        {
+                                            <td class="text-center">All Closed</td>
+                                        }
+
+                                    }
+                                </tr>
+                            }
+                            <tr>
+                                <td><strong>Division Total</strong></td>
+                                @foreach (var values in Model.DateList)
+                                {
+                                    <td class="text-center"><strong>@string.Format("{0:0}%", ((double)Model.peakHC.Where(c => c.Division.Contains(div) && c.Closed != 1).Sum(c => c.DeployedHC)/ Model.peakHC.Where(c => c.Division.Contains(div) && c.Closed != 1).Sum(c => c.MaxHC))*100)</strong></td>
+                                }
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            }            
         </div>
-    }
+    </div>
+</div>
 
     y = 0;
     x = 0;
@@ -175,33 +262,83 @@ else if (HttpContext.Current.Session["_DivisionName"] != null)
 }
 else
 {
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th class="text-center"></th>
-                @foreach (var item in Model.WeekList)
+    <div class="row">
+        <div class="btn-group col-xs-6 col-xs-offset-3">
+            <button type="button" class="btn btn-default active col-xs-6" id="br">Deployment Summary</button>
+            <button type="button" class="btn btn-info col-xs-6" id="kd">Key Dates</button>
+        </div>
+    </div>
+    <div class="row">
+        &emsp;
+    </div>
+    <div id="sTbl" class="panel panel-default">
+        <div class="panel-body">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th class="text-center"></th>
+                        @foreach (var item in Model.WeekList)
+                        {
+                            <th class="text-center">Wk @item.ToString().Substring(4)</th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.BranchListAll)
                 {
-                    <th class="text-center">Wk @item.ToString().Substring(4)</th>
-                }
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.BranchListAll)
-            {
-                { x = 0; }
-                var data = Model.collection.Where(c => c.Area == item.ToString()).OrderBy(c => c.WeekNumber);
-                <tr>
-                    <td>@item.ToString()</td>
-                    @foreach (var values in data)
-                    {
-                        <td class="text-center @(RAG(values)) tooltipHover" data-tooltip="@string.Format("#{0}_{1}", x, y)">@values.deployedPerc</td>
-                        x += 1;
+                    { x = 0; }
+                    var data = Model.collection.Where(c => c.Area == item.ToString()).OrderBy(c => c.WeekNumber);
+                        <tr>
+                            <td>@item.ToString()</td>
+                            @foreach (var values in data)
+                            {
+                                <td class="text-center @(RAG(values)) tooltipHover" data-tooltip="@string.Format("#{0}_{1}", x, y)">@values.deployedPerc</td>
+                                x += 1;
+                            }
+                        </tr>
+                        y += 1;
                     }
-                </tr>
-                y += 1;
-            }
-        </tbody>
-    </table>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="kdTbl" class="panel panel-default" style="display:none;">
+        <div class="panel-body">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th></th>
+                        @foreach (var item in Model.DateList)
+                        {
+                            <th class="text-center">@item.ToShortDateString()</th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.BranchListAll)
+                {
+                        <tr>
+                            <td>@item</td>
+                            @foreach (var d in Model.DateList)
+                            {
+                                var data = Model.peakHC.Where(c => c.FullStore == item && c.Date == d).FirstOrDefault();
+                                if (data.Closed == 1)
+                                {
+                                    <td class="text-center active">Closed</td>
+                                }
+                                else
+                                {
+                                    <td class="text-center">@string.Format("{0:0}%", ((double)data.DeployedHC/data.MaxHC)*100)</td>
+                                }
+
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
 
     y = 0;
     foreach (var item in Model.BranchListAll)
@@ -257,6 +394,32 @@ else
                     $advComment.slideDown(300);
                 }
                 
+            });
+
+            var br = true;
+            var $brBtn = $('#br');
+            var $kdBtn = $('#kd');
+            var $sView = $('#sTbl');
+            var $kdView = $('#kdTbl');
+
+            $brBtn.click(function () {
+                if (!br) {
+                    $(this).toggleClass('active');
+                    $kdBtn.toggleClass('active');
+                    $sView.slideToggle(400);
+                    $kdView.slideToggle(400);
+                    br = !br;
+                };
+            });
+
+            $kdBtn.click(function () {
+                if (br) {
+                    $(this).toggleClass('active');
+                    $brBtn.toggleClass('active');
+                    $kdView.slideToggle(400);
+                    $sView.slideToggle(400);
+                    br = !br;
+                };
             });
         });
     </script>
