@@ -275,9 +275,13 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
                 {
                     vm.openingTime = mapper.Map<StoreOpeningTimeView>(oTimes.Where(x => x.Status != "Live").First());
                 }
-                else
+                else if(oTimes.Where(x => x.Status == "Live").Count() >=1)
                 {
                     vm.openingTime = mapper.Map<StoreOpeningTimeView>(oTimes.Where(x => x.Status == "Live").First());
+                }
+                else
+                {
+                    vm.openingTime = null;
                 }
             }
 
