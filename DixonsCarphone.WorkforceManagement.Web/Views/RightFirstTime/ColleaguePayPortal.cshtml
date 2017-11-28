@@ -13,9 +13,9 @@
         <strong>Colleague Pay Portal</strong>
     </div>
     <div class="panel-body">
-        @if (HttpContext.Current.Session["_PTFlag"].ToString() == "FT")
+        @if (Model.menu.Count() == 0)
         {
-            <div class="alert alert-info text-center"><strong>This view is currently only available for colleagues on the part time payroll</strong></div>
+            <div class="alert alert-info text-center"><strong>This view is currently not available for GMs, AMs and colleagues on the full time payroll.</strong></div>
         }
         else
         {

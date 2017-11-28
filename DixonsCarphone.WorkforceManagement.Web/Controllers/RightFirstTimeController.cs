@@ -42,7 +42,11 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             }
 
             vm.rawMenu = mapper.Map<List<PayCalendarRefView>>(await _storeManager.GetPayCalendarRef((_store.Channel == "ROI" ? "ROI" : "CPW") + System.Web.HttpContext.Current.Session["_PTFlag"].ToString()));
-            
+            if(System.Web.HttpContext.Current.Session["_AccessLevel"].ToString() == "BM")
+            {
+                vm.rawMenu = new List<PayCalendarRefView>();
+            }
+
             return View(vm);
         }
         

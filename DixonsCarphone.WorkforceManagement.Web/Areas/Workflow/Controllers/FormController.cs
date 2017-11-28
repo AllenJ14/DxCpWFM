@@ -73,6 +73,15 @@ namespace DixonsCarphone.WorkforceManagement.Web.Areas.Workflow.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> NewSubmission(List<TicketQ_A> q, int TicketTypeId, int exception)
         {
+            foreach(var item in q.Where(x => x.ReturnType == "date"))
+            {
+                DateTime a = new DateTime();
+                if(DateTime.TryParse(item.Answer, out a))
+                {
+                    item.Answer = a.ToString("yyyy-MM-dd");
+                }
+            }
+
             var toReturn = await _ticketManager.SubmitTicket(TicketTypeId, System.Web.HttpContext.Current.Session["_UserName"].ToString(), StoreNumber, mapper.Map<List<TicketAnswer>>(q), exception);
 
             TempData["ticketID"] = toReturn;

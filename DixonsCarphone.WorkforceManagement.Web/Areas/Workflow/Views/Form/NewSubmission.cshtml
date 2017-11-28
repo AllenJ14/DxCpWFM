@@ -30,6 +30,7 @@
                 <label for="@q.QuestionId">@q.Question</label>
                 <input type="hidden" name="q.Index" value="@qCounter" />
                 <input type="hidden" name="@string.Format("q[{0}].QuestionID", qCounter)" value="@q.QuestionId" required />
+                <input type="hidden" name="@string.Format("q[{0}].ReturnType", qCounter)" value="@q.ReturnType" required />
                 <select name="@string.Format("q[{0}].Answer", qCounter)" class="form-control @q.apiIdent" required>
                     <option>Loading...</option>
                 </select>
@@ -41,6 +42,7 @@
                 <label for="@q.QuestionId">@q.Question</label>
                 <input type="hidden" name="q.Index" value="@qCounter" />
                 <input type="hidden" name="@string.Format("q[{0}].QuestionID", qCounter)" value="@q.QuestionId" required />
+                <input type="hidden" name="@string.Format("q[{0}].ReturnType", qCounter)" value="@q.ReturnType" required />
                 @if (q.ReturnType == "textarea")
                 {
                     <textarea class="form-control @q.apiIdent" style="resize:vertical;" placeholder="" name="@string.Format("q[{0}].Answer", qCounter)" rows="2"></textarea>
