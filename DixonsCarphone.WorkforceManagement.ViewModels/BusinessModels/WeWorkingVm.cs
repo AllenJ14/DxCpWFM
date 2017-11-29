@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
 {
@@ -16,6 +14,39 @@ namespace DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
         public List<WeWorkingView> SecDetailCollection { get; set; }
         public List<DayDates> SecHeaderCollection { get; set; }
         public List<BrList> SecBranchList { get; set; }
+
+        public List<WeWorkingView> colPast { get
+            {
+                return DetailCollection.Where(x => x.Date <= DateTime.Now.AddDays(-1)).ToList();
+            } }
+
+        public List<WeWorkingView> colFuture { get
+            {
+                return DetailCollection.Where(x => x.Date >= DateTime.Now.AddDays(-1)).ToList();
+            } }
+
+        public List<WeWorkingView> colPastSec { get
+            {
+                return SecDetailCollection.Where(x => x.Date <= DateTime.Now.AddDays(-1)).ToList();
+            } }
+
+        public List<WeWorkingView> colFutureSec { get
+            {
+                return SecDetailCollection.Where(x => x.Date >= DateTime.Now.AddDays(-1)).ToList();
+            } }
+
+        public List<DayDates> headPast { get
+            {
+                return HeaderCollection.Where(x => x.Date <= DateTime.Now.AddDays(-1)).ToList();
+            } }
+
+        public List<DayDates> headFuture
+        {
+            get
+            {
+                return HeaderCollection.Where(x => x.Date >= DateTime.Now.AddDays(-1)).ToList();
+            }
+        }
 
         public void PopulateHeader(List<WeWorkingView> a)
         {

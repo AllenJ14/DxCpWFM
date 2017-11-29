@@ -3,67 +3,6 @@
 
 @model StoreDetailViewModel
 
-@if (Model.CurrentTime != null)
-{
-    <div class="panel panel-default">
-        <div class="panel-heading text-center"><strong>Standard Trading Hours</strong></div>
-        <div class="table-responsive">
-            <table class="table table-bordered table-condensed-smtxt text-center">
-                @Html.Partial("~/Views/Partials/_OpeningHeader.cshtml")
-                <tbody>
-                    <tr>
-                        <td>
-                            @(Model.CurrentTime.SundayOpen.ToString() == "00:00:00" ? "Closed" : Model.CurrentTime.SundayOpen.ToString("hh\\:mm"))
-                        </td>
-                        <td>
-                            @(Model.CurrentTime.SundayClose.ToString() == "00:00:00" ? "Closed" : Model.CurrentTime.SundayClose.ToString("hh\\:mm"))
-                        </td>
-                        <td>
-                            @(Model.CurrentTime.MondayOpen.ToString() == "00:00:00" ? "Closed" : Model.CurrentTime.MondayOpen.ToString("hh\\:mm"))
-                        </td>
-                        <td>
-                            @(Model.CurrentTime.MondayClose.ToString() == "00:00:00" ? "Closed" : Model.CurrentTime.MondayClose.ToString("hh\\:mm"))
-                        </td>
-                        <td>
-                            @(Model.CurrentTime.TuesdayOpen.ToString() == "00:00:00" ? "Closed" : Model.CurrentTime.TuesdayOpen.ToString("hh\\:mm"))
-                        </td>
-                        <td>
-                            @(Model.CurrentTime.TuesdayClose.ToString() == "00:00:00" ? "Closed" : Model.CurrentTime.TuesdayClose.ToString("hh\\:mm"))
-                        </td>
-                        <td>
-                            @(Model.CurrentTime.WednesdayOpen.ToString() == "00:00:00" ? "Closed" : Model.CurrentTime.WednesdayOpen.ToString("hh\\:mm"))
-                        </td>
-                        <td>
-                            @(Model.CurrentTime.WednesdayClose.ToString() == "00:00:00" ? "Closed" : Model.CurrentTime.WednesdayClose.ToString("hh\\:mm"))
-                        </td>
-                        <td>
-                            @(Model.CurrentTime.ThursdayOpen.ToString() == "00:00:00" ? "Closed" : Model.CurrentTime.ThursdayOpen.ToString("hh\\:mm"))
-                        </td>
-                        <td>
-                            @(Model.CurrentTime.ThursdayClose.ToString() == "00:00:00" ? "Closed" : Model.CurrentTime.ThursdayClose.ToString("hh\\:mm"))
-                        </td>
-                        <td>
-                            @(Model.CurrentTime.FridayOpen.ToString() == "00:00:00" ? "Closed" : Model.CurrentTime.FridayOpen.ToString("hh\\:mm"))
-                        </td>
-                        <td>
-                            @(Model.CurrentTime.FridayClose.ToString() == "00:00:00" ? "Closed" : Model.CurrentTime.FridayClose.ToString("hh\\:mm"))
-                        </td>
-                        <td>
-                            @(Model.CurrentTime.SaturdayOpen.ToString() == "00:00:00" ? "Closed" : Model.CurrentTime.SaturdayOpen.ToString("hh\\:mm"))
-                        </td>
-                        <td>
-                            @(Model.CurrentTime.SaturdayClose.ToString() == "00:00:00" ? "Closed" : Model.CurrentTime.SaturdayClose.ToString("hh\\:mm"))
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div id="0" class="text-center panel-body">
-            <a class="btn btn-primary btn-default" href="@Url.Action("NewStoreTimeRequest", "Planning")">Change Standard Trading Hours</a>
-        </div>
-    </div>
-}
-
 @if (Model.PeakTimes != null && Model.PeakTimes.Count() > 0)
 {
     <br />
@@ -194,6 +133,69 @@
         </div>
     </div>
 }
+
+
+@if (Model.CurrentTime != null)
+{
+    <div class="panel panel-default">
+        <div class="panel-heading text-center"><strong>Standard Trading Hours</strong></div>
+        <div class="table-responsive">
+            <table class="table table-bordered table-condensed-smtxt text-center">
+                @Html.Partial("~/Views/Partials/_OpeningHeader.cshtml")
+                <tbody>
+                    <tr>
+                        <td>
+                            @(Model.CurrentTime.SundayOpen.ToString() == "00:00:00" ? "Closed" : Model.CurrentTime.SundayOpen.ToString("hh\\:mm"))
+                        </td>
+                        <td>
+                            @(Model.CurrentTime.SundayClose.ToString() == "00:00:00" ? "Closed" : Model.CurrentTime.SundayClose.ToString("hh\\:mm"))
+                        </td>
+                        <td>
+                            @(Model.CurrentTime.MondayOpen.ToString() == "00:00:00" ? "Closed" : Model.CurrentTime.MondayOpen.ToString("hh\\:mm"))
+                        </td>
+                        <td>
+                            @(Model.CurrentTime.MondayClose.ToString() == "00:00:00" ? "Closed" : Model.CurrentTime.MondayClose.ToString("hh\\:mm"))
+                        </td>
+                        <td>
+                            @(Model.CurrentTime.TuesdayOpen.ToString() == "00:00:00" ? "Closed" : Model.CurrentTime.TuesdayOpen.ToString("hh\\:mm"))
+                        </td>
+                        <td>
+                            @(Model.CurrentTime.TuesdayClose.ToString() == "00:00:00" ? "Closed" : Model.CurrentTime.TuesdayClose.ToString("hh\\:mm"))
+                        </td>
+                        <td>
+                            @(Model.CurrentTime.WednesdayOpen.ToString() == "00:00:00" ? "Closed" : Model.CurrentTime.WednesdayOpen.ToString("hh\\:mm"))
+                        </td>
+                        <td>
+                            @(Model.CurrentTime.WednesdayClose.ToString() == "00:00:00" ? "Closed" : Model.CurrentTime.WednesdayClose.ToString("hh\\:mm"))
+                        </td>
+                        <td>
+                            @(Model.CurrentTime.ThursdayOpen.ToString() == "00:00:00" ? "Closed" : Model.CurrentTime.ThursdayOpen.ToString("hh\\:mm"))
+                        </td>
+                        <td>
+                            @(Model.CurrentTime.ThursdayClose.ToString() == "00:00:00" ? "Closed" : Model.CurrentTime.ThursdayClose.ToString("hh\\:mm"))
+                        </td>
+                        <td>
+                            @(Model.CurrentTime.FridayOpen.ToString() == "00:00:00" ? "Closed" : Model.CurrentTime.FridayOpen.ToString("hh\\:mm"))
+                        </td>
+                        <td>
+                            @(Model.CurrentTime.FridayClose.ToString() == "00:00:00" ? "Closed" : Model.CurrentTime.FridayClose.ToString("hh\\:mm"))
+                        </td>
+                        <td>
+                            @(Model.CurrentTime.SaturdayOpen.ToString() == "00:00:00" ? "Closed" : Model.CurrentTime.SaturdayOpen.ToString("hh\\:mm"))
+                        </td>
+                        <td>
+                            @(Model.CurrentTime.SaturdayClose.ToString() == "00:00:00" ? "Closed" : Model.CurrentTime.SaturdayClose.ToString("hh\\:mm"))
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="0" class="text-center panel-body">
+            <a class="btn btn-primary btn-default" href="@Url.Action("NewStoreTimeRequest", "Planning")">Change Standard Trading Hours</a>
+        </div>
+    </div>
+}
+
 
 @if (Model.PendingTimes != null && Model.PendingTimes.Count != 0)
 {
