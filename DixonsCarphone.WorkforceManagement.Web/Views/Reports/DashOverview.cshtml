@@ -24,7 +24,6 @@
                 {
                     @Html.DropDownList("crit", Model.WeeksOfYear, new { onchange = "this.form.submit();", @class = "form-control" })
                 }
-                @*@Html.Partial("~/Views/Shared/_WeekPicker.cshtml", new WeekPickerViewModel { Action = "DashOverview", Controller = "Reports", WeeksOfYear = Model.WeeksOfYear, SelectedDate = Model.selectedDate })*@
             </div>
         </div>
         @if (Model.collection.Count() == 0)
@@ -53,8 +52,6 @@
                                         <tr>
                                             <th class="text-center col-xs-2" rowspan="2"></th>
                                             <th class="text-center col-xs-6" colspan="3">SOH Spend</th>
-                                            <th class="text-center col-xs-2" rowspan="2">% Timecards Signed Off</th>
-                                            <th class="text-center col-xs-2" rowspan="2">RFTP Non-Compliant</th>
                                         </tr>
                                         <tr>
                                             <th class="text-center">Budget</th>
@@ -72,8 +69,6 @@
                                                     <td class="text-center">@string.Format("{0:#,#}", row.FinalTarget)</td>
                                                     <td class="text-center">@string.Format("{0:#,#}", row.SOH)</td>
                                                     <td class="text-center">@string.Format("{0:#,#}", row.VarToTar) <small>@string.Format("({0:0}%)", ((decimal)row.VarToTar / (decimal)row.FinalTarget) * 100)</small></td>
-                                                    <td class="text-center">@(row.TCSignOff)%</td>
-                                                    <td class="text-center">@(string.Format("{0} / {1}", row.CountNonComp, row.AllStores))</td>
                                                 </tr>
                                             }
                                             else
@@ -83,8 +78,6 @@
                                                     <td class="text-center"><strong>@string.Format("{0:#,#}", row.FinalTarget)</strong></td>
                                                     <td class="text-center"><strong>@string.Format("{0:#,#}", row.SOH)</strong></td>
                                                     <td class="text-center"><strong>@string.Format("{0:#,#}", row.VarToTar) <small>@string.Format("({0:0}%)", ((decimal)row.VarToTar / (decimal)row.FinalTarget) * 100)</small></strong></td>
-                                                    <td class="text-center"><strong>@(row.TCSignOff)%</strong></td>
-                                                    <td class="text-center"><strong>@(string.Format("{0} / {1}", row.CountNonComp, row.AllStores))</strong></td>
                                                 </tr>
                                             }
                                         }

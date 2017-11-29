@@ -628,8 +628,9 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
 
             if (System.Web.HttpContext.Current.Session["_ChannelName"] != null)
             {
-                vm.Message = "This page is not available in the currently selected view, please select a store from the top right menu or go back.";
-                vm.MessageType = MessageType.Error;
+                vm.PopulateHeader(mapper.Map<List<WeWorkingView>>(await _storeManager.GetDivisionBmWeWorking(System.Web.HttpContext.Current.Session["_DivisionName"].ToString())));
+                vm.PopulateSecHeader(mapper.Map<List<WeWorkingView>>(await _storeManager.GetChannelBmWeWorking(_store.Channel)));
+                vm.DisplayType = 3;
             }
             else if (System.Web.HttpContext.Current.Session["_DivisionName"] != null)
             {
