@@ -910,5 +910,39 @@ namespace DixonsCarphone.WorkforceManagement.Business.Entities
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UserAccess>("sp_CheckUser", mergeOption, userNameParameter);
         }
+    
+        public virtual ObjectResult<sp_PeriodCompOverview_Result> sp_PeriodCompOverview(string channel, Nullable<int> period, string year)
+        {
+            var channelParameter = channel != null ?
+                new ObjectParameter("Channel", channel) :
+                new ObjectParameter("Channel", typeof(string));
+    
+            var periodParameter = period.HasValue ?
+                new ObjectParameter("Period", period) :
+                new ObjectParameter("Period", typeof(int));
+    
+            var yearParameter = year != null ?
+                new ObjectParameter("Year", year) :
+                new ObjectParameter("Year", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_PeriodCompOverview_Result>("sp_PeriodCompOverview", channelParameter, periodParameter, yearParameter);
+        }
+    
+        public virtual ObjectResult<sp_PeriodCompOverviewRegion_Result> sp_PeriodCompOverviewRegion(string region, Nullable<int> period, string year)
+        {
+            var regionParameter = region != null ?
+                new ObjectParameter("Region", region) :
+                new ObjectParameter("Region", typeof(string));
+    
+            var periodParameter = period.HasValue ?
+                new ObjectParameter("Period", period) :
+                new ObjectParameter("Period", typeof(int));
+    
+            var yearParameter = year != null ?
+                new ObjectParameter("Year", year) :
+                new ObjectParameter("Year", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_PeriodCompOverviewRegion_Result>("sp_PeriodCompOverviewRegion", regionParameter, periodParameter, yearParameter);
+        }
     }
 }

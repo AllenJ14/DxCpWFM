@@ -1,0 +1,238 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
+@model PeriodCompVm
+
+<div>
+    <ul class="nav nav-pills" role="tablist" id="dTabs" style="margin:0 auto;display:table;">
+        <li role="presentation" class="active"><a href="#overview" aria-controls="home" role="tab" data-toggle="tab">Overview</a></li>
+        <li role="presentation"><a href="#clock" aria-controls="home" role="tab" data-toggle="tab">Clocking Compliance</a></li>
+        <li role="presentation"><a href="#timecard" aria-controls="home" role="tab" data-toggle="tab">Timecard Sign Off</a></li>
+        <li role="presentation"><a href="#edits" aria-controls="home" role="tab" data-toggle="tab">Edited Clocks</a></li>
+    </ul>
+    <div class="tab-content">
+        <div role="tabpanel" id="overview" class="tab-pane fade in active">
+            <div class="container-fluid" style="margin-top:10px;">
+                <table class="table table-bordered-blue table-condensed">
+                    <thead>
+                        <tr>
+                            <th class="text-center col-xs-2" rowspan="2"></th>
+                            <th class="text-center" colspan="@(Model.WeekNumbers.Count())">Stores Compliant</th>
+                        </tr>
+                        <tr>
+                            @foreach (var item in Model.WeekNumbers)
+                            {
+                                <th class="text-center">@(item == 999999 ? "Period" : item.ToString().Substring(4, 2))</th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{var data = Model.collection.Where(x => x.StoreFlag != null).OrderBy(x => x.wk); }
+                        <tr style="background-color:#93c6ff">
+                            <td><strong>@data.First().StoreFlag</strong></td>
+                            @foreach (var row in data)
+                            {
+                                <td class="text-center">
+                                    <strong class="content">@string.Format("{0:0}%", row.CompPerc)</strong>
+                                    <strong class="content hide">@string.Format("{0}/{1}", row.Compliant, row.BranchCount)</strong>
+                                </td>
+                            }
+                        </tr>
+                        @foreach (var division in Model.DivisionList)
+                        {
+                            <tr style="background-color:#d5e9ff">
+                                <td><strong>@division</strong></td>
+                                @foreach (var row in Model.collection.Where(x => x.Division == division && x.Region == null).OrderBy(x => x.wk))
+                                {
+                                    <td class="text-center">
+                                        <strong class="content">@string.Format("{0:0}%", row.CompPerc)</strong>
+                                        <strong class="content hide">@string.Format("{0}/{1}", row.Compliant, row.BranchCount)</strong>
+                                    </td>
+                                }
+                            </tr>
+                            foreach (var region in Model.GetRegionList(division))
+                            {
+                                <tr>
+                                    <td>@region</td>
+                                    @foreach (var row in Model.collection.Where(x => x.Region == region).OrderBy(x => x.wk))
+                                    {
+                                        <td class="text-center">
+                                            <span class="content">@string.Format("{0:0}%", row.CompPerc)</span>
+                                            <span class="content hide">@string.Format("{0}/{1}", row.Compliant, row.BranchCount)</span>
+                                        </td>
+                                    }
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div role="tabpanel" id="clock" class="tab-pane fade in">
+            <div class="container-fluid" style="margin-top:10px;">
+                <table class="table table-bordered-blue table-condensed">
+                    <thead>
+                        <tr>
+                            <th class="text-center col-xs-2" rowspan="2"></th>
+                            <th class="text-center" colspan="@(Model.WeekNumbers.Count())">Stores Compliant</th>
+                        </tr>
+                        <tr>
+                            @foreach (var item in Model.WeekNumbers)
+                            {
+                                <th class="text-center">@(item == 999999 ? "Period" : item.ToString().Substring(4, 2))</th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background-color:#93c6ff">
+                            <td><strong>@data.First().StoreFlag</strong></td>
+                            @foreach (var row in data)
+                            {
+                                <td class="text-center">
+                                    <strong class="content">@string.Format("{0:0}%", row.ClockPerc)</strong>
+                                    <strong class="content hide">@string.Format("{0}/{1}", row.PunchCompliance, row.BranchCount)</strong>
+                                </td>
+                            }
+                        </tr>
+                        @foreach (var division in Model.DivisionList)
+                        {
+                            <tr style="background-color:#d5e9ff">
+                                <td><strong>@division</strong></td>
+                                @foreach (var row in Model.collection.Where(x => x.Division == division && x.Region == null).OrderBy(x => x.wk))
+                                {
+                                    <td class="text-center">
+                                        <strong class="content">@string.Format("{0:0}%", row.ClockPerc)</strong>
+                                        <strong class="content hide">@string.Format("{0}/{1}", row.PunchCompliance, row.BranchCount)</strong>
+                                    </td>
+                                }
+                            </tr>
+                            foreach (var region in Model.GetRegionList(division))
+                            {
+                                <tr>
+                                    <td>@region</td>
+                                    @foreach (var row in Model.collection.Where(x => x.Region == region).OrderBy(x => x.wk))
+                                    {
+                                        <td class="text-center">
+                                            <span class="content">@string.Format("{0:0}%", row.ClockPerc)</span>
+                                            <span class="content hide">@string.Format("{0}/{1}", row.PunchCompliance, row.BranchCount)</span>
+                                        </td>
+                                    }
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div role="tabpanel" id="timecard" class="tab-pane fade in">
+            <div class="container-fluid" style="margin-top:10px;">
+                <table class="table table-bordered-blue table-condensed">
+                    <thead>
+                        <tr>
+                            <th class="text-center col-xs-2" rowspan="2"></th>
+                            <th class="text-center" colspan="@(Model.WeekNumbers.Count())">Stores Compliant</th>
+                        </tr>
+                        <tr>
+                            @foreach (var item in Model.WeekNumbers)
+                            {
+                                <th class="text-center">@(item == 999999 ? "Period" : item.ToString().Substring(4, 2))</th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background-color:#93c6ff">
+                            <td><strong>@data.First().StoreFlag</strong></td>
+                            @foreach (var row in data)
+                            {
+                                <td class="text-center">
+                                    <strong class="content">@string.Format("{0:0}%", row.TCPerc)</strong>
+                                    <strong class="content hide">@string.Format("{0}/{1}", row.TCComp, row.BranchCount)</strong>
+                                </td>
+                            }
+                        </tr>
+                        @foreach (var division in Model.DivisionList)
+                        {
+                            <tr style="background-color:#d5e9ff">
+                                <td><strong>@division</strong></td>
+                                @foreach (var row in Model.collection.Where(x => x.Division == division && x.Region == null).OrderBy(x => x.wk))
+                                {
+                                    <td class="text-center">
+                                        <strong class="content">@string.Format("{0:0}%", row.TCPerc)</strong>
+                                        <strong class="content hide">@string.Format("{0}/{1}", row.TCComp, row.BranchCount)</strong>
+                                    </td>
+                                }
+                            </tr>
+                            foreach (var region in Model.GetRegionList(division))
+                            {
+                                <tr>
+                                    <td>@region</td>
+                                    @foreach (var row in Model.collection.Where(x => x.Region == region).OrderBy(x => x.wk))
+                                    {
+                                        <td class="text-center">
+                                            <span class="content">@string.Format("{0:0}%", row.TCPerc)</span>
+                                            <span class="content hide">@string.Format("{0}/{1}", row.TCComp, row.BranchCount)</span>
+                                        </td>
+                                    }
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div role="tabpanel" id="edits" class="tab-pane fade in">
+            <div class="container-fluid" style="margin-top:10px;">
+                <table class="table table-bordered-blue table-condensed">
+                    <thead>
+                        <tr>
+                            <th class="text-center col-xs-2" rowspan="2"></th>
+                            <th class="text-center" colspan="@(Model.WeekNumbers.Count())">Stores Compliant</th>
+                        </tr>
+                        <tr>
+                            @foreach (var item in Model.WeekNumbers)
+                            {
+                                <th class="text-center">@(item == 999999 ? "Period" : item.ToString().Substring(4, 2))</th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background-color:#93c6ff">
+                            <td><strong>@data.First().StoreFlag</strong></td>
+                            @foreach (var row in data)
+                            {
+                                <td class="text-center">
+                                    <strong class="content">@string.Format("{0:0}%", row.SSPerc)</strong>
+                                    <strong class="content hide">@string.Format("{0}/{1}", row.ShortShiftCompliance, row.BranchCount)</strong>
+                                </td>
+                            }
+                        </tr>
+                        @foreach (var division in Model.DivisionList)
+                        {
+                            <tr style="background-color:#d5e9ff">
+                                <td><strong>@division</strong></td>
+                                @foreach (var row in Model.collection.Where(x => x.Division == division && x.Region == null).OrderBy(x => x.wk))
+                                {
+                                    <td class="text-center">
+                                        <strong class="content">@string.Format("{0:0}%", row.SSPerc)</strong>
+                                        <strong class="content hide">@string.Format("{0:0}%", row.ShortShiftCompliance, row.BranchCount)</strong>
+                                    </td>
+                                }
+                            </tr>
+                            foreach (var region in Model.GetRegionList(division))
+                            {
+                                <tr>
+                                    <td>@region</td>
+                                    @foreach (var row in Model.collection.Where(x => x.Region == region).OrderBy(x => x.wk))
+                                    {
+                                        <td class="text-center">
+                                            <span class="content">@string.Format("{0:0}%", row.SSPerc)</span>
+                                            <span class="content hide">@string.Format("{0:0}%", row.ShortShiftCompliance, row.BranchCount)</span>
+                                        </td>
+                                    }
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

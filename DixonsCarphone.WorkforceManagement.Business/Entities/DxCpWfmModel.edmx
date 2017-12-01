@@ -1209,6 +1209,16 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
         <Function Name="sp_PeakFlexRegion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="RegionNo" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="sp_PeriodCompOverview" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Channel" Type="nvarchar" Mode="In" />
+          <Parameter Name="Period" Type="int" Mode="In" />
+          <Parameter Name="Year" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_PeriodCompOverviewRegion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Region" Type="nvarchar" Mode="In" />
+          <Parameter Name="Period" Type="int" Mode="In" />
+          <Parameter Name="Year" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="sp_PeriodDashOverview" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Channel" Type="nvarchar" Mode="In" />
           <Parameter Name="Year" Type="nvarchar" Mode="In" />
@@ -2095,6 +2105,16 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Parameter Name="userName" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="PeakHCs" EntityType="DixonsCarphone.WorkforceManagement.Business.PeakHC" />
+          <FunctionImport Name="sp_PeriodCompOverview" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_PeriodCompOverview_Result)">
+            <Parameter Name="Channel" Mode="In" Type="String" />
+            <Parameter Name="Period" Mode="In" Type="Int32" />
+            <Parameter Name="Year" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_PeriodCompOverviewRegion" ReturnType="Collection(DixonsCarphone.WorkforceManagement.Business.sp_PeriodCompOverviewRegion_Result)">
+            <Parameter Name="Region" Mode="In" Type="String" />
+            <Parameter Name="Period" Mode="In" Type="Int32" />
+            <Parameter Name="Year" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="BestPracticeCategoryType">
           <Key>
@@ -3821,6 +3841,40 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Property Name="DeployedHC" Type="Int32" Nullable="false" />
           <Property Name="Closed" Type="Int32" Nullable="false" />
         </EntityType>
+        <ComplexType Name="sp_PeriodCompOverview_Result">
+          <Property Type="String" Name="StoreFlag" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Division" Nullable="true" MaxLength="255" />
+          <Property Type="Int16" Name="Region" Nullable="true" />
+          <Property Type="String" Name="Year" Nullable="true" MaxLength="10" />
+          <Property Type="Byte" Name="Period" Nullable="true" />
+          <Property Type="Int32" Name="WeekNumber" Nullable="true" />
+          <Property Type="Int32" Name="BranchCount" Nullable="true" />
+          <Property Type="Int32" Name="Compliant" Nullable="true" />
+          <Property Type="Int32" Name="TCComp" Nullable="true" />
+          <Property Type="Int32" Name="TimecardsMissing" Nullable="true" />
+          <Property Type="Int32" Name="TotalHC" Nullable="true" />
+          <Property Type="Int32" Name="ZeroHour" Nullable="true" />
+          <Property Type="Int32" Name="PunchCompliance" Nullable="true" />
+          <Property Type="Int32" Name="ShortShiftCompliance" Nullable="true" />
+          <Property Type="Int32" Name="ShortShifts" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_PeriodCompOverviewRegion_Result">
+          <Property Type="String" Name="StoreFlag" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Division" Nullable="true" MaxLength="255" />
+          <Property Type="Int16" Name="Region" Nullable="true" />
+          <Property Type="String" Name="Year" Nullable="true" MaxLength="10" />
+          <Property Type="Byte" Name="Period" Nullable="true" />
+          <Property Type="Int32" Name="WeekNumber" Nullable="true" />
+          <Property Type="Int16" Name="BranchCount" Nullable="true" />
+          <Property Type="Int32" Name="Compliant" Nullable="true" />
+          <Property Type="Int32" Name="TCComp" Nullable="true" />
+          <Property Type="Int16" Name="TimecardsMissing" Nullable="true" />
+          <Property Type="Int16" Name="TotalHC" Nullable="true" />
+          <Property Type="Int16" Name="ZeroHour" Nullable="true" />
+          <Property Type="Double" Name="PunchCompliance" Nullable="true" />
+          <Property Type="Int32" Name="ShortShiftCompliance" Nullable="true" />
+          <Property Type="Int16" Name="ShortShifts" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5598,6 +5652,48 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_PeriodCompOverview" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_PeriodCompOverview">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.sp_PeriodCompOverview_Result">
+                <ScalarProperty Name="StoreFlag" ColumnName="StoreFlag" />
+                <ScalarProperty Name="Division" ColumnName="Division" />
+                <ScalarProperty Name="Region" ColumnName="Region" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Period" ColumnName="Period" />
+                <ScalarProperty Name="WeekNumber" ColumnName="WeekNumber" />
+                <ScalarProperty Name="BranchCount" ColumnName="BranchCount" />
+                <ScalarProperty Name="Compliant" ColumnName="Compliant" />
+                <ScalarProperty Name="TCComp" ColumnName="TCComp" />
+                <ScalarProperty Name="TimecardsMissing" ColumnName="TimecardsMissing" />
+                <ScalarProperty Name="TotalHC" ColumnName="TotalHC" />
+                <ScalarProperty Name="ZeroHour" ColumnName="ZeroHour" />
+                <ScalarProperty Name="PunchCompliance" ColumnName="PunchCompliance" />
+                <ScalarProperty Name="ShortShiftCompliance" ColumnName="ShortShiftCompliance" />
+                <ScalarProperty Name="ShortShifts" ColumnName="ShortShifts" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_PeriodCompOverviewRegion" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_PeriodCompOverviewRegion">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.sp_PeriodCompOverviewRegion_Result">
+                <ScalarProperty Name="StoreFlag" ColumnName="StoreFlag" />
+                <ScalarProperty Name="Division" ColumnName="Division" />
+                <ScalarProperty Name="Region" ColumnName="Region" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Period" ColumnName="Period" />
+                <ScalarProperty Name="WeekNumber" ColumnName="WeekNumber" />
+                <ScalarProperty Name="BranchCount" ColumnName="BranchCount" />
+                <ScalarProperty Name="Compliant" ColumnName="Compliant" />
+                <ScalarProperty Name="TCComp" ColumnName="TCComp" />
+                <ScalarProperty Name="TimecardsMissing" ColumnName="TimecardsMissing" />
+                <ScalarProperty Name="TotalHC" ColumnName="TotalHC" />
+                <ScalarProperty Name="ZeroHour" ColumnName="ZeroHour" />
+                <ScalarProperty Name="PunchCompliance" ColumnName="PunchCompliance" />
+                <ScalarProperty Name="ShortShiftCompliance" ColumnName="ShortShiftCompliance" />
+                <ScalarProperty Name="ShortShifts" ColumnName="ShortShifts" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

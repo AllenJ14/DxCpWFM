@@ -556,6 +556,23 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             }
         }
 
+        //Period Compliance overview
+        public async Task<List<sp_PeriodCompOverview_Result>> GetCompOverview(string year, byte period, string channel)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                return await Task.Run(() => dbContext.sp_PeriodCompOverview(channel, period, year).ToList());
+            }
+        }
+
+        public async Task<List<sp_PeriodCompOverviewRegion_Result>> GetCompOverviewRegion(string year, byte period, string region)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                return await Task.Run(() => dbContext.sp_PeriodCompOverviewRegion(region, period, year).ToList());
+            }
+        }
+
         // Queries Stores table for cost centre matching the given IP address
         public async Task<Store> GetStoreDetails(string ip)
         {

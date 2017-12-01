@@ -127,14 +127,11 @@
                                     <i class="glyphicon glyphicon-home"></i> <span>Home</span>
                                 </a>
                             </li>
-                            @if (accessLvl == "RM" || accessLvl == "DD" || accessLvl == "Admin" || accessLvl == "TPC")
-                            {
-                                <li>
-                                    <a href="@Url.Action("DashOverview", "Reports", new { area = "" })">
-                                        <i class="glyphicon glyphicon-dashboard"></i> <span>WFM Overview</span>
-                                    </a>
-                                </li>
-                            }
+                            <li class="current-menu-item">
+                                <a href="@Url.Action("ColleaguePayPortal", "RightFirstTime", new { area = "" })">
+                                    <i class="glyphicon glyphicon-user"></i> <span>Colleague Portal</span>
+                                </a>
+                            </li>
                             <li>
                                 <a href="#">
                                     <i class="glyphicon glyphicon-check"></i> <span>Right First Time Pay</span>
@@ -143,15 +140,20 @@
                                     </span>
                                 </a>
                                 <ul class="nav nav-second-level">
-                                    <li class="active"><a href="@Url.Action("GetCompliance", "Reports", new { area = "" })">Overview</a></li>
-                                    <li class="active"><a href="@Url.Action("TimecardSignOff", "RightFirstTime", new { area = "" })">Timecard Sign Off<span class="label label-danger pull-right">New!</span></a></li>
+                                    @if (accessLvl == "RM" || accessLvl == "DD" || accessLvl == "Admin" || accessLvl == "TPC")
+                                    {
+                                        <li>
+                                            <a href="@Url.Action("CompOverview", "Reports", new { area = "" })">RFTP Trend<span class="label label-danger pull-right">New!</span></a>
+                                        </li>
+                                    }
+                                    <li class="active"><a href="@Url.Action("GetCompliance", "Reports", new { area = "" })">Weekly Overview</a></li>
+                                    <li class="active"><a href="@Url.Action("TimecardSignOff", "RightFirstTime", new { area = "" })">Timecard Sign Off</a></li>
                                     <li class="active"><a href="@Url.Action("ClockingCompliance", "Reports", new { area = "" })">Clocking Compliance</a></li>
                                     @if (accessLvl == "RM" || accessLvl == "DD" || accessLvl == "Admin" || accessLvl == "TPC")
                                     {
-                                        <li class="active"><a href="@Url.Action("ClockingBehaviours", "Reports", new { area = "" })">Clocking Behaviours<span class="label label-danger pull-right">New!</span></a></li>
+                                        <li class="active"><a href="@Url.Action("ClockingBehaviours", "Reports", new { area = "" })">Clocking Behaviours</a></li>
                                     }
-                                    <li class="active"><a href="@Url.Action("EditedClocks", "Reports", new { area = "" })">Edited Clocks<span class="label label-danger pull-right">New!</span></a></li>
-                                    <li class="active"><a href="@Url.Action("ColleaguePayPortal", "RightFirstTime", new { area = "" })">Colleague Portal<span class="label label-danger pull-right">New!</span></a></li>
+                                    <li class="active"><a href="@Url.Action("EditedClocks", "Reports", new { area = "" })">Edited Clocks</a></li>
                                 </ul>
                             </li>
                             <li>
@@ -162,6 +164,12 @@
                                     </span>
                                 </a>
                                 <ul class="nav nav-second-level">
+                                    @if (accessLvl == "RM" || accessLvl == "DD" || accessLvl == "Admin" || accessLvl == "TPC")
+                                    {
+                                        <li>
+                                            <a href="@Url.Action("DashOverview", "Reports", new { area = "" })">Deployment Trend<span class="label label-danger pull-right">New!</span></a>
+                                        </li>
+                                    }
                                     <li class="active"><a href="@Url.Action("GetDeployment", "Reports", new { area = "" })">WFM Deployment</a></li>
                                     @if (!(bool)HttpContext.Current.Session["_ROIFlag"])
                                     {
@@ -319,10 +327,12 @@
                   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
                   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
                   })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
+                  
                   ga('create', 'UA-97493047-1', 'auto');
-                  ga('send', 'pageview');
-                </script>*@
+                  ga('send', 'pageview', {
+                      'dimension1': '@(store.CST_CNTR_ID)'
+                  });
+            </script>*@
 
             @if (Request.IsAuthenticated)
             {

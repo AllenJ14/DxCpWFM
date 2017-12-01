@@ -670,6 +670,33 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             return View(vm);
         }
 
+        [UserFilter(AccessLevel = "Admin,TPC,RM,DD,RD,BM")]
+        public async Task<ActionResult> CompOverview(string crit = "e_0")
+        {
+            string[] input = crit.Split('_');
+            byte period = byte.Parse(input[1]);
+            PeriodCompVm vm = new PeriodCompVm();
+
+            if(System.Web.HttpContext.Current.Session["_ChannelName"] != null || System.Web.HttpContext.Current.Session["_DivisionName"] != null)
+            {
+                vm.collection = mapper.Map<List<PeriodCompView>>(await _storeManager.GetCompOverview(input[0], period, _store.Channel));
+                vm.displayType = 3;
+            }
+            else
+            {
+                vm.collection = mapper.Map<List<PeriodCompView>>(await _storeManager.GetCompOverviewRegion(input[0], period, _store.RegionNo));
+                vm.displayType = 2;
+            }            
+
+            if (vm.collection.Count() > 0)
+            {
+                vm.selectedDate = string.Format("{0}_{1}", vm.collection.FirstOrDefault().Year, vm.collection.FirstOrDefault().Period);
+                vm.WeeksOfYear.ForEach(x => x.Selected = x.Value == vm.selectedDate);
+            }
+
+            return View(vm);
+        }
+
         private int GetWeekNumber(string selectedDate)
         {
             int weekOfYr;

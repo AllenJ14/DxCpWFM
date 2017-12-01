@@ -1,0 +1,61 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
+@model PeriodCompVm
+@{
+    ViewBag.Title = "Compliance Overview";
+}
+
+<div class="row">
+    &emsp;
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading text-center">
+        <strong>Compliance Overview</strong>
+        @if (Model.displayType == 3)
+        {
+            <label class="switch pull-right">
+                <input type="checkbox" id="advView" />
+                <span class="slider round"></span>
+            </label>
+            <span class="pull-right adv-label">Advanced view</span>
+        }
+    </div>
+    <div class="panel-body">
+        <div class="alert alert-info text-center">
+            <strong>Note: </strong>Figures for the previous week are published Tuesday AM <i><small>(Wednesday following BH)</small></i>
+        </div>
+        <div class="row" style="margin-bottom:10px;">
+            <div class="col-sm-4 col-sm-offset-4 col-xs-12">
+                @using (Html.BeginForm("CompOverview", "Reports", new { crit = Model.selectedDate }, FormMethod.Get, new { @class = "form-horizontal" }))
+                {
+                    @Html.DropDownList("crit", Model.WeeksOfYear, new { onchange = "this.form.submit();", @class = "form-control" })
+                }
+            </div>
+        </div>
+        @if (Model.collection.Count() == 0)
+        {
+            <div class="alert alert-danger text-center"><strong>Reporting for the selected period has not yet been finalised, check back later.</strong></div>
+        }
+        else if (Model.displayType == 3)
+        {
+            @Html.Partial("~/Views/Partials/_ChannelComp.cshtml", Model)
+        }
+        else
+        {
+            @Html.Partial("~/Views/Partials/_RegionComp.cshtml", Model)
+        }
+    </div>
+</div>
+
+@section myScripts{
+    <script>
+        $('#dTabs a').click(function (e) {
+            e.preventDefault()
+            $(this).tab('show')
+        })
+
+        $('#advView').click(function () {
+            $('.content').toggleClass('hide');
+        });
+    </script>
+}

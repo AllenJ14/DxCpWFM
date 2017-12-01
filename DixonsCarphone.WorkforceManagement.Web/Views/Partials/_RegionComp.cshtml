@@ -1,0 +1,161 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
+@model PeriodCompVm
+
+<div>
+    <ul class="nav nav-pills" role="tablist" id="dTabs" style="margin:0 auto;display:table;">
+        <li role="presentation" class="active"><a href="#overview" aria-controls="home" role="tab" data-toggle="tab">Overview</a></li>
+        <li role="presentation"><a href="#clock" aria-controls="home" role="tab" data-toggle="tab">Clocking Compliance</a></li>
+        <li role="presentation"><a href="#timecard" aria-controls="home" role="tab" data-toggle="tab">Timecard Sign Off</a></li>
+        <li role="presentation"><a href="#edits" aria-controls="home" role="tab" data-toggle="tab">Edited Clocks</a></li>
+    </ul>
+    <div class="tab-content">
+        <div role="tabpanel" id="overview" class="tab-pane fade in active">
+            <div class="container-fluid" style="margin-top:10px;">
+                <table class="table table-bordered-blue table-condensed">
+                    <thead>
+                        <tr>
+                            <th class="text-center col-xs-3" rowspan="2"></th>
+                            <th class="text-center" colspan="@(Model.WeekNumbers.Count())">Compliant</th>
+                        </tr>
+                        <tr>
+                            @foreach (var item in Model.WeekNumbers)
+                            {
+                                <th class="text-center col-xs-1">@(item == 999999 ? "Period" : item.ToString().Substring(4, 2))</th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach(var branch in Model.BranchList)
+                        {
+                            var data = Model.collection.Where(x => x.BranchCount == branch).OrderBy(x => x.wk);
+                            <tr>
+                                <td>@data.First().fullName</td>
+                                @foreach(var item in data)
+                                {
+                                    <td class="text-center @(item.Compliant == 1 ? "" : "danger")"><strong>@(item.Compliant == 1 ? "✔" : "X")</strong></td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div role="tabpanel" id="clock" class="tab-pane fade in">
+            <div class="container-fluid" style="margin-top:10px;">
+                <table class="table table-bordered-blue table-condensed">
+                    <thead>
+                        <tr>
+                            <th class="text-center col-xs-3" rowspan="2"></th>
+                            <th class="text-center" colspan="@(Model.WeekNumbers.Count() -1)">Clocking %</th>
+                            <th class="text-center">Compliant</th>
+                        </tr>
+                        <tr>
+                            @foreach (var item in Model.WeekNumbers)
+                            {
+                                <th class="text-center col-xs-1">@(item == 999999 ? "Period" : item.ToString().Substring(4, 2))</th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var branch in Model.BranchList)
+                        {
+                            var data = Model.collection.Where(x => x.BranchCount == branch).OrderBy(x => x.wk);
+                            <tr>
+                                <td>@data.First().fullName</td>
+                                @foreach (var item in data)
+                                {
+                                    if (item.wk != 999999)
+                                    {
+                                        <td class="text-center @(item.PunchCompliance >= 90 ? "" : "danger")">@(item.PunchCompliance)%</td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-center @(item.PunchCompliance == 1 ? "" : "danger")"><strong>@(item.PunchCompliance == 1 ? "✔" : "X")</strong></td>
+                                    }
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div role="tabpanel" id="timecard" class="tab-pane fade in">
+            <div class="container-fluid" style="margin-top:10px;">
+                <table class="table table-bordered-blue table-condensed">
+                    <thead>
+                        <tr>
+                            <th class="text-center col-xs-3" rowspan="2"></th>
+                            <th class="text-center" colspan="@(Model.WeekNumbers.Count() -1)">Zero Hour / Timecards Missing</th>
+                            <th class="text-center">Compliant</th>
+                        </tr>
+                        <tr>
+                            @foreach (var item in Model.WeekNumbers)
+                            {
+                                <th class="text-center col-xs-1">@(item == 999999 ? "Period" : item.ToString().Substring(4, 2))</th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var branch in Model.BranchList)
+                        {
+                            var data = Model.collection.Where(x => x.BranchCount == branch).OrderBy(x => x.wk);
+                            <tr>
+                                <td>@data.First().fullName</td>
+                                @foreach (var item in data)
+                                {
+                                    if (item.wk != 999999)
+                                    {
+                                        <td class="text-center @(item.TCComp == 1 ? "" : "danger")">@string.Format("{0}/{1}", item.ZeroHour == 0 ? "-" : item.ZeroHour.ToString(), item.TimecardsMissing == 0 ? "-" : item.TimecardsMissing.ToString())</td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-center @(item.TCComp == 1 ? "" : "danger")"><strong>@(item.TCComp == 1 ? "✔" : "X")</strong></td>
+                                    }
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div role="tabpanel" id="edits" class="tab-pane fade in">
+            <div class="container-fluid" style="margin-top:10px;">
+                <table class="table table-bordered-blue table-condensed">
+                    <thead>
+                        <tr>
+                            <th class="text-center col-xs-3" rowspan="2"></th>
+                            <th class="text-center" colspan="@(Model.WeekNumbers.Count() -1)">Edited Shifts</th>
+                            <th class="text-center">Compliant</th>
+                        </tr>
+                        <tr>
+                            @foreach (var item in Model.WeekNumbers)
+                            {
+                                <th class="text-center col-xs-1">@(item == 999999 ? "Period" : item.ToString().Substring(4, 2))</th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var branch in Model.BranchList)
+                        {
+                            var data = Model.collection.Where(x => x.BranchCount == branch).OrderBy(x => x.wk);
+                            <tr>
+                                <td>@data.First().fullName</td>
+                                @foreach (var item in data)
+                                {
+                                    if (item.wk != 999999)
+                                    {
+                                        <td class="text-center @(item.ShortShiftCompliance == 1 ? "" : "danger")">@item.ShortShifts</td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-center @(item.ShortShiftCompliance == 1 ? "" : "danger")"><strong>@(item.ShortShiftCompliance == 1 ? "✔" : "X")</strong></td>
+                                    }
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

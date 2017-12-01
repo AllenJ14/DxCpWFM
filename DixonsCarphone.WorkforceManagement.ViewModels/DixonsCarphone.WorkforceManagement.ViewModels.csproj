@@ -110,6 +110,8 @@
     <Compile Include="BusinessModels\PeakFlexRegionView.cs" />
     <Compile Include="BusinessModels\PeakFlexVm.cs" />
     <Compile Include="BusinessModels\PeakHCView.cs" />
+    <Compile Include="BusinessModels\PeriodCompView.cs" />
+    <Compile Include="BusinessModels\PeriodCompVm.cs" />
     <Compile Include="BusinessModels\PeriodDashView.cs" />
     <Compile Include="BusinessModels\PeriodDashVm.cs" />
     <Compile Include="BusinessModels\PunchExceptionsView.cs" />

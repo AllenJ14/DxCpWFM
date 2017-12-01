@@ -199,6 +199,10 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
 
         Task<List<sp_PeriodDashOverview_Result>> GetDashOverview(string year, byte period, string channel);
 
+        Task<List<sp_PeriodCompOverview_Result>> GetCompOverview(string year, byte period, string channel);
+
+        Task<List<sp_PeriodCompOverviewRegion_Result>> GetCompOverviewRegion(string year, byte period, string region);
+
         Task<List<PeakHC>> GetDivisionPeakHC(string channel);
 
         Task<List<PeakHC>> GetRegionPeakHC(string region);

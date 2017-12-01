@@ -11,6 +11,12 @@
         return Math.ceil((((this - onejan) / 86400000) + onejan.getDay() + 1) / 7);
     };
 
+    Date.prototype.addDays = function (days) {
+        var dat = new Date(this.valueOf());
+        dat.setDate(dat.getDate() + days);
+        return dat;
+    };
+
     $('#confException').click(function () {
         confirmed = true;
         $exception.val(1);
@@ -36,14 +42,15 @@
             var start = $(this).find('select').eq(0).val();
             var end = $(this).find('select').eq(1).val();
 
-            var dateString = $(this).find('input').eq(2).val();
+            var dateString = $(this).find('input').eq(3).val();
             var parts = dateString.split('-');
             var myDate = new Date(parts[0], parts[1] - 1, parts[2]);
-            var today = new Date();
-            
-            if ((today.getDay() <= 1 && myDate.getWeek() < today.getWeek()) || (today.getDay() >= 5 && today.getWeek() == myDate.getWeek())) {
+            var today = new Date().addDays(1);
+            today.setHours(0, 0, 0, 0);
+
+            if ((today.getDay() <= 1 && myDate < today.addDays(today.getDay())) || (today.getDay() >= 5 && myDate < today.addDays(7 - today.getDay()))) {
                 exception = true;
-            };
+            }
 
             if (start > end) {
                 if (!$(this).find('.alert').length) {
