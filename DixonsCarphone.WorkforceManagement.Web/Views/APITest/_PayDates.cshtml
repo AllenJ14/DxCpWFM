@@ -1,6 +1,15 @@
 ﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels;
 @model ColleaguePayDataVm
 
+@{ 
+    Func<int, int,string> GetTime = (h,m) =>
+    {
+        h += (int)Math.Floor((decimal)m / 60);
+        m = m % 60;
+        return string.Format("{0}:{1:0#}", h, m);
+    };
+}
+
 <p>
     <strong>This pay packet includes these weeks:</strong>
 </p>
@@ -51,16 +60,17 @@ else if (Model.tSheet != null && Model.tSheet.Count() > 0)
             </td>
             @foreach (var item in Model.payDates)
             {
-                var a = Model.tSheet.Where(x => x.Period.TimeFramePeriod.PeriodDateSpan.Contains(item.WCDate.ToShortDateString())).FirstOrDefault().PeriodTotalData.PeriodTotals.Totals.Total.Where(x => x.PayCodeName == "UK IE @WFM Worked Hours").FirstOrDefault();
-                <td class="text-center col-xs-2">@(a != null ? a.AmountInTime : "")</td>
+                var a = Model.tSheet.Where(x => x.Period.TimeFramePeriod.PeriodDateSpan.Contains(item.WCDate.ToShortDateString())).FirstOrDefault().PeriodTotalData.PeriodTotals.Totals.Total.Where(x => x.PayCodeName == "UK IE @WFM Worked Hours");
+
+                <td class="text-center col-xs-2">@(a.Count() > 0 ? GetTime(a.Sum(x => x.amtHour), a.Sum(x => x.amtMinute)) : "")</td>
             }
         </tr>
         <tr>
             <td class="active"><strong>Holiday</strong></td>
             @foreach (var item in Model.payDates)
             {
-                var a = Model.tSheet.Where(x => x.Period.TimeFramePeriod.PeriodDateSpan.Contains(item.WCDate.ToShortDateString())).FirstOrDefault().PeriodTotalData.PeriodTotals.Totals.Total.Where(x => x.PayCodeName == "UK IE @WFM Holiday").FirstOrDefault();
-                <td class="text-center">@(a != null ? a.AmountInTime : "")</td>
+                var a = Model.tSheet.Where(x => x.Period.TimeFramePeriod.PeriodDateSpan.Contains(item.WCDate.ToShortDateString())).FirstOrDefault().PeriodTotalData.PeriodTotals.Totals.Total.Where(x => x.PayCodeName == "UK IE @WFM Holiday");
+                <td class="text-center">@(a.Count() > 0 ? GetTime(a.Sum(x => x.amtHour), a.Sum(x => x.amtMinute)) : "")</td>
             }
         </tr>
         <tr>
@@ -70,24 +80,24 @@ else if (Model.tSheet != null && Model.tSheet.Count() > 0)
             </td>
             @foreach (var item in Model.payDates)
             {
-                var a = Model.tSheet.Where(x => x.Period.TimeFramePeriod.PeriodDateSpan.Contains(item.WCDate.ToShortDateString())).FirstOrDefault().PeriodTotalData.PeriodTotals.Totals.Total.Where(x => x.PayCodeName == "UK IE @WFM Sick").FirstOrDefault();
-                <td class="text-center">@(a != null ?a.AmountInTime : "")</td>
+                var a = Model.tSheet.Where(x => x.Period.TimeFramePeriod.PeriodDateSpan.Contains(item.WCDate.ToShortDateString())).FirstOrDefault().PeriodTotalData.PeriodTotals.Totals.Total.Where(x => x.PayCodeName == "UK IE @WFM Sick");
+                <td class="text-center">@(a.Count() > 0 ? GetTime(a.Sum(x => x.amtHour), a.Sum(x => x.amtMinute)) : "")</td>
             }
         </tr>
         <tr>
             <td class="active"><strong>Other Paid Absence</strong></td>
             @foreach (var item in Model.payDates)
             {
-                var a = Model.tSheet.Where(x => x.Period.TimeFramePeriod.PeriodDateSpan.Contains(item.WCDate.ToShortDateString())).FirstOrDefault().PeriodTotalData.PeriodTotals.Totals.Total.Where(x => x.PayCodeName == "UK IE @WFM Paid Absence").FirstOrDefault();
-                <td class="text-center">@(a != null ? a.AmountInTime : "")</td>
+                var a = Model.tSheet.Where(x => x.Period.TimeFramePeriod.PeriodDateSpan.Contains(item.WCDate.ToShortDateString())).FirstOrDefault().PeriodTotalData.PeriodTotals.Totals.Total.Where(x => x.PayCodeName == "UK IE @WFM Paid Absence");
+                <td class="text-center">@(a.Count() > 0 ? GetTime(a.Sum(x => x.amtHour), a.Sum(x => x.amtMinute)) : "")</td>
             }
         </tr>
         <tr>
             <td class="active"><strong>Other Unpaid Absence</strong></td>
             @foreach (var item in Model.payDates)
             {
-                var a = Model.tSheet.Where(x => x.Period.TimeFramePeriod.PeriodDateSpan.Contains(item.WCDate.ToShortDateString())).FirstOrDefault().PeriodTotalData.PeriodTotals.Totals.Total.Where(x => x.PayCodeName == "UK IE @WFM Unpaid Absence").FirstOrDefault();
-                <td class="text-center">@(a != null ? a.AmountInTime : "")</td>
+                var a = Model.tSheet.Where(x => x.Period.TimeFramePeriod.PeriodDateSpan.Contains(item.WCDate.ToShortDateString())).FirstOrDefault().PeriodTotalData.PeriodTotals.Totals.Total.Where(x => x.PayCodeName == "UK IE @WFM Unpaid Absence");
+                <td class="text-center">@(a.Count() > 0 ? GetTime(a.Sum(x => x.amtHour), a.Sum(x => x.amtMinute)) : "")</td>
             }
         </tr>
         <tr style="border:0px;">

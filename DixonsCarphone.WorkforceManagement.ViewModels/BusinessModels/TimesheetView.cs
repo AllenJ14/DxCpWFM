@@ -52,6 +52,16 @@ namespace DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
         public string OrgJobId { get; set; }
         public string OrgJobName { get; set; }
         public string OrgJobDescription { get; set; }
+
+        public int amtHour { get
+            {
+                return int.Parse(AmountInTime.Split(':')[0]);
+            } }
+
+        public int amtMinute { get
+            {
+                return int.Parse(AmountInTime.Split(':')[1]);
+            } }
     }
 
     public class EmployeeView

@@ -45,10 +45,10 @@
             var dateString = $(this).find('input').eq(3).val();
             var parts = dateString.split('-');
             var myDate = new Date(parts[0], parts[1] - 1, parts[2]);
-            var today = new Date().addDays(1);
+            var today = new Date();
             today.setHours(0, 0, 0, 0);
 
-            if ((today.getDay() <= 1 && myDate < today.addDays(today.getDay())) || (today.getDay() >= 5 && myDate < today.addDays(7 - today.getDay()))) {
+            if ((today.getDay() <= 1 && myDate < today.addDays(today.getDay())) || (today.getDay() == 5 && myDate.getHours() >= 17) || (today.getDay() == 6 && myDate < today.addDays(7 - today.getDay()))) {
                 exception = true;
             }
 
@@ -62,6 +62,7 @@
                 $('.alert', this).remove();
             };
         });
+        event.preventDefault();
 
         if ($('#_branchValidate').data('valid') === 0) {
             valid = false;
@@ -74,7 +75,6 @@
         if (valid && exception && !confirmed) {
             event.preventDefault();
             $('#crException').modal('toggle');
-        };
-        
+        };        
     });
 });
