@@ -272,6 +272,10 @@
     <Content Include="Content\New\sb-admin-2.js" />
     <Content Include="Content\New\sb-admin-2.min.css" />
     <Content Include="Content\New\sb-admin-2.min.js" />
+    <Content Include="Content\Workflow\WorkflowContingency.js" />
+    <Content Include="Content\Workflow\WorkflowContingency.min.js">
+      <DependentUpon>WorkflowContingency.js</DependentUpon>
+    </Content>
     <Content Include="Content\Workflow\WorkflowCrossRegion.js" />
     <Content Include="Content\Workflow\WorkflowCrossRegion.min.js">
       <DependentUpon>WorkflowCrossRegion.js</DependentUpon>

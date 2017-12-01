@@ -94,5 +94,11 @@
     "inputFiles": [
       "Content/Custom/TCSignOff.js"
     ]
+  },
+  {
+    "outputFileName": "Content/Workflow/WorkflowContingency.min.js",
+    "inputFiles": [
+      "Content/Workflow/WorkflowContingency.js"
+    ]
   }
 ]

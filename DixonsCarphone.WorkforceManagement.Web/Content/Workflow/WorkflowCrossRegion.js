@@ -48,7 +48,7 @@
             var today = new Date();
             today.setHours(0, 0, 0, 0);
 
-            if ((today.getDay() <= 1 && myDate < today.addDays(today.getDay())) || (today.getDay() == 5 && myDate.getHours() >= 17) || (today.getDay() == 6 && myDate < today.addDays(7 - today.getDay()))) {
+            if ((today.getDay() <= 1 && myDate < today.addDays(today.getDay())) || (today.getDay() == 5 && myDate.getHours() >= 15) || (today.getDay() == 6 && myDate < today.addDays(7 - today.getDay()))) {
                 exception = true;
             }
 

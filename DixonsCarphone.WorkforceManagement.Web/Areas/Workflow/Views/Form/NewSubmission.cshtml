@@ -123,19 +123,29 @@
 }
 @if (ticketType == 7)
 {
-    <div class="modal fade" id="crReminder" tabindex="-1" role="dialog">
+    <div class="modal fade" id="crReminder" tabindex="-1" role="dialog" data-backdrop="static">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h3 class="modal-title">Reminder</h3>
                 </div>
                 <div class="modal-body">
-                    <h4>Ensure all clocks have now been manually added into STAR.</h4>
-                    <h4>Please confirm this has been actioned</h4>
+                    <h4>Please confirm you have completed the below actions:</h4>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" id="chkA"> All clocks have been manually added to STAR
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" id="chkB"> A copy of the contingency paperwork has been emailed to my TPC
+                        </label>
+                    </div>
+                    <h4><strong><u>This form will be rejected if the above actions have not been completed</u></strong></h4>
                 </div>
                 <div class="modal-footer text-center">
-                    <button class="btn btn-success" id="crDismiss" data-dismiss="modal">Confirm</button>
+                    <a href="@Url.Action("/")" class="btn btn-danger">Cancel</a>
+                    <button class="btn btn-success" id="crDismiss" data-dismiss="modal" disabled>Confirm</button>
                 </div>
             </div>
         </div>
@@ -158,11 +168,7 @@ else if(ticketType == 5)
 }
 else if(ticketType == 7)
 {
-    <script>
-        $(function () {
-            $('#crReminder').modal('show');
-        });
-    </script>
+    <script id="wf7" src="~/Content/Workflow/WorkflowContingency.min.js"></script>
 }
 }
 
