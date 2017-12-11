@@ -9,18 +9,18 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
 {
     public interface IKronosManager
     {
-        Task<List<HyperFindResult>> GetKronosHyperFind(string kronosStoreName, string startDate, string endDate);
+        Task<List<HyperFindResult>> GetKronosHyperFind(string kronosStoreName, string startDate, string endDate, string sessionID = null);
 
-        Task<ScheduleItems> GetStoreScheduleForWeek(string startDate, string endDate, List<string> personNumbers);
+        Task<ScheduleItems> GetStoreScheduleForWeek(string startDate, string endDate, List<string> personNumbers, string sessionID = null);
 
-        List<Timesheet> GetTimesheet(DateTime[] dates, string personNumber);
+        List<Timesheet> GetTimesheet(DateTime[] dates, string personNumber, string sessionID = null);
 
-        Task<bool> LogOff();
+        Task<bool> LogOff(string sessionID = null);
 
-        Task<bool> LogOn();
+        Task<bool> LogOn(string sessionID = null);
 
-        Task<List<Timesheet>> GetTimesheetForStore(DateTime date, string[] personList);
+        Task<List<Timesheet>> GetTimesheetForStore(DateTime date, string[] personList, string sessionID = null);
 
-        Task<List<PunchStatus>> GetPunchStatus(List<string> employeeList);
+        Task<List<PunchStatus>> GetPunchStatus(List<string> employeeList, string sessionID = null);
     }
 }

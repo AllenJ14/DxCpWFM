@@ -62,10 +62,10 @@
     </div>
 
     @Html.Partial("~/Views/Partials/_PageBlurb.cshtml", (BaseViewModel)Model)
-    <div class="alert alert-danger text-center">
+    @*<div class="alert alert-danger text-center">
             <strong>Note:</strong> 
             Timecards can no longer be signed off from the Timecard Manager summary screen and now need to be done within each individual timecard  Click <u><a href="@Url.Action("TimecardSignOff", "STARHandbook", new { articleNumber = 1})">here</a></u> for the correct signoff process
-        </div>
+        </div>*@
     <div class="row">
         @Html.Partial("~/Views/Partials/_ScoresAndUtilization.cshtml", Model.Scores)
     </div>
@@ -126,6 +126,9 @@
                 <p>All Branch Managers should have been briefed on Right First Time Pay now. The briefing pack used in you Regional Team Meetings is available here, however if you have not been briefed you should speak to your Regional Manager as soon as possible.</p>
                 <p>Remember you now have until 3pm on Monday to ensure all timecards are signed off (even your own BM timecard) – use the new Timecard Signoff report to check you're getting this right.<p />
             </div>
+                <div class="row text-center">
+                <a class="btn btn-success btn-lg" href="@Url.Action("Guide", "RightFirstTime")">Briefing Packs</a>
+                    </div>
         </div>
     </div>
 

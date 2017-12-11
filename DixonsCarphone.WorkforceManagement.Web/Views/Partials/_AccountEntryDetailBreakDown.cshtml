@@ -4,12 +4,14 @@
 @{ 
     var modalId = string.Format("myModal{0}", Model.FirstOrDefault()?.AccountEntryDetailId);
     var modalLabel = string.Format("myModalLabel{0}", Model.FirstOrDefault()?.AccountEntryDetailId);
-    bool budget = Model.Sum(x => x.BreakdownBudgetAmount) > 0;
+    bool budget = Model.Sum(x => x.BreakdownBudgetAmount) != 0;
+    bool discount = (bool)ViewData["discount"];
+    bool rollup = ViewData["rollup"] == null ? false : (bool)ViewData["rollup"];
 }
 
 <div class="panel-default">
     <!-- Button trigger modal -->
-    <button class="btn-link" data-toggle="modal" data-target="#@modalId">
+    <button class="btn btn-link" data-toggle="modal" data-target="#@modalId">
         <small>View Detail</small>
     </button>
     <!-- Modal -->
@@ -26,10 +28,14 @@
                             <th>Title</th>
                             <th>Description</th>
                             <th>Actual</th>
-                            @if (budget)
+                            @if (budget && !discount)
                             {
                                 <th>Budget</th>
-                            }                            
+                            }
+                            @if (rollup && budget && !discount)
+                            {
+                                <th>%</th>
+                            }
                         </tr>
                         @foreach (var breakDown in Model)
                         {
@@ -37,9 +43,20 @@
                                 <td>@breakDown.BreakdownTitle</td>
                                 <td>@string.Format("{0:c}", breakDown.BreakdownText)</td>
                                 <td>@string.Format("{0:c}", breakDown.BreakdownActualAmount)</td>
-                                @if (budget)
+                                @if (budget && !discount)
                                 {
                                     <td>@string.Format("{0:c}", breakDown.BreakdownBudgetAmount)</td>
+                                }
+                                @if (rollup && budget && !discount)
+                                {
+                                    if (breakDown.BreakdownBudgetAmount == 0)
+                                    {
+                                        <td>-</td>
+                                    }
+                                    else
+                                    {
+                                        <td>@string.Format("{0:0}%", breakDown.BreakdownActualAmount / breakDown.BreakdownBudgetAmount * 100)</td>
+                                    }
                                 }
                             </tr>
                         }

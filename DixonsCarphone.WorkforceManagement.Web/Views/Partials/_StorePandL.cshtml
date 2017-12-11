@@ -4,7 +4,7 @@
 
 @{
     bool abbr = false;
-    if (HttpContext.Current.Session["_DivisionName"] != null || HttpContext.Current.Session["_ChannelName"] != null || ViewBag.abbr != null)
+    if (Model.PandLDetails.First().AccountEntryHeaderText == "RollupDivision" || Model.PandLDetails.First().AccountEntryHeaderText == "RollupChannel")
     {
         abbr = true;
     }

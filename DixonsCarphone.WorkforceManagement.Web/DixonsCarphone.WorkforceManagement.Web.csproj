@@ -224,6 +224,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\APIError\empty.txt" />
+    <Content Include="App_Data\APILog\empty.txt" />
     <Content Include="App_Data\ELMAH\empty.txt" />
     <Content Include="App_Readme\Elmah.txt" />
     <Content Include="Areas\Workflow\Views\Form\NewSubmission.cshtml" />

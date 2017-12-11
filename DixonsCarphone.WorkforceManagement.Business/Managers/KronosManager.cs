@@ -14,61 +14,61 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
         //     Logon();
         //}
 
-        public async Task<List<HyperFindResult>> GetKronosHyperFind(string kronosStoreName, string startDate, string endDate)
+        public async Task<List<HyperFindResult>> GetKronosHyperFind(string kronosStoreName, string startDate, string endDate, string sessionID = null)
         {
-            var hyperFindResult = await KronosApi.HyperfindResult(kronosStoreName, string.Format("{0}-{1}", startDate, endDate));
+            var hyperFindResult = await KronosApi.HyperfindResult(kronosStoreName, string.Format("{0}-{1}", startDate, endDate), sessionID);
             //var personNumbers = hyperFindResult.Select(x => x.PersonNumber).ToList();
             
             return hyperFindResult;
         }
 
-        public List<Timesheet> GetTimesheet(DateTime[] dates, string personNumber)
+        public List<Timesheet> GetTimesheet(DateTime[] dates, string personNumber, string sessionID = null)
         {
-            var timesheetResult = KronosApi.RequestTimesheet(dates, personNumber );
+            var timesheetResult = KronosApi.RequestTimesheet(dates, personNumber, sessionID);
             
             return timesheetResult;
         }
 
-        public async Task<List<Timesheet>> GetTimesheetForStore(DateTime date, string[] personList)
+        public async Task<List<Timesheet>> GetTimesheetForStore(DateTime date, string[] personList, string sessionID = null)
         {
-            var timesheetResult = await KronosApi.RequestTimesheet(date, personList);
+            var timesheetResult = await KronosApi.RequestTimesheet(date, personList, sessionID);
             
             return timesheetResult;
         }
 
-        public async Task<ScheduleItems> GetStoreScheduleForWeek(string startDate, string endDate, List<string> personNumbers)
+        public async Task<ScheduleItems> GetStoreScheduleForWeek(string startDate, string endDate, List<string> personNumbers, string sessionID = null)
         {
             var toRtn = new ScheduleItems();
 
             if (personNumbers.Count > 0)
             {
-                var data = await KronosApi.RequestScheduleDetail(startDate, endDate, personNumbers);
+                var data = await KronosApi.RequestScheduleDetail(startDate, endDate, personNumbers, sessionID);
                 toRtn = data.FirstOrDefault();
             }
             
             return toRtn;
         }
 
-        public async Task<List<PunchStatus>> GetPunchStatus(List<string> employeeList)
+        public async Task<List<PunchStatus>> GetPunchStatus(List<string> employeeList, string sessionId = null)
         {
             var toRtn = new List<PunchStatus>();
 
             if(employeeList.Count > 0)
             {
-                toRtn = await KronosApi.RequestPunchStatus(employeeList);
+                toRtn = await KronosApi.RequestPunchStatus(employeeList, sessionId);
             }
             
             return toRtn;
         }
 
-        public async Task<bool> LogOff()
+        public async Task<bool> LogOff(string sessionID = null)
         {
-            return await KronosApi.Logoff();
+            return await KronosApi.Logoff(sessionID);
         }
 
-        public async Task<bool> LogOn()
+        public async Task<bool> LogOn(string sessionID = null)
         {
-            return await KronosApi.Logon();
+            return await KronosApi.Logon(sessionID);
         }
     }
 }

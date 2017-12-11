@@ -62,7 +62,7 @@
                 $('.alert', this).remove();
             };
         });
-        event.preventDefault();
+        //event.preventDefault();
 
         if ($('#_branchValidate').data('valid') === 0) {
             valid = false;

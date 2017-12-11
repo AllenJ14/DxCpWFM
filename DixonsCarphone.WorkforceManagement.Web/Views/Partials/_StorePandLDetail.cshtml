@@ -5,7 +5,7 @@
 
 @{ 
     bool abbr = false;
-    if (HttpContext.Current.Session["_DivisionName"] != null || HttpContext.Current.Session["_ChannelName"] != null)
+    if (Model.PandLDetails.First().AccountEntryHeaderText == "RollupDivision" || Model.PandLDetails.First().AccountEntryHeaderText == "RollupChannel")
     {
         abbr = true;
     }
@@ -181,7 +181,7 @@
 
         @if (breakDowns != null && breakDowns.Count > 0)
         {
-            <td>@Html.Partial("~/Views/Partials/_AccountEntryDetailBreakDown.cshtml", breakDowns)</td>
+            <td>@Html.Partial("~/Views/Partials/_AccountEntryDetailBreakDown.cshtml", breakDowns, new ViewDataDictionary { { "discount", entry.AccountEntrySubTypeId == 5 } , { "rollup",  entry.AccountEntryHeaderText?.StartsWith("RollUp")} })</td>
         }
         else
         {

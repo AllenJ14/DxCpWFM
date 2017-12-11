@@ -140,16 +140,16 @@
                                     </span>
                                 </a>
                                 <ul class="nav nav-second-level">
-                                    @if (accessLvl == "RM" || accessLvl == "DD" || accessLvl == "Admin" || accessLvl == "TPC")
+                                    @if (accessLvl == "RD" || accessLvl == "RM" || accessLvl == "DD" || accessLvl == "Admin" || accessLvl == "TPC")
                                     {
                                         <li>
-                                            <a href="@Url.Action("CompOverview", "Reports", new { area = "" })">RFTP Trend<span class="label label-danger pull-right">New!</span></a>
+                                            <a href="@Url.Action("CompOverview", "Reports", new { area = "" })">RFTP Summary<span class="label label-danger pull-right">New!</span></a>
                                         </li>
                                     }
-                                    <li class="active"><a href="@Url.Action("GetCompliance", "Reports", new { area = "" })">Weekly Overview</a></li>
+                                    <li class="active"><a href="@Url.Action("GetCompliance", "Reports", new { area = "" })">RFTP Detail</a></li>
                                     <li class="active"><a href="@Url.Action("TimecardSignOff", "RightFirstTime", new { area = "" })">Timecard Sign Off</a></li>
                                     <li class="active"><a href="@Url.Action("ClockingCompliance", "Reports", new { area = "" })">Clocking Compliance</a></li>
-                                    @if (accessLvl == "RM" || accessLvl == "DD" || accessLvl == "Admin" || accessLvl == "TPC")
+                                    @if (accessLvl == "RD" || accessLvl == "RM" || accessLvl == "DD" || accessLvl == "Admin" || accessLvl == "TPC")
                                     {
                                         <li class="active"><a href="@Url.Action("ClockingBehaviours", "Reports", new { area = "" })">Clocking Behaviours</a></li>
                                     }
@@ -164,29 +164,32 @@
                                     </span>
                                 </a>
                                 <ul class="nav nav-second-level">
-                                    @if (accessLvl == "RM" || accessLvl == "DD" || accessLvl == "Admin" || accessLvl == "TPC")
+                                    @if (accessLvl == "RD" || accessLvl == "RM" || accessLvl == "DD" || accessLvl == "Admin" || accessLvl == "TPC")
                                     {
                                         <li>
-                                            <a href="@Url.Action("DashOverview", "Reports", new { area = "" })">Deployment Trend<span class="label label-danger pull-right">New!</span></a>
+                                            <a href="@Url.Action("DashOverview", "Reports", new { area = "" })">Deployment Summary<span class="label label-danger pull-right">New!</span></a>
                                         </li>
                                     }
-                                    <li class="active"><a href="@Url.Action("GetDeployment", "Reports", new { area = "" })">WFM Deployment</a></li>
+                                    <li class="active"><a href="@Url.Action("GetDeployment", "Reports", new { area = "" })">Deployment Detail</a></li>
                                     @if (!(bool)HttpContext.Current.Session["_ROIFlag"])
                                     {
                                         <li class="active"><a href="@Url.Action("Footfall", "Reports", new { area = "" })">Footfall Traffic</a></li>
 
-                                        if (accessLvl == "RM" || accessLvl == "DD" || accessLvl == "Admin" || accessLvl == "TPC")
+                                        if (accessLvl == "RD" || accessLvl == "RM" || accessLvl == "DD" || accessLvl == "Admin" || accessLvl == "TPC")
                                         {
                                             <li class="active"><a href="@Url.Action("WeekendWorking", "Reports", new { area = "" })">BM Weekend Working</a></li>
                                         }
                                     }
                                 </ul>
                             </li>
+                            @if(!(bool)HttpContext.Current.Session["_ROIFlag"])
+                            {
                             <li class="active">
                                 <a href="@Url.Action("StorePandL", "Reports", new { area = "" })">
                                     <i class="glyphicon glyphicon-gbp"></i> <span>Profit &amp; Loss</span>
                                 </a>
                             </li>
+                            }
                             <li>
                                 <a href="#">
                                     <i class="glyphicon glyphicon-th"></i> <span>My Store</span>
