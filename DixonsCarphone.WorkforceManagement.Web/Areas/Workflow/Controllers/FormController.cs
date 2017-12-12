@@ -87,6 +87,5 @@ namespace DixonsCarphone.WorkforceManagement.Web.Areas.Workflow.Controllers
             TempData["ticketID"] = toReturn;
             return RedirectToAction("Index");
         }
-
     }
 }

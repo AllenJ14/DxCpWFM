@@ -60,6 +60,10 @@
                         </div>
                     }
                 }
+                else if (q.ReturnType == "date")
+                {
+                    <input type="text" class="form-control date" name="@string.Format("q[{0}].Answer", qCounter)" required id="@string.Format("q[{0}].Answer", qCounter)"/>
+                }
                 else
                 {
                     <input type="@q.ReturnType" class="form-control @q.apiIdent" placeholder="" name="@string.Format("q[{0}].Answer", qCounter)" required />
@@ -152,7 +156,14 @@
     </div>
 }
 
+@section myStyles{
+    <link rel="stylesheet" href="~/Content/New/jquery-ui.min.css" />
+    <link rel="stylesheet" href="~/Content/New/jquery-ui.structure.min.css" />
+    <link rel="stylesheet" href="~/Content/New/jquery-ui.theme.min.css" />
+}
+
 @section myScripts{ 
+<script id="jqUI" src="~/Content/New/jquery-ui.min.js"></script>
 <script id="wfMaster" src="~/Content/Workflow/WorkflowMaster.min.js" data-grpLimit="@(Model.QuestionList.Where(x => x.GrpLimit != null).FirstOrDefault() != null ? Model.QuestionList.Where(x => x.GrpLimit != null).First().GrpLimit : 0)" data-qCount="@Model.QuestionList.Count()" data-defaultemp="@ViewBag.defaultEmp"></script>
 @if (ticketType == 1)
 {

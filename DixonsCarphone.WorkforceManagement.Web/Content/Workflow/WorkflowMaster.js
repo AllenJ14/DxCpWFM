@@ -64,6 +64,9 @@
             }
             else {
                 $(this).attr('name', 'q[' + qCount + '].Answer');
+                $(this).attr('id', 'q[' + qCount + '].Answer');
+                $(this).val("");
+                $(this).removeClass('hasDatepicker');
             }
             });
             qCount++;
@@ -71,7 +74,6 @@
         qCount++;
         $('#addGrpContainer').before(toAppend);
         if (grpCount == grpLimit) {
-            console.log('here');
             $('#addGrp').css('display','none');
         };
     });
@@ -82,5 +84,9 @@
         if (grpCount < grpLimit) {
             $('#addGrp').css('display', 'inline');
         };
+    });
+
+    $('#formContainer').on('focus', '.date', function () {
+        $(this).datepicker({dateFormat: 'dd/mm/yy'});
     });
 });
