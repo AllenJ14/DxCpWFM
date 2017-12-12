@@ -3,11 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
-using System.Linq;
-using System.Net;
-using System.Text;
 using System.Threading.Tasks;
-using System.Web;
 using System.Xml;
 
 namespace DixonsCarphone.WorkforceManagement.Business.Kronos
@@ -19,18 +15,18 @@ namespace DixonsCarphone.WorkforceManagement.Business.Kronos
         private static readonly string XMLfooter = "</Kronos_WFC>";
         private static readonly string userName = ConfigurationManager.AppSettings["KnUser"];
         private static readonly string password = ConfigurationManager.AppSettings["KnP"];
-        private static CookieContainer cookieContainer = new CookieContainer();
-
-
-        public static async Task<bool> Logon(string sessionID)
+        //private static CookieContainer cookieContainer = new CookieContainer();
+        
+        public static async Task<bool> Logon(string sessionID = null)
         {
             var xmlString = XMLheader + "<Request Action='logon' Object='system' Username='" + userName + "' Password='" + password + "'/> " + XMLfooter;
             
             var outcome = await postRequestAsync(xmlString);
+            var success = CheckResponse(outcome);
 
-            await Task.Run(() => logAction("Logon", CheckResponse(outcome), sessionID));
+            await Task.Run(() => logAction("Logon", success, sessionID));
 
-            return CheckResponse(outcome);
+            return success == 1;
         }
 
         public static async Task<bool> Logoff(string sessionID)
@@ -38,10 +34,11 @@ namespace DixonsCarphone.WorkforceManagement.Business.Kronos
             var xmlString = XMLheader + "<Request Action='logoff' Object='system'/> " + XMLfooter;
 
             var outcome = await postRequestAsync(xmlString);
+            var success = CheckResponse(outcome);
 
-            await Task.Run(() => logAction("Logoff", CheckResponse(outcome), sessionID));
+            await Task.Run(() => logAction("Logoff", success, sessionID));
 
-            return CheckResponse(outcome);
+            return success == 1;
         }
 
         public static async Task<List<HyperFindResult>> HyperfindResult(string queryName, string dateSpan, string sessionID)
@@ -53,15 +50,25 @@ namespace DixonsCarphone.WorkforceManagement.Business.Kronos
             var outcome = await postRequestAsync(xmlString);
             var success = CheckResponse(outcome);
 
+            if(success == -1)
+            {
+                var logon = await Logon();
+                if (logon)
+                {
+                    outcome = await postRequestAsync(xmlString);
+                    success = CheckResponse(outcome);
+                }
+            }
+
             logAction("Hyperfind", success, sessionID, queryName);
 
-            return success ? await outcome.DeserializeToObjectAsync<HyperFindResult>() : new List<HyperFindResult>();
+            return success == 1 ? await outcome.DeserializeToObjectAsync<HyperFindResult>() : new List<HyperFindResult>();
         }
 
         public static List<Timesheet> RequestTimesheet(DateTime[] dates, string personNumber, string sessionID)
         {
             var xmlString = XMLheader + "<Transaction>";
-            foreach(var item in dates)
+            foreach (var item in dates)
             {
                 xmlString += "<Request Action='LoadPeriodTotals'><Timesheet><Employee><PersonIdentity PersonNumber='" + personNumber + "'/></Employee><Period><TimeFramePeriod PeriodDateSpan='" + item.ToShortDateString() + "-" + item.AddDays(6).ToShortDateString() + "' TimeFrameName='9'/></Period></Timesheet></Request>";
             }
@@ -70,9 +77,19 @@ namespace DixonsCarphone.WorkforceManagement.Business.Kronos
             var outcome = postRequest(xmlString);
             var success = CheckResponse(outcome);
 
+            if (success == -1)
+            {
+                var logon = Task.Run(() => Logon());
+                if (logon.Result)
+                {
+                    outcome = postRequest(xmlString);
+                    success = CheckResponse(outcome);
+                }
+            }
+
             Task.Run(() => logAction("Timesheet", success, sessionID, null, personNumber));
 
-            return success ? outcome.DeserializeToObject<Timesheet>() : new List<Timesheet>();
+            return success == 1 ? outcome.DeserializeToObject<Timesheet>() : new List<Timesheet>();
         }
 
         public static async Task<List<Timesheet>> RequestTimesheet(DateTime date, string[] personNumber, string sessionID)
@@ -87,9 +104,19 @@ namespace DixonsCarphone.WorkforceManagement.Business.Kronos
             var outcome = await postRequestAsync(xmlString);
             var success = CheckResponse(outcome);
 
+            if (success == -1)
+            {
+                var logon = await Logon();
+                if (logon)
+                {
+                    outcome = await postRequestAsync(xmlString);
+                    success = CheckResponse(outcome);
+                }
+            }
+
             logAction("Timesheet", success, sessionID, null, personNumber[0]);
 
-            return success ? await outcome.DeserializeToObjectAsync<Timesheet>() : new List<Timesheet>();
+            return success == 1 ? await outcome.DeserializeToObjectAsync<Timesheet>() : new List<Timesheet>();
         }
 
         //Build Data xml request
@@ -107,9 +134,19 @@ namespace DixonsCarphone.WorkforceManagement.Business.Kronos
             var outcome = await postRequestAsync(xmlString);
             var success = CheckResponse(outcome);
 
+            if (success == -1)
+            {
+                var logon = await Logon();
+                if (logon)
+                {
+                    outcome = await postRequestAsync(xmlString);
+                    success = CheckResponse(outcome);
+                }
+            }
+
             logAction("Schedule", success, sessionID, null, employeeList[0]);
 
-            return success ? await outcome.DeserializeToObjectAsync<ScheduleItems>() : new List<ScheduleItems>();
+            return success == 1 ? await outcome.DeserializeToObjectAsync<ScheduleItems>() : new List<ScheduleItems>();
         }       
 
         public static async Task<List<PunchStatus>> RequestPunchStatus(List<string> employeeList, string sessionID)
@@ -124,9 +161,19 @@ namespace DixonsCarphone.WorkforceManagement.Business.Kronos
             var outcome = await postRequestAsync(xmlString);
             var success = CheckResponse(outcome);
 
+            if (success == -1)
+            {
+                var logon = await Logon();
+                if (logon)
+                {
+                    outcome = await postRequestAsync(xmlString);
+                    success = CheckResponse(outcome);
+                }
+            }
+
             logAction("PunchStatus", success, sessionID, null, employeeList[0]);
 
-            return success ? await outcome.DeserializeToObjectAsync<PunchStatus>() : new List<PunchStatus>();
+            return success == 1 ? await outcome.DeserializeToObjectAsync<PunchStatus>() : new List<PunchStatus>();
         }
 
         //Post request to server and save response to file
@@ -144,7 +191,7 @@ namespace DixonsCarphone.WorkforceManagement.Business.Kronos
         }
 
         //Check XML response for value of 'Status' attribute and return
-        static bool CheckResponse(string xmlString)
+        static short CheckResponse(string xmlString)
         {
             using (XmlReader reader = XmlReader.Create(new StringReader(xmlString)))
             {
@@ -153,10 +200,17 @@ namespace DixonsCarphone.WorkforceManagement.Business.Kronos
 
                 if (reader.Value == "Success")
                 {
-                    return true;
+                    return 1;
                 }
                 else
                 {
+                    short result = 0;
+                    reader.ReadToFollowing("Error");
+                    reader.MoveToAttribute("ErrorCode");
+                    if (reader.Value == "1307")
+                    {
+                        result = -1;
+                    }
                     var doc = new XmlDocument();
                     doc.LoadXml(xmlString);
 #if DEBUG
@@ -164,13 +218,13 @@ namespace DixonsCarphone.WorkforceManagement.Business.Kronos
 #else
                     doc.Save(@"D:\Inetpub\WFM App\App_Data\APIError\" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".xml");
 #endif
-                    return false;
+                    return result;
                 }
             }
 
         }
 
-        static bool logAction(string action, bool success, string sessionID, string branch = null, string empNum = null)
+        static bool logAction(string action, short success, string sessionID = null, string branch = null, string empNum = null)
         {
             string fPath = @"D:\Inetpub\WFM App\App_Data\APILog\" + DateTime.Now.ToString("yyyyMMdd") + ".txt";
 

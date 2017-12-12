@@ -51,7 +51,7 @@ namespace DixonsCarphone.WorkforceManagement.Web
             }
 
             toRtn.SerializeObject(@"C:\Dev\TestData\ScheduleTestData.xml"); //todo remove
-            await _kronosManager.LogOff();
+            //await _kronosManager.LogOff();
 
             return toRtn.OrderBy(x => x.ScheduledDate).ToList();
         }

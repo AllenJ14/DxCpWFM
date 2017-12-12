@@ -61,14 +61,14 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             return toRtn;
         }
 
-        public async Task<bool> LogOff(string sessionID = null)
-        {
-            return await KronosApi.Logoff(sessionID);
-        }
+        //    public async Task<bool> LogOff(string sessionID = null)
+        //    {
+        //        return await KronosApi.Logoff(sessionID);
+        //    }
 
-        public async Task<bool> LogOn(string sessionID = null)
-        {
-            return await KronosApi.Logon(sessionID);
-        }
+        //    public async Task<bool> LogOn(string sessionID = null)
+        //    {
+        //        return await KronosApi.Logon(sessionID);
+        //    }
     }
 }

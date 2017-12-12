@@ -15,9 +15,9 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
 
         List<Timesheet> GetTimesheet(DateTime[] dates, string personNumber, string sessionID = null);
 
-        Task<bool> LogOff(string sessionID = null);
+        //Task<bool> LogOff(string sessionID = null);
 
-        Task<bool> LogOn(string sessionID = null);
+        //Task<bool> LogOn(string sessionID = null);
 
         Task<List<Timesheet>> GetTimesheetForStore(DateTime date, string[] personList, string sessionID = null);
 

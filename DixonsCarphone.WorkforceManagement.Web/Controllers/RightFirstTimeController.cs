@@ -82,8 +82,8 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             }
             else if (System.Web.HttpContext.Current.Session["_RegionNumber"] != null)
             {
-                if (await _KronosManager.LogOn(System.Web.HttpContext.Current.Session.SessionID))
-                {
+                //if (await _KronosManager.LogOn(System.Web.HttpContext.Current.Session.SessionID))
+                //{
                     string hfQuery = _store.Channel == "ROI" ? "IE Region " : "UK - Region CPW";
                     vm.hf = mapper.Map<List<HyperFindResultView>>(await _KronosManager.GetKronosHyperFind(hfQuery + System.Web.HttpContext.Current.Session["_RegionNumber"].ToString(), vm.weekStart.ToShortDateString(), vm.weekStart.AddDays(6).ToShortDateString(), System.Web.HttpContext.Current.Session.SessionID));
                     var employeeList = await _storeManager.GetActiveColleagues(System.Web.HttpContext.Current.Session["_RegionNumber"].ToString());
@@ -104,13 +104,13 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
                         }
                     }
 
-                    await _KronosManager.LogOff(System.Web.HttpContext.Current.Session.SessionID);
-                }                
+                    //await _KronosManager.LogOff(System.Web.HttpContext.Current.Session.SessionID);
+                //}                
             }
             else
             {
-                if(await _KronosManager.LogOn(System.Web.HttpContext.Current.Session.SessionID))
-                {
+                //if(await _KronosManager.LogOn(System.Web.HttpContext.Current.Session.SessionID))
+                //{
                     vm.hf = mapper.Map<List<HyperFindResultView>>(await _KronosManager.GetKronosHyperFind(_store.KronosStoreName, vm.weekStart.ToShortDateString(), vm.weekStart.AddDays(6).ToShortDateString(), System.Web.HttpContext.Current.Session.SessionID));
                     vm.ss = mapper.Map<List<ShortShiftView>>(await _storeManager.GetShortShiftsBranch(StoreNumber, weekOfYr));
                     vm.HelpTcks = mapper.Map<List<HelpTckSummaryView>>(await _storeManager.GetHelpTickets(StoreNumber));
@@ -123,8 +123,8 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
                     }
                     //vm.ts = mapper.Map<List<TimesheetView>>(await _KronosManager.GetTimesheetForStore(vm.weekStart, vm.hf.Select(x => x.PersonNumber).ToArray()));
 
-                    await _KronosManager.LogOff(System.Web.HttpContext.Current.Session.SessionID);
-                }
+                //    await _KronosManager.LogOff(System.Web.HttpContext.Current.Session.SessionID);
+                //}
             }
             //var weekNumbers = await _storeManager.GetWeekNumbers(DateTime.Now.GetFirstDayOfWeek().AddDays(-56), DateTime.Now.GetFirstDayOfWeek().AddDays(-7));
 

@@ -79,12 +79,12 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
 
             if(payroll != "e")
             {
-                if(await Task.Run(() => _KronosManager.LogOn(sessionID)))
-                {
+                //if(await Task.Run(() => _KronosManager.LogOn(sessionID)))
+                //{
                     vm.tSheet = mapper.Map<List<TimesheetView>>(_KronosManager.GetTimesheet(dates.Select(x => x.WCDate).ToArray(), payroll, System.Web.HttpContext.Current.Session.SessionID));
                     vm.punch = mapper.Map<List<PunchCompView>>(_storeManager.GetEmployeePunch(payroll, dates.Min(x => x.Week), dates.Max(x => x.Week)));
-                    await Task.Run(() => _KronosManager.LogOff(sessionID));
-                }                
+                    //await Task.Run(() => _KronosManager.LogOff(sessionID));
+                //}                
             }
             else
             {
