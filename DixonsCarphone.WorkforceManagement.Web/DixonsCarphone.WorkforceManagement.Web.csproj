@@ -682,6 +682,8 @@
     <Content Include="Views\Reports\CompOverview.cshtml" />
     <Content Include="Views\Partials\_ChannelComp.cshtml" />
     <Content Include="Views\Partials\_RegionComp.cshtml" />
+    <Content Include="Views\RightFirstTime\PeriodSummary.cshtml" />
+    <Content Include="Views\RightFirstTime\_employeeSearch.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DixonsCarphone.WorkforceManagement.Business\DixonsCarphone.WorkforceManagement.Business.csproj">

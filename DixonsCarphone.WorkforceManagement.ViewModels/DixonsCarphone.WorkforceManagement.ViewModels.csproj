@@ -120,6 +120,10 @@
     <Compile Include="BusinessModels\RegionContractStatusView.cs" />
     <Compile Include="BusinessModels\RegionContractStatusVm.cs" />
     <Compile Include="BusinessModels\RegionShortShiftView.cs" />
+    <Compile Include="BusinessModels\RFTPCaseActionView.cs" />
+    <Compile Include="BusinessModels\RFTPCaseAuditView.cs" />
+    <Compile Include="BusinessModels\RFTPCaseStubView.cs" />
+    <Compile Include="BusinessModels\RFTPPeriodSummaryVm.cs" />
     <Compile Include="BusinessModels\ScheduleBMView.cs" />
     <Compile Include="BusinessModels\ShortShiftView.cs" />
     <Compile Include="BusinessModels\ShortShiftVm.cs" />

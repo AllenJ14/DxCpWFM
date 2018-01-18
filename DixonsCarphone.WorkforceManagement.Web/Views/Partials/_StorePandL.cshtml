@@ -4,7 +4,7 @@
 
 @{
     bool abbr = false;
-    if (Model.PandLDetails.First().AccountEntryHeaderText == "RollupDivision" || Model.PandLDetails.First().AccountEntryHeaderText == "RollupChannel")
+    if (Model.PandLDetails.Count() > 0 && (Model.PandLDetails.First().AccountEntryHeaderText == "RollupDivision" || Model.PandLDetails.First().AccountEntryHeaderText == "RollupChannel"))
     {
         abbr = true;
     }

@@ -21,7 +21,7 @@ namespace DixonsCarphone.WorkforceManagement.Business.Kronos
         {
             var xmlString = XMLheader + "<Request Action='logon' Object='system' Username='" + userName + "' Password='" + password + "'/> " + XMLfooter;
             
-            var outcome = await postRequestAsync(xmlString);
+            var outcome = await postRequestAsync(xmlString, true);
             var success = CheckResponse(outcome);
 
             await Task.Run(() => logAction("Logon", success, sessionID));
@@ -177,17 +177,17 @@ namespace DixonsCarphone.WorkforceManagement.Business.Kronos
         }
 
         //Post request to server and save response to file
-        static async Task<string> postRequestAsync(string postData)
+        static async Task<string> postRequestAsync(string postData, bool newSession = false)
         {
-            var result = await postData.PostStringAsync(KronosApi.URL);
+            var result = await postData.PostStringAsync(KronosApi.URL, newSession);
 
             return result;
         }
 
         //Post request synch
-        static string postRequest(string postData)
+        static string postRequest(string postData, bool newSession = false)
         {
-            return postData.PostString(KronosApi.URL);
+            return postData.PostString(KronosApi.URL, newSession);
         }
 
         //Check XML response for value of 'Status' attribute and return
@@ -207,7 +207,7 @@ namespace DixonsCarphone.WorkforceManagement.Business.Kronos
                     short result = 0;
                     reader.ReadToFollowing("Error");
                     reader.MoveToAttribute("ErrorCode");
-                    if (reader.Value == "1307")
+                    if (reader.Value == "1307" || reader.Value == "1328" || reader.Value == "1201")
                     {
                         result = -1;
                     }

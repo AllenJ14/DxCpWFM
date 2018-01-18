@@ -59,6 +59,9 @@
             if($(this).attr('name')==='q.Index'){
                 $(this).val(qCount)
             }
+            else if($(this).attr('name').indexOf('ReturnType') >= 0) {
+                $(this).attr('name', 'q[' + qCount + '].ReturnType');
+            }
             else if ($(this).attr('type') === "hidden") {
                 $(this).attr('name', 'q[' + qCount + '].QuestionID');
             }

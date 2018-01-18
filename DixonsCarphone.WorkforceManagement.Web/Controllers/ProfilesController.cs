@@ -82,7 +82,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
                 }
                 
             }
-            else if (selectedStoreNumber.Contains("DCPW"))
+            else if (selectedStoreNumber.StartsWith("D"))
             {
                 System.Web.HttpContext.Current.Session.Add("_DivisionName", selectedStoreNumber);
             }
@@ -119,7 +119,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
 
             System.Web.HttpContext.Current.Session["_AccessArea"] = selectedRegionNumber;
 
-            if (selectedRegionNumber.StartsWith("DCPW"))
+            if (selectedRegionNumber.StartsWith("D"))
             {
                 var stores = await _storeManager.GetRegionsForDivision(selectedRegionNumber);
 

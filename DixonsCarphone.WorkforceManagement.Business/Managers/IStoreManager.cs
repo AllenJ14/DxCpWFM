@@ -206,5 +206,21 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
         Task<List<PeakHC>> GetDivisionPeakHC(string channel);
 
         Task<List<PeakHC>> GetRegionPeakHC(string region);
+
+        Task<List<RFTPCaseStub>> GetRFTPCases(string region, string year, int period);
+
+        Task<List<RFTPCaseAction>> GetRFTPActions();
+
+        Task<List<KronosEmployeeSummary>> GetActiveManagers(string Region);
+
+        Task<List<KronosEmployeeSummary>> EmployeeSearch(string crit);
+
+        Task<int> ConfirmCase(int caseID, string userName);
+
+        Task<int> OverrideCase(int caseId, string userName, string reason, string comment);
+
+        Task<int> ReassignCase(int caseId, string empNumber, string userName, string comment);
+
+        Task<bool> CheckCaseAuth(int caseID, string region);
     }
 }

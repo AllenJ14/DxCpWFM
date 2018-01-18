@@ -263,12 +263,12 @@ else if (HttpContext.Current.Session["_DivisionName"] != null)
 }
 else
 {
-    <div class="row">
+    @*<div class="row">
         <div class="btn-group col-xs-6 col-xs-offset-3">
             <button type="button" class="btn btn-default active col-xs-6" id="br">Deployment Summary</button>
             <button type="button" class="btn btn-info col-xs-6" id="kd">Key Dates</button>
         </div>
-    </div>
+    </div>*@
     <div class="row">
         &emsp;
     </div>
@@ -346,7 +346,7 @@ else
     foreach (var item in Model.BranchListAll)
     {
         x = 0;
-        var data = Model.collection.Where(c => c.Area == item.ToString());
+        var data = Model.collection.Where(c => c.Area == item.ToString()).OrderBy(c => c.WeekNumber);
         foreach (var values in data)
         {
             <div class="depl_Popup" id="@string.Format("{0}_{1}", x, y)">

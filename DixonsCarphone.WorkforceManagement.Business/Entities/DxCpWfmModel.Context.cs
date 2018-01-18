@@ -81,6 +81,9 @@ namespace DixonsCarphone.WorkforceManagement.Business.Entities
         public virtual DbSet<DashBoardData_v2> DashBoardData_v2 { get; set; }
         public virtual DbSet<KronosEmployeeSummary> KronosEmployeeSummaries { get; set; }
         public virtual DbSet<PeakHC> PeakHCs { get; set; }
+        public virtual DbSet<RFTPCaseAction> RFTPCaseActions { get; set; }
+        public virtual DbSet<RFTPCaseAudit> RFTPCaseAudits { get; set; }
+        public virtual DbSet<RFTPCaseStub> RFTPCaseStubs { get; set; }
     
         public virtual ObjectResult<udsp_GetPandL_Result> udsp_GetPandL(Nullable<int> storeNumber, string periodYear, Nullable<short> periodMonth, Nullable<short> qtdStartMonth, Nullable<short> ytdStartMonth)
         {
@@ -943,6 +946,19 @@ namespace DixonsCarphone.WorkforceManagement.Business.Entities
                 new ObjectParameter("Year", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_PeriodCompOverviewRegion_Result>("sp_PeriodCompOverviewRegion", regionParameter, periodParameter, yearParameter);
+        }
+    
+        public virtual int sp_RFTPReassignCase(string personNumber, Nullable<int> oldCaseID)
+        {
+            var personNumberParameter = personNumber != null ?
+                new ObjectParameter("personNumber", personNumber) :
+                new ObjectParameter("personNumber", typeof(string));
+    
+            var oldCaseIDParameter = oldCaseID.HasValue ?
+                new ObjectParameter("oldCaseID", oldCaseID) :
+                new ObjectParameter("oldCaseID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_RFTPReassignCase", personNumberParameter, oldCaseIDParameter);
         }
     }
 }

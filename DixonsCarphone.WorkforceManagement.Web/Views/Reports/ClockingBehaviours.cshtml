@@ -45,7 +45,7 @@
                         <td><strong>Region Total</strong></td>
                         @foreach (var week in Model.WeekNumber)
                         {
-                            <td class="text-center @(Model.Trend.Where(x => x.RegionNo == null && x.WeekNumber == week).First().Compliance < 0.95M ? "danger" : "")"><strong>@string.Format("{0:0.0}%", Model.Trend.Where(x => x.RegionNo == null && x.WeekNumber == week).First().Compliance * 100)</strong></td>
+                            <td class="text-center @(Model.Trend.Where(x => x.RegionNo == null && x.WeekNumber == week).First().Compliance < 0.9M ? "danger" : "")"><strong>@string.Format("{0:0.0}%", Model.Trend.Where(x => x.RegionNo == null && x.WeekNumber == week).First().Compliance * 100)</strong></td>
                         }
                     </tr>
                     @foreach (var item in Model.RegionRowList)

@@ -63,8 +63,8 @@
 
     @Html.Partial("~/Views/Partials/_PageBlurb.cshtml", (BaseViewModel)Model)
     @*<div class="alert alert-danger text-center">
-            <strong>Note:</strong> 
-            Timecards can no longer be signed off from the Timecard Manager summary screen and now need to be done within each individual timecard  Click <u><a href="@Url.Action("TimecardSignOff", "STARHandbook", new { articleNumber = 1})">here</a></u> for the correct signoff process
+            <strong>Vacancy Approvals:</strong> 
+            There will be an increased SLA for vacancy approvals over the Christmas period. Requests raised between the 22nd - 27th will be approved by the 28th, those raised between the 28th and 1st of January will be approved by the 2nd.
         </div>*@
     <div class="row">
         @Html.Partial("~/Views/Partials/_ScoresAndUtilization.cshtml", Model.Scores)
@@ -89,18 +89,18 @@
                     <div class="col-xs-8 text-center" style="vertical-align:middle;"><p style="font-size:large;margin-bottom:0px;"><strong>Is holiday controlled?</strong></p></div>
                     <div class="col-xs-4"><a class="btn btn-info" href="@Url.Action("DeploymentStatus","Planning", new { adv = true })">Show me</a></div>
                 </div>
-                <div class="col-sm-12 col-md-6 col-lg-4" style="margin-bottom:15px;">
+                @*<div class="col-sm-12 col-md-6 col-lg-4" style="margin-bottom:15px;">
                     <div class="col-xs-8 text-center" style="vertical-align:middle;"><p style="font-size:large;margin-bottom:0px;"><strong>Do we have the right flex?</strong></p></div>
                     <div class="col-xs-4"><a class="btn btn-info" href="@Url.Action("FlexStatus","Planning", new { adv = true })">Show me</a></div>
-                </div>
-                <div class="col-sm-12 col-md-6 col-lg-4" style="margin-bottom:15px;">
+                </div>*@
+                @*<div class="col-sm-12 col-md-6 col-lg-4" style="margin-bottom:15px;">
                     <div class="col-xs-8 text-center" style="vertical-align:middle;"><p style="font-size:large;margin-bottom:0px;"><strong>Store Peak One Pagers</strong></p></div>
                     <div class="col-xs-4"><a class="btn btn-success" href="@Url.Action("PeakPlanning","Planning")">Show me</a></div>
-                </div>
+                </div>*@
             </div>
         </div>
     }
-    else
+    @*else
     {
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -113,24 +113,7 @@
                 </div>
             </div>
         </div>
-    }
-
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            <div class="panel-title text-center">Right First Time Pay - NOW LAUNCHED</div>
-        </div>
-        <div class="panel-body">
-            <img align="right" style="min-width:100px;" src="~/Images/RFTP.png" />
-            <div>
-                <p>Right First Time Pay has now launched. You'll noticed we've updated the Workforce Management site to reflect the 3 WFM controls that will now be used. You'll also find access to the new reports and tools that make it easier for you to ensure we're always getting our teams pay right first time.</p>
-                <p>All Branch Managers should have been briefed on Right First Time Pay now. The briefing pack used in you Regional Team Meetings is available here, however if you have not been briefed you should speak to your Regional Manager as soon as possible.</p>
-                <p>Remember you now have until 3pm on Monday to ensure all timecards are signed off (even your own BM timecard) – use the new Timecard Signoff report to check you're getting this right.<p />
-            </div>
-                <div class="row text-center">
-                <a class="btn btn-success btn-lg" href="@Url.Action("Guide", "RightFirstTime")">Briefing Packs</a>
-                    </div>
-        </div>
-    </div>
+    }*@
 
     @if (topNews.Count() != 0 && !(bool)HttpContext.Current.Session["_ROIFlag"])
     {
@@ -156,8 +139,24 @@
         </div>
     }
 
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <div class="panel-title text-center">Right First Time Pay - NOW LAUNCHED</div>
+        </div>
+        <div class="panel-body">
+            <img align="right" style="min-width:100px;" src="~/Images/RFTP.png" />
+            <div>
+                <p>Right First Time Pay has now launched. You'll noticed we've updated the Workforce Management site to reflect the 3 WFM controls that will now be used. You'll also find access to the new reports and tools that make it easier for you to ensure we're always getting our teams pay right first time.</p>
+                <p>All Branch Managers should have been briefed on Right First Time Pay now. The briefing pack used in you Regional Team Meetings is available here, however if you have not been briefed you should speak to your Regional Manager as soon as possible.</p>
+                <p>Remember you now have until 3pm on Monday to ensure all timecards are signed off (even your own BM timecard) – use the new Timecard Signoff report to check you're getting this right.<p />
+            </div>
+            <div class="row text-center">
+                <a class="btn btn-success btn-lg" href="@Url.Action("Guide", "RightFirstTime")">Briefing Packs</a>
+            </div>
+        </div>
+    </div>
 
-    @if (!wfAccess.Contains(HttpContext.Current.Session["_AccessLevel"].ToString()))
+    @*@if (!wfAccess.Contains(HttpContext.Current.Session["_AccessLevel"].ToString()))
     {
         <div class="panel panel-default">
             <div class="panel-body">
@@ -242,7 +241,7 @@
                 </div>
             </div>
         </div>
-    }
+    }*@
 
 </section>
 

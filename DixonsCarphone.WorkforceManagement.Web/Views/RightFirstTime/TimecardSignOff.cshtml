@@ -53,6 +53,9 @@ else if (HttpContext.Current.Session["_RegionNumber"] != null)
             <p>
                 If you have outstanding timecards and no STAR user scheduled or clocked in, by exception, your TPC can support on request.
             </p>
+            <div class="alert alert-info">
+                <strong>Following Bank Holiday periods the timecard sign off deadline is extended to 3PM of the next normal business day.</strong>
+            </div>
             @if (Model.hf == null || Model.hf.Count() == 0)
             {
                 <hr />

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -15,8 +16,12 @@ namespace DixonsCarphone.WorkforceManagement.Business.Helpers
     {
         private static CookieContainer cookieContainer = new CookieContainer();
 
-        public static string PostString(this string data, string url)
+        public static string PostString(this string data, string url, bool newSession)
         {
+            if (newSession)
+            {
+                cookieContainer = new CookieContainer();
+            }
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
             request.Method = "POST";
             request.CookieContainer = cookieContainer;
@@ -41,8 +46,12 @@ namespace DixonsCarphone.WorkforceManagement.Business.Helpers
             return reader.ReadToEnd();
         }
 
-        public static async Task<string> PostStringAsync(this string data, string url) 
+        public static async Task<string> PostStringAsync(this string data, string url, bool newSession) 
         {
+            if (newSession)
+            {
+                cookieContainer = new CookieContainer();
+            }
             var toRtn = string.Empty;
             using (var handler = new HttpClientHandler() { CookieContainer = cookieContainer })
             using (var client = new HttpClient(handler))
@@ -57,7 +66,7 @@ namespace DixonsCarphone.WorkforceManagement.Business.Helpers
                 var byteArrayContent = new ByteArrayContent(byteArray);
                 byteArrayContent.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
 
-                var result = await client.PostAsync(url, byteArrayContent);
+                var result = await client.PostAsync(url, byteArrayContent);                
                 if (result.IsSuccessStatusCode)
                 {
                     toRtn = await result.Content.ReadAsStringAsync(); 

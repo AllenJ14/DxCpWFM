@@ -101,7 +101,7 @@
                                     }
                                 </div>
                             </div>
-                            <div class="panel @(Model._dashboardView.ShortShifts == 0 ? "panel-success" : "panel-danger")">
+                            <div class="panel @(Model._dashboardView.ShortShifts == 0 ? "panel-success" : Model._dashboardView.ShortShifts == 1 ? "panel-warning" : "panel-danger")">
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
                                         <strong>
@@ -248,7 +248,7 @@
                                 <th class="text-center col-md-1" style="vertical-align:middle">Zero Hour/Missing Timecard</th>
                                 <th class="text-center col-md-1" style="vertical-align:middle">Edited Shifts</th>
                                 <th class="text-center col-md-1" style="vertical-align:middle">Clocking Compliance</th>
-                                <th class="text-center col-md-1" style="vertical-align:middle">Compliant</th>
+                                <th class="text-center col-md-1" style="vertical-align:middle">Non Compliant</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -292,7 +292,7 @@
                                 <th class="text-center col-md-1" style="vertical-align:middle">Zero Hour/Missing Timecard</th>
                                 <th class="text-center col-md-1" style="vertical-align:middle">Edited Shifts</th>
                                 <th class="text-center col-md-1" style="vertical-align:middle">Punch Compliance</th>
-                                <th class="text-center col-md-1" style="vertical-align:middle">Compliant</th>
+                                <th class="text-center col-md-1" style="vertical-align:middle">Non Compliant</th>
                             </tr>
                         </thead>
                         <tbody>

@@ -1219,6 +1219,127 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             }
         }
         
+        public async Task<List<RFTPCaseStub>> GetRFTPCases(string region, string year, int period)
+        {
+            var regionNo = int.Parse(region);
+            using (var dbContext = new DxCpWfmContext())
+            {
+                var empList = await dbContext.KronosEmployeeSummaries.Where(x => x.Region == regionNo && x.ReportingRoleFlag == 1).AsNoTracking().Select(x => x.PersonNumber).ToListAsync();
+                var caseList = await dbContext.RFTPCaseStubs.Where(x => empList.Contains(x.PersonNumber) && !x.Completed).Include("RFTPCaseAudits").ToListAsync();
+
+                return caseList;
+            }
+        }
+
+        public async Task<bool> CheckCaseAuth(int caseID, string region)
+        {
+            var regionNo = int.Parse(region);
+            using (var dbContext = new DxCpWfmContext())
+            {
+                var empList = await dbContext.KronosEmployeeSummaries.Where(x => x.Region == regionNo && x.ReportingRoleFlag == 1).AsNoTracking().Select(x => x.PersonNumber).ToListAsync();
+                var caseList = await dbContext.RFTPCaseStubs.Where(x => empList.Contains(x.PersonNumber) && x.CaseID == caseID).ToListAsync();
+
+                return caseList.Count > 0;
+            }
+        }
+
+        public async Task<List<RFTPCaseAction>> GetRFTPActions()
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                return await dbContext.RFTPCaseActions.ToListAsync();
+            }
+        }
+
+        public async Task<int> ConfirmCase(int caseID, string userName)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                var result = dbContext.RFTPCaseStubs.Find(caseID);
+                result.Confirmed = true;
+                result.LastUpdated = DateTime.Now;
+                result.LastUpdatedBy = userName;
+
+                return await dbContext.SaveChangesAsync();
+            }
+        }
+
+        public async Task<int> OverrideCase(int caseId, string userName, string reason, string comment)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                var stub = dbContext.RFTPCaseStubs.Find(caseId);
+
+                stub.Override = true;
+                stub.Completed = true;
+                stub.LastUpdated = DateTime.Now;
+                stub.LastUpdatedBy = userName;
+
+                stub.RFTPCaseAudits.Add(new RFTPCaseAudit
+                {
+                    CaseID = caseId,
+                    ActionType = "Override",
+                    Comment = reason + " : " + comment,
+                    CompletedBy = userName,
+                    DateTimeCreated = DateTime.Now
+                });
+
+                return await dbContext.SaveChangesAsync();
+            }
+        }
+
+        public async Task<int> ReassignCase(int caseId, string empNumber, string userName, string comment)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                var newEmployee = dbContext.KronosEmployeeSummaries.Where(x => x.PersonNumber == empNumber).FirstOrDefault();
+
+                if(newEmployee != null)
+                {
+                    var originalCase = dbContext.RFTPCaseStubs.Find(caseId);
+
+                    originalCase.Reassign = true;
+                    originalCase.LastUpdated = DateTime.Now;
+                    originalCase.LastUpdatedBy = userName;
+                    originalCase.Completed = true;
+
+                    originalCase.RFTPCaseAudits.Add(new RFTPCaseAudit
+                    {
+                        CaseID = caseId,
+                        ActionType = "Reassign",
+                        Comment = "Assigned to " + empNumber + " : " + comment,
+                        CompletedBy = userName,
+                        DateTimeCreated = DateTime.Now
+                    });
+
+                    var result = dbContext.sp_RFTPReassignCase(empNumber, caseId);
+
+                    return await dbContext.SaveChangesAsync();
+                }
+                else
+                {
+                    return -5;
+                }
+            }
+        }
+
+        public async Task<List<KronosEmployeeSummary>> GetActiveManagers(string Region)
+        {
+            int crit = int.Parse(Region);
+            using (var dbContext = new DxCpWfmContext())
+            {                
+                return await dbContext.KronosEmployeeSummaries.Where(x => x.Region == crit && x.ReportingRoleFlag == 1).AsNoTracking().ToListAsync();
+            }
+        }
+
+        public async Task<List<KronosEmployeeSummary>> EmployeeSearch(string crit)
+        {
+            using(var dbContext = new DxCpWfmContext())
+            {
+                return await dbContext.KronosEmployeeSummaries.Where(x => x.PersonName.Contains(crit)).OrderBy(x => x.PersonName).AsNoTracking().ToListAsync();
+            }
+        }
+
         private AccountEntryView MapToAccountEntryView(AccountEntryHeader data)
         {
             var toRtn = new AccountEntryView

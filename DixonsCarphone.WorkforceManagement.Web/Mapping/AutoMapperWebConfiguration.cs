@@ -39,6 +39,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Mapping
                 cfg.AddProfile(new ScheduleProfile());
                 cfg.AddProfile(new WorkflowProfile());
                 cfg.AddProfile(new TimesheetProfile());
+                cfg.AddProfile(new RFTPCaseProfile());
             });
         }
     }
@@ -271,6 +272,16 @@ namespace DixonsCarphone.WorkforceManagement.Web.Mapping
 
             CreateMap<ContentHeader, ContentHeaderViewModel>();
             CreateMap<ContentDetail, ContentDetailViewModel>();
+        }
+    }
+
+    public class RFTPCaseProfile : Profile
+    {
+        public RFTPCaseProfile()
+        {
+            CreateMap<RFTPCaseStub, RFTPCaseStubView>();
+            CreateMap<RFTPCaseAudit, RFTPCaseAuditView>();
+            CreateMap<RFTPCaseAction, RFTPCaseActionView>();
         }
     }
 }

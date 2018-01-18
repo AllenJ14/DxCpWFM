@@ -141,5 +141,51 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
 
             return RedirectToAction("NewSubmission","Form", new {area="Workflow", FormTypeId=formType });
         }
+
+        public async Task<ActionResult> PeriodSummary()
+        {
+            RFTPPeriodSummaryVm vm = new RFTPPeriodSummaryVm();
+
+            vm.Cases = mapper.Map<List<RFTPCaseStubView>>(await _storeManager.GetRFTPCases("101", "17/18", 9));
+            vm.Actions = mapper.Map<List<RFTPCaseActionView>>(await _storeManager.GetRFTPActions());
+            vm.RegionManagers = mapper.Map<List<KronosEmpSummaryView>>(await _storeManager.GetActiveManagers("101"));
+            
+            return View(vm);
+        }
+
+        [HttpGet]
+        public async Task<PartialViewResult> _employeeSearch(string crit)
+        {
+            var searchResult = new List<KronosEmpSummaryView>();
+            if(crit.Length != 0)
+            {
+                searchResult = mapper.Map<List<KronosEmpSummaryView>>(await _storeManager.EmployeeSearch(crit));
+            }            
+            return PartialView(searchResult);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> caseConfirm(int caseID)
+        {
+            var result = await _storeManager.ConfirmCase(caseID, System.Web.HttpContext.Current.Session["_UserName"].ToString());
+
+            return RedirectToAction("PeriodSummary");
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> caseOverride(int caseID, string reason, string comment)
+        {
+            var result = await _storeManager.OverrideCase(caseID, System.Web.HttpContext.Current.Session["_UserName"].ToString(), reason, comment);
+
+            return RedirectToAction("PeriodSummary");
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> caseReassign(int caseID, string empNumber, string comment)
+        {
+            var result = await _storeManager.ReassignCase(caseID, empNumber, System.Web.HttpContext.Current.Session["_UserName"].ToString(), comment);
+
+            return RedirectToAction("PeriodSummary");
+        }
     }
 }

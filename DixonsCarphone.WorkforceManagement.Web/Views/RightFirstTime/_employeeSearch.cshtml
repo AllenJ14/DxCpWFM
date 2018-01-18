@@ -1,0 +1,30 @@
+﻿@model List<DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels.KronosEmpSummaryView>
+
+<table class="table table-condensed table-striped">
+    <thead>
+        <tr>
+            <th class="text-center">Employee Name</th>
+            <th class="text-center">Current Branch</th>
+            <th class="text-center">Select</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Count() > 0)
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td class="text-center">@item.PersonName</td>
+                    <td class="text-center">@item.HomeBranch</td>
+                    <td class="text-center"><button type="button" class="btn btn-default btn-sm rSelected" data-name="@item.PersonName" data-number="@item.PersonNumber">Select</button></td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="3" class="text-center">No Results Found...</td>
+            </tr>
+        }
+    </tbody>
+</table>

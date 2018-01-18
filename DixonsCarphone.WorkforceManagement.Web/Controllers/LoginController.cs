@@ -85,6 +85,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
                 if (System.Web.HttpContext.Current.Session["_wfUserGroup"] == null)
                 {
                     System.Web.HttpContext.Current.Session["_wfUserGroup"] = _ticketManager.GetUserGroup(System.Web.HttpContext.Current.Session["_UserName"].ToString());
+                    //System.Web.HttpContext.Current.Session["_wfUserGroup"] = _ticketManager.GetUserGroup("DAWOON01");
                 }
 
                 await GetStores();
@@ -179,7 +180,8 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
                     Stores = regions.Select(x => new SelectListItem { Value = "Region " + x.RegionNo, Text = "Region " + x.RegionNo}).ToList(),
                     Regions = stores.Select(x => new SelectListItem { Value = x.Division, Text = x.Division }).ToList()
                 };
-                
+                storesVm.Stores.Add(new SelectListItem { Value = stores[0].Division.ToString(), Text = stores[0].Division.ToString() });
+
                 System.Web.HttpContext.Current.Session.Add("_StoresMenu", storesVm);
                 var newSelectedStore = await _storeManager.GetStoreDetails(stores.Select(x => x.CST_CNTR_ID).First());
                 if (newSelectedStore != null)
