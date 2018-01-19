@@ -1323,6 +1323,28 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             }
         }
 
+        public async Task<int> SubmitAction(int caseId, string actionType, string comment, string username)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                var originalCase = dbContext.RFTPCaseStubs.Find(caseId);
+
+                originalCase.LastUpdated = DateTime.Now;
+                originalCase.LastUpdatedBy = username;
+
+                originalCase.RFTPCaseAudits.Add(new RFTPCaseAudit
+                {
+                    CaseID = caseId,
+                    ActionType = actionType,
+                    Comment = comment,
+                    CompletedBy = username,
+                    DateTimeCreated = DateTime.Now
+                });
+
+                return await dbContext.SaveChangesAsync();
+            }
+        }
+
         public async Task<List<KronosEmployeeSummary>> GetActiveManagers(string Region)
         {
             int crit = int.Parse(Region);

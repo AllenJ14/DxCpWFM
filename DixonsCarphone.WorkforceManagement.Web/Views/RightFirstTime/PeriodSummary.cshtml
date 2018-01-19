@@ -27,6 +27,7 @@
                     <tr>
                         <th class="text-center" rowspan="2" style="vertical-align:middle;">Manager</th>
                         <th class="text-center" rowspan="2" style="vertical-align:middle;">Issue Store</th>
+                        <th class="text-center" rowspan="2" style="vertical-align:middle;">Period</th>
                         <th class="text-center" rowspan="2" style="vertical-align:middle;"></th>
                         <th class="text-center" colspan="3">Actions Required</th>
                     </tr>
@@ -42,6 +43,7 @@
                         <tr>
                             <td>@item.PersonName</td>
                             <td class="text-center">@item.StoreNumber</td>
+                            <td class="text-center">@item.Period</td>
                             <td class="text-center">
                                 @if (!item.Confirmed)
                                 {
@@ -73,19 +75,40 @@
                                 <td>
                                     @if (actionsNeeded.Where(x => x.Owner == "RM").Count() > 0)
                                     {
-                                        <span class="btn btn-info" style="width:100%;">@actionsNeeded.Where(x => x.Owner == "RM").First().ActionType</span>
+                                        if (item.RFTPCaseAudits.Where(x => x.ActionType.Contains(actionsNeeded.Where(c => c.Owner == "RM").First().ActionType)).Count() > 0)
+                                        {
+                                            <a class="btn btn-info disabled" style="width:100%;"><s>@actionsNeeded.Where(x => x.Owner == "RM").First().ActionType</s></a>
+                                        }
+                                        else
+                                        {
+                                            <a class="btn btn-info" style="width:100%;" data-toggle="modal" data-target="#aModal" data-caseid="@item.CaseID" data-action="@actionsNeeded.Where(x => x.Owner == "RM").First().ActionType">@actionsNeeded.Where(x => x.Owner == "RM").First().ActionType</a>
+                                        }
                                     }
                                 </td>
                                 <td>
                                     @if (actionsNeeded.Where(x => x.Owner == "TPC").Count() > 0)
                                     {
-                                        <span class="btn btn-info" style="width:100%;">@actionsNeeded.Where(x => x.Owner == "TPC").First().ActionType</span>
+                                        if (item.RFTPCaseAudits.Where(x => x.ActionType.Contains(actionsNeeded.Where(c => c.Owner == "TPC").First().ActionType)).Count() > 0)
+                                        {
+                                            <a class="btn btn-info disabled" style="width:100%;"><s>@actionsNeeded.Where(x => x.Owner == "TPC").First().ActionType</s></a>
+                                        }
+                                        else
+                                        {
+                                            <a class="btn btn-info" style="width:100%;" data-toggle="modal" data-target="#aModal" data-caseid="@item.CaseID" data-action="@actionsNeeded.Where(x => x.Owner == "TPC").First().ActionType">@actionsNeeded.Where(x => x.Owner == "TPC").First().ActionType</a>
+                                        }
                                     }
                                 </td>
                                 <td>
                                     @if (actionsNeeded.Where(x => x.Owner == "WFM").Count() > 0)
                                     {
-                                        <span class="btn btn-info" style="width:100%;">@actionsNeeded.Where(x => x.Owner == "WFM").First().ActionType</span>
+                                        if (item.RFTPCaseAudits.Where(x => x.ActionType.Contains(actionsNeeded.Where(c => c.Owner == "WFM").First().ActionType)).Count() > 0)
+                                        {
+                                            <a class="btn btn-info disabled" style="width:100%;"><s>@actionsNeeded.Where(x => x.Owner == "WFM").First().ActionType</s></a>
+                                        }
+                                        else
+                                        {
+                                            <a class="btn btn-info" style="width:100%;" data-toggle="modal" data-target="#aModal" data-caseid="@item.CaseID" data-action="@actionsNeeded.Where(x => x.Owner == "WFM").First().ActionType">@actionsNeeded.Where(x => x.Owner == "WFM").First().ActionType</a>
+                                        }
                                     }
                                 </td>
                             }
@@ -120,7 +143,7 @@
                     <div id="rSearchCont" style="display:none;">
                         <input style="display: inline-block; width: 80%;" type="text" class="form-control" id="rSearchCrit" placeholder="Search by name..." />
                         <button type="button" id="rSearchSubmit" class="btn btn-info">Search</button>
-                        <div id="searchResult" class="table-responsive" style="max-height:300px; margin:10px 0px;"></div>
+                        <div id="rSearchResult" class="table-responsive" style="max-height:300px; margin:10px 0px;"></div>
                     </div>
                     <div class="form-group">
                         <label for="rComment">Comment</label>
@@ -155,7 +178,7 @@
                     </div>
                     <div class="form-group" id="oCommentContainer" style="display:none;">
                         <label for="oComment">Comment</label>
-                        <textarea id="oComment" name="comment" class="form-control" rows="3"></textarea>
+                        <textarea id="oComment" name="comment" class="form-control" rows="3" style="resize:vertical;"></textarea>
                     </div>
                     <hr />
                     <div class="text-center">
@@ -177,10 +200,36 @@
             <div class="modal-body">
                 <form action="/RightFirstTime/caseConfirm" method="post">
                     <input id="cCaseID" name="caseID" hidden value="e" />
-                    <h4>Confirm this case is for <strong><u id="cName">Joe Bloggs</u></strong></h4>
+                    <h4>Confirm this case is for <strong><u id="cName"></u></strong></h4>
                     <hr />
                     <div class="text-center">
                         <button type="submit" class="btn btn-success">Confirm</button>
+                        <button type="button" data-dismiss="modal" class="btn btn-danger">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="aModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="oModalLabel">Confirm Action</h4>
+            </div>
+            <div class="modal-body">
+                <p>Please confirm the <strong id="aActionText"></strong> for this colleague is completed. Add any relevant comments below.</p>
+                <form action="/RightFirstTime/caseSubmitAction" method="post">
+                    <input id="aCaseID" name="caseID" hidden value="e" />
+                    <input id="aActionType" name="actionType" hidden value="e" />
+                    <div class="form-group" id="aCommentContainer">
+                        <label for="aComment">Comment</label>
+                        <textarea id="aComment" name="comment" class="form-control" rows="3" style="resize:vertical;"></textarea>
+                    </div>
+                    <hr />
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-success">Save Changes</button>
                         <button type="button" data-dismiss="modal" class="btn btn-danger">Cancel</button>
                     </div>
                 </form>
@@ -219,21 +268,43 @@
                 var button = $(event.relatedTarget);
                 var id = button.data('caseid');
                 var name = button.data('name');
-                console.log(id);
+                
                 var modal = $(this);
                 modal.find('#cCaseID').val(id);
                 modal.find('#cName').html(name);
+            });
+
+            $('#aModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var id = button.data('caseid');
+                var action = button.data('action');
+
+                var modal = $(this);
+                modal.find('#aCaseID').val(id);
+                modal.find('#aActionType').val(action);
+                modal.find('#aActionText').html(action);
             });
 
             $('#rSearchBtn').on('click', function () {
                 $('#rSearchCont').slideDown();
             });
 
+            $('#oReason').change(function () {
+                if ($(this).val() === "Exceptional circumstance (please specify)") {
+                    $('#oCommentContainer').slideDown();
+                    $('#oComment').prop('required', true);
+                }
+                else {
+                    $('#oCommentContainer').slideUp();
+                    $('#oComment').prop('required', false);
+                };
+            });
+
             $('#rSearchSubmit').on('click', function () {
                 var criteria = $('#rSearchCrit').val();
                 $.get('/RightFirstTime/_employeeSearch', { crit: criteria }, function (result) {
                     setTimeout(function () {
-                        $('#searchResult').html(result);
+                        $('#rSearchResult').html(result);
                     }, 250);
                 });
             });

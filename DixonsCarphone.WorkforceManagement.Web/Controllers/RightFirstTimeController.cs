@@ -146,9 +146,9 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
         {
             RFTPPeriodSummaryVm vm = new RFTPPeriodSummaryVm();
 
-            vm.Cases = mapper.Map<List<RFTPCaseStubView>>(await _storeManager.GetRFTPCases("101", "17/18", 9));
+            vm.Cases = mapper.Map<List<RFTPCaseStubView>>(await _storeManager.GetRFTPCases(_store.RegionNo, "17/18", 9));
             vm.Actions = mapper.Map<List<RFTPCaseActionView>>(await _storeManager.GetRFTPActions());
-            vm.RegionManagers = mapper.Map<List<KronosEmpSummaryView>>(await _storeManager.GetActiveManagers("101"));
+            vm.RegionManagers = mapper.Map<List<KronosEmpSummaryView>>(await _storeManager.GetActiveManagers(_store.RegionNo));
             
             return View(vm);
         }
@@ -167,7 +167,10 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
         [HttpPost]
         public async Task<ActionResult> caseConfirm(int caseID)
         {
-            var result = await _storeManager.ConfirmCase(caseID, System.Web.HttpContext.Current.Session["_UserName"].ToString());
+            if(await _storeManager.CheckCaseAuth(caseID, _store.RegionNo))
+            {
+                var result = await _storeManager.ConfirmCase(caseID, System.Web.HttpContext.Current.Session["_UserName"].ToString());
+            }            
 
             return RedirectToAction("PeriodSummary");
         }
@@ -175,7 +178,10 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
         [HttpPost]
         public async Task<ActionResult> caseOverride(int caseID, string reason, string comment)
         {
-            var result = await _storeManager.OverrideCase(caseID, System.Web.HttpContext.Current.Session["_UserName"].ToString(), reason, comment);
+            if(await _storeManager.CheckCaseAuth(caseID, _store.RegionNo))
+            {
+                var result = await _storeManager.OverrideCase(caseID, System.Web.HttpContext.Current.Session["_UserName"].ToString(), reason, comment);
+            }            
 
             return RedirectToAction("PeriodSummary");
         }
@@ -183,7 +189,21 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
         [HttpPost]
         public async Task<ActionResult> caseReassign(int caseID, string empNumber, string comment)
         {
-            var result = await _storeManager.ReassignCase(caseID, empNumber, System.Web.HttpContext.Current.Session["_UserName"].ToString(), comment);
+            if(await _storeManager.CheckCaseAuth(caseID, _store.RegionNo))
+            {
+                var result = await _storeManager.ReassignCase(caseID, empNumber, System.Web.HttpContext.Current.Session["_UserName"].ToString(), comment);
+            }            
+
+            return RedirectToAction("PeriodSummary");
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> caseSubmitAction(int caseID, string actionType, string comment)
+        {
+            if(await _storeManager.CheckCaseAuth(caseID, _store.RegionNo))
+            {
+                var result = await _storeManager.SubmitAction(caseID, actionType, comment, System.Web.HttpContext.Current.Session["_UserName"].ToString());
+            }            
 
             return RedirectToAction("PeriodSummary");
         }

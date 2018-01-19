@@ -222,5 +222,7 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
         Task<int> ReassignCase(int caseId, string empNumber, string userName, string comment);
 
         Task<bool> CheckCaseAuth(int caseID, string region);
+
+        Task<int> SubmitAction(int caseId, string actionType, string comment, string username);
     }
 }
