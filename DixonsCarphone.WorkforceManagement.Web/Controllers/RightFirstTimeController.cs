@@ -1,6 +1,7 @@
 ﻿using DixonsCarphone.WorkforceManagement.Business.Managers;
 using DixonsCarphone.WorkforceManagement.ViewModels;
 using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels;
+using DixonsCarphone.WorkforceManagement.Web.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -142,14 +143,42 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             return RedirectToAction("NewSubmission","Form", new {area="Workflow", FormTypeId=formType });
         }
 
-        public async Task<ActionResult> PeriodSummary()
+        [UserFilter(AccessLevel = "Admin,TPC,RM,DD,RD")]
+        public async Task<ActionResult> ManagerTracking()
         {
             RFTPPeriodSummaryVm vm = new RFTPPeriodSummaryVm();
 
-            vm.Cases = mapper.Map<List<RFTPCaseStubView>>(await _storeManager.GetRFTPCases(_store.RegionNo, "17/18", 9));
-            vm.Actions = mapper.Map<List<RFTPCaseActionView>>(await _storeManager.GetRFTPActions());
-            vm.RegionManagers = mapper.Map<List<KronosEmpSummaryView>>(await _storeManager.GetActiveManagers(_store.RegionNo));
-            
+            if (System.Web.HttpContext.Current.Session["_ChannelName"] != null)
+            {
+                vm.Message = "This page is not available in the currently selected view, please select a store from the top right menu or go back.";
+                vm.MessageType = MessageType.Error;
+            }
+            else if (System.Web.HttpContext.Current.Session["_DivisionName"] != null)
+            {
+                var managerList = await _storeManager.GetActiveManagersDivision(System.Web.HttpContext.Current.Session["_DivisionName"].ToString());
+
+                vm.Cases = mapper.Map<List<RFTPCaseStubView>>(await _storeManager.GetRFTPCasesDivision("17/18", 9, managerList));
+                vm.Actions = mapper.Map<List<RFTPCaseActionView>>(await _storeManager.GetRFTPActions());
+                vm.RegionManagers = mapper.Map<List<KronosEmpSummaryView>>(managerList);
+                vm.displayType = "d";
+            }
+            else if (System.Web.HttpContext.Current.Session["_RegionNumber"] != null)
+            {
+                vm.Cases = mapper.Map<List<RFTPCaseStubView>>(await _storeManager.GetRFTPCases(System.Web.HttpContext.Current.Session["_RegionNumber"].ToString(), "17/18", 9));
+                vm.Actions = mapper.Map<List<RFTPCaseActionView>>(await _storeManager.GetRFTPActions());
+                vm.RegionManagers = mapper.Map<List<KronosEmpSummaryView>>(await _storeManager.GetActiveManagers(_store.RegionNo));
+                vm.displayType = "r";
+            }
+            else
+            {
+                vm.Cases = mapper.Map<List<RFTPCaseStubView>>(await _storeManager.GetRFTPCases(_store.RegionNo, "17/18", 9));
+                vm.Actions = mapper.Map<List<RFTPCaseActionView>>(await _storeManager.GetRFTPActions());
+                vm.RegionManagers = mapper.Map<List<KronosEmpSummaryView>>(await _storeManager.GetActiveManagers(_store.RegionNo));
+                vm.displayType = "r";
+            }          
+
+            vm.AccessLevel = System.Web.HttpContext.Current.Session["_AccessLevel"].ToString();
+
             return View(vm);
         }
 
@@ -172,7 +201,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
                 var result = await _storeManager.ConfirmCase(caseID, System.Web.HttpContext.Current.Session["_UserName"].ToString());
             }            
 
-            return RedirectToAction("PeriodSummary");
+            return RedirectToAction("ManagerTracking");
         }
 
         [HttpPost]
@@ -183,7 +212,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
                 var result = await _storeManager.OverrideCase(caseID, System.Web.HttpContext.Current.Session["_UserName"].ToString(), reason, comment);
             }            
 
-            return RedirectToAction("PeriodSummary");
+            return RedirectToAction("ManagerTracking");
         }
 
         [HttpPost]
@@ -191,10 +220,18 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
         {
             if(await _storeManager.CheckCaseAuth(caseID, _store.RegionNo))
             {
-                var result = await _storeManager.ReassignCase(caseID, empNumber, System.Web.HttpContext.Current.Session["_UserName"].ToString(), comment);
+                if(empNumber != "Terminated")
+                {
+                    var result = await _storeManager.ReassignCase(caseID, empNumber, System.Web.HttpContext.Current.Session["_UserName"].ToString(), comment);
+                }
+                else
+                {
+                    var result = await _storeManager.OverrideCase(caseID, System.Web.HttpContext.Current.Session["_UserName"].ToString(), "GM Terminated", comment);
+                }
+                
             }            
 
-            return RedirectToAction("PeriodSummary");
+            return RedirectToAction("ManagerTracking");
         }
 
         [HttpPost]
@@ -202,10 +239,10 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
         {
             if(await _storeManager.CheckCaseAuth(caseID, _store.RegionNo))
             {
-                var result = await _storeManager.SubmitAction(caseID, actionType, comment, System.Web.HttpContext.Current.Session["_UserName"].ToString());
+                var result = await _storeManager.SubmitAction(caseID, actionType, comment, System.Web.HttpContext.Current.Session["_UserName"].ToString(), System.Web.HttpContext.Current.Session["_AccessLevel"].ToString());
             }            
 
-            return RedirectToAction("PeriodSummary");
+            return RedirectToAction("ManagerTracking");
         }
     }
 }

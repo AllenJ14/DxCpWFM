@@ -100,5 +100,11 @@
     "inputFiles": [
       "Content/Workflow/WorkflowContingency.js"
     ]
+  },
+  {
+    "outputFileName": "Content/Custom/RFTPTracking.min.js",
+    "inputFiles": [
+      "Content/Custom/RFTPTracking.js"
+    ]
   }
 ]

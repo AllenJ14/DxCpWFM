@@ -1218,14 +1218,25 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
                 return await dbContext.KronosEmployeeSummaries.Where(x => x.Division == Division).AsNoTracking().ToListAsync();
             }
         }
-        
+
         public async Task<List<RFTPCaseStub>> GetRFTPCases(string region, string year, int period)
         {
             var regionNo = int.Parse(region);
             using (var dbContext = new DxCpWfmContext())
             {
                 var empList = await dbContext.KronosEmployeeSummaries.Where(x => x.Region == regionNo && x.ReportingRoleFlag == 1).AsNoTracking().Select(x => x.PersonNumber).ToListAsync();
-                var caseList = await dbContext.RFTPCaseStubs.Where(x => empList.Contains(x.PersonNumber) && !x.Completed).Include("RFTPCaseAudits").ToListAsync();
+                var caseList = await dbContext.RFTPCaseStubs.Where(x => empList.Contains(x.PersonNumber) && x.Show).Include("RFTPCaseAudits").ToListAsync();
+
+                return caseList;
+            }
+        }
+
+        public async Task<List<RFTPCaseStub>> GetRFTPCasesDivision(string year, int period, List<KronosEmployeeSummary> empList)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                var personNumList = await dbContext.KronosEmployeeSummaries.Select(x => x.PersonNumber).ToListAsync();
+                var caseList = await dbContext.RFTPCaseStubs.Where(x => personNumList.Contains(x.PersonNumber) && x.Show).Include("RFTPCaseAudits").ToListAsync();
 
                 return caseList;
             }
@@ -1294,7 +1305,7 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             {
                 var newEmployee = dbContext.KronosEmployeeSummaries.Where(x => x.PersonNumber == empNumber).FirstOrDefault();
 
-                if(newEmployee != null)
+                if(newEmployee != null || empNumber == "RM")
                 {
                     var originalCase = dbContext.RFTPCaseStubs.Find(caseId);
 
@@ -1302,6 +1313,7 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
                     originalCase.LastUpdated = DateTime.Now;
                     originalCase.LastUpdatedBy = userName;
                     originalCase.Completed = true;
+                    originalCase.Show = false;
 
                     originalCase.RFTPCaseAudits.Add(new RFTPCaseAudit
                     {
@@ -1311,7 +1323,7 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
                         CompletedBy = userName,
                         DateTimeCreated = DateTime.Now
                     });
-
+                    
                     var result = dbContext.sp_RFTPReassignCase(empNumber, caseId);
 
                     return await dbContext.SaveChangesAsync();
@@ -1323,25 +1335,33 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             }
         }
 
-        public async Task<int> SubmitAction(int caseId, string actionType, string comment, string username)
+        public async Task<int> SubmitAction(int caseId, string actionType, string comment, string username, string accessLevel)
         {
             using (var dbContext = new DxCpWfmContext())
             {
-                var originalCase = dbContext.RFTPCaseStubs.Find(caseId);
-
-                originalCase.LastUpdated = DateTime.Now;
-                originalCase.LastUpdatedBy = username;
-
-                originalCase.RFTPCaseAudits.Add(new RFTPCaseAudit
+                if(dbContext.RFTPCaseActions.Where(x => x.ActionType == actionType && x.Owner == accessLevel).Count() > 0)
                 {
-                    CaseID = caseId,
-                    ActionType = actionType,
-                    Comment = comment,
-                    CompletedBy = username,
-                    DateTimeCreated = DateTime.Now
-                });
+                    var originalCase = dbContext.RFTPCaseStubs.Find(caseId);
 
-                return await dbContext.SaveChangesAsync();
+                    originalCase.LastUpdated = DateTime.Now;
+                    originalCase.LastUpdatedBy = username;
+
+                    originalCase.RFTPCaseAudits.Add(new RFTPCaseAudit
+                    {
+                        CaseID = caseId,
+                        ActionType = actionType,
+                        Comment = comment,
+                        CompletedBy = username,
+                        DateTimeCreated = DateTime.Now
+                    });
+
+                    return await dbContext.SaveChangesAsync();
+                }
+                else
+                {
+                    return -5;
+                }
+                
             }
         }
 
@@ -1351,6 +1371,14 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             using (var dbContext = new DxCpWfmContext())
             {                
                 return await dbContext.KronosEmployeeSummaries.Where(x => x.Region == crit && x.ReportingRoleFlag == 1).AsNoTracking().ToListAsync();
+            }
+        }
+
+        public async Task<List<KronosEmployeeSummary>> GetActiveManagersDivision(string division)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                return await dbContext.KronosEmployeeSummaries.Where(x => x.Division == division && x.ReportingRoleFlag == 1).AsNoTracking().ToListAsync();
             }
         }
 

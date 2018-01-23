@@ -213,6 +213,8 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
 
         Task<List<KronosEmployeeSummary>> GetActiveManagers(string Region);
 
+        Task<List<KronosEmployeeSummary>> GetActiveManagersDivision(string division);
+
         Task<List<KronosEmployeeSummary>> EmployeeSearch(string crit);
 
         Task<int> ConfirmCase(int caseID, string userName);
@@ -223,6 +225,8 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
 
         Task<bool> CheckCaseAuth(int caseID, string region);
 
-        Task<int> SubmitAction(int caseId, string actionType, string comment, string username);
+        Task<int> SubmitAction(int caseId, string actionType, string comment, string username, string accessLevel);
+
+        Task<List<RFTPCaseStub>> GetRFTPCasesDivision(string year, int period, List<KronosEmployeeSummary> empList);
     }
 }

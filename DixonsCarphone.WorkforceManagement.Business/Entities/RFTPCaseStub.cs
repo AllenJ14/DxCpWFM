@@ -34,6 +34,7 @@ namespace DixonsCarphone.WorkforceManagement.Business.Entities
         public bool Completed { get; set; }
         public string Year { get; set; }
         public Nullable<byte> Period { get; set; }
+        public bool Show { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RFTPCaseAudit> RFTPCaseAudits { get; set; }

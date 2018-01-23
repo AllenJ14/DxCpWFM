@@ -609,6 +609,7 @@ warning 6002: The table/view 'CarphoneWfm.dbo.PeakHC' does not have a primary ke
           <Property Name="Completed" Type="bit" Nullable="false" />
           <Property Name="Year" Type="nchar" MaxLength="5" />
           <Property Name="Period" Type="tinyint" />
+          <Property Name="Show" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="ROIIpRef">
           <Key>
@@ -3993,6 +3994,7 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Property Name="Completed" Type="Boolean" Nullable="false" />
           <Property Name="Year" Type="String" MaxLength="5" FixedLength="true" Unicode="true" />
           <Property Name="Period" Type="Byte" />
+          <Property Name="Show" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="FK_RFTPCaseAudit_RFTPCaseStub">
           <End Type="DixonsCarphone.WorkforceManagement.Business.RFTPCaseStub" Role="RFTPCaseStub" Multiplicity="1">
@@ -5853,6 +5855,7 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <EntitySetMapping Name="RFTPCaseStubs">
             <EntityTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.RFTPCaseStub">
               <MappingFragment StoreEntitySet="RFTPCaseStub">
+                <ScalarProperty Name="Show" ColumnName="Show" />
                 <ScalarProperty Name="Period" ColumnName="Period" />
                 <ScalarProperty Name="Year" ColumnName="Year" />
                 <ScalarProperty Name="Completed" ColumnName="Completed" />

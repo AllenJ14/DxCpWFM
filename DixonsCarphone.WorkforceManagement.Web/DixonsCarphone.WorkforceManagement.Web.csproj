@@ -240,6 +240,10 @@
     <Content Include="Content\Custom\CPayPortal.min.js">
       <DependentUpon>CPayPortal.js</DependentUpon>
     </Content>
+    <Content Include="Content\Custom\RFTPTracking.js" />
+    <Content Include="Content\Custom\RFTPTracking.min.js">
+      <DependentUpon>RFTPTracking.js</DependentUpon>
+    </Content>
     <Content Include="Content\Custom\TCSignOff.js" />
     <Content Include="Content\Custom\TCSignOff.min.js">
       <DependentUpon>TCSignOff.js</DependentUpon>
@@ -682,7 +686,7 @@
     <Content Include="Views\Reports\CompOverview.cshtml" />
     <Content Include="Views\Partials\_ChannelComp.cshtml" />
     <Content Include="Views\Partials\_RegionComp.cshtml" />
-    <Content Include="Views\RightFirstTime\PeriodSummary.cshtml" />
+    <Content Include="Views\RightFirstTime\ManagerTracking.cshtml" />
     <Content Include="Views\RightFirstTime\_employeeSearch.cshtml" />
     <Content Include="Uploads\RFTPColleagueLetter.pdf" />
   </ItemGroup>

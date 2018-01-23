@@ -1,0 +1,387 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
+@model RFTPPeriodSummaryVm
+
+@{
+    ViewBag.Title = "GM Tracking";
+}
+
+<div class="row">
+    &emsp;
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading text-center">
+        <strong>Period Action Summary</strong>
+    </div>
+    <div class="panel-body">
+        <p>These are all the stores in your region that were non-compliant for RFTP last period.</p>
+        <p>
+            We have attributed the responsibility to the manager that was assigned to the store at the end of the period.  Please confirm that you are holding the indicated manager accountable or re-assign accountability to a different manager if necessary. This should be completed within the first week of the period.
+            Once you’ve confirmed accountability please take the required action or (if required due to exceptional circumstance) process an override. Required actions must be completed and confirmed before the end of the period.
+        </p>
+    </div>
+</div>
+
+@if (Model.MessageType == MessageType.Error)
+{
+    <div class="alert alert-danger text-center"><strong>@Model.Message</strong></div>
+}
+else
+{
+    <div class="panel panel-default">
+        <div class="panel-body" style="min-height:500px;">
+            @if (Model.Cases.Count() == 0)
+            {
+                <div class="alert alert-success text-center"><strong>No Right First Time Pay cases for this Region!</strong></div>
+            }
+            else if (Model.displayType == "r")
+            {
+                <div class="table-responsive">
+                    <table class="table table-bordered table-condensed">
+                        <thead>
+                            <tr>
+                                <th class="text-center" rowspan="2" style="vertical-align:middle;">Manager</th>
+                                <th class="text-center" rowspan="2" style="vertical-align:middle;">Issue Store</th>
+                                <th class="text-center" rowspan="2" style="vertical-align:middle;">Period</th>
+                                <th class="text-center" rowspan="2" style="vertical-align:middle;"></th>
+                                <th class="text-center" colspan="3">Actions Required</th>
+                            </tr>
+                            <tr>
+                                <th class="col-xs-1 text-center">RM</th>
+                                <th class="col-xs-1 text-center">TPC</th>
+                                <th class="col-xs-1 text-center">WFM</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Cases.OrderBy(x => x.PersonName))
+                            {
+                                <tr>
+                                    <td>@item.PersonName</td>
+                                    <td class="text-center">@item.StoreNumber</td>
+                                    <td class="text-center">@item.Period</td>
+                                    <td class="text-center">
+                                        @if (!item.Confirmed)
+                                        {
+                                            <div class="btn-group visible-lg-inline-block" role="group">
+                                                <button type="button" data-toggle="modal" data-target="#rModal" data-caseid="@item.CaseID" class="btn btn-default">Reassign</button>
+                                                <button type="button" data-toggle="modal" data-target="#cModal" data-caseid="@item.CaseID" data-name="@item.PersonName" class="btn btn-success">Confirm</button>
+                                            </div>
+                                            <div class="btn-group hidden-lg">
+                                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Action required... <span class="caret"></span></button>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="#" data-toggle="modal" data-target="#oModal" data-caseid="@item.CaseID">Reassign</a></li>
+                                                    <li role="separator" class="divider"></li>
+                                                    <li><a href="#" data-toggle="modal" data-target="#cModal" data-caseid="@item.CaseID" data-name="@item.PersonName">Confirm</a></li>
+                                                </ul>
+                                            </div>
+                                        }
+                                        else if (!item.Override)
+                                        {
+                                            <button type="button" data-toggle="modal" data-target="#oModal" data-caseid="@item.CaseID" class="btn btn-warning">Override</button>
+                                        }
+                                        else
+                                        {
+                                            <strong><u>Overridden</u></strong>
+                                        }
+                                    </td>
+                                    @if (item.Confirmed)
+                                    {
+                                        var actionsNeeded = Model.Actions.Where(x => x.Stage == item.Stage);
+                                        <td>
+                                            @if (actionsNeeded.Where(x => x.Owner == "RM").Count() > 0)
+                                            {
+                                                if (item.RFTPCaseAudits.Where(x => x.ActionType.Contains(actionsNeeded.Where(c => c.Owner == "RM").First().ActionType)).Count() > 0)
+                                                {
+                                                    <a class="btn btn-info disabled" style="width:100%;"><s>@actionsNeeded.Where(x => x.Owner == "RM").First().ActionType</s></a>
+                                                }
+                                                else
+                                                {
+                                                    <a class="btn @(Model.AccessLevel != "RM" ? "disabled btn-info" : "btn-primary")" style="width:100%;" data-toggle="modal" data-target="#aModal" data-caseid="@item.CaseID" data-action="@actionsNeeded.Where(x => x.Owner == "RM").First().ActionType">@actionsNeeded.Where(x => x.Owner == "RM").First().ActionType</a>
+                                                }
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (actionsNeeded.Where(x => x.Owner == "TPC").Count() > 0)
+                                            {
+                                                if (item.RFTPCaseAudits.Where(x => x.ActionType.Contains(actionsNeeded.Where(c => c.Owner == "TPC").First().ActionType)).Count() > 0)
+                                                {
+                                                    <a class="btn btn-info disabled" style="width:100%;"><s>@actionsNeeded.Where(x => x.Owner == "TPC").First().ActionType</s></a>
+                                                }
+                                                else
+                                                {
+                                                    <a class="btn @(Model.AccessLevel != "TPC" ? "disabled btn-info" : "btn-primary")" style="width:100%;" data-toggle="modal" data-target="#aModal" data-caseid="@item.CaseID" data-action="@actionsNeeded.Where(x => x.Owner == "TPC").First().ActionType">@actionsNeeded.Where(x => x.Owner == "TPC").First().ActionType</a>
+                                                }
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (actionsNeeded.Where(x => x.Owner == "WFM").Count() > 0)
+                                            {
+                                                if (item.RFTPCaseAudits.Where(x => x.ActionType.Contains(actionsNeeded.Where(c => c.Owner == "WFM").First().ActionType)).Count() > 0)
+                                                {
+                                                    <a class="btn btn-info disabled" style="width:100%;"><s>@actionsNeeded.Where(x => x.Owner == "WFM").First().ActionType</s></a>
+                                                }
+                                                else
+                                                {
+                                                    <a class="btn @(Model.AccessLevel != "Admin" ? "disabled btn-info" : "btn-primary")" style="width:100%;" data-toggle="modal" data-target="#aModal" data-caseid="@item.CaseID" data-action="@actionsNeeded.Where(x => x.Owner == "WFM").First().ActionType">@actionsNeeded.Where(x => x.Owner == "WFM").First().ActionType</a>
+                                                }
+                                            }
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else if (Model.displayType == "d")
+            {
+                foreach (var region in Model.regionList)
+                {
+                    var caseList = Model.Cases.Where(x => Model.RegionManagers.Where(c => c.Region == region).Select(c => c.PersonNumber).Contains(x.PersonNumber)).OrderBy(x => x.PersonName);
+                    if (caseList.Count() > 0)
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th colspan="7" class="text-center"><strong>Region @region</strong></th>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-center" rowspan="2" style="vertical-align:middle;">Manager</th>
+                                        <th class="text-center" rowspan="2" style="vertical-align:middle;">Issue Store</th>
+                                        <th class="text-center" rowspan="2" style="vertical-align:middle;">Period</th>
+                                        <th class="text-center" rowspan="2" style="vertical-align:middle;"></th>
+                                        <th class="text-center" colspan="3">Actions Required</th>
+                                    </tr>
+                                    <tr>
+                                        <th class="col-xs-1 text-center">RM</th>
+                                        <th class="col-xs-1 text-center">TPC</th>
+                                        <th class="col-xs-1 text-center">WFM</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in caseList)
+                                    {
+                                        <tr>
+                                            <td>@item.PersonName</td>
+                                            <td class="text-center">@item.StoreNumber</td>
+                                            <td class="text-center">@item.Period</td>
+                                            <td class="text-center">
+                                                @if (!item.Confirmed)
+                                                {
+                                                    <div class="btn-group visible-lg-inline-block" role="group">
+                                                        <button class="btn btn-default disabled">Reassign</button>
+                                                        <button class="btn btn-success disabled">Confirm</button>
+                                                    </div>
+                                                    <div class="btn-group hidden-lg">
+                                                        <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Action required... <span class="caret"></span></button>
+                                                        <ul class="dropdown-menu">
+                                                            <li><a href="#">Reassign</a></li>
+                                                            <li role="separator" class="divider"></li>
+                                                            <li><a href="#">Confirm</a></li>
+                                                        </ul>
+                                                    </div>
+                                                }
+                                                else if (!item.Override)
+                                                {
+                                                    <button class="btn btn-warning disabled">Override</button>
+                                                }
+                                                else
+                                                {
+                                                    <strong><u>Overridden</u></strong>
+                                                }
+                                            </td>
+                                            @if (item.Confirmed)
+                                            {
+                                                var actionsNeeded = Model.Actions.Where(x => x.Stage == item.Stage);
+                                                <td>
+                                                    @if (actionsNeeded.Where(x => x.Owner == "RM").Count() > 0)
+                                                    {
+                                                        if (item.RFTPCaseAudits.Where(x => x.ActionType.Contains(actionsNeeded.Where(c => c.Owner == "RM").First().ActionType)).Count() > 0)
+                                                        {
+                                                            <a class="btn btn-info disabled" style="width:100%;"><s>@actionsNeeded.Where(x => x.Owner == "RM").First().ActionType</s></a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a class="btn btn-primary disabled" style="width:100%;">@actionsNeeded.Where(x => x.Owner == "RM").First().ActionType</a>
+                                                        }
+                                                    }
+                                                </td>
+                                                <td>
+                                                    @if (actionsNeeded.Where(x => x.Owner == "TPC").Count() > 0)
+                                                    {
+                                                        if (item.RFTPCaseAudits.Where(x => x.ActionType.Contains(actionsNeeded.Where(c => c.Owner == "TPC").First().ActionType)).Count() > 0)
+                                                        {
+                                                            <a class="btn btn-info disabled" style="width:100%;"><s>@actionsNeeded.Where(x => x.Owner == "TPC").First().ActionType</s></a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a class="btn btn-primary disabled" style="width:100%;">@actionsNeeded.Where(x => x.Owner == "TPC").First().ActionType</a>
+                                                        }
+                                                    }
+                                                </td>
+                                                <td>
+                                                    @if (actionsNeeded.Where(x => x.Owner == "WFM").Count() > 0)
+                                                    {
+                                                        if (item.RFTPCaseAudits.Where(x => x.ActionType.Contains(actionsNeeded.Where(c => c.Owner == "WFM").First().ActionType)).Count() > 0)
+                                                        {
+                                                            <a class="btn btn-info disabled" style="width:100%;"><s>@actionsNeeded.Where(x => x.Owner == "WFM").First().ActionType</s></a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a class="btn btn-primary disabled" style="width:100%;">@actionsNeeded.Where(x => x.Owner == "WFM").First().ActionType</a>
+                                                        }
+                                                    }
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            }
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                }
+            }
+        </div>
+    </div>
+
+    <div class="modal fade" id="rModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="rModalLabel">Reassign to Manager</h4>
+                </div>
+                <div class="modal-body">
+                    <form action="/RightFirstTime/caseReassign" method="post">
+                        <input id="rCaseID" name="caseID" hidden value="e" />
+                        <div class="form-group">
+                            <label for="empNumber" style="display:block;">Manager</label>
+                            <select id="empNumber" name="empNumber" class="form-control" style="display:inline-block; width: 80%;">
+                                <optgroup label="Managers in Region">
+                                    @foreach (var item in Model.ManagerDropdown)
+                                    {
+                                        <option value="@item.Value">@item.Text</option>
+                                    }
+                                </optgroup>
+                                <optgroup label="Exception">
+                                    <option value="RM">No GM - RM Responsible</option>
+                                    <option value="Terminated">No GM - Left the business</option>
+                                    <option value="LeftRegion">GM not in list - Please search for colleague below</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                        <div id="rSearchCont" style="display:none;">
+                            <input style="display: inline-block; width: 80%;" type="text" class="form-control" id="rSearchCrit" placeholder="Search by name..." />
+                            <button type="button" id="rSearchSubmit" class="btn btn-info">Search</button>
+                            <div id="rSearchResult" class="table-responsive" style="max-height:300px; margin:10px 0px;"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="rComment">Comment</label>
+                            <textarea id="rComment" name="comment" class="form-control" rows="3" style="resize:vertical;"></textarea>
+                        </div>
+                        <hr />
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-success">Save Changes</button>
+                            <button type="button" data-dismiss="modal" class="btn btn-danger">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="oModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="oModalLabel">Override</h4>
+                </div>
+                <div class="modal-body">
+                    <form action="/RightFirstTime/caseOverride" method="post">
+                        <input id="oCaseID" name="caseID" hidden value="e" />
+                        <div class="form-group">
+                            <label for="oReason">Reason</label>
+                            <select id="oReason" name="reason" class="form-control">
+                                <option>Manager joined half way through period</option>
+                                <option>Manager had unplanned absence - RM accountable</option>
+                                <option>Exceptional circumstance (please specify)</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="oCommentContainer" style="display:none;">
+                            <label for="oComment">Comment</label>
+                            <textarea id="oComment" name="comment" class="form-control" rows="3" style="resize:vertical;"></textarea>
+                        </div>
+                        <hr />
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-success">Save Changes</button>
+                            <button type="button" data-dismiss="modal" class="btn btn-danger">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="cModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="cModalLabel">Confirm</h4>
+                </div>
+                <div class="modal-body">
+                    <form action="/RightFirstTime/caseConfirm" method="post">
+                        <input id="cCaseID" name="caseID" hidden value="e" />
+                        <h4>Confirm this case is for <strong><u id="cName"></u></strong></h4>
+                        <hr />
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-success">Confirm</button>
+                            <button type="button" data-dismiss="modal" class="btn btn-danger">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="aModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="oModalLabel">Confirm Action</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Please confirm the <strong id="aActionText"></strong> for this colleague is completed. Add any relevant comments below.</p>
+                    <form action="/RightFirstTime/caseSubmitAction" method="post">
+                        <input id="aCaseID" name="caseID" hidden value="e" />
+                        <input id="aActionType" name="actionType" hidden value="e" />
+                        <div class="form-group" id="aCommentContainer">
+                            <label for="aComment">Comment</label>
+                            <textarea id="aComment" name="comment" class="form-control" rows="3" style="resize:vertical;"></textarea>
+                        </div>
+                        <hr />
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-success">Save Changes</button>
+                            <button type="button" data-dismiss="modal" class="btn btn-danger">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section myScripts{
+    <script src="~/Content/Custom/RFTPTracking.min.js"></script>
+}
