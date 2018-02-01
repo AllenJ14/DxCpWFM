@@ -1,4 +1,5 @@
 ﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
+@using DixonsCarphone.WorkforceManagement.Business.Entities
 @model RFTPPeriodSummaryVm
 
 @{
@@ -19,6 +20,7 @@
             We have attributed the responsibility to the manager that was assigned to the store at the end of the period.  Please confirm that you are holding the indicated manager accountable or re-assign accountability to a different manager if necessary. This should be completed within the first week of the period.
             Once you’ve confirmed accountability please take the required action or (if required due to exceptional circumstance) process an override. Required actions must be completed and confirmed before the end of the period.
         </p>
+        <div class="alert alert-info text-center"><strong>Non compliance for this period only includes weeks 38 and 39</strong></div>
     </div>
 </div>
 
@@ -264,7 +266,7 @@ else
                     <h4 class="modal-title" id="rModalLabel">Reassign to Manager</h4>
                 </div>
                 <div class="modal-body">
-                    <form action="/RightFirstTime/caseReassign" method="post">
+                    <form action="/RightFirstTime/caseReassign" method="post" id="rForm">
                         <input id="rCaseID" name="caseID" hidden value="e" />
                         <div class="form-group">
                             <label for="empNumber" style="display:block;">Manager</label>

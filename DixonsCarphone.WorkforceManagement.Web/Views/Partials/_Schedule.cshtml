@@ -176,7 +176,7 @@ else if (Model.ScheduleCollection != null && Model.ScheduleCollection.Count() > 
     }
 
     var colList = Model.ScheduleCollection.GroupBy(x => x.PersonNumber).Select(x => x.Key.Value).ToList();
-    var sohTotal = Model.ScheduleCollection.GroupBy(x => x.PersonNumber).Select(x => x.FirstOrDefault()).ToList();
+    var sohTotal = Model.ScheduleCollection.Where(x => x.TransferBranch == null).GroupBy(x => x.PersonNumber).Select(x => x.FirstOrDefault()).ToList();
     bool firstGS = true;
     <table class="table table-bordered">
         <thead>
@@ -227,7 +227,7 @@ else if (Model.ScheduleCollection != null && Model.ScheduleCollection.Count() > 
                             <td></td>
                         }
                     }
-                    <td class="text-center active"><small><strong>@Model.ScheduleCollection.Where(x => x.PersonNumber == colList[i]).First().PersonWeekTotal</strong></small></td>
+                    <td class="text-center active"><small><strong>@Model.ScheduleCollection.Where(x => x.PersonNumber == colList[i]).First().PersonWeekTotal.ToString()</strong></small></td>
                 </tr>
             }
             <tr>

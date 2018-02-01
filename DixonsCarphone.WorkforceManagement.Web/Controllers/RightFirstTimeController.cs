@@ -159,7 +159,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
 
                 vm.Cases = mapper.Map<List<RFTPCaseStubView>>(await _storeManager.GetRFTPCasesDivision("17/18", 9, managerList));
                 vm.Actions = mapper.Map<List<RFTPCaseActionView>>(await _storeManager.GetRFTPActions());
-                vm.RegionManagers = mapper.Map<List<KronosEmpSummaryView>>(managerList);
+                vm.RegionManagers = new List<KronosEmpSummaryView>(mapper.Map<List<KronosEmpSummaryView>>(managerList));//mapper.Map<List<KronosEmpSummaryView>>(managerList);
                 vm.displayType = "d";
             }
             else if (System.Web.HttpContext.Current.Session["_RegionNumber"] != null)
@@ -183,6 +183,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
         }
 
         [HttpGet]
+        [UserFilter(AccessLevel = "Admin,TPC,RM,DD,RD")]
         public async Task<PartialViewResult> _employeeSearch(string crit)
         {
             var searchResult = new List<KronosEmpSummaryView>();
@@ -194,9 +195,11 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
         }
 
         [HttpPost]
+        [UserFilter(AccessLevel = "Admin,TPC,RM,DD,RD")]
         public async Task<ActionResult> caseConfirm(int caseID)
         {
-            if(await _storeManager.CheckCaseAuth(caseID, _store.RegionNo))
+            var region = System.Web.HttpContext.Current.Session["_RegionNumber"] == null ? _store.RegionNo : System.Web.HttpContext.Current.Session["_RegionNumber"].ToString();
+            if (await _storeManager.CheckCaseAuth(caseID, region))
             {
                 var result = await _storeManager.ConfirmCase(caseID, System.Web.HttpContext.Current.Session["_UserName"].ToString());
             }            
@@ -205,9 +208,11 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
         }
 
         [HttpPost]
+        [UserFilter(AccessLevel = "Admin,TPC,RM,DD,RD")]
         public async Task<ActionResult> caseOverride(int caseID, string reason, string comment)
         {
-            if(await _storeManager.CheckCaseAuth(caseID, _store.RegionNo))
+            var region = System.Web.HttpContext.Current.Session["_RegionNumber"] == null ? _store.RegionNo : System.Web.HttpContext.Current.Session["_RegionNumber"].ToString();
+            if (await _storeManager.CheckCaseAuth(caseID, region))
             {
                 var result = await _storeManager.OverrideCase(caseID, System.Web.HttpContext.Current.Session["_UserName"].ToString(), reason, comment);
             }            
@@ -216,11 +221,13 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
         }
 
         [HttpPost]
+        [UserFilter(AccessLevel = "Admin,TPC,RM,DD,RD")]
         public async Task<ActionResult> caseReassign(int caseID, string empNumber, string comment)
         {
-            if(await _storeManager.CheckCaseAuth(caseID, _store.RegionNo))
+            var region = System.Web.HttpContext.Current.Session["_RegionNumber"] == null ? _store.RegionNo : System.Web.HttpContext.Current.Session["_RegionNumber"].ToString();
+            if (await _storeManager.CheckCaseAuth(caseID, region))
             {
-                if(empNumber != "Terminated")
+                if (empNumber != "Terminated")
                 {
                     var result = await _storeManager.ReassignCase(caseID, empNumber, System.Web.HttpContext.Current.Session["_UserName"].ToString(), comment);
                 }
@@ -228,16 +235,18 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
                 {
                     var result = await _storeManager.OverrideCase(caseID, System.Web.HttpContext.Current.Session["_UserName"].ToString(), "GM Terminated", comment);
                 }
-                
-            }            
+
+            }
 
             return RedirectToAction("ManagerTracking");
         }
 
         [HttpPost]
+        [UserFilter(AccessLevel = "Admin,TPC,RM,DD,RD")]
         public async Task<ActionResult> caseSubmitAction(int caseID, string actionType, string comment)
         {
-            if(await _storeManager.CheckCaseAuth(caseID, _store.RegionNo))
+            var region = System.Web.HttpContext.Current.Session["_RegionNumber"] == null ? _store.RegionNo : System.Web.HttpContext.Current.Session["_RegionNumber"].ToString();
+            if (await _storeManager.CheckCaseAuth(caseID, region))
             {
                 var result = await _storeManager.SubmitAction(caseID, actionType, comment, System.Web.HttpContext.Current.Session["_UserName"].ToString(), System.Web.HttpContext.Current.Session["_AccessLevel"].ToString());
             }            
