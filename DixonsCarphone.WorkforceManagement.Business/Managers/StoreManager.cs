@@ -1339,8 +1339,8 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
         {
             using (var dbContext = new DxCpWfmContext())
             {
-                if(dbContext.RFTPCaseActions.Where(x => x.ActionType == actionType && x.Owner == accessLevel).Count() > 0)
-                {
+                //if(dbContext.RFTPCaseActions.Where(x => x.ActionType == actionType && x.Owner == accessLevel).Count() > 0)
+                //{
                     var originalCase = dbContext.RFTPCaseStubs.Find(caseId);
 
                     originalCase.LastUpdated = DateTime.Now;
@@ -1356,11 +1356,11 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
                     });
 
                     return await dbContext.SaveChangesAsync();
-                }
-                else
-                {
-                    return -5;
-                }
+                //}
+                //else
+                //{
+                //    return -5;
+                //}
                 
             }
         }

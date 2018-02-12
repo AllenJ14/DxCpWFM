@@ -249,7 +249,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             if (await _storeManager.CheckCaseAuth(caseID, region))
             {
                 var result = await _storeManager.SubmitAction(caseID, actionType, comment, System.Web.HttpContext.Current.Session["_UserName"].ToString(), System.Web.HttpContext.Current.Session["_AccessLevel"].ToString());
-            }            
+            }
 
             return RedirectToAction("ManagerTracking");
         }
