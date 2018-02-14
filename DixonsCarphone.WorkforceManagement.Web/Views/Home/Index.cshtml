@@ -62,10 +62,10 @@
     </div>
 
     @Html.Partial("~/Views/Partials/_PageBlurb.cshtml", (BaseViewModel)Model)
-    @*<div class="alert alert-danger text-center">
-        <strong>Kronos clock time issue:</strong>
-        Kronos Touch-ID terminals are currently showing an incorrect time. We are aware of the issue and are working to resolve it. Until the issue is fixed you should continue to clock in and out as normal, do not edit any clocked times in the STAR web application.
-    </div>*@
+    <div class="alert alert-danger text-center">
+        <strong>Reporting Last Week:</strong>
+        Due to the widespread issue with the Kronos clocking terminals last Friday the deadline for timecard sign off has been extended to <u><strong>12PM Wednesday</strong></u>. The current reporting will then be refreshed Friday morning to reflect any changes.
+    </div>
     <div class="row">
         @Html.Partial("~/Views/Partials/_ScoresAndUtilization.cshtml", Model.Scores)
     </div>

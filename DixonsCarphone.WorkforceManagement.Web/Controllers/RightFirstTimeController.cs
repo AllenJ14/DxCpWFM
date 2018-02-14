@@ -155,18 +155,16 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
             }
             else if (System.Web.HttpContext.Current.Session["_DivisionName"] != null)
             {
-                var managerList = await _storeManager.GetActiveManagersDivision(System.Web.HttpContext.Current.Session["_DivisionName"].ToString());
-
-                vm.Cases = mapper.Map<List<RFTPCaseStubView>>(await _storeManager.GetRFTPCasesDivision("17/18", 9, managerList));
+                vm.Cases = mapper.Map<List<RFTPCaseStubView>>(await _storeManager.GetRFTPCasesDivision("17/18", 9, System.Web.HttpContext.Current.Session["_DivisionName"].ToString()));
                 vm.Actions = mapper.Map<List<RFTPCaseActionView>>(await _storeManager.GetRFTPActions());
-                vm.RegionManagers = new List<KronosEmpSummaryView>(mapper.Map<List<KronosEmpSummaryView>>(managerList));//mapper.Map<List<KronosEmpSummaryView>>(managerList);
+                vm.RegionManagers = new List<KronosEmpSummaryView>(mapper.Map<List<KronosEmpSummaryView>>(await _storeManager.GetColleagueDetails(vm.Cases.Select(x => x.PersonNumber).ToList())));
                 vm.displayType = "d";
             }
             else if (System.Web.HttpContext.Current.Session["_RegionNumber"] != null)
             {
                 vm.Cases = mapper.Map<List<RFTPCaseStubView>>(await _storeManager.GetRFTPCases(System.Web.HttpContext.Current.Session["_RegionNumber"].ToString(), "17/18", 9));
                 vm.Actions = mapper.Map<List<RFTPCaseActionView>>(await _storeManager.GetRFTPActions());
-                vm.RegionManagers = mapper.Map<List<KronosEmpSummaryView>>(await _storeManager.GetActiveManagers(_store.RegionNo));
+                vm.RegionManagers = mapper.Map<List<KronosEmpSummaryView>>(await _storeManager.GetActiveManagers(System.Web.HttpContext.Current.Session["_RegionNumber"].ToString()));
                 vm.displayType = "r";
             }
             else

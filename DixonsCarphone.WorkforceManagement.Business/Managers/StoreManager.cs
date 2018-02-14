@@ -1207,7 +1207,7 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             using (var dbContext = new DxCpWfmContext())
             {
                 int crit = int.Parse(Region);
-                return await dbContext.KronosEmployeeSummaries.Where(x => x.Region == crit).AsNoTracking().ToListAsync();
+                return await dbContext.KronosEmployeeSummaries.Where(x => x.Region == crit && x.Active == true).AsNoTracking().ToListAsync();
             }
         }
 
@@ -1215,7 +1215,7 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
         {
             using (var dbContext = new DxCpWfmContext())
             {
-                return await dbContext.KronosEmployeeSummaries.Where(x => x.Division == Division).AsNoTracking().ToListAsync();
+                return await dbContext.KronosEmployeeSummaries.Where(x => x.Division == Division && x.Active == true).AsNoTracking().ToListAsync();
             }
         }
 
@@ -1224,19 +1224,17 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             var regionNo = int.Parse(region);
             using (var dbContext = new DxCpWfmContext())
             {
-                var empList = await dbContext.KronosEmployeeSummaries.Where(x => x.Region == regionNo && x.ReportingRoleFlag == 1).AsNoTracking().Select(x => x.PersonNumber).ToListAsync();
-                var caseList = await dbContext.RFTPCaseStubs.Where(x => empList.Contains(x.PersonNumber) && x.Show).Include("RFTPCaseAudits").ToListAsync();
+                var caseList = await dbContext.RFTPCaseStubs.Where(x => dbContext.KronosEmployeeSummaries.Where(y => y.Region == regionNo).Any(y => y.PersonNumber == x.PersonNumber) && x.Show).Include("RFTPCaseAudits").ToListAsync();
 
                 return caseList;
             }
         }
 
-        public async Task<List<RFTPCaseStub>> GetRFTPCasesDivision(string year, int period, List<KronosEmployeeSummary> empList)
+        public async Task<List<RFTPCaseStub>> GetRFTPCasesDivision(string year, int period, string division)
         {
             using (var dbContext = new DxCpWfmContext())
             {
-                var personNumList = await dbContext.KronosEmployeeSummaries.Select(x => x.PersonNumber).ToListAsync();
-                var caseList = await dbContext.RFTPCaseStubs.Where(x => personNumList.Contains(x.PersonNumber) && x.Show).Include("RFTPCaseAudits").ToListAsync();
+                var caseList = await dbContext.RFTPCaseStubs.Where(x => dbContext.KronosEmployeeSummaries.Where(y => y.Division == division).Any(y => y.PersonNumber == x.PersonNumber) && x.Show).Include("RFTPCaseAudits").ToListAsync();
 
                 return caseList;
             }
@@ -1247,8 +1245,7 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             var regionNo = int.Parse(region);
             using (var dbContext = new DxCpWfmContext())
             {
-                var empList = await dbContext.KronosEmployeeSummaries.Where(x => x.Region == regionNo && x.ReportingRoleFlag == 1).AsNoTracking().Select(x => x.PersonNumber).ToListAsync();
-                var caseList = await dbContext.RFTPCaseStubs.Where(x => empList.Contains(x.PersonNumber) && x.CaseID == caseID).ToListAsync();
+                var caseList = await dbContext.RFTPCaseStubs.Where(x => dbContext.KronosEmployeeSummaries.Where(y => y.Region == regionNo).Any(y => y.PersonNumber == x.PersonNumber) && x.CaseID == caseID).ToListAsync();
 
                 return caseList.Count > 0;
             }
@@ -1370,7 +1367,7 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             int crit = int.Parse(Region);
             using (var dbContext = new DxCpWfmContext())
             {                
-                return await dbContext.KronosEmployeeSummaries.Where(x => x.Region == crit && x.ReportingRoleFlag == 1).AsNoTracking().ToListAsync();
+                return await dbContext.KronosEmployeeSummaries.Where(x => x.Region == crit && x.ReportingRoleFlag == 1 && x.Active == true).AsNoTracking().ToListAsync();
             }
         }
 
@@ -1378,7 +1375,15 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
         {
             using (var dbContext = new DxCpWfmContext())
             {
-                return await dbContext.KronosEmployeeSummaries.Where(x => x.Division == division && x.ReportingRoleFlag == 1).AsNoTracking().ToListAsync();
+                return await dbContext.KronosEmployeeSummaries.Where(x => x.Division == division && x.ReportingRoleFlag == 1 && x.Active == true).AsNoTracking().ToListAsync();
+            }
+        }
+
+        public async Task<List<KronosEmployeeSummary>> GetColleagueDetails(List<string> empNums)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                return await dbContext.KronosEmployeeSummaries.Where(x => empNums.Contains(x.PersonNumber)).AsNoTracking().ToListAsync();
             }
         }
 
@@ -1386,7 +1391,7 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
         {
             using(var dbContext = new DxCpWfmContext())
             {
-                return await dbContext.KronosEmployeeSummaries.Where(x => x.PersonName.Contains(crit)).OrderBy(x => x.PersonName).AsNoTracking().ToListAsync();
+                return await dbContext.KronosEmployeeSummaries.Where(x => x.PersonName.Contains(crit) && x.Active == true).OrderBy(x => x.PersonName).AsNoTracking().ToListAsync();
             }
         }
 

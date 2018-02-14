@@ -496,6 +496,7 @@ warning 6002: The table/view 'CarphoneWfm.dbo.KronosEmployeeSummary' does not ha
           <Property Name="BranchName" Type="varchar" MaxLength="100" />
           <Property Name="Scheduled" Type="bit" Nullable="false" />
           <Property Name="ReportingRoleFlag" Type="tinyint" />
+          <Property Name="Active" Type="bit" />
         </EntityType>
         <EntityType Name="OpeningTimesComments">
           <Key>
@@ -1529,7 +1530,8 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
     [KronosEmployeeSummary].[KronosUser] AS [KronosUser], 
     [KronosEmployeeSummary].[BranchName] AS [BranchName], 
     [KronosEmployeeSummary].[Scheduled] AS [Scheduled], 
-    [KronosEmployeeSummary].[ReportingRoleFlag] AS [ReportingRoleFlag]
+    [KronosEmployeeSummary].[ReportingRoleFlag] AS [ReportingRoleFlag], 
+    [KronosEmployeeSummary].[Active] AS [Active]
     FROM [dbo].[KronosEmployeeSummary] AS [KronosEmployeeSummary]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="PeakHC" EntityType="Self.PeakHC" store:Type="Tables" store:Schema="dbo">
@@ -3826,6 +3828,7 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <Property Name="BranchName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Scheduled" Type="Boolean" Nullable="false" />
           <Property Name="ReportingRoleFlag" Type="Byte" />
+          <Property Name="Active" Type="Boolean" />
         </EntityType>
         <ComplexType Name="sp_RegionShortShifts_Result">
           <Property Type="String" Name="Channel" Nullable="true" MaxLength="10" />
@@ -5649,6 +5652,7 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
           <EntitySetMapping Name="KronosEmployeeSummaries">
             <EntityTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.KronosEmployeeSummary">
               <MappingFragment StoreEntitySet="KronosEmployeeSummary">
+                <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="ReportingRoleFlag" ColumnName="ReportingRoleFlag" />
                 <ScalarProperty Name="Scheduled" ColumnName="Scheduled" />
                 <ScalarProperty Name="BranchName" ColumnName="BranchName" />
