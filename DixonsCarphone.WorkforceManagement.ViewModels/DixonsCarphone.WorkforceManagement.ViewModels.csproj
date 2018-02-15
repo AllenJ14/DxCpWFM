@@ -100,6 +100,9 @@
     <Compile Include="BusinessModels\HyperFindResultView.cs" />
     <Compile Include="BusinessModels\KeyDatesVm.cs" />
     <Compile Include="BusinessModels\KronosEmpSummaryView.cs" />
+    <Compile Include="BusinessModels\Last12MonthDetailView.cs" />
+    <Compile Include="BusinessModels\ManagerDetailVm.cs" />
+    <Compile Include="BusinessModels\ManagerTrendVm.cs" />
     <Compile Include="BusinessModels\MyTeamViewModel.cs" />
     <Compile Include="BusinessModels\MyTargetsViewModel.cs" />
     <Compile Include="BusinessModels\PayCalendarDateView.cs" />

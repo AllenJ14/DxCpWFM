@@ -1,0 +1,87 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
+@model ManagerDetailVm
+
+@{
+    ViewBag.Title = "Manager Detail";
+}
+
+<div class="row">
+    &emsp;
+</div>
+
+@if (Model.MessageType == MessageType.Error)
+{
+    <div class="alert alert-info text-center"><strong>@Model.Message</strong></div>
+}
+else
+{
+    <div class="panel panel-default">
+        <div class="panel-heading text-center">
+            <strong>@Model.caseDetails.First().PersonName</strong>
+        </div>
+    </div>
+    <div class="panel-group" id="cases" role="tablist">
+        @foreach (var item in Model.caseDetails)
+        {
+            <div class="panel @(item.Confirmed ? "panel-default" : "panel-danger")">
+                <div class="panel-heading text-center" role="tab">
+                    <a role="button" data-toggle="collapse" data-parent="#cases" href="#@(item.CaseID)"><strong>@string.Format("{0} P{1} - Stage {2}", item.Year, item.Period, item.Stage)</strong></a>
+                </div>
+                <div id="@item.CaseID" class="panel-collapse collapse in" role="tabpanel">
+                    <div class="panel-body">
+                        @*@if (item.Override)
+                            {
+                                var auditItem = item.RFTPCaseAudits.Where(x => x.ActionType == "Override").First();
+                                <div class="col-sm-4 col-xs-12">
+                                    <div class="panel panel-warning">
+                                        <div class="panel-heading text-center">
+                                            <strong>Overridden</strong>
+                                        </div>
+                                        <div class="panel-body">
+                                            <strong>Overridden by</strong> : @auditItem.CompletedBy <br />
+                                            <strong>Date Completed</strong> : @auditItem.DateTimeCreated <br />
+                                            <strong>Comment</strong> : <br />@auditItem.Comment
+                                        </div>
+                                    </div>
+                                </div>
+                            }*@
+                        <div class="col-sm-6" style="min-height:50px;">
+                            @if (item.Confirmed)
+                    {
+                                <h4>Colleague confirmed as responsible</h4>
+                            }
+                            else
+                            {
+                                <h4 class="text-danger">Not yet confirmed</h4>
+                            }
+                            @if (item.Override)
+                    {
+                                <p>Non compliance overridden, full details in comments.</p>
+                            }
+                        </div>
+                        <div class="col-sm-6" style="min-height:50px;">
+                            @foreach (var auditItem in item.RFTPCaseAudits.OrderByDescending(x => x.DateTimeCreated))
+                    {
+                                <div class="panel @(auditItem.ActionType == "Override" ? "panel-warning" : "panel-info")">
+                                    <div class="panel-heading text-center">
+                                        <strong>@auditItem.ActionType</strong>
+                                    </div>
+                                    <div class="panel-body">
+                                        @(auditItem.Comment.Length == 0 ? "No comment added" : auditItem.Comment)
+                                    </div>
+                                    <div class="panel-footer text-center">
+                                        @Html.Raw(string.Format("Added {0:g} by <strong>{1}</strong>", auditItem.DateTimeCreated, auditItem.CompletedBy))
+                                    </div>
+                                </div>
+                            }
+                            @if (item.RFTPCaseAudits.Count == 0)
+                            {
+                                <div class="alert alert-info text-center"><strong>No further actions yet</strong></div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

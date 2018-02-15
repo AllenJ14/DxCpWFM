@@ -84,6 +84,7 @@ namespace DixonsCarphone.WorkforceManagement.Business.Entities
         public virtual DbSet<RFTPCaseAction> RFTPCaseActions { get; set; }
         public virtual DbSet<RFTPCaseAudit> RFTPCaseAudits { get; set; }
         public virtual DbSet<RFTPCaseStub> RFTPCaseStubs { get; set; }
+        public virtual DbSet<Last12MonthDetail> Last12MonthDetail { get; set; }
     
         public virtual ObjectResult<udsp_GetPandL_Result> udsp_GetPandL(Nullable<int> storeNumber, string periodYear, Nullable<short> periodMonth, Nullable<short> qtdStartMonth, Nullable<short> ytdStartMonth)
         {

@@ -1219,14 +1219,38 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
             }
         }
 
+        public async Task<List<RFTPCaseStub>> GetHistoricRFTPCases(string region)
+        {
+            var regionNo = int.Parse(region);
+            using (var dbContext = new DxCpWfmContext())
+            {
+                var caseList = await dbContext.RFTPCaseStubs
+                    .Where(x => 
+                    dbContext.KronosEmployeeSummaries.Where(y => y.Region == regionNo).Any(y => y.PersonNumber == x.PersonNumber) 
+                    && dbContext.Last12MonthDetail.Any(y => y.FY == x.Year && y.Period == x.Period)
+                    //&& periodDetail.Any(y => y.Period == x.Period)
+                    && x.Confirmed == true)
+                    .Include("RFTPCaseAudits")
+                    .ToListAsync();
+
+                return caseList;
+            }
+        }
+
+        public async Task<List<Last12MonthDetail>> GetLast12MonthList()
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                return await dbContext.Last12MonthDetail.OrderBy(x => x.FY).ThenBy(x => x.Period).ToListAsync();
+            }
+        }
+
         public async Task<List<RFTPCaseStub>> GetRFTPCases(string region, string year, int period)
         {
             var regionNo = int.Parse(region);
             using (var dbContext = new DxCpWfmContext())
             {
-                var caseList = await dbContext.RFTPCaseStubs.Where(x => dbContext.KronosEmployeeSummaries.Where(y => y.Region == regionNo).Any(y => y.PersonNumber == x.PersonNumber) && x.Show).Include("RFTPCaseAudits").ToListAsync();
-
-                return caseList;
+                return await dbContext.RFTPCaseStubs.Where(x => dbContext.KronosEmployeeSummaries.Where(y => y.Region == regionNo).Any(y => y.PersonNumber == x.PersonNumber) && x.Show).Include("RFTPCaseAudits").ToListAsync();
             }
         }
 
@@ -1234,9 +1258,15 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
         {
             using (var dbContext = new DxCpWfmContext())
             {
-                var caseList = await dbContext.RFTPCaseStubs.Where(x => dbContext.KronosEmployeeSummaries.Where(y => y.Division == division).Any(y => y.PersonNumber == x.PersonNumber) && x.Show).Include("RFTPCaseAudits").ToListAsync();
+                return await dbContext.RFTPCaseStubs.Where(x => dbContext.KronosEmployeeSummaries.Where(y => y.Division == division).Any(y => y.PersonNumber == x.PersonNumber) && x.Show).Include("RFTPCaseAudits").ToListAsync();
+            }
+        }
 
-                return caseList;
+        public async Task<List<RFTPCaseStub>> GetAllCasesForPerson(string personNum)
+        {
+            using (var dbContext = new DxCpWfmContext())
+            {
+                return await dbContext.RFTPCaseStubs.Where(x => x.PersonNumber == personNum && !x.Reassign).Include("RFTPCaseAudits").OrderByDescending(x => x.DateTimeCreated).ToListAsync();
             }
         }
 

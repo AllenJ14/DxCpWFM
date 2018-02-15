@@ -689,6 +689,8 @@
     <Content Include="Views\RightFirstTime\ManagerTracking.cshtml" />
     <Content Include="Views\RightFirstTime\_employeeSearch.cshtml" />
     <Content Include="Uploads\RFTPColleagueLetter.pdf" />
+    <Content Include="Views\RightFirstTime\ManagerTrend.cshtml" />
+    <Content Include="Views\RightFirstTime\ManagerDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DixonsCarphone.WorkforceManagement.Business\DixonsCarphone.WorkforceManagement.Business.csproj">

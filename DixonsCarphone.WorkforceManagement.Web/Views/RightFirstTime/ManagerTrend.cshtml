@@ -1,0 +1,74 @@
+﻿@using DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
+@model ManagerTrendVm
+
+@{
+    ViewBag.Title = "Manager Trend";
+}
+
+<div class="row">
+    &emsp;
+</div>
+
+@if (Model.MessageType == MessageType.Error)
+{
+    <div class="alert alert-danger text-center"><strong>@Model.Message</strong></div>
+}
+else if (Model.displayType == "r")
+{
+    <div class="panel panel-default">
+        <div class="panel-heading text-center">
+            <strong>Manager Compliance Trend</strong>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="well well-sm col-sm-offset-4 col-sm-4 col-xs-offset-1 col-xs-10 text-center">
+                    <span style="margin-right:20px;white-space:nowrap;"><strong>X </strong>- Non Compliant</span>
+                    <span style="margin-right:20px;white-space:nowrap;"><strong>O </strong>- Overridden</span>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered-blue table-condensed">
+                    <thead>
+                        <tr>
+                            <th class="text-center">GM Name</th>
+                            @foreach (var item in Model.monthList)
+                            {
+                                <th class="text-center">@(item.FY)<br />P@(item.Period)</th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.gmList)
+                        {
+                            <tr>
+                                <td><a href="@Url.Action("ManagerDetail", "RightFirstTime", new { personNum = item.PersonNumber })">@item.PersonName <span class="glyphicon glyphicon-circle-arrow-right"></span></a></td>
+                                @foreach (var period in Model.monthList)
+                                {
+                                    var c = Model.cases.Where(x => x.PersonNumber == item.PersonNumber && x.Year == period.FY && x.Period == period.Period).FirstOrDefault();
+                                    <td class="text-center">@(c == null ? "" : (c.Override ? "O" : "X"))</td>
+                                }
+                            </tr>
+                        }
+                        @if (Model.nonGMList.Count > 0)
+                        {
+                            <tr class="active">
+                                <td colspan="13"><strong><small>Non Management</small></strong></td>
+                            </tr>
+                            foreach (var item in Model.nonGMList)
+                            {
+                                <tr>
+                                    <td><a href="@Url.Action("ManagerDetail", "RightFirstTime", new { personNum = item.PersonNumber })">@item.PersonName <span class="glyphicon glyphicon-circle-arrow-right"></span></a></td>
+                                    @foreach (var period in Model.monthList)
+                                    {
+                                        var c = Model.cases.Where(x => x.PersonNumber == item.PersonNumber && x.Year == period.FY && x.Period == period.Period).FirstOrDefault();
+                                        <td class="text-center">@(c == null ? "" : (c.Override ? "O" : "X"))</td>
+                                    }
+                                </tr>
+                            }
+                        }                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>    
+}

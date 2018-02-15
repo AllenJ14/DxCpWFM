@@ -84,6 +84,7 @@
         <EntityTypeShape EntityType="DixonsCarphone.WorkforceManagement.Business.RFTPCaseAudit" Width="1.5" PointX="26.625" PointY="1.5" />
         <EntityTypeShape EntityType="DixonsCarphone.WorkforceManagement.Business.RFTPCaseStub" Width="1.5" PointX="24.375" PointY="1" />
         <AssociationConnector Association="DixonsCarphone.WorkforceManagement.Business.FK_RFTPCaseAudit_RFTPCaseStub" />
+        <EntityTypeShape EntityType="DixonsCarphone.WorkforceManagement.Business.Last12MonthDetail" Width="1.5" PointX="16.375" PointY="18.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

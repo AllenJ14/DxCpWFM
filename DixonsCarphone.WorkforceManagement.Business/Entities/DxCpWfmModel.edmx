@@ -885,6 +885,16 @@ warning 6002: The table/view 'CarphoneWfm.dbo.footfall_raw' does not have a prim
           <Property Name="Hour In Day 24" Type="smallint" />
           <Property Name="Footfall Volume" Type="smallint" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'CarphoneWfm.dbo.Last12MonthDetail' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Last12MonthDetail">
+          <Key>
+            <PropertyRef Name="EntryId" />
+          </Key>
+          <Property Name="EntryId" Type="bigint" Nullable="false" />
+          <Property Name="FY" Type="varchar" MaxLength="5" />
+          <Property Name="Period" Type="tinyint" />
+        </EntityType>
         <Association Name="FK_AccountEntryDetail_AccountEntryHeader">
           <End Role="AccountEntryHeader" Type="Self.AccountEntryHeader" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -1565,6 +1575,13 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
     [footfall_raw].[Footfall Volume] AS [Footfall Volume]
     FROM [dbo].[footfall_raw] AS [footfall_raw]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="Last12MonthDetail" EntityType="Self.Last12MonthDetail" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Last12MonthDetail].[EntryId] AS [EntryId], 
+    [Last12MonthDetail].[FY] AS [FY], 
+    [Last12MonthDetail].[Period] AS [Period]
+    FROM [dbo].[Last12MonthDetail] AS [Last12MonthDetail]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_AccountEntryDetail_AccountEntryHeader" Association="Self.FK_AccountEntryDetail_AccountEntryHeader">
             <End Role="AccountEntryHeader" EntitySet="AccountEntryHeader" />
             <End Role="AccountEntryDetail" EntitySet="AccountEntryDetail" />
@@ -2195,6 +2212,7 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
             <Parameter Name="personNumber" Mode="In" Type="String" />
             <Parameter Name="oldCaseID" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="Last12MonthDetail" EntityType="DixonsCarphone.WorkforceManagement.Business.Last12MonthDetail" />
         </EntityContainer>
         <EntityType Name="BestPracticeCategoryType">
           <Key>
@@ -4013,6 +4031,14 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Last12MonthDetail">
+          <Key>
+            <PropertyRef Name="EntryId" />
+          </Key>
+          <Property Name="EntryId" Type="Int64" Nullable="false" />
+          <Property Name="FY" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="Period" Type="Byte" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5878,6 +5904,15 @@ warning 6035: The relationship 'FK_TicketEscalations_TicketType' has columns tha
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="sp_RFTPReassignCase" FunctionName="DixonsCarphone.WorkforceManagement.Business.Store.sp_RFTPReassignCase" />
+          <EntitySetMapping Name="Last12MonthDetail">
+            <EntityTypeMapping TypeName="DixonsCarphone.WorkforceManagement.Business.Last12MonthDetail">
+              <MappingFragment StoreEntitySet="Last12MonthDetail">
+                <ScalarProperty Name="Period" ColumnName="Period" />
+                <ScalarProperty Name="FY" ColumnName="FY" />
+                <ScalarProperty Name="EntryId" ColumnName="EntryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

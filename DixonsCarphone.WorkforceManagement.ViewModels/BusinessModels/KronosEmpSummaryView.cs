@@ -16,5 +16,7 @@ namespace DixonsCarphone.WorkforceManagement.ViewModels.BusinessModels
         public bool KronosUser { get; set; }
         public string BranchName { get; set; }
         public bool Scheduled { get; set; }
+        public Nullable<byte> ReportingRoleFlag { get; set; }
+        public Nullable<bool> Active { get; set; }
     }
 }

@@ -200,6 +200,9 @@
     <Compile Include="Entities\KronosEmployeeSummary.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\Last12MonthDetail.cs">
+      <DependentUpon>DxCpWfmModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\OpeningTimesComment.cs">
       <DependentUpon>DxCpWfmModel.tt</DependentUpon>
     </Compile>

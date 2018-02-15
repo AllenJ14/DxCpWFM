@@ -251,5 +251,53 @@ namespace DixonsCarphone.WorkforceManagement.Web.Controllers
 
             return RedirectToAction("ManagerTracking");
         }
+
+        [UserFilter(AccessLevel = "Admin,TPC,RM,DD,RD")]
+        public async Task<ActionResult> ManagerTrend()
+        {
+            ManagerTrendVm vm = new ManagerTrendVm();
+
+            if (System.Web.HttpContext.Current.Session["_ChannelName"] != null)
+            {
+                vm.Message = "This page is not available in the currently selected view, please select a store from the top right menu or go back.";
+                vm.MessageType = MessageType.Error;
+            }
+            else if (System.Web.HttpContext.Current.Session["_DivisionName"] != null)
+            {
+                vm.Message = "This page is not available in the currently selected view, please select a store from the top right menu or go back.";
+                vm.MessageType = MessageType.Error;
+            }
+            else if (System.Web.HttpContext.Current.Session["_RegionNumber"] != null)
+            {
+                vm.cases = mapper.Map<List<RFTPCaseStubView>>(await _storeManager.GetHistoricRFTPCases(System.Web.HttpContext.Current.Session["_RegionNumber"].ToString()));
+                vm.monthList = mapper.Map<List<Last12MonthDetailView>>(await _storeManager.GetLast12MonthList());
+                vm.empDetails = mapper.Map<List<KronosEmpSummaryView>>(await _storeManager.GetColleagueDetails(vm.cases.Select(x => x.PersonNumber).ToList()));
+                vm.displayType = "r";
+            }
+            else
+            {
+                vm.cases = mapper.Map<List<RFTPCaseStubView>>(await _storeManager.GetHistoricRFTPCases(_store.RegionNo));
+                vm.monthList = mapper.Map<List<Last12MonthDetailView>>(await _storeManager.GetLast12MonthList());
+                vm.empDetails = mapper.Map<List<KronosEmpSummaryView>>(await _storeManager.GetColleagueDetails(vm.cases.Select(x => x.PersonNumber).ToList()));
+                vm.displayType = "r";
+            }
+
+            return View(vm);
+        }
+
+        [UserFilter(AccessLevel = "Admin,TPC,RM,DD,RD")]
+        public async Task<ActionResult> ManagerDetail(string personNum)
+        {
+            ManagerDetailVm vm = new ManagerDetailVm();
+
+            vm.caseDetails = mapper.Map<List<RFTPCaseStubView>>(await _storeManager.GetAllCasesForPerson(personNum));
+            if(vm.caseDetails == null)
+            {
+                vm.Message = "No case details for the selected colleague.";
+                vm.MessageType = MessageType.Error;
+            }
+
+            return View(vm);
+        }
     }
 }

@@ -230,5 +230,11 @@ namespace DixonsCarphone.WorkforceManagement.Business.Managers
         Task<int> SubmitAction(int caseId, string actionType, string comment, string username, string accessLevel);
 
         Task<List<RFTPCaseStub>> GetRFTPCasesDivision(string year, int period, string division);
+
+        Task<List<RFTPCaseStub>> GetHistoricRFTPCases(string region);
+
+        Task<List<Last12MonthDetail>> GetLast12MonthList();
+
+        Task<List<RFTPCaseStub>> GetAllCasesForPerson(string personNum);
     }
 }

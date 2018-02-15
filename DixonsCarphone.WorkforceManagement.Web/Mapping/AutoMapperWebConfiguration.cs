@@ -282,6 +282,7 @@ namespace DixonsCarphone.WorkforceManagement.Web.Mapping
             CreateMap<RFTPCaseStub, RFTPCaseStubView>();
             CreateMap<RFTPCaseAudit, RFTPCaseAuditView>();
             CreateMap<RFTPCaseAction, RFTPCaseActionView>();
+            CreateMap<Last12MonthDetail, Last12MonthDetailView>();
         }
     }
 }

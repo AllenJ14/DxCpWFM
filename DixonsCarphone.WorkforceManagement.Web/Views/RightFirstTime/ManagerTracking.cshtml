@@ -19,6 +19,9 @@
             We have attributed the responsibility to the manager that was assigned to the store at the end of the period.  Please confirm that you are holding the indicated manager accountable or re-assign accountability to a different manager if necessary. This should be completed within the first week of the period.
             Once you’ve confirmed accountability please take the required action or (if required due to exceptional circumstance) process an override. Required actions must be completed and confirmed before the end of the period.
         </p>
+        <div class="text-center" style="margin-bottom:10px;">
+            <a href="@Url.Action("ManagerTrend", "RightFirstTime")" class="btn btn-lg btn-info">12 Month Trend</a>
+        </div>
         <div class="alert alert-info text-center"><strong>Non compliance for this period only includes weeks 38 and 39</strong></div>
     </div>
 </div>
@@ -57,7 +60,7 @@ else
                             @foreach (var item in Model.Cases.OrderBy(x => x.PersonName))
                             {
                                 <tr>
-                                    <td>@item.PersonName</td>
+                                    <td><a href="@Url.Action("ManagerDetail", "RightFirstTime", new { personNum = item.PersonNumber })">@item.PersonName <span class="glyphicon glyphicon-circle-arrow-right"></span></a></td>
                                     <td class="text-center">@item.StoreNumber</td>
                                     <td class="text-center">@item.Period</td>
                                     <td class="text-center">
